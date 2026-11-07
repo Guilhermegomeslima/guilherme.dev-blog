@@ -28,7 +28,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | ------ | -------------------------------------------------------------------- | ------------ | ---------- | --------- | --------- | --------- |
 | PLN-01 | Revisar e aprovar requisitos, arquitetura, design e guia de conteúdo | —            | P0         | 07/10     | 7c9c8a5   | Concluído |
 | PLN-02 | Revisar e aprovar Git Workflow, Roadmap e AGENTS                     | PLN-01       | P0         | 07/10     | 7c9c8a5   | Concluído |
-| PLN-03 | Definir textos reais mínimos e URLs sociais para o MVP               | PLN-01       | P0         | —         | —         | Pendente  |
+| PLN-03 | Definir textos reais mínimos e URLs sociais para o MVP               | PLN-01       | P0         | 08/10     | bc5938c   | Concluído |
 
 **Aceitação:** decisões aprovadas e pendências claramente rotuladas; conteúdo factual não inventado.
 
@@ -51,7 +51,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | UI-01 | Implementar BaseLayout e container reutilizável             | DEV-03        | P0         | 08/10     | ad94927   | Concluído |
 | UI-02 | Implementar cabeçalho e navegação desktop                   | UI-01         | P0         | 08/10     | 12f7a7e   | Concluído |
 | UI-03 | Implementar menu mobile recolhível e acessível              | UI-02         | P0         | 08/10     | 0fce214   | Concluído |
-| UI-04 | Implementar rodapé com links sociais reais                  | UI-01, PLN-03 | P0         | 08/10     | —         | Pendente  |
+| UI-04 | Implementar rodapé com links sociais reais                  | UI-01, PLN-03 | P0         | 08/10     | bc5938c   | Concluído |
 | UI-05 | Criar primitives de UI necessárias: seção, botão/link, card | UI-01         | P0         | 09/10     | —         | Pendente  |
 
 **Aceitação:** navegação funcional em desktop/mobile, foco/teclado coerentes, nenhuma rota quebrada ou link social inventado.
