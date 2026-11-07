@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  eyebrow?: string;
+  description?: string;
+  as?: 'h1' | 'h2';
+  id?: string;
+  class?: string;
+}
+
+const {
+  title,
+  eyebrow,
+  description,
+  as: HeadingTag = 'h2',
+  id,
+  class: className,
+} = Astro.props;
+---
+
+<div class:list={['mb-8 max-w-2xl', className]}>
+  {eyebrow && (
+    <p class="font-mono text-accent-alt mb-2 text-xs tracking-wider uppercase">
+      {eyebrow}
+    </p>
+  )}
+  <HeadingTag
+    id={id}
+    class="font-display text-text text-2xl font-bold tracking-tight sm:text-3xl"
+  >
+    {title}
+  </HeadingTag>
+  {description && (
+    <p class="font-body text-text-muted mt-3 text-base leading-relaxed">
+      {description}
+    </p>
+  )}
+</div>

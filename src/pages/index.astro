@@ -1,20 +1,61 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Container from '../components/ui/Container.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
 ---
 
 <BaseLayout title="guilherme.dev">
-  <Container>
-    <section class="border-border bg-surface my-12 rounded-lg border p-6">
-      <span class="font-mono text-xs tracking-wider text-accent-alt uppercase">
-        UI-01 • BaseLayout e Container
-      </span>
-      <h1 class="font-display text-accent mt-2 text-3xl font-bold">
-        guilherme.dev
-      </h1>
-      <p class="font-body text-text-muted mt-2 text-base">
-        Layout base e container reutilizável configurados.
-      </p>
-    </section>
-  </Container>
+  <Section ariaLabelledby="ui-preview-heading">
+    <SectionHeading
+      as="h1"
+      id="ui-preview-heading"
+      eyebrow="UI-05 • Primitives de UI"
+      title="guilherme.dev"
+      description="Base visual e componentes reutilizáveis configurados para o MVP."
+    />
+
+    <div class="grid gap-6 md:grid-cols-2">
+      <Card>
+        <h2 class="font-display text-text text-xl font-bold">Ações e botões</h2>
+        <p class="font-body text-text-muted mt-2 text-sm leading-relaxed">
+          Variantes com área mínima de toque, foco visível por teclado e
+          respeito a movimento reduzido.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <Button href="/">Início</Button>
+          <Button
+            href="https://github.com/Guilhermegomeslima/guilherme.dev-blog"
+            external
+            variant="secondary"
+          >
+            Repositório
+          </Button>
+          <Button type="button" variant="ghost">
+            Ação discreta
+          </Button>
+        </div>
+      </Card>
+
+      <Card interactive>
+        <span class="font-mono text-accent text-xs tracking-wider uppercase">
+          Código aberto
+        </span>
+        <h2 class="font-display text-text mt-2 text-xl font-bold">
+          <a
+            href="https://github.com/Guilhermegomeslima"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="focus-visible:outline-accent after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-4"
+          >
+            Perfil no GitHub
+          </a>
+        </h2>
+        <p class="font-body text-text-muted mt-2 text-sm leading-relaxed">
+          Exemplo de card interativo clicável em toda a área sem aninhar links.
+        </p>
+      </Card>
+    </div>
+  </Section>
 </BaseLayout>

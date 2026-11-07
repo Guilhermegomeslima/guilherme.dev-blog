@@ -1,0 +1,51 @@
+---
+type Variant = 'primary' | 'secondary' | 'ghost';
+
+interface Props {
+  href?: string;
+  external?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  variant?: Variant;
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  href,
+  external = false,
+  type = 'button',
+  variant = 'primary',
+  ariaLabel,
+  class: className,
+} = Astro.props;
+
+const baseClasses =
+  'inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-4 py-2 font-mono text-xs font-medium tracking-wider uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent motion-safe:transition-colors';
+
+const variantClasses: Record<Variant, string> = {
+  primary: 'bg-accent text-bg hover:bg-accent/90',
+  secondary:
+    'border border-border bg-surface text-text hover:border-accent hover:text-accent',
+  ghost: 'text-accent underline-offset-4 hover:underline',
+};
+---
+
+{href ? (
+  <a
+    href={href}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener noreferrer' : undefined}
+    aria-label={ariaLabel}
+    class:list={[baseClasses, variantClasses[variant], className]}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type={type}
+    aria-label={ariaLabel}
+    class:list={[baseClasses, variantClasses[variant], className]}
+  >
+    <slot />
+  </button>
+)}
