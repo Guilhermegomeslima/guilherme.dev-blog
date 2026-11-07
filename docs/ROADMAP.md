@@ -26,8 +26,8 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID | Item | Dependências | Prioridade | Data alvo | Commit/PR | Status |
 |---|---|---|---|---|---|---|
-| PLN-01 | Revisar e aprovar requisitos, arquitetura, design e guia de conteúdo | — | P0 | — | 7c9c8a5 | Concluído |
-| PLN-02 | Revisar e aprovar Git Workflow, Roadmap e AGENTS | PLN-01 | P0 | — | 7c9c8a5 | Concluído |
+| PLN-01 | Revisar e aprovar requisitos, arquitetura, design e guia de conteúdo | — | P0 | 07/10 | 7c9c8a5 | Concluído |
+| PLN-02 | Revisar e aprovar Git Workflow, Roadmap e AGENTS | PLN-01 | P0 | 07/10 | 7c9c8a5 | Concluído |
 | PLN-03 | Definir textos reais mínimos e URLs sociais para o MVP | PLN-01 | P0 | — | — | Pendente |
 
 **Aceitação:** decisões aprovadas e pendências claramente rotuladas; conteúdo factual não inventado.
@@ -36,11 +36,11 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID | Item | Dependências | Prioridade | Data alvo | Commit/PR | Status |
 |---|---|---|---|---|---|---|
-| DEV-01 | Criar repositório Git e inicializar Astro com TypeScript | PLN-02 | P0 | — | 413ab01 | Concluído |
-| DEV-02 | Configurar Tailwind CSS 4 e estilos globais | DEV-01 | P0 | — | — | Pendente |
-| DEV-03 | Definir tokens provisórios: cores, tipografia, espaçamento | DEV-02 | P0 | — | — | Pendente |
-| DEV-04 | Configurar scripts de checagem, formatação e build | DEV-01 | P0 | — | — | Pendente |
-| DEV-05 | Preparar README e configuração básica de desenvolvimento | DEV-01 | P0 | — | — | Pendente |
+| DEV-01 | Criar repositório Git e inicializar Astro com TypeScript | PLN-02 | P0 | 07/10 | 413ab01 | Concluído |
+| DEV-02 | Configurar Tailwind CSS 4 e estilos globais | DEV-01 | P0 | 07/10 | — | Pendente |
+| DEV-03 | Definir tokens provisórios: cores, tipografia, espaçamento | DEV-02 | P0 | 07/10 | — | Pendente |
+| DEV-04 | Configurar scripts de checagem, formatação e build | DEV-01 | P0 | 07/10 | — | Pendente |
+| DEV-05 | Preparar README e configuração básica de desenvolvimento | DEV-01 | P0 | 07/10 | — | Pendente |
 
 **Aceitação:** projeto sobe localmente, comandos realmente configurados passam, estrutura é compreensível, sem backend ou banco.
 
@@ -48,11 +48,11 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID | Item | Dependências | Prioridade | Data alvo | Commit/PR | Status |
 |---|---|---|---|---|---|---|
-| UI-01 | Implementar BaseLayout e container reutilizável | DEV-03 | P0 | — | — | Pendente |
-| UI-02 | Implementar cabeçalho e navegação desktop | UI-01 | P0 | — | — | Pendente |
-| UI-03 | Implementar menu mobile recolhível e acessível | UI-02 | P0 | — | — | Pendente |
-| UI-04 | Implementar rodapé com links sociais reais | UI-01, PLN-03 | P0 | — | — | Pendente |
-| UI-05 | Criar primitives de UI necessárias: seção, botão/link, card | UI-01 | P0 | — | — | Pendente |
+| UI-01 | Implementar BaseLayout e container reutilizável | DEV-03 | P0 | 08/10 | — | Pendente |
+| UI-02 | Implementar cabeçalho e navegação desktop | UI-01 | P0 | 08/10 | — | Pendente |
+| UI-03 | Implementar menu mobile recolhível e acessível | UI-02 | P0 | 08/10 | — | Pendente |
+| UI-04 | Implementar rodapé com links sociais reais | UI-01, PLN-03 | P0 | 08/10 | — | Pendente |
+| UI-05 | Criar primitives de UI necessárias: seção, botão/link, card | UI-01 | P0 | 09/10 | — | Pendente |
 
 **Aceitação:** navegação funcional em desktop/mobile, foco/teclado coerentes, nenhuma rota quebrada ou link social inventado.
 
@@ -60,13 +60,13 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID | Item | Dependências | Prioridade | Data alvo | Commit/PR | Status |
 |---|---|---|---|---|---|---|
-| MVP-01 | Hero e introdução da Home | UI-01, PLN-03 | P0 | — | — | Pendente |
-| MVP-02 | Resumo Sobre na Home | MVP-01 | P0 | — | — | Pendente |
-| MVP-03 | Cards/atalhos para seções, sem links quebrados | UI-05 | P0 | — | — | Pendente |
-| MVP-04 | Página Sobre completa para a primeira versão | UI-01, PLN-03 | P0 | — | — | Pendente |
-| MVP-05 | Revisar responsividade, acessibilidade, imagens e desempenho | MVP-01, MVP-02, MVP-03, MVP-04, UI-03, UI-04 | P0 | — | — | Pendente |
-| MVP-06 | Revisar SEO básico, metadados e página 404 | MVP-05 | P0 | — | — | Pendente |
-| MVP-07 | Escolher hospedagem e publicar primeira versão | MVP-06 | P0 | — | — | Pendente |
+| MVP-01 | Hero e introdução da Home | UI-01, PLN-03 | P0 | 10/10 | — | Pendente |
+| MVP-02 | Resumo Sobre na Home | MVP-01 | P0 | 10/10 | — | Pendente |
+| MVP-03 | Cards/atalhos para seções, sem links quebrados | UI-05 | P0 | 10/10 | — | Pendente |
+| MVP-04 | Página Sobre completa para a primeira versão | UI-01, PLN-03 | P0 | 11/10 | — | Pendente |
+| MVP-05 | Revisar responsividade, acessibilidade, imagens e desempenho | MVP-01, MVP-02, MVP-03, MVP-04, UI-03, UI-04 | P0 | 11/10 | — | Pendente |
+| MVP-06 | Revisar SEO básico, metadados e página 404 | MVP-05 | P0 | 11/10 | — | Pendente |
+| MVP-07 | Escolher hospedagem e publicar primeira versão | MVP-06 | P0 | 11/10 | — | Pendente |
 
 **Aceitação do MVP:** Home, Sobre e rodapé social funcionais; tema escuro consistente; layout responsivo; build sem erros; URLs válidas; README explica execução/deploy. O deploy depende de escolha posterior de hospedagem.
 
