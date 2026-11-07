@@ -49,7 +49,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | ID    | Item                                                        | Dependências  | Prioridade | Data alvo | Commit/PR | Status    |
 | ----- | ----------------------------------------------------------- | ------------- | ---------- | --------- | --------- | --------- |
 | UI-01 | Implementar BaseLayout e container reutilizável             | DEV-03        | P0         | 08/10     | ad94927   | Concluído |
-| UI-02 | Implementar cabeçalho e navegação desktop                   | UI-01         | P0         | 08/10     | —         | Pendente  |
+| UI-02 | Implementar cabeçalho e navegação desktop                   | UI-01         | P0         | 08/10     | 12f7a7e   | Concluído |
 | UI-03 | Implementar menu mobile recolhível e acessível              | UI-02         | P0         | 08/10     | —         | Pendente  |
 | UI-04 | Implementar rodapé com links sociais reais                  | UI-01, PLN-03 | P0         | 08/10     | —         | Pendente  |
 | UI-05 | Criar primitives de UI necessárias: seção, botão/link, card | UI-01         | P0         | 09/10     | —         | Pendente  |

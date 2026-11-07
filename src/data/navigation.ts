@@ -10,4 +10,3 @@ export const navigation: NavItem[] = [
   // Ativar quando a página existir (MVP-04).
   { label: 'Sobre', href: '/sobre/', available: false },
 ];
-
