@@ -27,20 +27,20 @@ Navegador do visitante
 
 ## 2. Stack e justificativas
 
-| Tecnologia | Estado | Papel |
-|---|---|---|
-| Astro | [CONFIRMADO] | Páginas, rotas e geração estática |
-| TypeScript | [CONFIRMADO] | Modelos, verificações e utilitários |
-| Tailwind CSS 4 | [CONFIRMADO] | Estilos utilitários e tokens |
-| Markdown | [CONFIRMADO] | Artigos e textos |
-| JSON | [CONFIRMADO] | Registros de jogos, projetos e outros dados |
-| Astro Content Collections | [PROPOSTO] | Carregar/validar dados e conteúdo |
-| Zod | [PROPOSTO] | Schemas de coleções, quando pertinente |
-| MDX | [OPCIONAL] | Texto que necessite de componentes embutidos |
-| Lucide | [PROPOSTO] | Ícones coerentes |
-| Git + GitHub | [CONFIRMADO] | Histórico e código público |
-| Vercel | [PENDENTE] | Candidata a hospedagem, não obrigatória |
-| React/Vue | [NÃO NECESSÁRIO AGORA] | Só se surgir uma interação complexa justificável |
+| Tecnologia                | Estado                 | Papel                                            |
+| ------------------------- | ---------------------- | ------------------------------------------------ |
+| Astro                     | [CONFIRMADO]           | Páginas, rotas e geração estática                |
+| TypeScript                | [CONFIRMADO]           | Modelos, verificações e utilitários              |
+| Tailwind CSS 4            | [CONFIRMADO]           | Estilos utilitários e tokens                     |
+| Markdown                  | [CONFIRMADO]           | Artigos e textos                                 |
+| JSON                      | [CONFIRMADO]           | Registros de jogos, projetos e outros dados      |
+| Astro Content Collections | [PROPOSTO]             | Carregar/validar dados e conteúdo                |
+| Zod                       | [PROPOSTO]             | Schemas de coleções, quando pertinente           |
+| MDX                       | [OPCIONAL]             | Texto que necessite de componentes embutidos     |
+| Lucide                    | [PROPOSTO]             | Ícones coerentes                                 |
+| Git + GitHub              | [CONFIRMADO]           | Histórico e código público                       |
+| Vercel                    | [PENDENTE]             | Candidata a hospedagem, não obrigatória          |
+| React/Vue                 | [NÃO NECESSÁRIO AGORA] | Só se surgir uma interação complexa justificável |
 
 **Nota:** Astro não implica “zero JS”. O objetivo é **JavaScript somente quando necessário** (menu, filtros, pesquisa, galeria interativa).
 

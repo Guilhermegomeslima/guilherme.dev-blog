@@ -24,19 +24,19 @@
 
 ## 2. Escopo de páginas
 
-| Seção | Intenção | Planejamento |
-|---|---|---|
-| Home | Apresentação breve e acesso às áreas do site | [CONFIRMADO] MVP |
-| Sobre | Perfil, gostos e conhecimentos técnicos | [CONFIRMADO] MVP |
-| Projetos | Projetos de programação e links para código | [CONFIRMADO] pós-MVP |
-| Linux | Experiências, preferências, configuração e trajetória | [CONFIRMADO] pós-MVP |
-| Jogos | Catálogo, opiniões e avaliações com cinco critérios (Mecânica, Enredo, Estética, Retenção, Feeling) | [CONFIRMADO] pós-MVP |
-| Filmes | Catálogo, opiniões e avaliações com seis critérios (Direção, Roteiro, Audiovisual, Atuação, Ritmo, Feeling) | [CONFIRMADO] pós-MVP |
-| Música | Bandas, músicas, álbuns e indicações | [CONFIRMADO] pós-MVP |
-| Open Source | Ferramentas e recomendações | [CONFIRMADO] pós-MVP |
-| Artigos | Publicações autorais | [CONFIRMADO] pós-MVP |
-| Galeria | Imagens e wallpapers | [CONFIRMADO] pós-MVP |
-| Livros | Leituras e avaliações | [PROPOSTO] confirmar página própria; mencionada no planejamento e nos cards |
+| Seção       | Intenção                                                                                                    | Planejamento                                                                |
+| ----------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Home        | Apresentação breve e acesso às áreas do site                                                                | [CONFIRMADO] MVP                                                            |
+| Sobre       | Perfil, gostos e conhecimentos técnicos                                                                     | [CONFIRMADO] MVP                                                            |
+| Projetos    | Projetos de programação e links para código                                                                 | [CONFIRMADO] pós-MVP                                                        |
+| Linux       | Experiências, preferências, configuração e trajetória                                                       | [CONFIRMADO] pós-MVP                                                        |
+| Jogos       | Catálogo, opiniões e avaliações com cinco critérios (Mecânica, Enredo, Estética, Retenção, Feeling)         | [CONFIRMADO] pós-MVP                                                        |
+| Filmes      | Catálogo, opiniões e avaliações com seis critérios (Direção, Roteiro, Audiovisual, Atuação, Ritmo, Feeling) | [CONFIRMADO] pós-MVP                                                        |
+| Música      | Bandas, músicas, álbuns e indicações                                                                        | [CONFIRMADO] pós-MVP                                                        |
+| Open Source | Ferramentas e recomendações                                                                                 | [CONFIRMADO] pós-MVP                                                        |
+| Artigos     | Publicações autorais                                                                                        | [CONFIRMADO] pós-MVP                                                        |
+| Galeria     | Imagens e wallpapers                                                                                        | [CONFIRMADO] pós-MVP                                                        |
+| Livros      | Leituras e avaliações                                                                                       | [PROPOSTO] confirmar página própria; mencionada no planejamento e nos cards |
 
 **[PROPOSTO]** Cada área poderá ter uma listagem e páginas de detalhes quando o conteúdo justificar. Evitar criar páginas vazias e links sem destino no MVP; se aparecerem na navegação, sinalizar “em breve” ou ocultar temporariamente.
 
@@ -54,19 +54,19 @@
 
 ## 4. Funcionalidades
 
-| ID | Requisito | Prioridade / fase | Estado |
-|---|---|---|---|
-| RF-01 | Navegar entre páginas por links claros e utilizáveis por teclado | MVP | [CONFIRMADO] |
-| RF-02 | Exibir Home com apresentação, resumo Sobre e cards/atalhos | MVP | [CONFIRMADO] |
-| RF-03 | Exibir rodapé com links sociais | MVP | [CONFIRMADO] |
-| RF-04 | Menu adaptável, recolhível em telas menores | MVP | [CONFIRMADO] |
-| RF-05 | Exibir conteúdos de arquivos locais em páginas temáticas | Pós-MVP | [CONFIRMADO] |
-| RF-06 | Pesquisa em conteúdo publicado | Pós-MVP | [CONFIRMADO]; mecanismo [PENDENTE] |
-| RF-07 | Filtros nos catálogos pertinentes | Pós-MVP | [CONFIRMADO]; critérios [PENDENTE] |
-| RF-08 | Galeria de imagens/wallpapers | Pós-MVP | [CONFIRMADO] |
-| RF-09 | Páginas de artigos e conteúdos autorais com URLs próprias | Pós-MVP | [PROPOSTO] |
-| RF-10 | Adicionar/alterar artigos e registros editando Markdown/JSON localmente | Inicial | [CONFIRMADO] |
-| RF-11 | Área administrativa própria, privada, acessível por navegador, para publicação | Futuro | [FUTURO], sem CMS de terceiros |
+| ID    | Requisito                                                                      | Prioridade / fase | Estado                             |
+| ----- | ------------------------------------------------------------------------------ | ----------------- | ---------------------------------- |
+| RF-01 | Navegar entre páginas por links claros e utilizáveis por teclado               | MVP               | [CONFIRMADO]                       |
+| RF-02 | Exibir Home com apresentação, resumo Sobre e cards/atalhos                     | MVP               | [CONFIRMADO]                       |
+| RF-03 | Exibir rodapé com links sociais                                                | MVP               | [CONFIRMADO]                       |
+| RF-04 | Menu adaptável, recolhível em telas menores                                    | MVP               | [CONFIRMADO]                       |
+| RF-05 | Exibir conteúdos de arquivos locais em páginas temáticas                       | Pós-MVP           | [CONFIRMADO]                       |
+| RF-06 | Pesquisa em conteúdo publicado                                                 | Pós-MVP           | [CONFIRMADO]; mecanismo [PENDENTE] |
+| RF-07 | Filtros nos catálogos pertinentes                                              | Pós-MVP           | [CONFIRMADO]; critérios [PENDENTE] |
+| RF-08 | Galeria de imagens/wallpapers                                                  | Pós-MVP           | [CONFIRMADO]                       |
+| RF-09 | Páginas de artigos e conteúdos autorais com URLs próprias                      | Pós-MVP           | [PROPOSTO]                         |
+| RF-10 | Adicionar/alterar artigos e registros editando Markdown/JSON localmente        | Inicial           | [CONFIRMADO]                       |
+| RF-11 | Área administrativa própria, privada, acessível por navegador, para publicação | Futuro            | [FUTURO], sem CMS de terceiros     |
 
 **Observação:** somente o autor publica conteúdo. **No MVP não existirá login, painel administrativo, API de escrita ou banco de dados.** O site público não receberá edições por visitantes.
 
@@ -90,23 +90,23 @@
 
 ## 7. Requisitos não funcionais
 
-| ID | Requisito | Critério proposto |
-|---|---|---|
-| RNF-01 | Responsividade | Experiência funcional em celular, tablet e desktop; sem rolagem horizontal involuntária |
-| RNF-02 | Desempenho | Páginas predominantemente estáticas; minimizar JavaScript e mídia pesada |
-| RNF-03 | Acessibilidade | HTML semântico, navegação por teclado, foco visível, contraste e respeito a movimento reduzido |
-| RNF-04 | SEO | Títulos e descrições individuais, URLs previsíveis, sitemap e metadados de compartilhamento quando publicados |
-| RNF-05 | Segurança | Nenhum segredo no repositório; validar URLs/dados; minimizar dependências e superfície de ataque |
-| RNF-06 | Compatibilidade | Navegadores modernos e diferentes tamanhos de tela; testar mobile real ou emulação |
-| RNF-07 | Modularidade | Layouts, componentes, conteúdo e estilos com responsabilidades bem separadas |
-| RNF-08 | Manutenção | Build reproduzível, formatação consistente, documentação e mudanças em pequenos commits |
-| RNF-09 | Consistência visual | Mesma identidade visual em todas as páginas, adaptada à função de cada seção |
+| ID     | Requisito           | Critério proposto                                                                                             |
+| ------ | ------------------- | ------------------------------------------------------------------------------------------------------------- |
+| RNF-01 | Responsividade      | Experiência funcional em celular, tablet e desktop; sem rolagem horizontal involuntária                       |
+| RNF-02 | Desempenho          | Páginas predominantemente estáticas; minimizar JavaScript e mídia pesada                                      |
+| RNF-03 | Acessibilidade      | HTML semântico, navegação por teclado, foco visível, contraste e respeito a movimento reduzido                |
+| RNF-04 | SEO                 | Títulos e descrições individuais, URLs previsíveis, sitemap e metadados de compartilhamento quando publicados |
+| RNF-05 | Segurança           | Nenhum segredo no repositório; validar URLs/dados; minimizar dependências e superfície de ataque              |
+| RNF-06 | Compatibilidade     | Navegadores modernos e diferentes tamanhos de tela; testar mobile real ou emulação                            |
+| RNF-07 | Modularidade        | Layouts, componentes, conteúdo e estilos com responsabilidades bem separadas                                  |
+| RNF-08 | Manutenção          | Build reproduzível, formatação consistente, documentação e mudanças em pequenos commits                       |
+| RNF-09 | Consistência visual | Mesma identidade visual em todas as páginas, adaptada à função de cada seção                                  |
 
 **SEO, em poucas palavras:** medidas que permitem aos buscadores interpretar e apresentar o conteúdo do site. Não significa garantia de posição nas buscas.
 
 ## 8. Identidade visual
 
-**[CONFIRMADO]** Direção escolhida para todas as páginas: **cyberpunk cinematográfico**, inspirada na atmosfera de *Blade Runner*, partindo do primeiro protótipo criado no Figma Make. Tema **somente escuro** inicialmente; moderno, tecnológico e fluido. As seções podem ter layouts próprios, mas compartilham identidade visual.
+**[CONFIRMADO]** Direção escolhida para todas as páginas: **cyberpunk cinematográfico**, inspirada na atmosfera de _Blade Runner_, partindo do primeiro protótipo criado no Figma Make. Tema **somente escuro** inicialmente; moderno, tecnológico e fluido. As seções podem ter layouts próprios, mas compartilham identidade visual.
 
 **[PROPOSTO]** Fundo preto azulado, detalhes em ciano e magenta, imagens urbanas noturnas, contraste editorial, tipografia marcante, títulos contornados com moderação, cards assimétricos. Paleta e valores precisos são **temporários** e constam no `DESIGN_SYSTEM.md`.
 

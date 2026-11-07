@@ -7,6 +7,7 @@
 ## 1. Contexto do projeto
 
 Blog pessoal e portfólio multipáginas, em português, desenvolvido com:
+
 - Astro + TypeScript + Tailwind CSS 4;
 - saída estática (SSG) no início, sem backend/banco de dados;
 - Markdown para conteúdo narrativo e JSON para registros estruturados;
@@ -16,6 +17,7 @@ Blog pessoal e portfólio multipáginas, em português, desenvolvido com:
 - publicação local via arquivos/commits; painel próprio remoto apenas futuramente.
 
 **Fonte de verdade:**
+
 1. `REQUIREMENTS.md` — escopo e decisões;
 2. `ARCHITECTURE.md` — organização técnica;
 3. `DESIGN_SYSTEM.md` — aparência e acessibilidade;
@@ -80,6 +82,7 @@ Se houver contradições entre documentos, **não escolha silenciosamente**. Apo
 `director` (diretor) e `releaseYear` (ano de lançamento) são **metadados**, não critérios.
 
 Regras:
+
 - Validar 0 ≤ nota ≤ 100 e presença dos critérios exigidos;
 - Calcular notas por função TypeScript compartilhada, sem duplicar a lógica no card;
 - Não inserir `finalScore` manual divergente do cálculo;

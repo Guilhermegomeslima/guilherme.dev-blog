@@ -4,7 +4,7 @@
 
 ## 1. Identidade
 
-**[CONFIRMADO]** A identidade é **cyberpunk cinematográfica**, inspirada na atmosfera de *Blade Runner*, aplicada a **todas as páginas**. O tema será **escuro apenas**, inicialmente. O objetivo não é copiar a franquia, e sim combinar tecnologia, fotografia noturna, hierarquia editorial e usabilidade.
+**[CONFIRMADO]** A identidade é **cyberpunk cinematográfica**, inspirada na atmosfera de _Blade Runner_, aplicada a **todas as páginas**. O tema será **escuro apenas**, inicialmente. O objetivo não é copiar a franquia, e sim combinar tecnologia, fotografia noturna, hierarquia editorial e usabilidade.
 
 **[CONFIRMADO] Referência preferida:** primeiro protótipo do Figma Make:  
 https://www.figma.com/make/rcvx0jQ0gfulTn1owpG3bd/Blog-Pessoal-Cyberpunk?t=P4xgPHVx9xefWPZk-1
@@ -24,17 +24,17 @@ Aspectos observados no protótipo escolhido: foto urbana noturna no hero; títul
 
 Os valores abaixo são **[PROPOSTO]**, ponto de partida técnico, **não extraídos do Figma nem aprovados como cores finais**.
 
-| Token | Hex inicial | Uso sugerido |
-|---|---|---|
-| `--color-bg` | `#060910` | Fundo principal |
-| `--color-surface` | `#0D1320` | Cards e superfícies |
-| `--color-surface-raised` | `#141D2B` | Elementos elevados |
-| `--color-text` | `#EEF3F7` | Texto principal |
-| `--color-text-muted` | `#A2ADBB` | Texto secundário |
-| `--color-border` | `#273546` | Bordas e divisores |
-| `--color-accent` | `#61EAF1` | Ciano, foco e ação principal |
-| `--color-accent-alt` | `#C96AD9` | Magenta pontual |
-| `--color-warm` | `#DC8C61` | Detalhes quentes opcionais |
+| Token                    | Hex inicial | Uso sugerido                 |
+| ------------------------ | ----------- | ---------------------------- |
+| `--color-bg`             | `#060910`   | Fundo principal              |
+| `--color-surface`        | `#0D1320`   | Cards e superfícies          |
+| `--color-surface-raised` | `#141D2B`   | Elementos elevados           |
+| `--color-text`           | `#EEF3F7`   | Texto principal              |
+| `--color-text-muted`     | `#A2ADBB`   | Texto secundário             |
+| `--color-border`         | `#273546`   | Bordas e divisores           |
+| `--color-accent`         | `#61EAF1`   | Ciano, foco e ação principal |
+| `--color-accent-alt`     | `#C96AD9`   | Magenta pontual              |
+| `--color-warm`           | `#DC8C61`   | Detalhes quentes opcionais   |
 
 **[PROPOSTO]** Regra prática: cerca de 80–90% de áreas neutras, 10–20% de acentos e imagens — orientação visual, não fórmula de implementação. Validar contraste do texto com as cores reais, inclusive sobre fotos.
 

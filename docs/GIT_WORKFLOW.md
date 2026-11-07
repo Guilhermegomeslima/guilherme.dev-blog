@@ -35,17 +35,17 @@ tipo(escopo): descrição curta no imperativo
 
 Tipos sugeridos:
 
-| Tipo | Uso |
-|---|---|
-| `feat` | Funcionalidade nova |
-| `fix` | Correção de comportamento defeituoso |
-| `docs` | Documentação |
-| `style` | Formatação visual ou de código sem alteração de comportamento |
-| `refactor` | Reorganização sem nova funcionalidade |
-| `perf` | Melhoria de desempenho |
-| `test` | Testes |
-| `chore` | Configuração, tooling e manutenção |
-| `ci` | Automação de integração/entrega |
+| Tipo       | Uso                                                           |
+| ---------- | ------------------------------------------------------------- |
+| `feat`     | Funcionalidade nova                                           |
+| `fix`      | Correção de comportamento defeituoso                          |
+| `docs`     | Documentação                                                  |
+| `style`    | Formatação visual ou de código sem alteração de comportamento |
+| `refactor` | Reorganização sem nova funcionalidade                         |
+| `perf`     | Melhoria de desempenho                                        |
+| `test`     | Testes                                                        |
+| `chore`    | Configuração, tooling e manutenção                            |
+| `ci`       | Automação de integração/entrega                               |
 
 Exemplos planejados — **não representam commits existentes**:
 
@@ -66,6 +66,7 @@ Evitar mensagens como `ajustes`, `mudanças`, `update` e misturar alterações i
 ## 4. Tamanho e organização dos commits
 
 Uma entrega pode conter **vários commits menores**, por exemplo:
+
 - Estrutura e tipos;
 - Componente e apresentação;
 - Testes e documentação pertinente.
@@ -77,6 +78,7 @@ Não fracionar artificialmente alterações inseparáveis. Um commit deve repres
 **Fluxo padrão:** trabalhar na `main` localmente e publicar depois de verificar e autorizar.
 
 Quando fizer sentido isolar uma tarefa:
+
 - Criar `feat/identificador-curto` ou `fix/identificador-curto`;
 - Desenvolver e testar;
 - Revisar o diff;

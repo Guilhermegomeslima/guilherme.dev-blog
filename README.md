@@ -18,7 +18,7 @@ Toda a especificação, regras e planejamento do projeto estão documentados na 
 
 - **Framework:** [Astro](https://astro.build/)
 - **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
-- **Estilização:** [Tailwind CSS 4](https://tailwindcss.com/) *(configuração na tarefa DEV-02)*
+- **Estilização:** [Tailwind CSS 4](https://tailwindcss.com/) _(configuração na tarefa DEV-02)_
 - **Saída:** Estática (SSG)
 
 ## 🛠️ Como executar
@@ -55,4 +55,3 @@ npm run preview
 - **Fase atual:** Fase 1 — Fundação do projeto
 - **Tarefa concluída:** DEV-01 — Inicialização do Astro com TypeScript
 - **Próxima tarefa:** DEV-02 — Configuração do Tailwind CSS 4 e estilos globais
-

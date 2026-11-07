@@ -10,16 +10,16 @@
 
 ## 2. Qual formato usar?
 
-| Tipo de informação | Formato sugerido | Por quê |
-|---|---|---|
-| Artigos, ensaios e tutoriais | Markdown (`.md`) | Texto longo, seções, links, imagens |
-| Textos de experiência com Linux | Markdown (`.md`) | Conteúdo narrativo |
-| Jogos com critérios de avaliação | JSON (`.json`) | Dados consistentes e comparáveis |
-| Filmes e livros como catálogo | JSON (`.json`) inicialmente | Campos, listas e filtros |
-| Resenhas longas de filmes/livros | Markdown relacionado ao registro | Texto editorial |
-| Projetos | JSON ou Markdown | Depende do tamanho da descrição |
-| Música e Open Source | JSON ou Markdown | A definir pela natureza do conteúdo |
-| Galeria | Metadados JSON + URLs de imagens | Organizar nome, origem e descrição |
+| Tipo de informação               | Formato sugerido                 | Por quê                             |
+| -------------------------------- | -------------------------------- | ----------------------------------- |
+| Artigos, ensaios e tutoriais     | Markdown (`.md`)                 | Texto longo, seções, links, imagens |
+| Textos de experiência com Linux  | Markdown (`.md`)                 | Conteúdo narrativo                  |
+| Jogos com critérios de avaliação | JSON (`.json`)                   | Dados consistentes e comparáveis    |
+| Filmes e livros como catálogo    | JSON (`.json`) inicialmente      | Campos, listas e filtros            |
+| Resenhas longas de filmes/livros | Markdown relacionado ao registro | Texto editorial                     |
+| Projetos                         | JSON ou Markdown                 | Depende do tamanho da descrição     |
+| Música e Open Source             | JSON ou Markdown                 | A definir pela natureza do conteúdo |
+| Galeria                          | Metadados JSON + URLs de imagens | Organizar nome, origem e descrição  |
 
 **[PROPOSTO]** Não usar MDX por padrão: só quando o artigo realmente precisar de componentes interativos ou visuais personalizados. Formatos definitivos e schemas serão definidos por coleção, quando sua seção for desenvolvida.
 
@@ -44,10 +44,10 @@ Não obrigar todos os tipos a ter todos esses campos. Campos pessoais não forne
 
 ```md
 ---
-title: "Como organizei meu ambiente Linux"
-description: "Notas sobre organização e ferramentas no desktop."
+title: 'Como organizei meu ambiente Linux'
+description: 'Notas sobre organização e ferramentas no desktop.'
 publishedAt: 2026-11-07
-tags: ["linux", "desktop"]
+tags: ['linux', 'desktop']
 draft: true
 ---
 
@@ -66,21 +66,21 @@ Conteúdo...
 
 **[CONFIRMADO]** Cada critério recebe uma nota de **0 a 100**, incluindo os extremos. A nota final é a **média aritmética simples dos cinco critérios, sem pesos**.
 
-| Jogo | Mecânica | Enredo | Estética | Retenção | Feeling | Nota |
-|---|---:|---:|---:|---:|---:|---:|
-| *Exemplo fictício* | 80 | 90 | 85 | 75 | 95 | 85 |
+| Jogo               | Mecânica | Enredo | Estética | Retenção | Feeling | Nota |
+| ------------------ | -------: | -----: | -------: | -------: | ------: | ---: |
+| _Exemplo fictício_ |       80 |     90 |       85 |       75 |      95 |   85 |
 
 **[PROPOSTO]** Campos internos em inglês para manter consistência com TypeScript; rótulos apresentados no site sempre em português:
 
-| Rótulo | Campo técnico | Tipo |
-|---|---|---|
-| Jogo | `title` | Texto |
-| Mecânica | `mechanics` | Número de 0 a 100 |
-| Enredo | `plot` | Número de 0 a 100 |
-| Estética | `aesthetics` | Número de 0 a 100 |
-| Retenção | `retention` | Número de 0 a 100 |
-| Feeling | `feeling` | Número de 0 a 100 |
-| Nota | `finalScore` | Calculada, não editada manualmente |
+| Rótulo   | Campo técnico | Tipo                               |
+| -------- | ------------- | ---------------------------------- |
+| Jogo     | `title`       | Texto                              |
+| Mecânica | `mechanics`   | Número de 0 a 100                  |
+| Enredo   | `plot`        | Número de 0 a 100                  |
+| Estética | `aesthetics`  | Número de 0 a 100                  |
+| Retenção | `retention`   | Número de 0 a 100                  |
+| Feeling  | `feeling`     | Número de 0 a 100                  |
+| Nota     | `finalScore`  | Calculada, não editada manualmente |
 
 Exemplo fictício de arquivo JSON (a nota final é calculada pelo site):
 
@@ -108,24 +108,24 @@ Exemplo fictício de arquivo JSON (a nota final é calculada pelo site):
 
 **[CONFIRMADO]** Cada critério de filme recebe uma nota de **0 a 100**, incluindo os extremos. A nota final é a **média aritmética simples dos seis critérios, sem pesos**.
 
-| Filmes | Diretor | Ano/lançamento | Direção | Roteiro | Audiovisual | Atuação | Ritmo | Feeling | Nota |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| *Exemplo fictício* | Direção de exemplo | 2020 | 80 | 90 | 85 | 75 | 95 | 85 | 85 |
+| Filmes             | Diretor            | Ano/lançamento | Direção | Roteiro | Audiovisual | Atuação | Ritmo | Feeling | Nota |
+| ------------------ | ------------------ | -------------: | ------: | ------: | ----------: | ------: | ----: | ------: | ---: |
+| _Exemplo fictício_ | Direção de exemplo |           2020 |      80 |      90 |          85 |      75 |    95 |      85 |   85 |
 
 **Importante:** `Diretor` e `Ano/lançamento` são informações sobre o filme, **não são critérios numéricos de avaliação** e não entram na média.
 
-| Rótulo | Campo técnico proposto | Tipo |
-|---|---|---|
-| Filmes | `title` | Texto |
-| Diretor | `director` | Texto |
-| Ano/lançamento | `releaseYear` | Ano |
-| Direção | `direction` | Número de 0 a 100 |
-| Roteiro | `screenplay` | Número de 0 a 100 |
-| Audiovisual | `audiovisual` | Número de 0 a 100 |
-| Atuação | `acting` | Número de 0 a 100 |
-| Ritmo | `pacing` | Número de 0 a 100 |
-| Feeling | `feeling` | Número de 0 a 100 |
-| Nota | `finalScore` | Calculada, não editada manualmente |
+| Rótulo         | Campo técnico proposto | Tipo                               |
+| -------------- | ---------------------- | ---------------------------------- |
+| Filmes         | `title`                | Texto                              |
+| Diretor        | `director`             | Texto                              |
+| Ano/lançamento | `releaseYear`          | Ano                                |
+| Direção        | `direction`            | Número de 0 a 100                  |
+| Roteiro        | `screenplay`           | Número de 0 a 100                  |
+| Audiovisual    | `audiovisual`          | Número de 0 a 100                  |
+| Atuação        | `acting`               | Número de 0 a 100                  |
+| Ritmo          | `pacing`               | Número de 0 a 100                  |
+| Feeling        | `feeling`              | Número de 0 a 100                  |
+| Nota           | `finalScore`           | Calculada, não editada manualmente |
 
 Exemplo fictício de arquivo JSON:
 
