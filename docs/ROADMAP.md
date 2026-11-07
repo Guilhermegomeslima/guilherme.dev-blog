@@ -26,8 +26,8 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID | Item | Dependências | Prioridade | Data alvo | Commit/PR | Status |
 |---|---|---|---|---|---|---|
-| PLN-01 | Revisar e aprovar requisitos, arquitetura, design e guia de conteúdo | — | P0 | — | — | Em revisão |
-| PLN-02 | Revisar e aprovar Git Workflow, Roadmap e AGENTS | PLN-01 | P0 | — | — | Em revisão |
+| PLN-01 | Revisar e aprovar requisitos, arquitetura, design e guia de conteúdo | — | P0 | — | 7c9c8a5 | Concluído |
+| PLN-02 | Revisar e aprovar Git Workflow, Roadmap e AGENTS | PLN-01 | P0 | — | 7c9c8a5 | Concluído |
 | PLN-03 | Definir textos reais mínimos e URLs sociais para o MVP | PLN-01 | P0 | — | — | Pendente |
 
 **Aceitação:** decisões aprovadas e pendências claramente rotuladas; conteúdo factual não inventado.
@@ -36,7 +36,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID | Item | Dependências | Prioridade | Data alvo | Commit/PR | Status |
 |---|---|---|---|---|---|---|
-| DEV-01 | Criar repositório Git e inicializar Astro com TypeScript | PLN-02 | P0 | — | — | Pendente |
+| DEV-01 | Criar repositório Git e inicializar Astro com TypeScript | PLN-02 | P0 | — | 413ab01 | Concluído |
 | DEV-02 | Configurar Tailwind CSS 4 e estilos globais | DEV-01 | P0 | — | — | Pendente |
 | DEV-03 | Definir tokens provisórios: cores, tipografia, espaçamento | DEV-02 | P0 | — | — | Pendente |
 | DEV-04 | Configurar scripts de checagem, formatação e build | DEV-01 | P0 | — | — | Pendente |
