@@ -1,29 +1,20 @@
 ---
-import '../styles/global.css';
-
-// DEV-03: Validação dos tokens provisórios do Design System
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
 ---
 
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>guilherme.dev</title>
-  </head>
-  <body class="flex min-h-screen items-center justify-center p-6">
-    <main class="w-full max-w-lg rounded-lg border border-border bg-surface p-6">
-      <span class="font-mono text-xs uppercase tracking-wider text-accent-alt">
-        DEV-03 • Tokens provisórios
+<BaseLayout title="guilherme.dev">
+  <Container>
+    <section class="border-border bg-surface my-12 rounded-lg border p-6">
+      <span class="font-mono text-xs tracking-wider text-accent-alt uppercase">
+        UI-01 • BaseLayout e Container
       </span>
-      <h1 class="mt-2 font-display text-3xl font-bold text-accent">
+      <h1 class="font-display text-accent mt-2 text-3xl font-bold">
         guilherme.dev
       </h1>
-      <p class="mt-2 font-body text-base text-text-muted">
-        Fundação com Astro, Tailwind CSS 4 e tokens provisórios configurados.
+      <p class="font-body text-text-muted mt-2 text-base">
+        Layout base e container reutilizável configurados.
       </p>
-    </main>
-  </body>
-</html>
+    </section>
+  </Container>
+</BaseLayout>
