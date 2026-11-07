@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 
-// DEV-02: Validação do Astro com Tailwind CSS 4
+// DEV-03: Validação dos tokens provisórios do Design System
 ---
 
 <!doctype html>
@@ -13,11 +13,13 @@ import '../styles/global.css';
 		<meta name="generator" content={Astro.generator} />
 		<title>guilherme.dev</title>
 	</head>
-	<body>
-		<main class="p-8">
-			<h1 class="text-2xl font-bold">guilherme.dev</h1>
-			<p class="text-base">Inicialização do Astro e Tailwind CSS 4 concluída (DEV-02).</p>
+	<body class="flex min-h-screen items-center justify-center p-6">
+		<main class="w-full max-w-lg rounded-lg border border-border bg-surface p-6">
+			<span class="font-mono text-xs uppercase tracking-wider text-accent-alt">DEV-03 • Tokens provisórios</span>
+			<h1 class="mt-2 font-display text-3xl font-bold text-accent">guilherme.dev</h1>
+			<p class="mt-2 font-body text-base text-text-muted">
+				Fundação com Astro, Tailwind CSS 4 e tokens provisórios configurados.
+			</p>
 		</main>
 	</body>
 </html>
-
