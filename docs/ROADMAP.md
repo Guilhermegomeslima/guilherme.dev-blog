@@ -38,7 +38,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 |---|---|---|---|---|---|---|
 | DEV-01 | Criar repositório Git e inicializar Astro com TypeScript | PLN-02 | P0 | 07/10 | 413ab01 | Concluído |
 | DEV-02 | Configurar Tailwind CSS 4 e estilos globais | DEV-01 | P0 | 07/10 | a459350 | Concluído |
-| DEV-03 | Definir tokens provisórios: cores, tipografia, espaçamento | DEV-02 | P0 | 07/10 | — | Pendente |
+| DEV-03 | Definir tokens provisórios: cores, tipografia, espaçamento | DEV-02 | P0 | 07/10 | 1bdc0e3 | Concluído |
 | DEV-04 | Configurar scripts de checagem, formatação e build | DEV-01 | P0 | 07/10 | — | Pendente |
 | DEV-05 | Preparar README e configuração básica de desenvolvimento | DEV-01 | P0 | 07/10 | — | Pendente |
 
