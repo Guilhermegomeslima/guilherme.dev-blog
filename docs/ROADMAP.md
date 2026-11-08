@@ -65,7 +65,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | MVP-03 | Cards/atalhos para seções, sem links quebrados               | UI-05                                        | P0         | 10/10     | 876e6dd   | Concluído |
 | MVP-04 | Página Sobre completa para a primeira versão                 | UI-01, PLN-03                                | P0         | 11/10     | 2381d33   | Concluído |
 | MVP-05 | Revisar responsividade, acessibilidade, imagens e desempenho | MVP-01, MVP-02, MVP-03, MVP-04, UI-03, UI-04 | P0         | 11/10     | dcc8a93   | Concluído |
-| MVP-06 | Revisar SEO básico, metadados e página 404                   | MVP-05                                       | P0         | 11/10     | —         | Pendente  |
+| MVP-06 | Revisar SEO básico, metadados e página 404                   | MVP-05                                       | P0         | 11/10     | 8f7278e   | Concluído |
 | MVP-07 | Escolher hospedagem e publicar primeira versão               | MVP-06                                       | P0         | 11/10     | —         | Pendente  |
 
 **Aceitação do MVP:** Home, Sobre e rodapé social funcionais; tema escuro consistente; layout responsivo; build sem erros; URLs válidas; README explica execução/deploy. O deploy depende de escolha posterior de hospedagem.
