@@ -1,0 +1,85 @@
+---
+import Card from '../ui/Card.astro';
+
+interface SkillGroup {
+  category: string;
+  code: string;
+  skills: { name: string; tag: string }[];
+}
+
+const skillGroups: SkillGroup[] = [
+  {
+    category: 'Linguagens & Fundamentos',
+    code: 'MOD.LANG',
+    skills: [
+      { name: 'TypeScript', tag: 'Core' },
+      { name: 'JavaScript (ES6+)', tag: 'Core' },
+      { name: 'HTML5 & CSS3', tag: 'Web' },
+      { name: 'Java', tag: 'POO / Algoritmos' },
+      { name: 'SQL', tag: 'Bancos de dados' },
+    ],
+  },
+  {
+    category: 'Ambiente & Ferramentas',
+    code: 'MOD.ENV',
+    skills: [
+      { name: 'Fedora Linux', tag: 'SO diário' },
+      { name: 'GNOME Shell', tag: 'Desktop' },
+      { name: 'Git & GitHub', tag: 'Versionamento' },
+      { name: 'Astro', tag: 'Static Site' },
+      { name: 'Tailwind CSS', tag: 'Estilos' },
+      { name: 'VS Code', tag: 'Editor' },
+    ],
+  },
+  {
+    category: 'Interesses Técnicos & Arquitetura',
+    code: 'MOD.SYS',
+    skills: [
+      { name: 'Desenvolvimento Web', tag: 'Prática' },
+      { name: 'Sistemas Operacionais', tag: 'Estudo ativo' },
+      { name: 'Open Source', tag: 'Filosofia' },
+      { name: 'UI / UX Minimalista', tag: 'Design' },
+      { name: 'Organização & Documentação', tag: 'Método' },
+    ],
+  },
+];
+---
+
+<section class="border-b border-border/80 py-12">
+  <div class="mb-8">
+    <p class="font-mono text-xs tracking-wider text-accent-alt uppercase">
+      // COMPETÊNCIAS & AMBIENTE TÉCNICO
+    </p>
+    <h2 class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl mt-1">
+      Matriz de conhecimentos
+    </h2>
+    <p class="font-body text-sm text-text-muted mt-2 max-w-2xl">
+      Linguagens, ferramentas cotidianas e tópicos de engenharia computacional
+      explorados no aprendizado e nos projetos.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+    {skillGroups.map((group) => (
+      <Card class="flex flex-col border-border/70 bg-surface/80 p-5">
+        <div class="mb-4 flex items-center justify-between border-b border-border/50 pb-2.5">
+          <h3 class="font-display text-base font-bold text-text">
+            {group.category}
+          </h3>
+          <span class="font-mono text-[11px] text-accent/80">{group.code}</span>
+        </div>
+
+        <ul class="space-y-2.5 font-mono text-xs">
+          {group.skills.map((skill) => (
+            <li class="flex items-center justify-between rounded bg-surface-raised/60 px-2.5 py-1.5 border border-border/40">
+              <span class="text-text font-medium">{skill.name}</span>
+              <span class="text-[10px] text-text-muted uppercase">
+                {skill.tag}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </Card>
+    ))}
+  </div>
+</section>

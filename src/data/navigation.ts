@@ -7,6 +7,5 @@ export interface NavItem {
 
 export const navigation: NavItem[] = [
   { label: 'Home', href: '/', available: true },
-  // Ativar quando a página existir (MVP-04).
-  { label: 'Sobre', href: '/sobre/', available: false },
+  { label: 'Sobre', href: '/sobre/', available: true },
 ];

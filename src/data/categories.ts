@@ -100,4 +100,3 @@ export const categories: CategoryItem[] = [
     badge: 'Em breve',
   },
 ];
-

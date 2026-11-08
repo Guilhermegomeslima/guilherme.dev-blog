@@ -1,0 +1,137 @@
+---
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+
+interface ProjectItem {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  tags: string[];
+  repoUrl: string;
+}
+
+const projects: ProjectItem[] = [
+  {
+    id: 'PRJ-01',
+    name: 'Ludoteca Pessoal',
+    tagline: 'Gestão e catálogo de acervo lúdico',
+    description:
+      'Sistema para catalogação, organização e acompanhamento de jogos de tabuleiro e digitais com filtros e parâmetros personalizados.',
+    tags: ['Web', 'TypeScript', 'Interface'],
+    repoUrl: 'https://github.com/Guilhermegomeslima',
+  },
+  {
+    id: 'PRJ-02',
+    name: 'A Chave para o Combate às Queimadas',
+    tagline: 'Conscientização socioambiental',
+    description:
+      'Iniciativa web voltada à disseminação de dados e alertas sobre preservação ecológica e impactos ambientais das queimadas.',
+    tags: ['HTML5', 'CSS3', 'Impacto Social'],
+    repoUrl: 'https://github.com/Guilhermegomeslima',
+  },
+  {
+    id: 'PRJ-03',
+    name: 'Minecraft Fanmade Site',
+    tagline: 'Experimento de interface temática',
+    description:
+      'Aplicação web explorando a atmosfera, elementos visuais e universo de Minecraft com foco em fidelidade estética e layout.',
+    tags: ['Design', 'Web Front-end', 'CSS'],
+    repoUrl: 'https://github.com/Guilhermegomeslima',
+  },
+  {
+    id: 'PRJ-04',
+    name: 'Exercícios de Java',
+    tagline: 'Algoritmos e estruturas de dados',
+    description:
+      'Laboratório prático contendo soluções de problemas, conceitos essenciais de programação orientada a objetos (POO) e lógica computacional.',
+    tags: ['Java', 'POO', 'Algoritmos'],
+    repoUrl: 'https://github.com/Guilhermegomeslima',
+  },
+  {
+    id: 'PRJ-05',
+    name: 'BloomTech Gardens',
+    tagline: 'Conceito web ecológico e moderno',
+    description:
+      'Interface desenvolvida com ênfase em tecnologia sustentável, estética verde e usabilidade responsiva em múltiplos dispositivos.',
+    tags: ['UI Design', 'Front-end', 'Sustentabilidade'],
+    repoUrl: 'https://github.com/Guilhermegomeslima',
+  },
+];
+---
+
+<section class="border-b border-border/80 py-12">
+  <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="font-mono text-xs tracking-wider text-accent-alt uppercase">
+        // REPOSITÓRIOS PÚBLICOS
+      </p>
+      <h2 class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl mt-1">
+        Projetos em destaque
+      </h2>
+      <p class="font-body text-sm text-text-muted mt-2 max-w-xl">
+        Aplicações e estudos práticos extraídos do meu perfil no GitHub
+        demonstrando evolução técnica.
+      </p>
+    </div>
+
+    <Button
+      href="https://github.com/Guilhermegomeslima?tab=repositories"
+      variant="secondary"
+      external
+      class="self-start sm:self-auto"
+    >
+      Ver todos no GitHub &rarr;
+    </Button>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {projects.map((project) => (
+      <Card class="flex flex-col justify-between border-border/70 bg-surface/80 p-5">
+        <div>
+          <div class="mb-3 flex items-center justify-between border-b border-border/50 pb-2">
+            <span class="font-mono text-xs font-semibold text-accent/80">
+              {project.id}
+            </span>
+            <span class="font-mono text-[11px] text-text-muted">
+              {project.tagline}
+            </span>
+          </div>
+
+          <h3 class="font-display text-lg font-bold text-text">
+            {project.name}
+          </h3>
+
+          <p class="font-body mt-2 text-sm leading-relaxed text-text-muted">
+            {project.description}
+          </p>
+
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <span class="rounded bg-surface-raised px-2 py-0.5 font-mono text-[10px] text-text-muted border border-border/40">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div class="mt-6 border-t border-border/40 pt-4">
+          <a
+            href={project.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group inline-flex items-center gap-1.5 font-mono text-xs text-accent transition-colors hover:text-accent-alt focus-visible:outline-accent"
+          >
+            <span>Acessar no GitHub</span>
+            <span
+              aria-hidden="true"
+              class="transition-transform duration-200 group-hover:translate-x-1"
+            >
+              &rarr;
+            </span>
+          </a>
+        </div>
+      </Card>
+    ))}
+  </div>
+</section>

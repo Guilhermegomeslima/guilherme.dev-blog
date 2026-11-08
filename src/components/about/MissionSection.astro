@@ -1,0 +1,81 @@
+---
+import Card from '../ui/Card.astro';
+import { socialLinks } from '../../data/social';
+---
+
+<section class="py-12">
+  <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start">
+    {/* Bloco de Missão e Metas */}
+    <div class="lg:col-span-7">
+      <p class="font-mono text-xs tracking-wider text-accent-alt uppercase">
+        // MISSÃO & VISÃO DE FUTURO
+      </p>
+      <h2 class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl mt-1">
+        Objetivos e aspirações
+      </h2>
+
+      <div class="mt-4 space-y-4 font-body text-base leading-relaxed text-text-muted">
+        <p>
+          Meu propósito é consolidar uma sólida carreira profissional como
+          desenvolvedor de software, colaborando em projetos com arquitetura
+          robusta e impacto significativo para os usuários.
+        </p>
+        <p>
+          Além do desenvolvimento web e de aplicações, cultivo uma meta de longo
+          prazo: aprofundar meus estudos em ciência da computação de baixo nível
+          e arquitetar, linha por linha, meu próprio sistema operacional. Para
+          mim, compreender o computador em sua totalidade é o ápice do ofício de
+          programar.
+        </p>
+      </div>
+
+      <div class="mt-6 rounded-lg border border-accent/30 bg-surface-raised/40 p-4">
+        <div class="flex items-center gap-2 font-mono text-xs text-accent">
+          <span class="h-2 w-2 rounded-full bg-accent"></span>
+          <span>COMPROMISSO DE APRENDIZADO:</span>
+        </div>
+        <p class="mt-1 font-body text-xs text-text-muted">
+          "Aprender continuamente, valorizar a liberdade do software livre e
+          construir tecnologia com propósito e estética."
+        </p>
+      </div>
+    </div>
+
+    {/* Bloco de Conexões e Redes */}
+    <div class="lg:col-span-5">
+      <Card class="border-border/80 bg-surface/90 p-6">
+        <div class="mb-4 border-b border-border/50 pb-3">
+          <span class="font-mono text-xs tracking-wider text-accent-alt uppercase">
+            // CANAIS DE CONTATO
+          </span>
+          <h3 class="font-display text-lg font-bold text-text mt-1">
+            Presença online
+          </h3>
+        </div>
+
+        <p class="font-body text-xs text-text-muted mb-5 leading-relaxed">
+          Links oficiais e perfis ativos para troca de ideias, colaborações ou
+          conexões profissionais.
+        </p>
+
+        <ul class="space-y-3 font-mono text-xs">
+          {socialLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center justify-between rounded border border-border/60 bg-surface-raised/70 px-3 py-2 text-text transition-colors duration-150 hover:border-accent hover:text-accent focus-visible:outline-accent"
+              >
+                <span class="font-medium">{link.label}</span>
+                <span class="text-text-muted group-hover:text-accent">
+                  &nearr;
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Card>
+    </div>
+  </div>
+</section>
