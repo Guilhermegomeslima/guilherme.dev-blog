@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import Card from '../components/ui/Card.astro';
+---
+
+<BaseLayout
+  title="404: Setor não encontrado — guilherme.dev"
+  description="A rota ou coordenada digital solicitada não foi localizada no acervo de guilherme.dev."
+>
+  <div class="relative flex flex-1 items-center py-20 sm:py-28">
+    {/* Efeito atmosférico cyberpunk de alerta */}
+    <div
+      class="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center opacity-25"
+      aria-hidden="true"
+    >
+      <div class="h-96 w-96 rounded-full bg-gradient-to-tr from-accent-alt/25 to-warm/15 blur-3xl"></div>
+    </div>
+
+    <Container>
+      <div class="mx-auto max-w-2xl text-center">
+        <div class="mb-4 inline-flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-accent-alt motion-safe:animate-pulse"></span>
+          <span class="font-mono text-xs tracking-wider text-accent-alt uppercase">
+            ERR_CODE // 0x404: ROUTE_NOT_RESOLVED
+          </span>
+        </div>
+
+        <h1 class="font-display text-4xl font-extrabold tracking-tight text-text sm:text-6xl">
+          404: Setor <span class="text-accent-alt">não localizado</span>
+        </h1>
+
+        <p class="font-body mt-4 text-base leading-relaxed text-text-muted sm:text-lg">
+          A coordenada ou link que você tentou acessar não aponta para nenhum
+          módulo ativo do sistema. O conteúdo pode ter sido renomeado,
+          reorganizado ou ainda está em preparação para as próximas fases.
+        </p>
+
+        {/* Bloco de terminal/diagnóstico */}
+        <Card class="mt-8 border-border/70 bg-surface/90 text-left font-mono text-xs text-text-muted">
+          <div class="mb-2 border-b border-border/40 pb-2 text-[11px] text-accent/80">
+            [ DIAGNÓSTICO DO TERMINAL ]
+          </div>
+          <p class="text-text">
+            &gt; BUSCA_NO_SISTEMA:{' '}
+            <span class="text-accent-alt">NENHUM_RESULTADO</span>
+          </p>
+          <p class="mt-1">
+            &gt; STATUS: 404_PAGE_NOT_FOUND // COORDENADA_INVÁLIDA
+          </p>
+          <p class="mt-1 text-accent">
+            &gt; PROTOCOLO_RECOMENDADO: RETORNAR_AO_HUB_PRINCIPAL
+          </p>
+        </Card>
+
+        {/* Ações de recuperação */}
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Button href="/">Voltar para o início</Button>
+          <Button href="/sobre/" variant="secondary">
+            Consultar dossiê sobre
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </div>
+</BaseLayout>
