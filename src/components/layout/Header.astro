@@ -3,6 +3,7 @@ import { navigation } from '../../data/navigation';
 import Container from '../ui/Container.astro';
 
 const currentPath = Astro.url.pathname;
+const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
 const items = navigation.filter((item) => item.available);
 ---
 
@@ -46,7 +47,7 @@ const items = navigation.filter((item) => item.available);
       >
         <ul class="flex flex-wrap items-center gap-x-6 gap-y-1">
           {items.map((item) => {
-            const isCurrent = currentPath === item.href;
+            const isCurrent = normalize(currentPath) === normalize(item.href);
             return (
               <li>
                 <a
