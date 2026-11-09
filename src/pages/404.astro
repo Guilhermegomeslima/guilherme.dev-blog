@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/ui/Container.astro';
 import Button from '../components/ui/Button.astro';
 import Card from '../components/ui/Card.astro';
+import { withBase } from '../utils/base';
 ---
 
 <BaseLayout
@@ -56,8 +57,8 @@ import Card from '../components/ui/Card.astro';
 
         {/* Ações de recuperação */}
         <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Button href="/">Voltar para o início</Button>
-          <Button href="/sobre/" variant="secondary">
+          <Button href={withBase('/')}>Voltar para o início</Button>
+          <Button href={withBase('/sobre/')} variant="secondary">
             Consultar dossiê sobre
           </Button>
         </div>

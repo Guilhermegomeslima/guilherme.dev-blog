@@ -1,6 +1,7 @@
 ---
 import { navigation } from '../../data/navigation';
 import Container from '../ui/Container.astro';
+import { withBase } from '../../utils/base';
 
 const currentPath = Astro.url.pathname;
 const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
@@ -11,7 +12,7 @@ const items = navigation.filter((item) => item.available);
   <Container>
     <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-4">
       <a
-        href="/"
+        href={withBase('/')}
         class="font-display text-text focus-visible:outline-accent text-lg font-bold focus-visible:outline-2 focus-visible:outline-offset-4"
       >
         guilherme.dev
@@ -47,11 +48,12 @@ const items = navigation.filter((item) => item.available);
       >
         <ul class="flex flex-wrap items-center gap-x-6 gap-y-1">
           {items.map((item) => {
-            const isCurrent = normalize(currentPath) === normalize(item.href);
+            const targetHref = withBase(item.href);
+            const isCurrent = normalize(currentPath) === normalize(targetHref);
             return (
               <li>
                 <a
-                  href={item.href}
+                  href={targetHref}
                   aria-current={isCurrent ? 'page' : undefined}
                   class:list={[
                     'font-mono text-sm tracking-wider uppercase focus-visible:outline-accent focus-visible:outline-2 focus-visible:outline-offset-4 inline-flex min-h-11 items-center',

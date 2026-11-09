@@ -4,6 +4,7 @@ import SectionHeading from '../ui/SectionHeading.astro';
 import Card from '../ui/Card.astro';
 import Button from '../ui/Button.astro';
 import { navigation } from '../../data/navigation';
+import { withBase } from '../../utils/base';
 
 const sobreAvailable =
   navigation.find((item) => item.href === '/sobre/')?.available ?? false;
@@ -47,7 +48,7 @@ const sobreAvailable =
 
         <div class="pt-4">
           {sobreAvailable ? (
-            <Button href="/sobre/">Acessar dossiê completo</Button>
+            <Button href={withBase('/sobre/')}>Acessar dossiê completo</Button>
           ) : (
             <div class="flex items-center gap-3">
               <Button href="https://github.com/Guilhermegomeslima" external>
