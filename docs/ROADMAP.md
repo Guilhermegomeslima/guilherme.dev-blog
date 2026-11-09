@@ -1,6 +1,6 @@
 # Roadmap de desenvolvimento do blog
 
-> **Status:** proposta inicial para revisão · **Versão:** 0.1 · **Atualizado:** 2026-11-07
+> **Status:** Em desenvolvimento · **Versão:** 0.4 · **Atualizado:** 2026-11-08
 > Planejamento **não é execução**. Nenhuma tarefa abaixo está presumida como implementada.
 > Fonte de requisitos: `REQUIREMENTS.md`. Guias: `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `CONTENT_GUIDE.md`, `GIT_WORKFLOW.md`.
 
@@ -68,23 +68,23 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | MVP-06 | Revisar SEO básico, metadados e página 404                   | MVP-05                                       | P0         | 11/11     | 8f7278e   | Concluído |
 | MVP-07 | Escolher hospedagem e publicar primeira versão               | MVP-06                                       | P0         | 11/11     | 4a89c22   | Concluído |
 
-**Aceitação do MVP:** Home, Sobre e rodapé social funcionais; tema escuro consistente; layout responsivo; build sem erros; URLs válidas; README explica execução/deploy. O deploy depende de escolha posterior de hospedagem.
+**Aceitação do MVP:** Home, Sobre e rodapé social funcionais; tema escuro consistente; layout responsivo; build sem erros; URLs válidas; README explica execução/deploy. Hospedagem definida: Vercel e GitHub Pages.
 
 ### Fase 4 — Conteúdo e páginas temáticas (P1)
 
 | ID     | Item                                                              | Dependências | Prioridade | Data alvo | Commit/PR | Status   |
 | ------ | ----------------------------------------------------------------- | ------------ | ---------- | --------- | --------- | -------- |
-| CNT-01 | Definir schemas/content collections por tipo realmente necessário | MVP-07       | P1         | —         | —         | Pendente |
-| CNT-02 | Criar listagens e páginas de artigos                              | CNT-01       | P1         | —         | —         | Pendente |
-| CNT-03 | Criar seção Linux e conteúdos de experiência/timeline             | CNT-01       | P1         | —         | —         | Pendente |
-| CNT-04 | Criar seção Projetos e links GitHub                               | CNT-01       | P1         | —         | —         | Pendente |
-| CNT-05 | Criar seção Jogos e validação dos cinco critérios                 | CNT-01       | P1         | —         | —         | Pendente |
-| CNT-06 | Criar cálculo/testes da média simples de jogos                    | CNT-05       | P1         | —         | —         | Pendente |
-| CNT-07 | Criar seção Filmes e validação dos seis critérios                 | CNT-01       | P1         | —         | —         | Pendente |
-| CNT-08 | Criar cálculo/testes da média simples de filmes                   | CNT-07       | P1         | —         | —         | Pendente |
-| CNT-09 | Criar seções Música e Open Source                                 | CNT-01       | P1         | —         | —         | Pendente |
-| CNT-10 | Definir modelo e criar seção Livros                               | CNT-01       | P1         | —         | —         | Pendente |
-| CNT-11 | Criar galeria com metadados e imagens externas permitidas         | CNT-01       | P1         | —         | —         | Pendente |
+| CNT-01 | Definir schemas/content collections por tipo realmente necessário | MVP-07       | P1         | 12/11         | —         | Pendente |
+| CNT-02 | Criar listagens e páginas de artigos                              | CNT-01       | P1         | 13/11         | —         | Pendente |
+| CNT-03 | Criar seção Linux e conteúdos de experiência/timeline             | CNT-01       | P1         | 14/11         | —         | Pendente |
+| CNT-04 | Criar seção Projetos e links GitHub                               | CNT-01       | P1         | 16/11         | —         | Pendente |
+| CNT-05 | Criar seção Jogos e validação dos cinco critérios                 | CNT-01       | P1         | 20/11         | —         | Pendente |
+| CNT-06 | Criar cálculo/testes da média simples de jogos                    | CNT-05       | P1         | 22/11         | —         | Pendente |
+| CNT-07 | Criar seção Filmes e validação dos seis critérios                 | CNT-01       | P1         | 28/11         | —         | Pendente |
+| CNT-08 | Criar cálculo/testes da média simples de filmes                   | CNT-07       | P1         | 29/11         | —         | Pendente |
+| CNT-09 | Criar seções Música e Open Source                                 | CNT-01       | P1         | 06/12         | —         | Pendente |
+| CNT-10 | Definir modelo e criar seção Livros                               | CNT-01       | P1         | 16/12         | —         | Pendente |
+| CNT-11 | Criar galeria com metadados e imagens externas permitidas         | CNT-01       | P1         | 20/12         | —         | Pendente |
 
 **Aceitação:** conteúdo separado da interface; dados validados no build; notas entre 0 e 100; média sem pesos; URLs de imagens e créditos documentados; evitar seções vazias.
 
@@ -94,14 +94,14 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID     | Item                                                                      | Dependências   | Prioridade | Data alvo | Commit/PR | Status   |
 | ------ | ------------------------------------------------------------------------- | -------------- | ---------- | --------- | --------- | -------- |
-| QLT-01 | Adicionar filtros úteis a jogos/filmes e outras listagens                 | CNT-05, CNT-07 | P1         | —         | —         | Pendente |
-| QLT-02 | Adicionar busca local quando houver volume que justifique                 | CNT-02         | P1         | —         | —         | Pendente |
-| QLT-03 | Revisar SEO por conteúdo, sitemap e compartilhamento social               | CNT-02         | P1         | —         | —         | Pendente |
-| QLT-04 | Ampliar testes, verificações automáticas e CI quando necessário           | DEV-04         | P1         | —         | —         | Pendente |
-| QLT-05 | Refinar desempenho, imagens e movimento reduzido                          | CNT-11         | P1         | —         | —         | Pendente |
-| EVO-01 | Especificar autenticação e backend para painel próprio remoto             | MVP-07         | P2         | —         | —         | Pendente |
-| EVO-02 | Decidir armazenamento externo próprio/de mídia                            | CNT-11         | P2         | —         | —         | Pendente |
-| EVO-03 | Implementar painel administrativo próprio, após nova arquitetura aprovada | EVO-01, EVO-02 | P2         | —         | —         | Pendente |
+| QLT-01 | Adicionar filtros úteis a jogos/filmes e outras listagens                 | CNT-05, CNT-07 | P1         | 24/12         | —         | Pendente |
+| QLT-02 | Adicionar busca local quando houver volume que justifique                 | CNT-02         | P1         | 26/12         | —         | Pendente |
+| QLT-03 | Revisar SEO por conteúdo, sitemap e compartilhamento social               | CNT-02         | P1         | 28/12         | —         | Pendente |
+| QLT-04 | Ampliar testes, verificações automáticas e CI quando necessário           | DEV-04         | P1         | 31/12         | —         | Pendente |
+| QLT-05 | Refinar desempenho, imagens e movimento reduzido                          | CNT-11         | P1         | 02/01         | —         | Pendente |
+| EVO-01 | Especificar autenticação e backend para painel próprio remoto             | MVP-07         | P2         | 09/01        | —         | Pendente |
+| EVO-02 | Decidir armazenamento externo próprio/de mídia                            | CNT-11         | P2         | 10/01         | —         | Pendente |
+| EVO-03 | Implementar painel administrativo próprio, após nova arquitetura aprovada | EVO-01, EVO-02 | P2         | 30/01         | —         | Pendente |
 
 **Aceitação:** mudanças adicionais não comprometem a publicação atual; soluções externas são opcionais e justificadas, não introduzidas antecipadamente.
 
@@ -125,7 +125,7 @@ Uma tarefa somente vira **Concluído** quando:
 
 ## 5. Decisões que não devem ser inventadas
 
-- Domínio, hospedagem definitiva, links pessoais, biografia final;
+- Domínio próprio, links pessoais e biografia final que ainda não tenham sido definidos;
 - Cores/tokens finais (a paleta é provisória);
 - Quantidade de casas decimais das médias;
 - Modelo definitivo de livros/música;
