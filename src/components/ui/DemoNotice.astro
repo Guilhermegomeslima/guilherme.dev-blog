@@ -1,0 +1,39 @@
+---
+interface Props {
+  variant?: 'section' | 'item' | 'narrative';
+  class?: string;
+}
+
+const { variant = 'section', class: className } = Astro.props;
+
+const messages = {
+  section:
+    'Conteúdo de demonstração: os itens e avaliações desta seção são fictícios e utilizados para testar a interface.',
+  item: 'Registro de teste. As informações e notas desta página são fictícias.',
+  narrative:
+    'Esta seção está em desenvolvimento. Os textos abaixo são provisórios e servem apenas para demonstrar a estrutura da página.',
+};
+
+const message = messages[variant];
+---
+
+<div
+  role="status"
+  class:list={[
+    'relative overflow-hidden rounded-lg border border-warm/40 bg-surface-raised/70 p-4 text-xs font-mono text-text-muted backdrop-blur-xs',
+    className,
+  ]}
+>
+  <div class="flex items-start gap-3">
+    <span
+      class="mt-0.5 inline-block h-2 w-2 rounded-full bg-warm shadow-[0_0_8px_var(--color-warm)] motion-safe:animate-pulse"
+      aria-hidden="true"
+    ></span>
+    <div>
+      <span class="font-bold tracking-wider text-warm uppercase">
+        [ AMBIENTE DE DEMONSTRAÇÃO // MOCK DATA ]
+      </span>
+      <p class="font-body mt-1 text-xs leading-relaxed text-text">{message}</p>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,7 @@ interface Props {
   description?: string;
   image?: string;
   type?: 'website' | 'article';
+  noindex?: boolean;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   description = 'Blog pessoal e acervo tecnológico de Guilherme Gomes: desenvolvimento web, Linux, projetos open source, jogos, leituras e cultura.',
   image = 'https://github.com/Guilhermegomeslima.png',
   type = 'website',
+  noindex = false,
 } = Astro.props;
 
 const canonicalURL = Astro.site
@@ -32,6 +34,7 @@ const canonicalURL = Astro.site
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#060910" />
     <meta name="author" content="Guilherme Gomes" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />

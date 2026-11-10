@@ -72,19 +72,19 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 ### Fase 4 — Conteúdo e páginas temáticas (P1)
 
-| ID     | Item                                                              | Dependências | Prioridade | Data alvo | Commit/PR | Status   |
-| ------ | ----------------------------------------------------------------- | ------------ | ---------- | --------- | --------- | -------- |
+| ID     | Item                                                              | Dependências | Prioridade | Data alvo | Commit/PR | Status    |
+| ------ | ----------------------------------------------------------------- | ------------ | ---------- | --------- | --------- | --------- |
 | CNT-01 | Definir schemas/content collections por tipo realmente necessário | MVP-07       | P1         | 12/11     | 0f6d04e   | Concluído |
-| CNT-02 | Criar listagens e páginas de artigos                              | CNT-01       | P1         | 13/11     | —         | Pendente |
-| CNT-03 | Criar seção Linux e conteúdos de experiência/timeline             | CNT-01       | P1         | 14/11     | —         | Pendente |
-| CNT-04 | Criar seção Projetos e links GitHub                               | CNT-01       | P1         | 16/11     | —         | Pendente |
-| CNT-05 | Criar seção Jogos e validação dos cinco critérios                 | CNT-01       | P1         | 20/11     | —         | Pendente |
-| CNT-06 | Criar cálculo/testes da média simples de jogos                    | CNT-05       | P1         | 22/11     | —         | Pendente |
-| CNT-07 | Criar seção Filmes e validação dos seis critérios                 | CNT-01       | P1         | 28/11     | —         | Pendente |
-| CNT-08 | Criar cálculo/testes da média simples de filmes                   | CNT-07       | P1         | 29/11     | —         | Pendente |
-| CNT-09 | Criar seções Música e Open Source                                 | CNT-01       | P1         | 06/12     | —         | Pendente |
-| CNT-10 | Definir modelo e criar seção Livros                               | CNT-01       | P1         | 16/12     | —         | Pendente |
-| CNT-11 | Criar galeria com metadados e imagens externas permitidas         | CNT-01       | P1         | 20/12     | —         | Pendente |
+| CNT-02 | Criar listagens e páginas de artigos                              | CNT-01       | P1         | 13/11     | —         | Pendente  |
+| CNT-03 | Criar seção Linux e conteúdos de experiência/timeline             | CNT-01       | P1         | 14/11     | —         | Pendente  |
+| CNT-04 | Criar seção Projetos e links GitHub                               | CNT-01       | P1         | 16/11     | —         | Pendente  |
+| CNT-05 | Criar seção Jogos e validação dos cinco critérios                 | CNT-01       | P1         | 20/11     | —         | Pendente  |
+| CNT-06 | Criar cálculo/testes da média simples de jogos                    | CNT-05       | P1         | 22/11     | —         | Pendente  |
+| CNT-07 | Criar seção Filmes e validação dos seis critérios                 | CNT-01       | P1         | 28/11     | —         | Pendente  |
+| CNT-08 | Criar cálculo/testes da média simples de filmes                   | CNT-07       | P1         | 29/11     | —         | Pendente  |
+| CNT-09 | Criar seções Música e Open Source                                 | CNT-01       | P1         | 06/12     | —         | Pendente  |
+| CNT-10 | Definir modelo e criar seção Livros                               | CNT-01       | P1         | 16/12     | —         | Pendente  |
+| CNT-11 | Criar galeria com metadados e imagens externas permitidas         | CNT-01       | P1         | 20/12     | —         | Pendente  |
 
 **Aceitação:** conteúdo separado da interface; dados validados no build; notas entre 0 e 100; média sem pesos; URLs de imagens e créditos documentados; evitar seções vazias.
 

@@ -43,4 +43,3 @@ const status: ArtigoDemo = {
 ## Considerações Finais
 
 A formatação deste documento atesta que links, listas, títulos e citações recebem os contrastes e alinhamentos adequados definidos no sistema de design do projeto.
-

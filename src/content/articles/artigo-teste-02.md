@@ -24,4 +24,3 @@ Este texto secundário permite checar a alternância de datas na listagem de art
 3. **Userland e Shell:** O ambiente de interação direta através do terminal e utilitários.
 
 Este registro confirma a consistência do schema para artigos não destacados no catálogo principal.
-

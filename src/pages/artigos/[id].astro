@@ -1,0 +1,143 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+import Button from '../../components/ui/Button.astro';
+import { withBase } from '../../utils/base';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { id: article.id },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+const { data } = article;
+const { Content } = await render(article);
+
+const formattedDate = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+}).format(data.publishedAt);
+---
+
+<BaseLayout
+  title={`${data.title} — guilherme.dev`}
+  description={data.description}
+  image={data.image?.url}
+  type="article"
+  noindex={data.isDemo}
+>
+  <article class="py-12 md:py-16">
+    <Container class="max-w-3xl">
+      {/* Botão de retorno */}
+      <div class="mb-8">
+        <Button href={withBase('/artigos/')} variant="ghost" class="px-0">
+          &larr; Voltar para todos os artigos
+        </Button>
+      </div>
+
+      {/* Cabeçalho do Artigo */}
+      <header class="border-b border-border/80 pb-8">
+        <div class="mb-3 flex flex-wrap items-center gap-3 font-mono text-xs">
+          <span class="text-accent uppercase tracking-wider">
+            // {data.category}
+          </span>
+          <span class="text-border" aria-hidden="true">
+            |
+          </span>
+          <time
+            datetime={data.publishedAt.toISOString()}
+            class="text-text-muted"
+          >
+            {formattedDate}
+          </time>
+          {data.isDemo && (
+            <>
+              <span class="text-border" aria-hidden="true">
+                |
+              </span>
+              <span class="rounded bg-warm/20 px-2 py-0.5 text-[10px] text-warm uppercase border border-warm/40">
+                Mock Data
+              </span>
+            </>
+          )}
+        </div>
+
+        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-text">
+          {data.title}
+        </h1>
+
+        <p class="font-body mt-4 text-lg leading-relaxed text-text-muted">
+          {data.description}
+        </p>
+
+        {/* Metadados de autoria */}
+        <div class="mt-6 flex items-center gap-3 border-t border-border/50 pt-4 font-mono text-xs text-text-muted">
+          <span class="text-accent">AUTOR:</span>
+          <span class="text-text font-medium">Guilherme Gomes</span>
+        </div>
+      </header>
+
+      {/* Aviso de Conteúdo Demonstrativo */}
+      {data.isDemo && <DemoNotice variant="item" class="my-8" />}
+
+      {/* Imagem de Capa do Artigo */}
+      {data.image && (
+        <div class="my-8 overflow-hidden rounded-lg border border-border/70 bg-surface-raised">
+          <img
+            src={data.image.url}
+            alt={data.image.alt}
+            width="1200"
+            height="630"
+            loading="eager"
+            decoding="async"
+            class="h-auto w-full object-cover filter contrast-110 brightness-95"
+          />
+          <p class="border-t border-border/40 bg-surface/80 px-4 py-2 font-mono text-[11px] text-text-muted/70">
+            [ Imagem ilustrativa de teste ]
+          </p>
+        </div>
+      )}
+
+      {/* Corpo do Artigo Renderizado em Markdown */}
+      <div class="mt-8 space-y-6 font-body text-base leading-relaxed text-text/90 [&>h2]:font-display [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:tracking-tight [&>h2]:text-text [&>h2]:mt-10 [&>h2]:mb-4 [&>h2]:border-b [&>h2]:border-border/60 [&>h2]:pb-2 [&>h3]:font-display [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-text [&>h3]:mt-8 [&>h3]:mb-3 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ul]:text-text-muted [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>ol]:text-text-muted [&>blockquote]:border-l-2 [&>blockquote]:border-accent [&>blockquote]:bg-surface/50 [&>blockquote]:p-4 [&>blockquote]:rounded-r [&>blockquote]:italic [&>blockquote]:text-text-muted [&>pre]:rounded-lg [&>pre]:border [&>pre]:border-border [&>pre]:bg-surface-raised [&>pre]:p-4 [&>pre]:overflow-x-auto [&>p>code]:rounded [&>p>code]:bg-surface-raised [&>p>code]:px-1.5 [&>p>code]:py-0.5 [&>p>code]:font-mono [&>p>code]:text-accent">
+        <Content />
+      </div>
+
+      {/* Tags do Artigo e Rodapé de Leitura */}
+      <footer class="mt-12 border-t border-border/80 pt-8">
+        {data.tags.length > 0 && (
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-mono text-xs text-text-muted uppercase">
+              Tags:
+            </span>
+            {data.tags.map((tag) => (
+              <span class="rounded border border-border/60 bg-surface-raised px-2.5 py-1 font-mono text-xs text-text-muted">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div class="mt-8 flex justify-between border-t border-border/50 pt-6">
+          <Button href={withBase('/artigos/')} variant="secondary">
+            &larr; Voltar para a listagem
+          </Button>
+          <Button href={withBase('/')} variant="ghost">
+            Início &rarr;
+          </Button>
+        </div>
+      </footer>
+    </Container>
+  </article>
+</BaseLayout>

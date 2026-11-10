@@ -1,0 +1,155 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Card from '../ui/Card.astro';
+import { withBase } from '../../utils/base';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  featured?: boolean;
+}
+
+const { article, featured = false } = Astro.props;
+const { data, id } = article;
+
+const formattedDate = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+}).format(data.publishedAt);
+
+const articleHref = withBase(`/artigos/${id}/`);
+---
+
+{featured ? (
+  <Card
+    as="article"
+    interactive
+    class="border-accent/40 bg-surface/95 p-0 overflow-hidden shadow-lg shadow-accent/5"
+  >
+    <a href={articleHref} class="block group">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
+        {data.image && (
+          <div class="lg:col-span-6 relative aspect-video lg:aspect-auto overflow-hidden bg-surface-raised">
+            <img
+              src={data.image.url}
+              alt={data.image.alt}
+              width="800"
+              height="450"
+              loading="eager"
+              decoding="async"
+              class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
+            />
+            <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent lg:hidden"
+              aria-hidden="true"
+            />
+          </div>
+        )}
+
+        <div
+          class:list={[
+            'p-6 sm:p-8 flex flex-col justify-between',
+            data.image ? 'lg:col-span-6' : 'lg:col-span-12',
+          ]}
+        >
+          <div>
+            <div class="mb-4 flex flex-wrap items-center gap-2">
+              <span class="rounded bg-accent/15 px-2.5 py-0.5 font-mono text-[11px] font-semibold tracking-wider text-accent uppercase border border-accent/30">
+                Destaque Editorial
+              </span>
+              <span class="font-mono text-xs text-text-muted">
+                // {data.category}
+              </span>
+              <span class="font-mono text-xs text-text-muted/60">·</span>
+              <time
+                datetime={data.publishedAt.toISOString()}
+                class="font-mono text-xs text-text-muted"
+              >
+                {formattedDate}
+              </time>
+            </div>
+
+            <h2 class="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-text transition-colors duration-200 group-hover:text-accent">
+              {data.title}
+            </h2>
+
+            <p class="font-body mt-4 text-base leading-relaxed text-text-muted">
+              {data.description}
+            </p>
+
+            {data.tags.length > 0 && (
+              <div class="mt-6 flex flex-wrap gap-1.5">
+                {data.tags.map((tag) => (
+                  <span class="rounded border border-border/60 bg-surface-raised px-2 py-0.5 font-mono text-[10px] text-text-muted">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-border/50 flex items-center justify-between font-mono text-xs text-accent">
+            <span>Ler artigo completo</span>
+            <span
+              aria-hidden="true"
+              class="transition-transform duration-200 group-hover:translate-x-1.5"
+            >
+              &rarr;
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </Card>
+) : (
+  <Card
+    as="article"
+    interactive
+    class="flex flex-col justify-between border-border/80 bg-surface/90 p-0 overflow-hidden transition-colors"
+  >
+    <a href={articleHref} class="flex flex-col h-full group">
+      {data.image && (
+        <div class="relative aspect-video w-full overflow-hidden bg-surface-raised">
+          <img
+            src={data.image.url}
+            alt={data.image.alt}
+            width="600"
+            height="338"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
+          />
+        </div>
+      )}
+
+      <div class="p-5 flex-1 flex flex-col justify-between">
+        <div>
+          <div class="mb-3 flex items-center justify-between font-mono text-xs text-text-muted">
+            <span class="text-accent/90">{data.category}</span>
+            <time datetime={data.publishedAt.toISOString()}>
+              {formattedDate}
+            </time>
+          </div>
+
+          <h3 class="font-display text-lg font-bold tracking-tight text-text transition-colors duration-200 group-hover:text-accent">
+            {data.title}
+          </h3>
+
+          <p class="font-body mt-2 text-sm leading-relaxed text-text-muted line-clamp-3">
+            {data.description}
+          </p>
+        </div>
+
+        <div class="mt-5 pt-3 border-t border-border/40 flex items-center justify-between font-mono text-xs text-accent">
+          <span>Acessar leitura</span>
+          <span
+            aria-hidden="true"
+            class="transition-transform duration-200 group-hover:translate-x-1"
+          >
+            &rarr;
+          </span>
+        </div>
+      </div>
+    </a>
+  </Card>
+)}

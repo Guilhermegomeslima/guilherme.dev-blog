@@ -86,8 +86,8 @@ export const categories: CategoryItem[] = [
     description:
       'Textos reflexivos, ensaios sobre tecnologia e anotações do processo de aprendizado.',
     href: '/artigos/',
-    available: false,
-    badge: 'Em breve',
+    available: true,
+    badge: 'Disponível',
   },
   {
     id: 'galeria',
