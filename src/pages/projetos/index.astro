@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import ProjectCard from '../../components/content/ProjectCard.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+
+const allProjects = await getCollection('projects');
+
+// Ordena projetos: primeiro os destacados, depois os demais
+const sortedProjects = allProjects.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const hasDemoContent = allProjects.some((p) => p.data.isDemo);
+---
+
+<BaseLayout
+  title="Projetos & Aplicações — guilherme.dev"
+  description="Catálogo de projetos, experimentos web e repositórios desenvolvidos por Guilherme Gomes."
+>
+  <div class="py-12 md:py-16">
+    <Container>
+      <SectionHeading
+        eyebrow="// ACERVO DE SOFTWARE"
+        title="Projetos & Aplicações"
+        description="Repositórios de código, experimentos web e ferramentas em desenvolvimento prático."
+      />
+
+      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {sortedProjects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    </Container>
+  </div>
+</BaseLayout>
+

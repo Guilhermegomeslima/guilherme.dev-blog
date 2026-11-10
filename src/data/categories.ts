@@ -16,8 +16,8 @@ export const categories: CategoryItem[] = [
     description:
       'Repositórios, experimentos de software e aplicações web em desenvolvimento ativo.',
     href: '/projetos/',
-    available: false,
-    badge: 'Em breve',
+    available: true,
+    badge: 'Disponível',
   },
   {
     id: 'linux',
