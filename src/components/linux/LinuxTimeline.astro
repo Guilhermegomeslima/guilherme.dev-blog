@@ -1,0 +1,106 @@
+---
+import Card from '../ui/Card.astro';
+import { linuxTimeline } from '../../data/linuxTimeline';
+---
+
+<div class="relative py-6">
+  {/* Linha vertical central luminosa (desktop) */}
+  <div
+    class="pointer-events-none absolute top-0 bottom-0 left-4 hidden w-0.5 -translate-x-1/2 bg-accent/40 shadow-[0_0_10px_var(--color-accent)] md:left-1/2 md:block"
+    aria-hidden="true"
+  ></div>
+
+  {/* Linha vertical à esquerda (mobile) */}
+  <div
+    class="pointer-events-none absolute top-0 bottom-0 left-4 w-0.5 -translate-x-1/2 bg-accent/40 shadow-[0_0_10px_var(--color-accent)] md:hidden"
+    aria-hidden="true"
+  ></div>
+
+  <div class="space-y-12">
+    {linuxTimeline.map((item, index) => {
+      const isEven = index % 2 === 0;
+
+      return (
+        <div class="relative flex flex-col md:flex-row md:items-center">
+          {/* Marcador / Nó luminoso da linha do tempo */}
+          <div class="absolute left-4 z-10 -translate-x-1/2 md:left-1/2">
+            <span
+              class:list={[
+                'flex h-5 w-5 items-center justify-center rounded-full border-2 bg-bg shadow-md',
+                item.current
+                  ? 'border-accent shadow-[0_0_12px_var(--color-accent)]'
+                  : 'border-border',
+              ]}
+            >
+              <span
+                class:list={[
+                  'h-2 w-2 rounded-full',
+                  item.current
+                    ? 'bg-accent motion-safe:animate-pulse'
+                    : 'bg-text-muted/60',
+                ]}
+              />
+            </span>
+          </div>
+
+          {/* Conteúdo do Card alternado em desktop */}
+          <div
+            class:list={[
+              'ml-10 md:ml-0 md:w-1/2',
+              isEven ? 'md:pr-12 md:text-right' : 'md:pl-12 md:ml-auto',
+            ]}
+          >
+            <Card
+              class:list={[
+                'border-border/80 bg-surface/90 p-5 backdrop-blur-xs transition-colors',
+                item.current &&
+                  'border-accent/50 shadow-lg shadow-accent/5 bg-surface/95',
+              ]}
+            >
+              <div
+                class:list={[
+                  'mb-3 flex flex-wrap items-center gap-2 border-b border-border/50 pb-2.5 font-mono text-xs',
+                  isEven ? 'md:justify-end' : 'md:justify-start',
+                ]}
+              >
+                <span class="font-bold text-accent">{item.id}</span>
+                <span class="text-text-muted/60">·</span>
+                <span class="text-text-muted">{item.category}</span>
+                {item.current && (
+                  <span class="rounded bg-accent/15 px-2 py-0.5 text-[10px] font-semibold text-accent uppercase border border-accent/30">
+                    Atual
+                  </span>
+                )}
+              </div>
+
+              <h3 class="font-display text-lg font-bold tracking-tight text-text">
+                {item.name}
+              </h3>
+
+              <p class="font-mono text-xs text-accent-alt mt-1">
+                {item.period}
+              </p>
+
+              <p class="font-body mt-3 text-sm leading-relaxed text-text-muted">
+                {item.description}
+              </p>
+
+              <div
+                class:list={[
+                  'mt-4 flex flex-wrap gap-1.5',
+                  isEven ? 'md:justify-end' : 'md:justify-start',
+                ]}
+              >
+                {item.tags.map((tag) => (
+                  <span class="rounded border border-border/50 bg-surface-raised px-2 py-0.5 font-mono text-[10px] text-text-muted">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </Card>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>

@@ -26,8 +26,8 @@ export const categories: CategoryItem[] = [
     description:
       'Configurações de sistema, workflows no Fedora/GNOME, terminal e personalizações.',
     href: '/linux/',
-    available: false,
-    badge: 'Em breve',
+    available: true,
+    badge: 'Disponível',
   },
   {
     id: 'jogos',
