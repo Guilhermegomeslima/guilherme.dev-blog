@@ -1,0 +1,142 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import RatingPanel from '../../components/content/RatingPanel.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+import Button from '../../components/ui/Button.astro';
+import Card from '../../components/ui/Card.astro';
+import { withBase } from '../../utils/base';
+import { calculateGameScore, formatScore } from '../../utils/ratings';
+
+export async function getStaticPaths() {
+  const games = await getCollection('games');
+  return games.map((game) => ({
+    params: { id: game.id },
+    props: { game },
+  }));
+}
+
+interface Props {
+  game: CollectionEntry<'games'>;
+}
+
+const { game } = Astro.props;
+const { data } = game;
+
+const finalScore = calculateGameScore(data.scores);
+const formattedFinal = formatScore(finalScore);
+---
+
+<BaseLayout
+  title={`${data.title} — Avaliação de Jogos // guilherme.dev`}
+  description={data.description}
+  image={data.coverImage.url}
+  noindex={data.isDemo}
+>
+  <div class="py-12 md:py-16">
+    <Container class="max-w-4xl">
+      {/* Botão de retorno */}
+      <div class="mb-8">
+        <Button href={withBase('/jogos/')} variant="ghost" class="px-0">
+          &larr; Voltar para catálogo de jogos
+        </Button>
+      </div>
+
+      {/* Hero com Capa e Dados Principais */}
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-start border-b border-border/80 pb-12">
+        <div class="md:col-span-5 lg:col-span-4">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-lg border border-border/80 bg-surface-raised shadow-xl">
+            <img
+              src={data.coverImage.url}
+              alt={data.coverImage.alt}
+              width="600"
+              height="800"
+              loading="eager"
+              decoding="async"
+              class="h-full w-full object-cover filter contrast-110 brightness-95"
+            />
+          </div>
+        </div>
+
+        <div class="md:col-span-7 lg:col-span-8 flex flex-col justify-between">
+          <div>
+            <div class="mb-3 flex flex-wrap items-center gap-2 font-mono text-xs">
+              <span class="text-accent uppercase tracking-wider font-semibold">
+                // {data.genre}
+              </span>
+              <span class="text-border" aria-hidden="true">
+                ·
+              </span>
+              <span class="text-text-muted">{data.releaseYear}</span>
+              {data.developer && (
+                <>
+                  <span class="text-border" aria-hidden="true">
+                    ·
+                  </span>
+                  <span class="text-text-muted">{data.developer}</span>
+                </>
+              )}
+            </div>
+
+            <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-text">
+              {data.title}
+            </h1>
+
+            <p class="font-body mt-4 text-base leading-relaxed text-text-muted">
+              {data.description}
+            </p>
+          </div>
+
+          <div class="mt-8 rounded-lg border border-accent/30 bg-surface-raised/50 p-4 flex items-center justify-between">
+            <div>
+              <span class="font-mono text-xs text-text-muted uppercase block">
+                Média dos 5 Critérios
+              </span>
+              <span class="font-mono text-[11px] text-text-muted/70">
+                Escala uniforme de 0 a 100
+              </span>
+            </div>
+            <div class="text-right">
+              <span class="font-display text-3xl font-extrabold text-accent drop-shadow-[0_0_10px_var(--color-accent)]">
+                {formattedFinal}
+              </span>
+              <span class="font-mono text-xs text-text-muted/60">/ 100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Aviso de mock data */}
+      {data.isDemo && <DemoNotice variant="item" class="my-8" />}
+
+      {/* Seção das Notas em 5 Eixos */}
+      <div class="my-10">
+        <RatingPanel scores={data.scores} />
+      </div>
+
+      {/* Parecer / Opinião Crítica */}
+      {data.opinion && (
+        <div class="mt-10 border-t border-border/80 pt-8">
+          <h2 class="font-display text-2xl font-bold tracking-tight text-text mb-4">
+            Parecer Crítico
+          </h2>
+          <Card class="border-border/70 bg-surface/80 p-6 font-body text-base leading-relaxed text-text-muted">
+            <p>{data.opinion}</p>
+          </Card>
+        </div>
+      )}
+
+      {/* Ações de navegação no rodapé da página */}
+      <div class="mt-12 flex justify-between border-t border-border/60 pt-6">
+        <Button href={withBase('/jogos/')} variant="secondary">
+          &larr; Voltar para catálogo
+        </Button>
+        <Button href={withBase('/')} variant="ghost">
+          Início &rarr;
+        </Button>
+      </div>
+    </Container>
+  </div>
+</BaseLayout>

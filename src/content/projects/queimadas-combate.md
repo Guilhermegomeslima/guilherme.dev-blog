@@ -9,4 +9,3 @@ isDemo: false
 ---
 
 Projeto web concebido com o propósito de disseminar informações confiáveis e dados sobre preservação ambiental, destacando os perigos dos focos de incêndio e medidas de proteção civil.
-

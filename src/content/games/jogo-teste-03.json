@@ -1,0 +1,21 @@
+{
+  "title": "Jogo Teste 03: Void Protocol",
+  "releaseYear": 2025,
+  "genre": "Suspense / Ficção Científica",
+  "developer": "Protocol Works",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/jogo-teste-03/600/800",
+    "alt": "Capa ilustrativa temporária para Jogo Teste 03"
+  },
+  "description": "Terceiro registro demonstrativo para validação de notas limítrofes máximas e responsividade em grid triplo.",
+  "opinion": "Demonstração de avaliação ressaltando a imersão sensorial, design de áudio minimalista e sensação de isolamento cósmico.",
+  "scores": {
+    "mechanics": 95,
+    "plot": 100,
+    "aesthetics": 98,
+    "retention": 92,
+    "feeling": 100
+  },
+  "isDemo": true
+}
+

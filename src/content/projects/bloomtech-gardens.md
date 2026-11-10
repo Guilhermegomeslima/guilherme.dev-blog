@@ -9,4 +9,3 @@ isDemo: false
 ---
 
 Experimento que alia design de interface com temática ecológica, demonstrando layout fluido, tipografia limpa e hierarquia visual focada na experiência do usuário.
-

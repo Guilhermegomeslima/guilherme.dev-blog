@@ -11,4 +11,5 @@ export const navigation: NavItem[] = [
   { label: 'Projetos', href: '/projetos/', available: true },
   { label: 'Artigos', href: '/artigos/', available: true },
   { label: 'Linux', href: '/linux/', available: true },
+  { label: 'Jogos', href: '/jogos/', available: true },
 ];

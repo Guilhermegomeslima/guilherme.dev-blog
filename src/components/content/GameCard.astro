@@ -1,0 +1,80 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Card from '../ui/Card.astro';
+import { calculateGameScore, formatScore } from '../../utils/ratings';
+import { withBase } from '../../utils/base';
+
+interface Props {
+  game: CollectionEntry<'games'>;
+}
+
+const { game } = Astro.props;
+const { data, id } = game;
+
+const finalScore = calculateGameScore(data.scores);
+const formattedFinal = formatScore(finalScore);
+const gameHref = withBase(`/jogos/${id}/`);
+---
+
+<Card
+  as="article"
+  interactive
+  class="flex flex-col justify-between border-border/80 bg-surface/90 p-0 overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 group"
+>
+  <a href={gameHref} class="flex flex-col h-full">
+    {/* Capa em proporção vertical (pôster 3:4) */}
+    <div class="relative aspect-[3/4] w-full overflow-hidden bg-surface-raised border-b border-border/60">
+      <img
+        src={data.coverImage.url}
+        alt={data.coverImage.alt}
+        width="600"
+        height="800"
+        loading="lazy"
+        decoding="async"
+        class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
+      />
+
+      {/* Badge Flutuante da Nota Final */}
+      <div class="absolute top-3 right-3 rounded-md border border-accent/40 bg-surface/90 px-2.5 py-1 backdrop-blur-xs shadow-md">
+        <span class="font-mono text-[10px] text-text-muted mr-1">SCORE:</span>
+        <span class="font-display text-sm font-extrabold text-accent drop-shadow-[0_0_6px_var(--color-accent)]">
+          {formattedFinal}
+        </span>
+      </div>
+
+      {data.isDemo && (
+        <div class="absolute bottom-3 left-3 rounded bg-warm/90 px-2 py-0.5 font-mono text-[10px] font-semibold text-bg uppercase">
+          Mock Data
+        </div>
+      )}
+    </div>
+
+    {/* Conteúdo textual */}
+    <div class="p-5 flex-1 flex flex-col justify-between">
+      <div>
+        <div class="mb-2 flex items-center justify-between font-mono text-xs text-text-muted">
+          <span class="text-accent/90">{data.genre}</span>
+          <span>{data.releaseYear}</span>
+        </div>
+
+        <h3 class="font-display text-lg font-bold tracking-tight text-text group-hover:text-accent transition-colors">
+          {data.title}
+        </h3>
+
+        <p class="font-body mt-2 text-xs leading-relaxed text-text-muted line-clamp-2">
+          {data.description}
+        </p>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-border/40 flex items-center justify-between font-mono text-xs text-accent">
+        <span>Ver análise completa</span>
+        <span
+          aria-hidden="true"
+          class="transition-transform duration-200 group-hover:translate-x-1"
+        >
+          &rarr;
+        </span>
+      </div>
+    </div>
+  </a>
+</Card>

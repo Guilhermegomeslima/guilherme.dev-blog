@@ -36,8 +36,8 @@ export const categories: CategoryItem[] = [
     description:
       'Catálogo e avaliações com notas detalhadas em 5 dimensões técnicas e narrativas.',
     href: '/jogos/',
-    available: false,
-    badge: 'Em breve',
+    available: true,
+    badge: 'Disponível',
   },
   {
     id: 'filmes',

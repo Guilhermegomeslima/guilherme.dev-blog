@@ -11,4 +11,3 @@ isDemo: true
 ---
 
 > **Aviso de demonstração:** Este projeto possui conteúdo fictício e provisório, criado exclusivamente para validação de layouts, proporções de imagem e cards de catálogo.
-

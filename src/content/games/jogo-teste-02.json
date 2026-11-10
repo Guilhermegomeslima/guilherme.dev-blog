@@ -1,0 +1,21 @@
+{
+  "title": "Jogo Teste 02: Neon Tactics",
+  "releaseYear": 2023,
+  "genre": "Estratégia em Turnos",
+  "developer": "Indie Lab Demo",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/jogo-teste-02/600/800",
+    "alt": "Capa ilustrativa temporária para Jogo Teste 02"
+  },
+  "description": "Segundo registro de teste para validação de pontuações medianas, diagramação de cards e filtros de gênero.",
+  "opinion": "Opinião fictícia sobre a profundidade tática, design de tabuleiros e ritmo cadenciado das partidas.",
+  "scores": {
+    "mechanics": 80,
+    "plot": 70,
+    "aesthetics": 75,
+    "retention": 85,
+    "feeling": 75
+  },
+  "isDemo": true
+}
+

@@ -9,4 +9,3 @@ isDemo: false
 ---
 
 Coleção de exercícios implementados em Java para consolidar conceitos essenciais de abstração, encapsulamento, herança, polimorfismo, pilhas, filas e listas encadeadas.
-

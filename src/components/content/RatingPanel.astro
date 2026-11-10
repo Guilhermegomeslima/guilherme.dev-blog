@@ -1,0 +1,87 @@
+---
+import Card from '../ui/Card.astro';
+import {
+  calculateGameScore,
+  formatScore,
+  type GameScores,
+} from '../../utils/ratings';
+
+interface Props {
+  scores: GameScores;
+  class?: string;
+}
+
+const { scores, class: className } = Astro.props;
+
+const finalScore = calculateGameScore(scores);
+const formattedFinal = formatScore(finalScore);
+
+const criteriaList = [
+  { label: 'Mecânica', score: scores.mechanics },
+  { label: 'Enredo', score: scores.plot },
+  { label: 'Estética', score: scores.aesthetics },
+  { label: 'Retenção', score: scores.retention },
+  { label: 'Feeling', score: scores.feeling },
+];
+---
+
+<Card
+  class:list={[
+    'border-border/80 bg-surface/90 p-6 backdrop-blur-xs shadow-lg',
+    className,
+  ]}
+>
+  <div class="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-border/50 pb-4">
+    <div>
+      <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider">
+        // AVALIAÇÃO TÉCNICA
+      </span>
+      <h3 class="font-display text-lg font-bold text-text mt-0.5">
+        Métricas de Desempenho
+      </h3>
+    </div>
+
+    {/* Placa da Nota Final em Destaque */}
+    <div class="flex items-center gap-3 rounded-lg border border-accent/40 bg-surface-raised/80 px-4 py-2">
+      <span class="font-mono text-xs text-text-muted uppercase">
+        Nota Final:
+      </span>
+      <span class="font-display text-2xl font-extrabold text-accent drop-shadow-[0_0_8px_var(--color-accent)]">
+        {formattedFinal}
+      </span>
+      <span class="font-mono text-xs text-text-muted/60">/ 100</span>
+    </div>
+  </div>
+
+  {/* Gráfico de Barras dos 5 Critérios */}
+  <div class="space-y-4">
+    {criteriaList.map((crit) => (
+      <div>
+        <div class="mb-1.5 flex items-center justify-between font-mono text-xs">
+          <span class="text-text font-medium">{crit.label}</span>
+          <span class="text-accent">{crit.score} / 100</span>
+        </div>
+
+        <div
+          class="h-2 w-full overflow-hidden rounded-full bg-surface-raised border border-border/40"
+          role="progressbar"
+          aria-valuenow={crit.score}
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-label={`Nota de ${crit.label}: ${crit.score} de 100`}
+        >
+          <div
+            class="h-full rounded-full bg-gradient-to-r from-accent/70 to-accent transition-all duration-500 shadow-[0_0_6px_var(--color-accent)]"
+            style={`width: ${crit.score}%;`}
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="mt-6 border-t border-border/40 pt-3 text-right">
+    <span class="font-mono text-[11px] text-text-muted/70">
+      * Média aritmética simples sem pesos calculada a partir dos 5 eixos.
+    </span>
+  </div>
+</Card>

@@ -9,4 +9,3 @@ isDemo: false
 ---
 
 Laboratório prático de design de interface e CSS moderno, recriando menus, paleta de cores e tipografia icônica inspirados no popular jogo de sobrevivência e blocos.
-
