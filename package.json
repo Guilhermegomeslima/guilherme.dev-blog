@@ -9,9 +9,10 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
+    "test": "node --experimental-strip-types --test src/utils/*.test.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "npm run check && npm run format:check && npm run build"
+    "verify": "npm run check && npm run test && npm run format:check && npm run build"
   },
   "dependencies": {
     "astro": "^6.4.8"

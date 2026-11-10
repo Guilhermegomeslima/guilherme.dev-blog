@@ -47,4 +47,3 @@ export function calculateGameScore(scores: GameScores): number {
 export function formatScore(score: number): string {
   return Number.isInteger(score) ? score.toString() : score.toFixed(1);
 }
-
