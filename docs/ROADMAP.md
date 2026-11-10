@@ -76,7 +76,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | ------ | ----------------------------------------------------------------- | ------------ | ---------- | --------- | --------- | --------- |
 | CNT-01 | Definir schemas/content collections por tipo realmente necessário | MVP-07       | P1         | 12/11     | 0f6d04e   | Concluído |
 | CNT-02 | Criar listagens e páginas de artigos                              | CNT-01       | P1         | 13/11     | 91a80c2   | Concluído |
-| CNT-03 | Criar seção Linux e conteúdos de experiência/timeline             | CNT-01       | P1         | 14/11     | —         | Pendente  |
+| CNT-03 | Criar seção Linux e conteúdos de experiência/timeline             | CNT-01       | P1         | 14/11     | e7be65f   | Concluído |
 | CNT-04 | Criar seção Projetos e links GitHub                               | CNT-01       | P1         | 16/11     | —         | Pendente  |
 | CNT-05 | Criar seção Jogos e validação dos cinco critérios                 | CNT-01       | P1         | 20/11     | —         | Pendente  |
 | CNT-06 | Criar cálculo/testes da média simples de jogos                    | CNT-05       | P1         | 22/11     | —         | Pendente  |
