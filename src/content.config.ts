@@ -65,8 +65,36 @@ const games = defineCollection({
   }),
 });
 
+const movies = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/movies' }),
+  schema: z.object({
+    title: z.string(),
+    director: z.string(),
+    releaseYear: z.number().int(),
+    genre: z.string().default('Cinema'),
+    description: z.string(),
+    opinion: z.string().optional(),
+    coverImage: z
+      .object({
+        url: z.string(),
+        alt: z.string(),
+      })
+      .optional(),
+    scores: z.object({
+      direction: z.number().min(0).max(100),
+      screenplay: z.number().min(0).max(100),
+      audiovisual: z.number().min(0).max(100),
+      acting: z.number().min(0).max(100),
+      pacing: z.number().min(0).max(100),
+      feeling: z.number().min(0).max(100),
+    }),
+    isDemo: z.boolean().default(true),
+  }),
+});
+
 export const collections = {
   articles,
   projects,
   games,
+  movies,
 };

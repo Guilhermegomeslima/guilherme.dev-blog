@@ -1,0 +1,18 @@
+{
+  "title": "Filme Teste 02: Memórias em Neon",
+  "director": "Diretor Fictício B",
+  "releaseYear": 2021,
+  "genre": "Suspense Noir",
+  "description": "Investigação criminal ambientada em um distrito tecnológico subterrâneo com dilemas morais sobre identidade e memória adulterada.",
+  "opinion": "Roteiro intrincado com reviravoltas bem amarradas e ritmo ágil que sustenta a tensão dramática até o desfecho inesperado.",
+  "scores": {
+    "direction": 90,
+    "screenplay": 92,
+    "audiovisual": 88,
+    "acting": 91,
+    "pacing": 86,
+    "feeling": 89
+  },
+  "isDemo": true
+}
+

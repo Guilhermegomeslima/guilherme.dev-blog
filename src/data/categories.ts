@@ -46,8 +46,8 @@ export const categories: CategoryItem[] = [
     description:
       'Acervo cinematográfico e críticas avaliadas em 6 critérios estéticos e autorais.',
     href: '/filmes/',
-    available: false,
-    badge: 'Em breve',
+    available: true,
+    badge: 'Disponível',
   },
   {
     id: 'musica',

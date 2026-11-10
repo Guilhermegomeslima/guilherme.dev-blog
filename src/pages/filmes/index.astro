@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import MovieCard from '../../components/content/MovieCard.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+
+const allMovies = await getCollection('movies');
+
+// Ordena filmes por ano de lançamento decrescente
+const sortedMovies = allMovies.sort(
+  (a, b) => b.data.releaseYear - a.data.releaseYear,
+);
+
+const hasDemoContent = allMovies.some((m) => m.data.isDemo);
+---
+
+<BaseLayout
+  title="Filmes & Críticas — guilherme.dev"
+  description="Acervo cinematográfico e análises avaliadas em 6 critérios técnicos e autorais: Direção, Roteiro, Audiovisual, Atuação, Ritmo e Feeling."
+>
+  <div class="py-12 md:py-16">
+    <Container>
+      <SectionHeading
+        eyebrow="// ARQUIVO CINEMATOGRÁFICO"
+        title="Filmes & Críticas"
+        description="Acervo e análises críticas avaliadas sob 6 critérios técnicos e autorais, sem pesos."
+      />
+
+      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {sortedMovies.map((movie) => (
+          <MovieCard movie={movie} />
+        ))}
+      </div>
+    </Container>
+  </div>
+</BaseLayout>
+

@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import RatingPanel from '../../components/content/RatingPanel.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+import Button from '../../components/ui/Button.astro';
+import Card from '../../components/ui/Card.astro';
+import { withBase } from '../../utils/base';
+import { calculateMovieScore, formatScore } from '../../utils/ratings';
+
+export async function getStaticPaths() {
+  const movies = await getCollection('movies');
+  return movies.map((movie) => ({
+    params: { id: movie.id },
+    props: { movie },
+  }));
+}
+
+interface Props {
+  movie: CollectionEntry<'movies'>;
+}
+
+const { movie } = Astro.props;
+const { data, id } = movie;
+
+const finalScore = calculateMovieScore(data.scores);
+const formattedFinal = formatScore(finalScore);
+---
+
+<BaseLayout
+  title={`${data.title} — Crítica de Cinema // guilherme.dev`}
+  description={data.description}
+  image={data.coverImage?.url}
+  noindex={data.isDemo}
+>
+  <div class="py-12 md:py-16">
+    <Container class="max-w-4xl">
+      {/* Botão de retorno */}
+      <div class="mb-8">
+        <Button href={withBase('/filmes/')} variant="ghost" class="px-0">
+          &larr; Voltar para catálogo de filmes
+        </Button>
+      </div>
+
+      {/* Header do Arquivo Cinematográfico */}
+      <div class="border-b border-border/80 pb-10">
+        <div class="mb-4 flex flex-wrap items-center gap-2 font-mono text-xs">
+          <span class="text-accent uppercase tracking-wider font-semibold">
+            // REGISTRO CINEMATOGRÁFICO #{id}
+          </span>
+          <span class="text-border" aria-hidden="true">
+            ·
+          </span>
+          <span class="text-text-muted">{data.genre}</span>
+        </div>
+
+        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-text">
+          {data.title}
+        </h1>
+
+        {/* Ficha técnica em badges */}
+        <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+          <div class="rounded-lg border border-border/70 bg-surface/80 p-3">
+            <span class="text-text-muted block text-[11px] uppercase">
+              Direção
+            </span>
+            <span class="text-text font-bold text-sm mt-0.5 block">
+              {data.director}
+            </span>
+          </div>
+
+          <div class="rounded-lg border border-border/70 bg-surface/80 p-3">
+            <span class="text-text-muted block text-[11px] uppercase">
+              Lançamento
+            </span>
+            <span class="text-text font-bold text-sm mt-0.5 block">
+              {data.releaseYear}
+            </span>
+          </div>
+
+          <div class="rounded-lg border border-border/70 bg-surface/80 p-3">
+            <span class="text-text-muted block text-[11px] uppercase">
+              Gênero
+            </span>
+            <span class="text-text font-bold text-sm mt-0.5 block">
+              {data.genre}
+            </span>
+          </div>
+
+          <div class="rounded-lg border border-accent/40 bg-surface-raised/80 p-3">
+            <span class="text-text-muted block text-[11px] uppercase">
+              Nota Final (6 eixos)
+            </span>
+            <span class="text-accent font-extrabold text-sm mt-0.5 block">
+              {formattedFinal} / 100
+            </span>
+          </div>
+        </div>
+
+        {/* Capa opcional futura (se houver imagem) */}
+        {data.coverImage && (
+          <div class="mt-8 aspect-[16/9] w-full overflow-hidden rounded-lg border border-border/80 bg-surface-raised shadow-xl">
+            <img
+              src={data.coverImage.url}
+              alt={data.coverImage.alt}
+              width="1200"
+              height="675"
+              loading="eager"
+              decoding="async"
+              class="h-full w-full object-cover filter contrast-110 brightness-95"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Aviso de Dado Mock se aplicável */}
+      {data.isDemo && <DemoNotice variant="item" class="my-8" />}
+
+      {/* Seções de Texto e Avaliação */}
+      <div class="mt-8 space-y-10">
+        {/* Sinopse / Contexto */}
+        <section>
+          <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-2">
+            // SINOPSE & CONTEXTO
+          </span>
+          <p class="font-body text-base sm:text-lg leading-relaxed text-text-muted">
+            {data.description}
+          </p>
+        </section>
+
+        {/* Parecer Crítico */}
+        {data.opinion && (
+          <section>
+            <Card class="border-border/80 bg-surface/60 p-6 sm:p-8">
+              <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-3">
+                // ANÁLISE CRÍTICA
+              </span>
+              <p class="font-body text-base leading-relaxed text-text italic">
+                "{data.opinion}"
+              </p>
+            </Card>
+          </section>
+        )}
+
+        {/* Painel com as 6 Notas Técnicas */}
+        <section>
+          <RatingPanel scores={data.scores} type="movie" />
+        </section>
+      </div>
+    </Container>
+  </div>
+</BaseLayout>

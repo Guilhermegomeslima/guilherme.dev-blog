@@ -1,0 +1,18 @@
+{
+  "title": "Filme Teste 03: Horizonte Analógico",
+  "director": "Diretora Fictícia C",
+  "releaseYear": 2018,
+  "genre": "Drama / Mistério",
+  "description": "Ensaio nostálgico sobre a transição das mídias magnéticas e fitas cassete para redes puramente digitais no início dos anos 2000.",
+  "opinion": "Experiência contemplativa com cadência mais lenta e primoroso design de som analógico, evocando o sentimento de um mundo que desaparece.",
+  "scores": {
+    "direction": 84,
+    "screenplay": 79,
+    "audiovisual": 87,
+    "acting": 80,
+    "pacing": 72,
+    "feeling": 84
+  },
+  "isDemo": true
+}
+

@@ -1,0 +1,122 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Card from '../ui/Card.astro';
+import { calculateMovieScore, formatScore } from '../../utils/ratings';
+import { withBase } from '../../utils/base';
+
+interface Props {
+  movie: CollectionEntry<'movies'>;
+}
+
+const { movie } = Astro.props;
+const { data, id } = movie;
+
+const finalScore = calculateMovieScore(data.scores);
+const formattedFinal = formatScore(finalScore);
+const movieHref = withBase(`/filmes/${id}/`);
+
+const criteriaAbbr = [
+  { label: 'DIR', score: data.scores.direction, title: 'Direção' },
+  { label: 'ROT', score: data.scores.screenplay, title: 'Roteiro' },
+  { label: 'AV', score: data.scores.audiovisual, title: 'Audiovisual' },
+  { label: 'ATU', score: data.scores.acting, title: 'Atuação' },
+  { label: 'RIT', score: data.scores.pacing, title: 'Ritmo' },
+  { label: 'FEE', score: data.scores.feeling, title: 'Feeling' },
+];
+---
+
+<Card
+  as="article"
+  interactive
+  class="flex flex-col justify-between border-border/80 bg-surface/90 p-6 transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 group"
+>
+  <a href={movieHref} class="flex flex-col h-full justify-between">
+    <div>
+      {/* Topo com etiqueta de arquivo e badge de nota */}
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-border/40 pb-3">
+        <span class="font-mono text-[11px] font-semibold text-accent/90 uppercase tracking-wider">
+          // CINE-LOG [{data.genre.toUpperCase()}]
+        </span>
+
+        <div class="flex items-center gap-1.5 rounded-md border border-accent/40 bg-surface-raised/90 px-2.5 py-1 backdrop-blur-xs shadow-sm">
+          <span class="font-mono text-[10px] text-text-muted">SCORE:</span>
+          <span class="font-display text-sm font-extrabold text-accent drop-shadow-[0_0_6px_var(--color-accent)]">
+            {formattedFinal}
+          </span>
+          <span class="font-mono text-[9px] text-text-muted/60">/ 100</span>
+        </div>
+      </div>
+
+      {/* Capa opcional futura (se existir) */}
+      {data.coverImage && (
+        <div class="mb-4 aspect-[16/9] w-full overflow-hidden rounded-md border border-border/60 bg-surface-raised">
+          <img
+            src={data.coverImage.url}
+            alt={data.coverImage.alt}
+            width="600"
+            height="338"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105"
+          />
+        </div>
+      )}
+
+      {/* Título principal */}
+      <h3 class="font-display text-xl font-bold tracking-tight text-text group-hover:text-accent transition-colors">
+        {data.title}
+      </h3>
+
+      {/* Metadados: Diretor e Ano (não interferem na nota) */}
+      <div class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-text-muted">
+        <span>
+          <strong class="text-text-muted/70">DIR:</strong>{' '}
+          <span class="text-text font-medium">{data.director}</span>
+        </span>
+        <span class="text-border" aria-hidden="true">
+          ·
+        </span>
+        <span>
+          <strong class="text-text-muted/70">ANO:</strong>{' '}
+          <span class="text-text font-medium">{data.releaseYear}</span>
+        </span>
+      </div>
+
+      {/* Sinopse / Descrição curta */}
+      <p class="font-body mt-3.5 text-sm leading-relaxed text-text-muted/90 line-clamp-3">
+        {data.description}
+      </p>
+
+      {/* Resumo visual dos 6 critérios */}
+      <div class="mt-5 pt-4 border-t border-border/40">
+        <span class="font-mono text-[10px] uppercase text-text-muted/70 tracking-wider block mb-2">
+          Critérios (0–100):
+        </span>
+        <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 font-mono text-[11px]">
+          {criteriaAbbr.map((crit) => (
+            <div
+              class="flex flex-col items-center rounded border border-border/50 bg-surface-raised/40 py-1 px-1.5 text-center"
+              title={`${crit.title}: ${crit.score}`}
+            >
+              <span class="text-[9px] text-text-muted/80">{crit.label}</span>
+              <span class="font-bold text-text mt-0.5">{crit.score}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* Rodapé do card */}
+    <div class="mt-6 flex items-center justify-between pt-3 border-t border-border/40 font-mono text-xs">
+      <span class="text-accent group-hover:underline flex items-center gap-1 font-semibold">
+        Acessar ficha técnica <span aria-hidden="true">&rarr;</span>
+      </span>
+
+      {data.isDemo && (
+        <span class="rounded bg-warm/90 px-2 py-0.5 text-[10px] font-semibold text-bg uppercase">
+          Mock Data
+        </span>
+      )}
+    </div>
+  </a>
+</Card>

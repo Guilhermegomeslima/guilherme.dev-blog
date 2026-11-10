@@ -2,27 +2,48 @@
 import Card from '../ui/Card.astro';
 import {
   calculateGameScore,
+  calculateMovieScore,
   formatScore,
   type GameScores,
+  type MovieScores,
 } from '../../utils/ratings';
 
 interface Props {
-  scores: GameScores;
+  scores: GameScores | MovieScores;
+  type?: 'game' | 'movie';
   class?: string;
 }
 
-const { scores, class: className } = Astro.props;
+const { scores, type = 'game', class: className } = Astro.props;
 
-const finalScore = calculateGameScore(scores);
+const isMovie = type === 'movie' || 'direction' in scores;
+
+const finalScore = isMovie
+  ? calculateMovieScore(scores as MovieScores)
+  : calculateGameScore(scores as GameScores);
 const formattedFinal = formatScore(finalScore);
 
-const criteriaList = [
-  { label: 'Mecânica', score: scores.mechanics },
-  { label: 'Enredo', score: scores.plot },
-  { label: 'Estética', score: scores.aesthetics },
-  { label: 'Retenção', score: scores.retention },
-  { label: 'Feeling', score: scores.feeling },
-];
+const criteriaList = isMovie
+  ? [
+      { label: 'Direção', score: (scores as MovieScores).direction },
+      { label: 'Roteiro', score: (scores as MovieScores).screenplay },
+      { label: 'Audiovisual', score: (scores as MovieScores).audiovisual },
+      { label: 'Atuação', score: (scores as MovieScores).acting },
+      { label: 'Ritmo', score: (scores as MovieScores).pacing },
+      { label: 'Feeling', score: (scores as MovieScores).feeling },
+    ]
+  : [
+      { label: 'Mecânica', score: (scores as GameScores).mechanics },
+      { label: 'Enredo', score: (scores as GameScores).plot },
+      { label: 'Estética', score: (scores as GameScores).aesthetics },
+      { label: 'Retenção', score: (scores as GameScores).retention },
+      { label: 'Feeling', score: (scores as GameScores).feeling },
+    ];
+
+const countAxis = isMovie ? '6' : '5';
+const subtitle = isMovie
+  ? 'Métricas Cinematográficas'
+  : 'Métricas de Desempenho';
 ---
 
 <Card
@@ -37,7 +58,7 @@ const criteriaList = [
         // AVALIAÇÃO TÉCNICA
       </span>
       <h3 class="font-display text-lg font-bold text-text mt-0.5">
-        Métricas de Desempenho
+        {subtitle}
       </h3>
     </div>
 
@@ -53,7 +74,7 @@ const criteriaList = [
     </div>
   </div>
 
-  {/* Gráfico de Barras dos 5 Critérios */}
+  {/* Gráfico de Barras dos Critérios */}
   <div class="space-y-4">
     {criteriaList.map((crit) => (
       <div>
@@ -81,7 +102,8 @@ const criteriaList = [
 
   <div class="mt-6 border-t border-border/40 pt-3 text-right">
     <span class="font-mono text-[11px] text-text-muted/70">
-      * Média aritmética simples sem pesos calculada a partir dos 5 eixos.
+      * Média aritmética simples sem pesos calculada a partir dos {countAxis}{' '}
+      eixos.
     </span>
   </div>
 </Card>

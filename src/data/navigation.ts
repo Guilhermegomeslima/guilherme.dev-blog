@@ -12,4 +12,5 @@ export const navigation: NavItem[] = [
   { label: 'Artigos', href: '/artigos/', available: true },
   { label: 'Linux', href: '/linux/', available: true },
   { label: 'Jogos', href: '/jogos/', available: true },
+  { label: 'Filmes', href: '/filmes/', available: true },
 ];
