@@ -74,7 +74,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID     | Item                                                              | Dependências | Prioridade | Data alvo | Commit/PR | Status   |
 | ------ | ----------------------------------------------------------------- | ------------ | ---------- | --------- | --------- | -------- |
-| CNT-01 | Definir schemas/content collections por tipo realmente necessário | MVP-07       | P1         | 12/11     | —         | Pendente |
+| CNT-01 | Definir schemas/content collections por tipo realmente necessário | MVP-07       | P1         | 12/11     | 0f6d04e   | Concluído |
 | CNT-02 | Criar listagens e páginas de artigos                              | CNT-01       | P1         | 13/11     | —         | Pendente |
 | CNT-03 | Criar seção Linux e conteúdos de experiência/timeline             | CNT-01       | P1         | 14/11     | —         | Pendente |
 | CNT-04 | Criar seção Projetos e links GitHub                               | CNT-01       | P1         | 16/11     | —         | Pendente |
