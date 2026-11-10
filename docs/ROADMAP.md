@@ -78,7 +78,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | CNT-02 | Criar listagens e páginas de artigos                              | CNT-01       | P1         | 13/11     | 91a80c2   | Concluído |
 | CNT-03 | Criar seção Linux e conteúdos de experiência/timeline             | CNT-01       | P1         | 14/11     | e7be65f   | Concluído |
 | CNT-04 | Criar seção Projetos e links GitHub                               | CNT-01       | P1         | 16/11     | f5808d9   | Concluído |
-| CNT-05 | Criar seção Jogos e validação dos cinco critérios                 | CNT-01       | P1         | 20/11     | —         | Pendente  |
+| CNT-05 | Criar seção Jogos e validação dos cinco critérios                 | CNT-01       | P1         | 20/11     | a58d7b6   | Concluído |
 | CNT-06 | Criar cálculo/testes da média simples de jogos                    | CNT-05       | P1         | 22/11     | —         | Pendente  |
 | CNT-07 | Criar seção Filmes e validação dos seis critérios                 | CNT-01       | P1         | 28/11     | —         | Pendente  |
 | CNT-08 | Criar cálculo/testes da média simples de filmes                   | CNT-07       | P1         | 29/11     | —         | Pendente  |
