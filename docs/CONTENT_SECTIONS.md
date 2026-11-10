@@ -18,7 +18,7 @@ Especificar a estrutura visual, a experiência de navegação e as regras dos co
 
 **Regra de precedência:** seguir a orientação explícita mais recente do autor. Ao detectar divergência técnica relevante entre documentos ou código existente, relatar o conflito antes da implementação afetada. Não reestruturar o projeto apenas para se ajustar a exemplos deste arquivo.
 
-## 2. Padrão global de demonstração (*mock data*)
+## 2. Padrão global de demonstração (_mock data_)
 
 ### 2.1 Identificação
 
@@ -105,6 +105,7 @@ Campos comuns sugeridos (quando fizerem sentido): `title`, `description`, `slug`
 **[CONFIRMADO]** Uma única página longa com narrativa e **timeline neon** de **todos os sistemas operacionais usados** (inclusive não Linux).
 
 Ordem narrativa desejada:
+
 1. Introdução: o que é Linux no desktop;
 2. Motivos da migração;
 3. Primeiras impressões;
@@ -135,6 +136,7 @@ Ordem narrativa desejada:
 **[CONFIRMADO]** Catálogo de cards clicáveis com informações resumidas e imagens na maioria dos jogos. Cada jogo leva a **página individual** com dados completos, imagens e avaliação.
 
 **Dados sugeridos:** título, slug, ano, gênero, desenvolvedora (opcional), imagens/capa, descrição, opinião (quando real), `isDemo`, e cinco critérios obrigatórios entre 0 e 100:
+
 - Mecânica
 - Enredo
 - Estética
@@ -162,6 +164,7 @@ Ordem narrativa desejada:
 **Visual:** arquivo cinematográfico com cards tipográficos bem resolvidos, sem espaços vazios simulando pôsteres ausentes. Layout preparado para imagens futuras opcionais.
 
 **Dados:** título, diretor, ano de lançamento, slug, descrição/opinião e seis critérios de 0 a 100:
+
 - Direção
 - Roteiro
 - Audiovisual
