@@ -83,7 +83,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | CNT-07 | Criar seção Filmes e validação dos seis critérios                 | CNT-01       | P1         | 28/11     | 4f749bb   | Concluído |
 | CNT-08 | Criar cálculo/testes da média simples de filmes                   | CNT-07       | P1         | 29/11     | 3fa44b7   | Concluído |
 | CNT-09 | Criar seções Música e Open Source                                 | CNT-01       | P1         | 06/12     | 4db1780   | Concluído |
-| CNT-10 | Definir modelo e criar seção Livros                               | CNT-01       | P1         | 16/12     | —         | Pendente  |
+| CNT-10 | Definir modelo e criar seção Livros                               | CNT-01       | P1         | 16/12     | a6c4cc2   | Concluído |
 | CNT-11 | Criar galeria com metadados e imagens externas permitidas         | CNT-01       | P1         | 20/12     | —         | Pendente  |
 
 **Aceitação:** conteúdo separado da interface; dados validados no build; notas entre 0 e 100; média sem pesos; URLs de imagens e créditos documentados; evitar seções vazias.
