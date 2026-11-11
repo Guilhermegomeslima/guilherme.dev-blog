@@ -1,0 +1,21 @@
+{
+  "title": "Tomb Raider",
+  "releaseYear": 2013,
+  "genre": "Ação/Aventura",
+  "developer": "Crystal Dynamics",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/tomb-raider/600/800",
+    "alt": "Capa provisória de Tomb Raider",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 92,
+    "plot": 89,
+    "aesthetics": 91,
+    "retention": 92,
+    "feeling": 94
+  },
+  "isDemo": false
+}

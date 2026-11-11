@@ -1,0 +1,21 @@
+{
+  "title": "Samurai Warriors 5",
+  "releaseYear": 2021,
+  "genre": "Hack and Slash",
+  "developer": "Omega Force",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/samurai-warriors-5/600/800",
+    "alt": "Capa provisória de Samurai Warriors 5",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 85,
+    "plot": 91,
+    "aesthetics": 85,
+    "retention": 89,
+    "feeling": 88
+  },
+  "isDemo": false
+}

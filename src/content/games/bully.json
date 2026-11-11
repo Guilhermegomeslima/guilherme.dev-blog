@@ -1,0 +1,21 @@
+{
+  "title": "Bully",
+  "releaseYear": 2006,
+  "genre": "Ação/Aventura",
+  "developer": "Rockstar Vancouver",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/bully/600/800",
+    "alt": "Capa provisória de Bully",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 89,
+    "plot": 88,
+    "aesthetics": 87,
+    "retention": 87,
+    "feeling": 88
+  },
+  "isDemo": false
+}

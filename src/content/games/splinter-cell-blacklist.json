@@ -1,0 +1,21 @@
+{
+  "title": "Splinter Cell Blacklist",
+  "releaseYear": 2013,
+  "genre": "Ação/Furtividade",
+  "developer": "Ubisoft Toronto",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/splinter-cell-blacklist/600/800",
+    "alt": "Capa provisória de Splinter Cell Blacklist",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 94,
+    "plot": 88,
+    "aesthetics": 86,
+    "retention": 86,
+    "feeling": 87
+  },
+  "isDemo": false
+}

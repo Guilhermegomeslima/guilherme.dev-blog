@@ -1,0 +1,21 @@
+{
+  "title": "Nobunaga's Ambition: S.O.I. Ascencion",
+  "releaseYear": 2014,
+  "genre": "Estratégia",
+  "developer": "Koei Tecmo",
+  "platform": "PC/Steam",
+  "status": "Descontinuado",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/nobunagas-ambition-soi-ascencion/600/800",
+    "alt": "Capa provisória de Nobunaga's Ambition: S.O.I. Ascencion",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 82,
+    "plot": 80,
+    "aesthetics": 85,
+    "retention": 60,
+    "feeling": 70
+  },
+  "isDemo": false
+}

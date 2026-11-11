@@ -1,0 +1,21 @@
+{
+  "title": "Mercenaries 2 World in flames",
+  "releaseYear": 2008,
+  "genre": "Ação/Mundo Aberto",
+  "developer": "Pandemic Studios",
+  "platform": "Xbox 360",
+  "status": "Descontinuado",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/mercenaries-2-world-in-flames/600/800",
+    "alt": "Capa provisória de Mercenaries 2 World in flames",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 80,
+    "aesthetics": 81,
+    "retention": 81,
+    "feeling": 81
+  },
+  "isDemo": false
+}

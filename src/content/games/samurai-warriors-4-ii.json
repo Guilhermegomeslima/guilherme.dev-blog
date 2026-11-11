@@ -1,0 +1,21 @@
+{
+  "title": "Samurai Warriors 4-II",
+  "releaseYear": 2015,
+  "genre": "Hack and Slash",
+  "developer": "Omega Force",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/samurai-warriors-4-ii/600/800",
+    "alt": "Capa provisória de Samurai Warriors 4-II",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 89,
+    "plot": 82,
+    "aesthetics": 86,
+    "retention": 82,
+    "feeling": 84
+  },
+  "isDemo": false
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Splinter Cell: Chaos Theory",
+  "releaseYear": 2005,
+  "genre": "Ação/Furtividade",
+  "developer": "Ubisoft Montreal",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/splinter-cell-chaos-theory/600/800",
+    "alt": "Capa provisória de Splinter Cell: Chaos Theory",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 94,
+    "plot": 90,
+    "aesthetics": 89,
+    "retention": 89,
+    "feeling": 94
+  },
+  "isDemo": false
+}

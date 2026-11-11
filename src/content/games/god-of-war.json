@@ -1,0 +1,21 @@
+{
+  "title": "God of War",
+  "releaseYear": 2005,
+  "genre": "Ação/Aventura",
+  "developer": "Santa Monica Studio",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/god-of-war/600/800",
+    "alt": "Capa provisória de God of War",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 88,
+    "plot": 91,
+    "aesthetics": 89,
+    "retention": 89,
+    "feeling": 94
+  },
+  "isDemo": false
+}

@@ -48,20 +48,29 @@ const games = defineCollection({
     releaseYear: z.number().int(),
     genre: z.string(),
     developer: z.string().optional(),
+    platform: z.string(),
+    status: z.enum([
+      'Concluido',
+      'Platinado',
+      'Jogando',
+      'Parado',
+      'Descontinuado',
+    ]),
     coverImage: z.object({
       url: z.string(),
       alt: z.string(),
+      isPlaceholder: z.boolean().default(true),
     }),
-    description: z.string(),
+    description: z.string().optional(),
     opinion: z.string().optional(),
     scores: z.object({
       mechanics: z.number().min(0).max(100),
-      plot: z.number().min(0).max(100),
+      plot: z.number().min(0).max(100).nullable(),
       aesthetics: z.number().min(0).max(100),
       retention: z.number().min(0).max(100),
       feeling: z.number().min(0).max(100),
     }),
-    isDemo: z.boolean().default(true),
+    isDemo: z.boolean().default(false),
   }),
 });
 

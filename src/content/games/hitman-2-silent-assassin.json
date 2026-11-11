@@ -1,0 +1,21 @@
+{
+  "title": "Hitman 2: Silent Assassin",
+  "releaseYear": 2002,
+  "genre": "Ação/Furtividade",
+  "developer": "IO Interactive",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/hitman-2-silent-assassin/600/800",
+    "alt": "Capa provisória de Hitman 2: Silent Assassin",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 84,
+    "plot": 87,
+    "aesthetics": 84,
+    "retention": 81,
+    "feeling": 85
+  },
+  "isDemo": false
+}

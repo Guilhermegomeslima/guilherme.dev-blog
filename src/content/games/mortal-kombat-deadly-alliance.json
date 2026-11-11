@@ -1,0 +1,21 @@
+{
+  "title": "Mortal kombat deadly alliance",
+  "releaseYear": 2002,
+  "genre": "Luta",
+  "developer": "Midway Games",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/mortal-kombat-deadly-alliance/600/800",
+    "alt": "Capa provisória de Mortal kombat deadly alliance",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 78,
+    "plot": 80,
+    "aesthetics": 80,
+    "retention": 75,
+    "feeling": 80
+  },
+  "isDemo": false
+}

@@ -1,0 +1,21 @@
+{
+  "title": "The Godfather",
+  "releaseYear": 2006,
+  "genre": "Ação/Mundo Aberto",
+  "developer": "EA Redwood Shores",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/the-godfather/600/800",
+    "alt": "Capa provisória de The Godfather",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 90,
+    "aesthetics": 86,
+    "retention": 85,
+    "feeling": 93
+  },
+  "isDemo": false
+}

@@ -58,6 +58,11 @@ const formattedFinal = formatScore(finalScore);
               class="h-full w-full object-cover filter contrast-110 brightness-95"
             />
           </div>
+          {data.coverImage.isPlaceholder && (
+            <p class="mt-2 text-center font-mono text-[11px] text-text-muted/70">
+              * Capa provisória para fins ilustrativos
+            </p>
+          )}
         </div>
 
         <div class="md:col-span-7 lg:col-span-8 flex flex-col justify-between">
@@ -84,15 +89,30 @@ const formattedFinal = formatScore(finalScore);
               {data.title}
             </h1>
 
-            <p class="font-body mt-4 text-base leading-relaxed text-text-muted">
-              {data.description}
-            </p>
+            {/* Metadados: Plataforma e Status */}
+            <div class="mt-4 flex flex-wrap items-center gap-2 font-mono text-xs">
+              <div class="rounded border border-border/70 bg-surface px-2.5 py-1 text-text-muted">
+                <span class="text-text-muted/70 mr-1">Plataforma:</span>
+                <strong class="text-text font-semibold">{data.platform}</strong>
+              </div>
+
+              <div class="rounded border border-accent/40 bg-surface px-2.5 py-1 text-accent font-semibold">
+                <span class="text-text-muted/70 mr-1">Status:</span>
+                <span>{data.status}</span>
+              </div>
+            </div>
+
+            {data.description && (
+              <p class="font-body mt-4 text-base leading-relaxed text-text-muted">
+                {data.description}
+              </p>
+            )}
           </div>
 
           <div class="mt-8 rounded-lg border border-accent/30 bg-surface-raised/50 p-4 flex items-center justify-between">
             <div>
               <span class="font-mono text-xs text-text-muted uppercase block">
-                Média dos 5 Critérios
+                Média Geral de Avaliação
               </span>
               <span class="font-mono text-[11px] text-text-muted/70">
                 Escala uniforme de 0 a 100

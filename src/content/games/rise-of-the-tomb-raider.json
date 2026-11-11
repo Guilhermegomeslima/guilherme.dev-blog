@@ -1,0 +1,21 @@
+{
+  "title": "Rise of the Tomb Raider",
+  "releaseYear": 2015,
+  "genre": "Ação/Aventura",
+  "developer": "Crystal Dynamics",
+  "platform": "Xbox 360",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/rise-of-the-tomb-raider/600/800",
+    "alt": "Capa provisória de Rise of the Tomb Raider",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 93,
+    "plot": 91,
+    "aesthetics": 92,
+    "retention": 93,
+    "feeling": 95
+  },
+  "isDemo": false
+}

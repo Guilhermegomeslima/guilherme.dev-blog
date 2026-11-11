@@ -1,0 +1,21 @@
+{
+  "title": "God of War II",
+  "releaseYear": 2007,
+  "genre": "Ação/Aventura",
+  "developer": "Santa Monica Studio",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/god-of-war-ii/600/800",
+    "alt": "Capa provisória de God of War II",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 90,
+    "plot": 94,
+    "aesthetics": 93,
+    "retention": 91,
+    "feeling": 95
+  },
+  "isDemo": false
+}

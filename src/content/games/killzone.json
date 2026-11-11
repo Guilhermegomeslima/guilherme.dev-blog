@@ -1,0 +1,21 @@
+{
+  "title": "Killzone",
+  "releaseYear": 2004,
+  "genre": "FPS",
+  "developer": "Guerrilla Games",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/killzone/600/800",
+    "alt": "Capa provisória de Killzone",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 82,
+    "plot": 81,
+    "aesthetics": 85,
+    "retention": 80,
+    "feeling": 83
+  },
+  "isDemo": false
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Swat Global strike team",
+  "releaseYear": 2003,
+  "genre": "Tiro Tático",
+  "developer": "Argonaut Games",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/swat-global-strike-team/600/800",
+    "alt": "Capa provisória de Swat Global strike team",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 82,
+    "aesthetics": 81,
+    "retention": 80,
+    "feeling": 84
+  },
+  "isDemo": false
+}

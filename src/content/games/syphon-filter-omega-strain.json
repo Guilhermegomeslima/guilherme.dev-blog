@@ -1,0 +1,21 @@
+{
+  "title": "Syphon Filter: Omega Strain",
+  "releaseYear": 2004,
+  "genre": "Ação/Tiro",
+  "developer": "Bend Studio",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/syphon-filter-omega-strain/600/800",
+    "alt": "Capa provisória de Syphon Filter: Omega Strain",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 84,
+    "plot": 86,
+    "aesthetics": 85,
+    "retention": 88,
+    "feeling": 89
+  },
+  "isDemo": false
+}

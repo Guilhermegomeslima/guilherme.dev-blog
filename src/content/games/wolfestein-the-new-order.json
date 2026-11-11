@@ -1,0 +1,21 @@
+{
+  "title": "Wolfestein: The New Order",
+  "releaseYear": 2014,
+  "genre": "FPS",
+  "developer": "MachineGames",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/wolfestein-the-new-order/600/800",
+    "alt": "Capa provisória de Wolfestein: The New Order",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 91,
+    "plot": 90,
+    "aesthetics": 93,
+    "retention": 87,
+    "feeling": 91
+  },
+  "isDemo": false
+}

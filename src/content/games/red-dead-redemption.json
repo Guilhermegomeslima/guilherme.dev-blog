@@ -1,0 +1,21 @@
+{
+  "title": "Red Dead Redemption",
+  "releaseYear": 2010,
+  "genre": "Ação/Mundo Aberto",
+  "developer": "Rockstar San Diego",
+  "platform": "Xbox 360",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/red-dead-redemption/600/800",
+    "alt": "Capa provisória de Red Dead Redemption",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 92,
+    "plot": 90,
+    "aesthetics": 90,
+    "retention": 94,
+    "feeling": 96
+  },
+  "isDemo": false
+}

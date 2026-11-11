@@ -1,0 +1,21 @@
+{
+  "title": "Mortal Kombat: Armageddon",
+  "releaseYear": 2006,
+  "genre": "Luta",
+  "developer": "Midway Games",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/mortal-kombat-armageddon/600/800",
+    "alt": "Capa provisória de Mortal Kombat: Armageddon",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 78,
+    "plot": 77,
+    "aesthetics": 85,
+    "retention": 78,
+    "feeling": 82
+  },
+  "isDemo": false
+}

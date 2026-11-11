@@ -14,6 +14,38 @@ const { data, id } = game;
 const finalScore = calculateGameScore(data.scores);
 const formattedFinal = formatScore(finalScore);
 const gameHref = withBase(`/jogos/${id}/`);
+
+const statusConfig: Record<
+  string,
+  { label: string; badgeClass: string; dotClass?: string }
+> = {
+  Platinado: {
+    label: 'Platinado',
+    badgeClass: 'border-warm/50 bg-warm/15 text-warm',
+  },
+  Concluido: {
+    label: 'Concluído',
+    badgeClass: 'border-accent/40 bg-accent/15 text-accent',
+  },
+  Jogando: {
+    label: 'Jogando',
+    badgeClass: 'border-accent/60 bg-surface/90 text-accent font-semibold',
+    dotClass: 'bg-accent animate-pulse',
+  },
+  Parado: {
+    label: 'Parado',
+    badgeClass: 'border-border/70 bg-surface-raised text-text-muted',
+  },
+  Descontinuado: {
+    label: 'Descontinuado',
+    badgeClass: 'border-border/60 bg-surface-raised text-text-muted/70',
+  },
+};
+
+const currentStatus = statusConfig[data.status] || {
+  label: data.status,
+  badgeClass: 'border-border/60 bg-surface-raised text-text-muted',
+};
 ---
 
 <Card
@@ -34,6 +66,29 @@ const gameHref = withBase(`/jogos/${id}/`);
         class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
       />
 
+      {/* Badges Flutuantes: Status e Plataforma */}
+      <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+        <div
+          class:list={[
+            'inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider backdrop-blur-xs shadow-md',
+            currentStatus.badgeClass,
+          ]}
+        >
+          {currentStatus.dotClass && (
+            <span
+              class:list={['h-1.5 w-1.5 rounded-full', currentStatus.dotClass]}
+            />
+          )}
+          <span>{currentStatus.label}</span>
+        </div>
+
+        {data.platform && (
+          <span class="rounded border border-border/70 bg-surface/90 px-1.5 py-0.5 font-mono text-[10px] text-text-muted backdrop-blur-xs shadow-xs">
+            {data.platform}
+          </span>
+        )}
+      </div>
+
       {/* Badge Flutuante da Nota Final */}
       <div class="absolute top-3 right-3 rounded-md border border-accent/40 bg-surface/90 px-2.5 py-1 backdrop-blur-xs shadow-md">
         <span class="font-mono text-[10px] text-text-muted mr-1">SCORE:</span>
@@ -42,8 +97,14 @@ const gameHref = withBase(`/jogos/${id}/`);
         </span>
       </div>
 
+      {data.coverImage.isPlaceholder && (
+        <div class="absolute bottom-3 left-3 rounded border border-border/50 bg-surface/85 px-2 py-0.5 font-mono text-[9px] text-text-muted/80 backdrop-blur-xs">
+          Capa Provisória
+        </div>
+      )}
+
       {data.isDemo && (
-        <div class="absolute bottom-3 left-3 rounded bg-warm/90 px-2 py-0.5 font-mono text-[10px] font-semibold text-bg uppercase">
+        <div class="absolute bottom-3 right-3 rounded bg-warm/90 px-2 py-0.5 font-mono text-[10px] font-semibold text-bg uppercase">
           Mock Data
         </div>
       )}
@@ -61,9 +122,15 @@ const gameHref = withBase(`/jogos/${id}/`);
           {data.title}
         </h3>
 
-        <p class="font-body mt-2 text-xs leading-relaxed text-text-muted line-clamp-2">
-          {data.description}
-        </p>
+        {data.developer && (
+          <p class="font-mono text-xs text-text-muted mt-1">{data.developer}</p>
+        )}
+
+        {data.description && (
+          <p class="font-body mt-2 text-xs leading-relaxed text-text-muted line-clamp-2">
+            {data.description}
+          </p>
+        )}
       </div>
 
       <div class="mt-4 pt-3 border-t border-border/40 flex items-center justify-between font-mono text-xs text-accent">

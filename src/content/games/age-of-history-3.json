@@ -1,0 +1,21 @@
+{
+  "title": "Age of History 3",
+  "releaseYear": 2023,
+  "genre": "Grande Estratégia",
+  "developer": "Lukasz Jakowski",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/age-of-history-3/600/800",
+    "alt": "Capa provisória de Age of History 3",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 78,
+    "plot": 72,
+    "aesthetics": 82,
+    "retention": 87,
+    "feeling": 86
+  },
+  "isDemo": false
+}

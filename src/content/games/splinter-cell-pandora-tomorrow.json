@@ -1,0 +1,21 @@
+{
+  "title": "Splinter Cell: Pandora Tomorrow",
+  "releaseYear": 2004,
+  "genre": "Ação/Furtividade",
+  "developer": "Ubisoft Shanghai",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/splinter-cell-pandora-tomorrow/600/800",
+    "alt": "Capa provisória de Splinter Cell: Pandora Tomorrow",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 90,
+    "plot": 86,
+    "aesthetics": 87,
+    "retention": 85,
+    "feeling": 87
+  },
+  "isDemo": false
+}

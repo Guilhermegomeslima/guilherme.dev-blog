@@ -1,0 +1,21 @@
+{
+  "title": "Minecraft",
+  "releaseYear": 2011,
+  "genre": "Sandbox/Sobrevivência",
+  "developer": "Mojang",
+  "platform": "Mobile",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/minecraft/600/800",
+    "alt": "Capa provisória de Minecraft",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 90,
+    "plot": 79,
+    "aesthetics": 85,
+    "retention": 84,
+    "feeling": 87
+  },
+  "isDemo": false
+}

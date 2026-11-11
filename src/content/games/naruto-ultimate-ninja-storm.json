@@ -1,0 +1,21 @@
+{
+  "title": "Naruto Ultimate Ninja Storm",
+  "releaseYear": 2017,
+  "genre": "Luta",
+  "developer": "CyberConnect2",
+  "platform": "PC/Steam",
+  "status": "Jogando",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/naruto-ultimate-ninja-storm/600/800",
+    "alt": "Capa provisória de Naruto Ultimate Ninja Storm",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 90,
+    "plot": 79,
+    "aesthetics": 93,
+    "retention": 80,
+    "feeling": 83
+  },
+  "isDemo": false
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Asterix At The Olympic Games",
+  "releaseYear": 2007,
+  "genre": "Esporte/Minigames",
+  "developer": "Etranges Libellules",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/asterix-at-the-olympic-games/600/800",
+    "alt": "Capa provisória de Asterix At The Olympic Games",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 79,
+    "plot": 82,
+    "aesthetics": 83,
+    "retention": 81,
+    "feeling": 82
+  },
+  "isDemo": false
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Metal Gear Solid 5 The Panthom Pain",
+  "releaseYear": 2015,
+  "genre": "Ação/Furtividade",
+  "developer": "Kojima Productions",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/metal-gear-solid-5-the-panthom-pain/600/800",
+    "alt": "Capa provisória de Metal Gear Solid 5 The Panthom Pain",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 98,
+    "plot": 89,
+    "aesthetics": 95,
+    "retention": 98,
+    "feeling": 98
+  },
+  "isDemo": false
+}

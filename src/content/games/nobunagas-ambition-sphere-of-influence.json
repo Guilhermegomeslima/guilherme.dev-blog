@@ -1,0 +1,21 @@
+{
+  "title": "Nobunaga's Ambition: Sphere of Influence",
+  "releaseYear": 2013,
+  "genre": "Estratégia",
+  "developer": "Koei Tecmo",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/nobunagas-ambition-sphere-of-influence/600/800",
+    "alt": "Capa provisória de Nobunaga's Ambition: Sphere of Influence",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 94,
+    "plot": 91,
+    "aesthetics": 90,
+    "retention": 91,
+    "feeling": 94
+  },
+  "isDemo": false
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Commandos: Strike Force",
+  "releaseYear": 2006,
+  "genre": "FPS/Furtividade",
+  "developer": "Pyro Studios",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/commandos-strike-force/600/800",
+    "alt": "Capa provisória de Commandos: Strike Force",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 80,
+    "plot": 81,
+    "aesthetics": 83,
+    "retention": 80,
+    "feeling": 85
+  },
+  "isDemo": false
+}

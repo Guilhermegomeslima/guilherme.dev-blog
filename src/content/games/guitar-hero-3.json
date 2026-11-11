@@ -1,0 +1,21 @@
+{
+  "title": "Guitar Hero 3",
+  "releaseYear": 2007,
+  "genre": "Ritmo/Musical",
+  "developer": "Neversoft",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/guitar-hero-3/600/800",
+    "alt": "Capa provisória de Guitar Hero 3",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 86,
+    "plot": 83,
+    "aesthetics": 85,
+    "retention": 84,
+    "feeling": 85
+  },
+  "isDemo": false
+}

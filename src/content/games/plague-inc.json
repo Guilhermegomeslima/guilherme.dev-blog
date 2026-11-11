@@ -1,0 +1,21 @@
+{
+  "title": "Plague Inc",
+  "releaseYear": 2012,
+  "genre": "Estratégia/Simulação",
+  "developer": "Ndemic Creations",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/plague-inc/600/800",
+    "alt": "Capa provisória de Plague Inc",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 82,
+    "plot": null,
+    "aesthetics": 81,
+    "retention": 75,
+    "feeling": 68
+  },
+  "isDemo": false
+}

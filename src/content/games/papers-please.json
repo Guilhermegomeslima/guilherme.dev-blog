@@ -1,0 +1,21 @@
+{
+  "title": "Papers, Please",
+  "releaseYear": 2013,
+  "genre": "Simulação/Puzzle",
+  "developer": "3909 LLC",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/papers-please/600/800",
+    "alt": "Capa provisória de Papers, Please",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 85,
+    "plot": 85,
+    "aesthetics": 85,
+    "retention": 84,
+    "feeling": 85
+  },
+  "isDemo": false
+}

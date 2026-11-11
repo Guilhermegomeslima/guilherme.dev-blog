@@ -1,0 +1,21 @@
+{
+  "title": "Astral Ascent",
+  "releaseYear": 2023,
+  "genre": "Roguelite/Ação",
+  "developer": "Hibernian Workshop",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/astral-ascent/600/800",
+    "alt": "Capa provisória de Astral Ascent",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 80,
+    "aesthetics": 86,
+    "retention": 90,
+    "feeling": 87
+  },
+  "isDemo": false
+}

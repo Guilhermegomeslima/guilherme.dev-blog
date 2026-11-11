@@ -1,0 +1,21 @@
+{
+  "title": "Star Wars: Battlefront",
+  "releaseYear": 2004,
+  "genre": "Tiro/Ação",
+  "developer": "Pandemic Studios",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/star-wars-battlefront/600/800",
+    "alt": "Capa provisória de Star Wars: Battlefront",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 85,
+    "plot": 78,
+    "aesthetics": 83,
+    "retention": 80,
+    "feeling": 79
+  },
+  "isDemo": false
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Mortal Kombat: Shaolin Monks",
+  "releaseYear": 2005,
+  "genre": "Ação/Beat em Up",
+  "developer": "Midway Studios Los Angeles",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/mortal-kombat-shaolin-monks/600/800",
+    "alt": "Capa provisória de Mortal Kombat: Shaolin Monks",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 85,
+    "plot": 85,
+    "aesthetics": 84,
+    "retention": 80,
+    "feeling": 89
+  },
+  "isDemo": false
+}

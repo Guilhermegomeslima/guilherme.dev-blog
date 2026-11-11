@@ -1,0 +1,21 @@
+{
+  "title": "GTA San Andreas",
+  "releaseYear": 2004,
+  "genre": "Ação/Mundo Aberto",
+  "developer": "Rockstar North",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/gta-san-andreas/600/800",
+    "alt": "Capa provisória de GTA San Andreas",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 85,
+    "plot": 81,
+    "aesthetics": 80,
+    "retention": 78,
+    "feeling": 86
+  },
+  "isDemo": false
+}

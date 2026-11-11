@@ -1,0 +1,21 @@
+{
+  "title": "Naruto Shippuden: Ultimate Ninja Storm 3 FB",
+  "releaseYear": 2016,
+  "genre": "Luta",
+  "developer": "CyberConnect2",
+  "platform": "PC/Steam",
+  "status": "Platinado",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/naruto-shippuden-ultimate-ninja-storm-3-fb/600/800",
+    "alt": "Capa provisória de Naruto Shippuden: Ultimate Ninja Storm 3 FB",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 94,
+    "plot": 95,
+    "aesthetics": 94,
+    "retention": 96,
+    "feeling": 98
+  },
+  "isDemo": false
+}

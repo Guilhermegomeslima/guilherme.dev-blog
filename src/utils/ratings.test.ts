@@ -57,6 +57,34 @@ describe('calculateGameScore — Cálculo da média dos 5 critérios de jogos', 
     assert.equal(calculateGameScore(scores), 100);
   });
 
+  it('deve calcular a média dos 4 critérios aplicáveis quando o enredo for nulo (caso Ultimate Chicken Horse)', () => {
+    const scores: GameScores = {
+      mechanics: 83,
+      plot: null,
+      aesthetics: 80,
+      retention: 80,
+      feeling: 80,
+    };
+    // (83 + 80 + 80 + 80) / 4 = 323 / 4 = 80.75
+    const result = calculateGameScore(scores);
+    assert.equal(result, 80.75);
+    assert.equal(formatScore(result), '80.8');
+  });
+
+  it('deve calcular a média dos 4 critérios aplicáveis quando o enredo for nulo (caso Plague Inc)', () => {
+    const scores: GameScores = {
+      mechanics: 82,
+      plot: null,
+      aesthetics: 81,
+      retention: 75,
+      feeling: 68,
+    };
+    // (82 + 81 + 75 + 68) / 4 = 306 / 4 = 76.5
+    const result = calculateGameScore(scores);
+    assert.equal(result, 76.5);
+    assert.equal(formatScore(result), '76.5');
+  });
+
   it('deve lançar erro se qualquer nota for menor que 0', () => {
     const scores = {
       mechanics: -1,

@@ -1,0 +1,21 @@
+{
+  "title": "Sleeping Dogs",
+  "releaseYear": 2012,
+  "genre": "Ação/Mundo Aberto",
+  "developer": "United Front Games",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/sleeping-dogs/600/800",
+    "alt": "Capa provisória de Sleeping Dogs",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 87,
+    "aesthetics": 87,
+    "retention": 83,
+    "feeling": 87
+  },
+  "isDemo": false
+}

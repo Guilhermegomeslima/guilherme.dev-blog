@@ -1,0 +1,21 @@
+{
+  "title": "Gun",
+  "releaseYear": 2005,
+  "genre": "Ação/Aventura",
+  "developer": "Neversoft",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/gun/600/800",
+    "alt": "Capa provisória de Gun",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 84,
+    "plot": 84,
+    "aesthetics": 87,
+    "retention": 79,
+    "feeling": 85
+  },
+  "isDemo": false
+}

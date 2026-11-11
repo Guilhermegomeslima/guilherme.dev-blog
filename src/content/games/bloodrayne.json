@@ -1,0 +1,21 @@
+{
+  "title": "BloodRayne",
+  "releaseYear": 2002,
+  "genre": "Ação/Aventura",
+  "developer": "Terminal Reality",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/bloodrayne/600/800",
+    "alt": "Capa provisória de BloodRayne",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 70,
+    "plot": 78,
+    "aesthetics": 80,
+    "retention": 74,
+    "feeling": 76
+  },
+  "isDemo": false
+}

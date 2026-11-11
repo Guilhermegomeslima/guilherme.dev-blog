@@ -1,0 +1,21 @@
+{
+  "title": "Stardew Valley",
+  "releaseYear": 2016,
+  "genre": "Simulação/RPG",
+  "developer": "ConcernedApe",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/stardew-valley/600/800",
+    "alt": "Capa provisória de Stardew Valley",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 84,
+    "plot": 80,
+    "aesthetics": 86,
+    "retention": 83,
+    "feeling": 83
+  },
+  "isDemo": false
+}

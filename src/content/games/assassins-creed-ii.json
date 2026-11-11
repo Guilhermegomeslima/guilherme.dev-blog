@@ -1,0 +1,21 @@
+{
+  "title": "Assassin's Creed II",
+  "releaseYear": 2010,
+  "genre": "Ação/Aventura",
+  "developer": "Ubisoft Montreal",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/assassins-creed-ii/600/800",
+    "alt": "Capa provisória de Assassin's Creed II",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 90,
+    "plot": 94,
+    "aesthetics": 94,
+    "retention": 90,
+    "feeling": 92
+  },
+  "isDemo": false
+}

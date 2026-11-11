@@ -1,0 +1,21 @@
+{
+  "title": "Ultimate Chicken Horse",
+  "releaseYear": 2016,
+  "genre": "Plataforma/Party Game",
+  "developer": "Clever Endeavour Games",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/ultimate-chicken-horse/600/800",
+    "alt": "Capa provisória de Ultimate Chicken Horse",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 83,
+    "plot": null,
+    "aesthetics": 80,
+    "retention": 80,
+    "feeling": 80
+  },
+  "isDemo": false
+}

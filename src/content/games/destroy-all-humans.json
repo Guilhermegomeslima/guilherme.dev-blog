@@ -1,0 +1,21 @@
+{
+  "title": "Destroy all humans",
+  "releaseYear": 2005,
+  "genre": "Ação/Aventura",
+  "developer": "Pandemic Studios",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/destroy-all-humans/600/800",
+    "alt": "Capa provisória de Destroy all humans",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 86,
+    "plot": 80,
+    "aesthetics": 85,
+    "retention": 82,
+    "feeling": 83
+  },
+  "isDemo": false
+}

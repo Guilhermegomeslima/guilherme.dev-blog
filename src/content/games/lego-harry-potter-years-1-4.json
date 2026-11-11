@@ -1,0 +1,21 @@
+{
+  "title": "Lego Harry Potter: Years 1-4",
+  "releaseYear": 2010,
+  "genre": "Ação/Aventura",
+  "developer": "Traveller's Tales",
+  "platform": "Xbox 360",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/lego-harry-potter-years-1-4/600/800",
+    "alt": "Capa provisória de Lego Harry Potter: Years 1-4",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 88,
+    "aesthetics": 89,
+    "retention": 84,
+    "feeling": 87
+  },
+  "isDemo": false
+}

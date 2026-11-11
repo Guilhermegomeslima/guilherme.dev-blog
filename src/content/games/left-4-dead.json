@@ -1,0 +1,21 @@
+{
+  "title": "Left 4 Dead",
+  "releaseYear": 2008,
+  "genre": "FPS Cooperativo",
+  "developer": "Turtle Rock Studios",
+  "platform": "Xbox 360",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/left-4-dead/600/800",
+    "alt": "Capa provisória de Left 4 Dead",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 85,
+    "plot": 75,
+    "aesthetics": 79,
+    "retention": 77,
+    "feeling": 75
+  },
+  "isDemo": false
+}

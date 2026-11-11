@@ -1,0 +1,21 @@
+{
+  "title": "Dynasty Warriors 6 Empires",
+  "releaseYear": 2009,
+  "genre": "Hack and Slash/Estratégia",
+  "developer": "Omega Force",
+  "platform": "Xbox 360",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/dynasty-warriors-6-empires/600/800",
+    "alt": "Capa provisória de Dynasty Warriors 6 Empires",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 77,
+    "plot": 79,
+    "aesthetics": 85,
+    "retention": 79,
+    "feeling": 82
+  },
+  "isDemo": false
+}

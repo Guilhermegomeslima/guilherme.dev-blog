@@ -1,0 +1,21 @@
+{
+  "title": "Shinobido: The Way of the Ninja",
+  "releaseYear": 2005,
+  "genre": "Ação/Furtividade",
+  "developer": "Acquire",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/shinobido-the-way-of-the-ninja/600/800",
+    "alt": "Capa provisória de Shinobido: The Way of the Ninja",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 94,
+    "plot": 94,
+    "aesthetics": 91,
+    "retention": 95,
+    "feeling": 99
+  },
+  "isDemo": false
+}

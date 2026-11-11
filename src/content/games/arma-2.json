@@ -1,0 +1,21 @@
+{
+  "title": "Arma 2",
+  "releaseYear": 2009,
+  "genre": "FPS/Simulação Militar",
+  "developer": "Bohemia Interactive",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/arma-2/600/800",
+    "alt": "Capa provisória de Arma 2",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 91,
+    "plot": 77,
+    "aesthetics": 80,
+    "retention": 82,
+    "feeling": 86
+  },
+  "isDemo": false
+}

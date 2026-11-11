@@ -1,0 +1,21 @@
+{
+  "title": "Mount and Blade Warband",
+  "releaseYear": 2010,
+  "genre": "RPG/Estratégia",
+  "developer": "TaleWorlds Entertainment",
+  "platform": "PC/Steam",
+  "status": "Parado",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/mount-and-blade-warband/600/800",
+    "alt": "Capa provisória de Mount and Blade Warband",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 82,
+    "plot": 86,
+    "aesthetics": 78,
+    "retention": 83,
+    "feeling": 84
+  },
+  "isDemo": false
+}

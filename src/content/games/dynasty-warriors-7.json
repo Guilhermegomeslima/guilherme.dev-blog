@@ -1,0 +1,21 @@
+{
+  "title": "Dynasty Warriors 7",
+  "releaseYear": 2011,
+  "genre": "Hack and Slash",
+  "developer": "Omega Force",
+  "platform": "Xbox 360",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/dynasty-warriors-7/600/800",
+    "alt": "Capa provisória de Dynasty Warriors 7",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 89,
+    "plot": 88,
+    "aesthetics": 89,
+    "retention": 83,
+    "feeling": 87
+  },
+  "isDemo": false
+}

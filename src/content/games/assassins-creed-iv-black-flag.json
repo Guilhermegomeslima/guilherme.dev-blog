@@ -1,0 +1,21 @@
+{
+  "title": "Assassin's Creed IV: Black Flag",
+  "releaseYear": 2013,
+  "genre": "Ação/Aventura",
+  "developer": "Ubisoft Montreal",
+  "platform": "Xbox 360",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/assassins-creed-iv-black-flag/600/800",
+    "alt": "Capa provisória de Assassin's Creed IV: Black Flag",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 96,
+    "plot": 88,
+    "aesthetics": 92,
+    "retention": 96,
+    "feeling": 98
+  },
+  "isDemo": false
+}

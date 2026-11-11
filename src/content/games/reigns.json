@@ -1,0 +1,21 @@
+{
+  "title": "Reigns",
+  "releaseYear": 2016,
+  "genre": "Estratégia/Cartas",
+  "developer": "Nerial",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/reigns/600/800",
+    "alt": "Capa provisória de Reigns",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 80,
+    "plot": 82,
+    "aesthetics": 78,
+    "retention": 80,
+    "feeling": 76
+  },
+  "isDemo": false
+}

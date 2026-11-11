@@ -1,0 +1,21 @@
+{
+  "title": "Hitman: Absolution",
+  "releaseYear": 2012,
+  "genre": "Ação/Furtividade",
+  "developer": "IO Interactive",
+  "platform": "Xbox 360",
+  "status": "Parado",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/hitman-absolution/600/800",
+    "alt": "Capa provisória de Hitman: Absolution",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 80,
+    "aesthetics": 81,
+    "retention": 79,
+    "feeling": 84
+  },
+  "isDemo": false
+}

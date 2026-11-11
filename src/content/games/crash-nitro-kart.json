@@ -1,0 +1,21 @@
+{
+  "title": "Crash Nitro Kart",
+  "releaseYear": 2003,
+  "genre": "Corrida",
+  "developer": "Vicarious Visions",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/crash-nitro-kart/600/800",
+    "alt": "Capa provisória de Crash Nitro Kart",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 79,
+    "plot": 77,
+    "aesthetics": 82,
+    "retention": 78,
+    "feeling": 80
+  },
+  "isDemo": false
+}

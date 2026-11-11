@@ -1,0 +1,21 @@
+{
+  "title": "Game Dev Tycoon",
+  "releaseYear": 2012,
+  "genre": "Simulação/Gerenciamento",
+  "developer": "Greenheart Games",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/game-dev-tycoon/600/800",
+    "alt": "Capa provisória de Game Dev Tycoon",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 74,
+    "plot": 72,
+    "aesthetics": 76,
+    "retention": 70,
+    "feeling": 70
+  },
+  "isDemo": false
+}

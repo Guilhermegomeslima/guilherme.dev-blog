@@ -1,0 +1,21 @@
+{
+  "title": "Victoria II",
+  "releaseYear": 2010,
+  "genre": "Grande Estratégia",
+  "developer": "Paradox Development Studio",
+  "platform": "PC",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/victoria-ii/600/800",
+    "alt": "Capa provisória de Victoria II",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 75,
+    "plot": 72,
+    "aesthetics": 70,
+    "retention": 74,
+    "feeling": 75
+  },
+  "isDemo": false
+}

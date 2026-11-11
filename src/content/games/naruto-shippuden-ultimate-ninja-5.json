@@ -1,0 +1,21 @@
+{
+  "title": "Naruto Shippuden: Ultimate Ninja 5",
+  "releaseYear": 2008,
+  "genre": "Luta",
+  "developer": "CyberConnect2",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/naruto-shippuden-ultimate-ninja-5/600/800",
+    "alt": "Capa provisória de Naruto Shippuden: Ultimate Ninja 5",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 85,
+    "plot": 85,
+    "aesthetics": 85,
+    "retention": 85,
+    "feeling": 89
+  },
+  "isDemo": false
+}

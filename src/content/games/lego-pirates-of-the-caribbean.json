@@ -1,0 +1,21 @@
+{
+  "title": "Lego Pirates of the Caribbean",
+  "releaseYear": 2011,
+  "genre": "Ação/Aventura",
+  "developer": "Traveller's Tales",
+  "platform": "Xbox 360",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/lego-pirates-of-the-caribbean/600/800",
+    "alt": "Capa provisória de Lego Pirates of the Caribbean",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 85,
+    "plot": 86,
+    "aesthetics": 86,
+    "retention": 80,
+    "feeling": 84
+  },
+  "isDemo": false
+}

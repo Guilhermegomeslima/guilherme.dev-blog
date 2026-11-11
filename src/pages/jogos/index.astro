@@ -30,6 +30,17 @@ const hasDemoContent = allGames.some((g) => g.data.isDemo);
 
       {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
 
+      {/* Resumo do Acervo */}
+      <div class="mb-10 flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-4 font-mono text-xs text-text-muted">
+        <span>
+          Total catalogado:{' '}
+          <strong class="text-text">{allGames.length} obras</strong>
+        </span>
+        <span class="text-text-muted/70">
+          * Ordenadas cronologicamente por ano de lançamento
+        </span>
+      </div>
+
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {sortedGames.map((game) => (
           <GameCard game={game} />

@@ -1,0 +1,21 @@
+{
+  "title": "Prison Architect",
+  "releaseYear": 2015,
+  "genre": "Simulação/Gerenciamento",
+  "developer": "Introversion Software",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/prison-architect/600/800",
+    "alt": "Capa provisória de Prison Architect",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 78,
+    "aesthetics": 79,
+    "retention": 79,
+    "feeling": 81
+  },
+  "isDemo": false
+}

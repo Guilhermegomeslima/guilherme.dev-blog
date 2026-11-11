@@ -1,0 +1,21 @@
+{
+  "title": "STALKER clear sky",
+  "releaseYear": 2008,
+  "genre": "FPS/RPG",
+  "developer": "GSC Game World",
+  "platform": "PC/Steam",
+  "status": "Descontinuado",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/stalker-clear-sky/600/800",
+    "alt": "Capa provisória de STALKER clear sky",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 91,
+    "plot": 65,
+    "aesthetics": 87,
+    "retention": 77,
+    "feeling": 80
+  },
+  "isDemo": false
+}

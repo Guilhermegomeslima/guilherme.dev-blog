@@ -1,0 +1,21 @@
+{
+  "title": "Metal Gear Solid 5 Ground Zeroes",
+  "releaseYear": 2014,
+  "genre": "Ação/Furtividade",
+  "developer": "Kojima Productions",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/metal-gear-solid-5-ground-zeroes/600/800",
+    "alt": "Capa provisória de Metal Gear Solid 5 Ground Zeroes",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 91,
+    "plot": 75,
+    "aesthetics": 88,
+    "retention": 80,
+    "feeling": 80
+  },
+  "isDemo": false
+}

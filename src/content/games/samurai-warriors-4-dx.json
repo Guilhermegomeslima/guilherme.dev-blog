@@ -1,0 +1,21 @@
+{
+  "title": "Samurai Warriors 4 DX",
+  "releaseYear": 2024,
+  "genre": "Hack and Slash",
+  "developer": "Omega Force",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/samurai-warriors-4-dx/600/800",
+    "alt": "Capa provisória de Samurai Warriors 4 DX",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 93,
+    "plot": 89,
+    "aesthetics": 93,
+    "retention": 96,
+    "feeling": 97
+  },
+  "isDemo": false
+}

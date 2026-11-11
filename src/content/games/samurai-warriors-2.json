@@ -1,0 +1,21 @@
+{
+  "title": "Samurai Warriors 2",
+  "releaseYear": 2006,
+  "genre": "Hack and Slash",
+  "developer": "Omega Force",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/samurai-warriors-2/600/800",
+    "alt": "Capa provisória de Samurai Warriors 2",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 95,
+    "aesthetics": 96,
+    "retention": 90,
+    "feeling": 96
+  },
+  "isDemo": false
+}

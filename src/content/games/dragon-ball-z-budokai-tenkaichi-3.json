@@ -1,0 +1,21 @@
+{
+  "title": "Dragon Ball Z: Budokai Tenkaichi 3",
+  "releaseYear": 2007,
+  "genre": "Luta",
+  "developer": "Spike",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/dragon-ball-z-budokai-tenkaichi-3/600/800",
+    "alt": "Capa provisória de Dragon Ball Z: Budokai Tenkaichi 3",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 86,
+    "plot": 87,
+    "aesthetics": 86,
+    "retention": 82,
+    "feeling": 88
+  },
+  "isDemo": false
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Hearts of Iron IV",
+  "releaseYear": 2016,
+  "genre": "Grande Estratégia",
+  "developer": "Paradox Development Studio",
+  "platform": "PC/Steam",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/hearts-of-iron-iv/600/800",
+    "alt": "Capa provisória de Hearts of Iron IV",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 87,
+    "plot": 83,
+    "aesthetics": 75,
+    "retention": 75,
+    "feeling": 83
+  },
+  "isDemo": false
+}

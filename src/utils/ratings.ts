@@ -1,6 +1,6 @@
 export interface GameScores {
   mechanics: number;
-  plot: number;
+  plot: number | null;
   aesthetics: number;
   retention: number;
   feeling: number;
@@ -16,7 +16,9 @@ export interface MovieScores {
 }
 
 /**
- * Calcula a média aritmética simples dos cinco critérios obrigatórios de jogos (0 a 100), sem pesos.
+ * Calcula a média aritmética simples dos critérios de jogos (0 a 100), sem pesos.
+ * Caso o Enredo seja nulo (critério não aplicável na obra), a média é calculada
+ * sobre os critérios válidos restantes, conforme registrado na planilha original.
  */
 export function calculateGameScore(scores: GameScores): number {
   const criteria = [
@@ -27,7 +29,15 @@ export function calculateGameScore(scores: GameScores): number {
     { name: 'Feeling', val: scores.feeling },
   ];
 
+  let sum = 0;
+  let count = 0;
+
   for (const item of criteria) {
+    if (item.val === null || item.val === undefined) {
+      // Critério não aplicável / nulo (ex.: Ultimate Chicken Horse e Plague Inc)
+      continue;
+    }
+
     if (
       typeof item.val !== 'number' ||
       Number.isNaN(item.val) ||
@@ -38,16 +48,16 @@ export function calculateGameScore(scores: GameScores): number {
         `Critério '${item.name}' inválido: ${item.val}. A nota deve ser um número entre 0 e 100.`,
       );
     }
+
+    sum += item.val;
+    count += 1;
   }
 
-  const sum =
-    scores.mechanics +
-    scores.plot +
-    scores.aesthetics +
-    scores.retention +
-    scores.feeling;
+  if (count === 0) {
+    throw new Error('Nenhum critério válido fornecido para o cálculo da nota.');
+  }
 
-  return sum / 5;
+  return sum / count;
 }
 
 /**

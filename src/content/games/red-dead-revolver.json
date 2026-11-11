@@ -1,0 +1,21 @@
+{
+  "title": "Red Dead Revolver",
+  "releaseYear": 2004,
+  "genre": "Tiro em Terceira Pessoa",
+  "developer": "Rockstar San Diego",
+  "platform": "PS2",
+  "status": "Platinado",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/red-dead-revolver/600/800",
+    "alt": "Capa provisória de Red Dead Revolver",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 83,
+    "plot": 95,
+    "aesthetics": 91,
+    "retention": 92,
+    "feeling": 98
+  },
+  "isDemo": false
+}

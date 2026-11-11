@@ -1,0 +1,21 @@
+{
+  "title": "Fifa Street",
+  "releaseYear": 2012,
+  "genre": "Esporte/Futebol",
+  "developer": "EA Canada",
+  "platform": "Xbox 360",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/fifa-street/600/800",
+    "alt": "Capa provisória de Fifa Street",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 88,
+    "plot": 82,
+    "aesthetics": 85,
+    "retention": 88,
+    "feeling": 82
+  },
+  "isDemo": false
+}

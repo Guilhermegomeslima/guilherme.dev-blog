@@ -1,0 +1,21 @@
+{
+  "title": "Cuphead",
+  "releaseYear": 2017,
+  "genre": "Run and Gun/Plataforma",
+  "developer": "Studio MDHR",
+  "platform": "PC/Steam",
+  "status": "Parado",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/cuphead/600/800",
+    "alt": "Capa provisória de Cuphead",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 86,
+    "plot": 80,
+    "aesthetics": 84,
+    "retention": 84,
+    "feeling": 83
+  },
+  "isDemo": false
+}

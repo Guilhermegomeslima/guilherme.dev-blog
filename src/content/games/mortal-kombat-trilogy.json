@@ -1,0 +1,21 @@
+{
+  "title": "Mortal kombat Trilogy",
+  "releaseYear": 1996,
+  "genre": "Luta",
+  "developer": "Midway Games",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/mortal-kombat-trilogy/600/800",
+    "alt": "Capa provisória de Mortal kombat Trilogy",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 70,
+    "plot": 75,
+    "aesthetics": 76,
+    "retention": 62,
+    "feeling": 70
+  },
+  "isDemo": false
+}

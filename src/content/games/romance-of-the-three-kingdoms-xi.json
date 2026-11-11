@@ -1,0 +1,21 @@
+{
+  "title": "Romance of the Three Kingdoms XI",
+  "releaseYear": 2006,
+  "genre": "Estratégia",
+  "developer": "Koei",
+  "platform": "PS2 + PC",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/romance-of-the-three-kingdoms-xi/600/800",
+    "alt": "Capa provisória de Romance of the Three Kingdoms XI",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 95,
+    "plot": 90,
+    "aesthetics": 89,
+    "retention": 90,
+    "feeling": 96
+  },
+  "isDemo": false
+}

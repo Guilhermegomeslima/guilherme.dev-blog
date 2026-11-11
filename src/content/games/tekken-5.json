@@ -1,0 +1,21 @@
+{
+  "title": "Tekken 5",
+  "releaseYear": 2005,
+  "genre": "Luta",
+  "developer": "Namco",
+  "platform": "PS2",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/tekken-5/600/800",
+    "alt": "Capa provisória de Tekken 5",
+    "isPlaceholder": true
+  },
+  "scores": {
+    "mechanics": 86,
+    "plot": 89,
+    "aesthetics": 88,
+    "retention": 90,
+    "feeling": 89
+  },
+  "isDemo": false
+}
