@@ -1,6 +1,12 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { calculateGameScore, formatScore, type GameScores } from './ratings.ts';
+import {
+  calculateGameScore,
+  calculateMovieScore,
+  formatScore,
+  type GameScores,
+  type MovieScores,
+} from './ratings.ts';
 
 describe('calculateGameScore — Cálculo da média dos 5 critérios de jogos', () => {
   it('deve calcular a média aritmética simples exata para entradas válidas', () => {
@@ -109,6 +115,145 @@ describe('calculateGameScore — Cálculo da média dos 5 critérios de jogos', 
       () => calculateGameScore(scores),
       /Critério 'Estética' inválido/,
     );
+  });
+});
+
+describe('calculateMovieScore — Cálculo da média dos 6 critérios de filmes', () => {
+  it('deve calcular a média aritmética simples exata para entradas válidas (6 eixos)', () => {
+    const scores: MovieScores = {
+      direction: 84,
+      screenplay: 79,
+      audiovisual: 87,
+      acting: 80,
+      pacing: 72,
+      feeling: 84,
+    };
+    // (84 + 79 + 87 + 80 + 72 + 84) / 6 = 486 / 6 = 81
+    const result = calculateMovieScore(scores);
+    assert.equal(result, 81);
+  });
+
+  it('deve calcular a média corretamente quando o resultado tem casas decimais periódicas', () => {
+    const scores: MovieScores = {
+      direction: 88,
+      screenplay: 82,
+      audiovisual: 95,
+      acting: 85,
+      pacing: 78,
+      feeling: 90,
+    };
+    // (88 + 82 + 95 + 85 + 78 + 90) / 6 = 518 / 6 = 86.33333333333333
+    const result = calculateMovieScore(scores);
+    assert.equal(result, 518 / 6);
+    assert.equal(formatScore(result), '86.3');
+  });
+
+  it('deve retornar 0 quando todos os critérios forem 0 (limite inferior)', () => {
+    const scores: MovieScores = {
+      direction: 0,
+      screenplay: 0,
+      audiovisual: 0,
+      acting: 0,
+      pacing: 0,
+      feeling: 0,
+    };
+    assert.equal(calculateMovieScore(scores), 0);
+  });
+
+  it('deve retornar 100 quando todos os critérios forem 100 (limite superior)', () => {
+    const scores: MovieScores = {
+      direction: 100,
+      screenplay: 100,
+      audiovisual: 100,
+      acting: 100,
+      pacing: 100,
+      feeling: 100,
+    };
+    assert.equal(calculateMovieScore(scores), 100);
+  });
+
+  it('deve lançar erro se qualquer nota for menor que 0', () => {
+    const scores = {
+      direction: -1,
+      screenplay: 80,
+      audiovisual: 80,
+      acting: 80,
+      pacing: 80,
+      feeling: 80,
+    } as unknown as MovieScores;
+
+    assert.throws(
+      () => calculateMovieScore(scores),
+      /Critério 'Direção' inválido/,
+    );
+  });
+
+  it('deve lançar erro se qualquer nota for maior que 100', () => {
+    const scores = {
+      direction: 80,
+      screenplay: 80,
+      audiovisual: 80,
+      acting: 105,
+      pacing: 80,
+      feeling: 80,
+    } as unknown as MovieScores;
+
+    assert.throws(
+      () => calculateMovieScore(scores),
+      /Critério 'Atuação' inválido/,
+    );
+  });
+
+  it('deve lançar erro se qualquer critério for NaN', () => {
+    const scores = {
+      direction: 80,
+      screenplay: 80,
+      audiovisual: 80,
+      acting: 80,
+      pacing: NaN,
+      feeling: 80,
+    } as unknown as MovieScores;
+
+    assert.throws(
+      () => calculateMovieScore(scores),
+      /Critério 'Ritmo' inválido/,
+    );
+  });
+
+  it('deve lançar erro se qualquer critério for não numérico ou ausente', () => {
+    const scores = {
+      direction: 80,
+      screenplay: 80,
+      audiovisual: '90',
+      acting: 80,
+      pacing: 80,
+      feeling: 80,
+    } as unknown as MovieScores;
+
+    assert.throws(
+      () => calculateMovieScore(scores),
+      /Critério 'Audiovisual' inválido/,
+    );
+  });
+
+  it('deve garantir que metadados (como diretor e ano de lançamento) não influenciam o cálculo', () => {
+    const scores = {
+      direction: 90,
+      screenplay: 92,
+      audiovisual: 88,
+      acting: 91,
+      pacing: 86,
+      feeling: 89,
+      // Metadados adicionais hipotéticos passados junto
+      director: 'Diretor Fictício B',
+      releaseYear: 2021,
+      randomFactor: 9999,
+    } as unknown as MovieScores;
+
+    // (90 + 92 + 88 + 91 + 86 + 89) / 6 = 536 / 6 = 89.33333333333333
+    const result = calculateMovieScore(scores);
+    assert.equal(result, 536 / 6);
+    assert.equal(formatScore(result), '89.3');
   });
 });
 
