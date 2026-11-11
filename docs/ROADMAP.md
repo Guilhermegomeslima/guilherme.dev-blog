@@ -100,7 +100,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID      | Item                                                                                | Dependências técnicas | Prioridade | Data alvo | Commit/PR | Status   |
 | ------- | ----------------------------------------------------------------------------------- | --------------------- | ---------- | --------- | --------- | -------- |
-| DATA-01 | Inserir jogos reais, informações, imagens e notas dos cinco critérios               | CNT-05, CNT-06        | P1         | —         | —         | Pendente |
+| DATA-01 | Inserir jogos reais, informações, imagens e notas dos cinco critérios               | CNT-05, CNT-06        | P1         | —         | 3f4fb7e   | Concluído |
 | DATA-02 | Cadastrar projetos reais com imagens, descrições e links conferidos                 | CNT-04                | P1         | —         | —         | Pendente |
 | DATA-03 | Escrever a trajetória no Linux e completar a timeline dos sistemas utilizados       | CNT-03                | P1         | —         | —         | Pendente |
 | DATA-04 | Inserir filmes reais, diretor, ano e avaliações dos seis critérios                  | CNT-07, CNT-08        | P1         | —         | —         | Pendente |
