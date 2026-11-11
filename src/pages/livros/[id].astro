@@ -1,0 +1,201 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+import Button from '../../components/ui/Button.astro';
+import Card from '../../components/ui/Card.astro';
+import { withBase } from '../../utils/base';
+
+export async function getStaticPaths() {
+  const books = await getCollection('books');
+  return books.map((book) => ({
+    params: { id: book.id },
+    props: { book },
+  }));
+}
+
+interface Props {
+  book: CollectionEntry<'books'>;
+}
+
+const { book } = Astro.props;
+const { data, id } = book;
+
+const statusLabels: Record<string, { label: string; badgeClass: string }> = {
+  lendo: {
+    label: 'Leitura em Andamento',
+    badgeClass: 'border-accent/40 bg-accent/10 text-accent',
+  },
+  lido: {
+    label: 'Leitura Concluída',
+    badgeClass: 'border-border/80 bg-surface-raised text-text font-semibold',
+  },
+  quero_ler: {
+    label: 'Fila de Próximas Leituras',
+    badgeClass: 'border-border/60 bg-surface-raised text-text-muted',
+  },
+};
+
+const currentStatus = statusLabels[data.status] || {
+  label: data.status,
+  badgeClass: 'border-border/60 bg-surface-raised text-text-muted',
+};
+---
+
+<BaseLayout
+  title={`${data.title} — Ficha de Leitura // guilherme.dev`}
+  description={data.description}
+  image={data.coverImage?.url}
+  noindex={data.isDemo}
+>
+  <div class="py-12 md:py-16">
+    <Container class="max-w-4xl">
+      {/* Botão de retorno */}
+      <div class="mb-8">
+        <Button href={withBase('/livros/')} variant="ghost" class="px-0">
+          &larr; Voltar para a biblioteca de livros
+        </Button>
+      </div>
+
+      {/* Hero com Capa e Ficha Técnica */}
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-start border-b border-border/80 pb-12">
+        <div class="md:col-span-5 lg:col-span-4">
+          <div class="relative aspect-[2/3] overflow-hidden rounded-lg border border-border/80 bg-surface-raised shadow-xl">
+            {data.coverImage ? (
+              <img
+                src={data.coverImage.url}
+                alt={data.coverImage.alt}
+                width="600"
+                height="900"
+                loading="eager"
+                decoding="async"
+                class="h-full w-full object-cover filter contrast-105 brightness-95"
+              />
+            ) : (
+              <div class="flex h-full w-full flex-col justify-between p-8 bg-gradient-to-br from-surface to-surface-raised border-r border-border/40">
+                <span class="font-mono text-xs text-accent uppercase tracking-widest">
+                  // TOMO BIBLIOGRÁFICO
+                </span>
+                <div>
+                  <h2 class="font-display text-2xl font-bold text-text leading-tight">
+                    {data.title}
+                  </h2>
+                  <p class="font-mono text-sm text-text-muted mt-3">
+                    {data.author}
+                  </p>
+                </div>
+                <span class="font-mono text-xs text-text-muted/60">
+                  {data.genre}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div class="md:col-span-7 lg:col-span-8 flex flex-col justify-between">
+          <div>
+            <div class="mb-3 flex flex-wrap items-center gap-2 font-mono text-xs">
+              <span class="text-accent uppercase tracking-wider font-semibold">
+                // REGISTRO BIBLIOGRÁFICO #{id}
+              </span>
+              <span class="text-border" aria-hidden="true">
+                ·
+              </span>
+              <span class="text-text-muted">{data.genre}</span>
+            </div>
+
+            <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-text">
+              {data.title}
+            </h1>
+
+            <p class="font-mono text-sm text-accent/90 mt-2 font-medium">
+              Por {data.author}
+            </p>
+
+            {/* Metadados do Livro */}
+            <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3 font-mono text-xs">
+              <div class="rounded-lg border border-border/70 bg-surface/80 p-3">
+                <span class="text-text-muted block text-[11px] uppercase">
+                  Status
+                </span>
+                <span
+                  class:list={[
+                    'inline-block mt-1 font-semibold',
+                    currentStatus.badgeClass,
+                  ]}
+                >
+                  {currentStatus.label}
+                </span>
+              </div>
+
+              {data.year && (
+                <div class="rounded-lg border border-border/70 bg-surface/80 p-3">
+                  <span class="text-text-muted block text-[11px] uppercase">
+                    Publicação
+                  </span>
+                  <span class="text-text font-bold text-sm mt-0.5 block">
+                    {data.year}
+                  </span>
+                </div>
+              )}
+
+              <div class="rounded-lg border border-border/70 bg-surface/80 p-3">
+                <span class="text-text-muted block text-[11px] uppercase">
+                  Destaque
+                </span>
+                <span
+                  class:list={[
+                    'text-sm mt-0.5 block font-bold',
+                    data.favorite ? 'text-warm' : 'text-text-muted',
+                  ]}
+                >
+                  {data.favorite ? '★ Obra Favorita' : 'Leitura Regular'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Aviso de mock data se aplicável */}
+      {data.isDemo && <DemoNotice variant="item" class="my-8" />}
+
+      {/* Seções de Texto e Resenha */}
+      <div class="mt-8 space-y-10">
+        {/* Sinopse / Contexto */}
+        <section>
+          <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-2">
+            // SINOPSE & ESCOPO
+          </span>
+          <p class="font-body text-base sm:text-lg leading-relaxed text-text-muted">
+            {data.description}
+          </p>
+        </section>
+
+        {/* Anotações e Comentário Editorial */}
+        {data.comment && (
+          <section>
+            <Card class="border-border/80 bg-surface/60 p-6 sm:p-8">
+              <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-3">
+                // ANOTAÇÕES DE LEITURA & IMPRESSÕES
+              </span>
+              <p class="font-body text-base leading-relaxed text-text italic">
+                "{data.comment}"
+              </p>
+            </Card>
+          </section>
+        )}
+
+        {/* Nota Metodológica */}
+        <div class="border-t border-border/40 pt-4 text-right">
+          <span class="font-mono text-[11px] text-text-muted/70">
+            * A seção de livros prioriza resenhas e fichamentos textuais sem
+            atribuição de notas numéricas antes da definição de metodologia.
+          </span>
+        </div>
+      </div>
+    </Container>
+  </div>
+</BaseLayout>

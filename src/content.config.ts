@@ -132,6 +132,27 @@ const opensource = defineCollection({
   }),
 });
 
+const books = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/books' }),
+  schema: z.object({
+    title: z.string(),
+    author: z.string(),
+    year: z.number().int().optional(),
+    genre: z.string().default('Computação / Ficção Científica'),
+    status: z.enum(['lendo', 'lido', 'quero_ler']),
+    favorite: z.boolean().default(false),
+    coverImage: z
+      .object({
+        url: z.string(),
+        alt: z.string(),
+      })
+      .optional(),
+    description: z.string(),
+    comment: z.string().optional(),
+    isDemo: z.boolean().default(true),
+  }),
+});
+
 export const collections = {
   articles,
   projects,
@@ -139,4 +160,5 @@ export const collections = {
   movies,
   music,
   opensource,
+  books,
 };

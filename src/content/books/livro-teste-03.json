@@ -1,0 +1,16 @@
+{
+  "title": "Livro Teste 03: Protocolos de Ficção Especulativa",
+  "author": "Autor Hipotético C",
+  "year": 2024,
+  "genre": "Ficção Científica & Cyberpunk",
+  "status": "quero_ler",
+  "favorite": false,
+  "coverImage": {
+    "url": "https://picsum.photos/seed/livro-teste-03/600/900",
+    "alt": "Capa do Livro Teste 03: Protocolos de Ficção Especulativa"
+  },
+  "description": "Narrativa cyberpunk focada na convivência entre inteligências biológicas e protocolos de rede autônomos em uma sociedade pós-escassez.",
+  "comment": "Na fila de próximas leituras recomendado por entusiastas de literatura especulativa e ficção distópica.",
+  "isDemo": true
+}
+

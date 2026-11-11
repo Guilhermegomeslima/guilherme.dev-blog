@@ -14,5 +14,6 @@ export const navigation: NavItem[] = [
   { label: 'Jogos', href: '/jogos/', available: true },
   { label: 'Filmes', href: '/filmes/', available: true },
   { label: 'Música', href: '/musica/', available: true },
+  { label: 'Livros', href: '/livros/', available: true },
   { label: 'Open Source', href: '/opensource/', available: true },
 ];

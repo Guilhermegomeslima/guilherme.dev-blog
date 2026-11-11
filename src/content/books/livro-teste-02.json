@@ -1,0 +1,16 @@
+{
+  "title": "Livro Teste 02: Fundações da Filosofia Hacker",
+  "author": "Autora Hipotética B",
+  "year": 2019,
+  "genre": "História da Tecnologia & Ensaio",
+  "status": "lido",
+  "favorite": true,
+  "coverImage": {
+    "url": "https://picsum.photos/seed/livro-teste-02/600/900",
+    "alt": "Capa do Livro Teste 02: Fundações da Filosofia Hacker"
+  },
+  "description": "Uma crônica histórica sobre as origens do software livre, cultura comunitária e o impacto social das redes descentralizadas.",
+  "comment": "Leitura concluída com impacto marcante na minha visão sobre transparência, ética de código aberto e colaboração.",
+  "isDemo": true
+}
+

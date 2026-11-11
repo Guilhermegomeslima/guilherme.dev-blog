@@ -1,0 +1,134 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import BookCard from '../../components/content/BookCard.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+
+const allBooks = await getCollection('books');
+
+const currentlyReading = allBooks.filter((b) => b.data.status === 'lendo');
+const readBooks = allBooks.filter((b) => b.data.status === 'lido');
+const wantToRead = allBooks.filter((b) => b.data.status === 'quero_ler');
+
+const hasDemoContent = allBooks.some((b) => b.data.isDemo);
+---
+
+<BaseLayout
+  title="Livros & Leituras — guilherme.dev"
+  description="Biblioteca pessoal com registros de livros lidos, leituras em andamento, próximas leituras e obras favoritas."
+>
+  <div class="py-12 md:py-16">
+    <Container>
+      <SectionHeading
+        eyebrow="// BIBLIOTECA & LEITURAS"
+        title="Livros & Leituras"
+        description="Fichamentos, leituras de computação, ficção científica, ensaios e obras de referência organizadas por status de leitura."
+      />
+
+      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+
+      {/* Resumo da Biblioteca */}
+      <div class="mb-12 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+        <div class="rounded-lg border border-border/70 bg-surface/80 p-3.5">
+          <span class="text-text-muted block text-[11px] uppercase">
+            Total no Acervo
+          </span>
+          <span class="font-display text-xl font-bold text-text mt-0.5 block">
+            {allBooks.length}
+          </span>
+        </div>
+        <div class="rounded-lg border border-accent/40 bg-surface-raised/80 p-3.5">
+          <span class="text-text-muted block text-[11px] uppercase">
+            Lendo Agora
+          </span>
+          <span class="font-display text-xl font-bold text-accent mt-0.5 block">
+            {currentlyReading.length}
+          </span>
+        </div>
+        <div class="rounded-lg border border-border/70 bg-surface/80 p-3.5">
+          <span class="text-text-muted block text-[11px] uppercase">Lidos</span>
+          <span class="font-display text-xl font-bold text-text mt-0.5 block">
+            {readBooks.length}
+          </span>
+        </div>
+        <div class="rounded-lg border border-border/70 bg-surface/80 p-3.5">
+          <span class="text-text-muted block text-[11px] uppercase">
+            Quero Ler
+          </span>
+          <span class="font-display text-xl font-bold text-text-muted mt-0.5 block">
+            {wantToRead.length}
+          </span>
+        </div>
+      </div>
+
+      <div class="space-y-16">
+        {/* Seção: Lendo */}
+        {currentlyReading.length > 0 && (
+          <section>
+            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
+              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
+                <span class="text-accent font-mono text-sm">//</span> Leituras
+                em Andamento
+              </h2>
+              <span class="font-mono text-xs text-text-muted">
+                {currentlyReading.length}{' '}
+                {currentlyReading.length === 1 ? 'livro' : 'livros'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+              {currentlyReading.map((book) => (
+                <BookCard book={book} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Seção: Lidos */}
+        {readBooks.length > 0 && (
+          <section>
+            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
+              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
+                <span class="text-text font-mono text-sm">//</span> Leituras
+                Concluídas
+              </h2>
+              <span class="font-mono text-xs text-text-muted">
+                {readBooks.length} {readBooks.length === 1 ? 'livro' : 'livros'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+              {readBooks.map((book) => (
+                <BookCard book={book} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Seção: Quero Ler */}
+        {wantToRead.length > 0 && (
+          <section>
+            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
+              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
+                <span class="text-text-muted font-mono text-sm">//</span> Fila
+                de Próximas Leituras
+              </h2>
+              <span class="font-mono text-xs text-text-muted">
+                {wantToRead.length}{' '}
+                {wantToRead.length === 1 ? 'livro' : 'livros'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+              {wantToRead.map((book) => (
+                <BookCard book={book} />
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </Container>
+  </div>
+</BaseLayout>

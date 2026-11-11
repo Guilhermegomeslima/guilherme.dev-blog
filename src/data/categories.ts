@@ -66,8 +66,8 @@ export const categories: CategoryItem[] = [
     description:
       'Fichamentos e leituras de computação, ficção científica, história e ensaios.',
     href: '/livros/',
-    available: false,
-    badge: 'Em breve',
+    available: true,
+    badge: 'Disponível',
   },
   {
     id: 'opensource',

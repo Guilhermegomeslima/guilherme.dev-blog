@@ -1,0 +1,16 @@
+{
+  "title": "Livro Teste 01: Arquitetura de Sistemas Distribuídos",
+  "author": "Autor Hipotético A",
+  "year": 2022,
+  "genre": "Computação & Arquitetura",
+  "status": "lendo",
+  "favorite": true,
+  "coverImage": {
+    "url": "https://picsum.photos/seed/livro-teste-01/600/900",
+    "alt": "Capa do Livro Teste 01: Arquitetura de Sistemas Distribuídos"
+  },
+  "description": "Estudo teórico e prático sobre consistência eventual, tolerância a falhas e padrões de particionamento em escala.",
+  "comment": "Leitura em andamento nos capítulos de consenso e replicação de dados. Excelente profundidade técnica.",
+  "isDemo": true
+}
+
