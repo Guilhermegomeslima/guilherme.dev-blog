@@ -82,7 +82,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | CNT-06 | Criar cálculo/testes da média simples de jogos                    | CNT-05       | P1         | 22/11     | 40b06c5   | Concluído |
 | CNT-07 | Criar seção Filmes e validação dos seis critérios                 | CNT-01       | P1         | 28/11     | 4f749bb   | Concluído |
 | CNT-08 | Criar cálculo/testes da média simples de filmes                   | CNT-07       | P1         | 29/11     | 3fa44b7   | Concluído |
-| CNT-09 | Criar seções Música e Open Source                                 | CNT-01       | P1         | 06/12     | —         | Pendente  |
+| CNT-09 | Criar seções Música e Open Source                                 | CNT-01       | P1         | 06/12     | 4db1780   | Concluído |
 | CNT-10 | Definir modelo e criar seção Livros                               | CNT-01       | P1         | 16/12     | —         | Pendente  |
 | CNT-11 | Criar galeria com metadados e imagens externas permitidas         | CNT-01       | P1         | 20/12     | —         | Pendente  |
 
