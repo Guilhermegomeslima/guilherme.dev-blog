@@ -1,0 +1,12 @@
+{
+  "name": "Ferramenta Teste 02",
+  "category": "Terminal & Shell",
+  "description": "Emulador de terminal acelerado por GPU com foco em performance, baixo consumo de memória e personalização via Lua.",
+  "comment": "Exemplo de ferramenta de linha de comando para testar o status de 'recomendo' e visualização de repositório.",
+  "status": "recomendo",
+  "license": "MIT",
+  "websiteUrl": "https://example.com",
+  "repoUrl": "https://github.com/example",
+  "isDemo": true
+}
+

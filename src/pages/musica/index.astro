@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import MusicCard from '../../components/content/MusicCard.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+
+const allMusic = await getCollection('music');
+
+const artists = allMusic.filter((item) => item.data.type === 'artist');
+const albums = allMusic.filter((item) => item.data.type === 'album');
+const tracks = allMusic.filter((item) => item.data.type === 'track');
+
+const hasDemoContent = allMusic.some((m) => m.data.isDemo);
+---
+
+<BaseLayout
+  title="Música & Trilhas Sonoras — guilherme.dev"
+  description="Artistas, álbuns e faixas selecionadas para foco em programação, imersão sonora e apreciação musical."
+>
+  <div class="py-12 md:py-16">
+    <Container>
+      <SectionHeading
+        eyebrow="// FREQUÊNCIAS & FOCO"
+        title="Música & Trilhas Sonoras"
+        description="Artistas, discos e faixas instrumentais sem rankings ou notas — apenas recomendações sonoras para foco e inspiração."
+      />
+
+      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+
+      <div class="space-y-16">
+        {/* Seção: Artistas */}
+        {artists.length > 0 && (
+          <section>
+            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
+              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
+                <span class="text-accent font-mono text-sm">//</span> Artistas
+              </h2>
+              <span class="font-mono text-xs text-text-muted">
+                {artists.length} {artists.length === 1 ? 'item' : 'itens'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+              {artists.map((item) => (
+                <MusicCard item={item} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Seção: Álbuns */}
+        {albums.length > 0 && (
+          <section>
+            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
+              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
+                <span class="text-warm font-mono text-sm">//</span> Álbuns
+              </h2>
+              <span class="font-mono text-xs text-text-muted">
+                {albums.length} {albums.length === 1 ? 'item' : 'itens'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+              {albums.map((item) => (
+                <MusicCard item={item} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Seção: Faixas / Músicas */}
+        {tracks.length > 0 && (
+          <section>
+            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
+              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
+                <span class="text-text-muted font-mono text-sm">//</span> Faixas
+                Selecionadas
+              </h2>
+              <span class="font-mono text-xs text-text-muted">
+                {tracks.length} {tracks.length === 1 ? 'item' : 'itens'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+              {tracks.map((item) => (
+                <MusicCard item={item} />
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </Container>
+  </div>
+</BaseLayout>

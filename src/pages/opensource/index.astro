@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import OpenSourceCard from '../../components/content/OpenSourceCard.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+
+const allTools = await getCollection('opensource');
+
+// Agrupamento por status ou ordenação simples
+const sortedTools = allTools.sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+
+const hasDemoContent = allTools.some((t) => t.data.isDemo);
+---
+
+<BaseLayout
+  title="Open Source & Ferramentas — guilherme.dev"
+  description="Catálogo de softwares, programas e ferramentas de código aberto recomendados ou utilizados no dia a dia."
+>
+  <div class="py-12 md:py-16">
+    <Container>
+      <SectionHeading
+        eyebrow="// SOFTWARE LIVRE & COMUNIDADE"
+        title="Open Source & Ferramentas"
+        description="Catálogo de programas, bibliotecas e utilitários abertos com transparência sobre uso, licença e links oficiais."
+      />
+
+      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {sortedTools.map((tool) => (
+          <OpenSourceCard tool={tool} />
+        ))}
+      </div>
+    </Container>
+  </div>
+</BaseLayout>
+

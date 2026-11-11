@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import Button from '../../components/ui/Button.astro';
+import { withBase } from '../../utils/base';
+
+const targetUrl = withBase('/opensource/');
+---
+
+<BaseLayout
+  title="Redirecionando para Open Source... — guilherme.dev"
+  description="Redirecionando para o catálogo de software livre e ferramentas open source."
+>
+  <head slot="head">
+    <meta http-equiv="refresh" content={`0;url=${targetUrl}`} />
+    <link rel="canonical" href={targetUrl} />
+  </head>
+
+  <div class="py-20 text-center">
+    <Container class="max-w-md">
+      <p class="font-mono text-xs text-accent uppercase tracking-wider mb-2">
+        // REDIRECIONAMENTO
+      </p>
+      <h1 class="font-display text-2xl font-bold text-text mb-4">
+        Redirecionando para Open Source
+      </h1>
+      <p class="font-body text-sm text-text-muted mb-6">
+        Se você não for redirecionado automaticamente, utilize o link abaixo:
+      </p>
+      <Button href={targetUrl} variant="primary">
+        Acessar catálogo Open Source &rarr;
+      </Button>
+    </Container>
+  </div>
+</BaseLayout>
+

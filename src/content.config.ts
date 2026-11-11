@@ -92,9 +92,51 @@ const movies = defineCollection({
   }),
 });
 
+const music = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/music' }),
+  schema: z.object({
+    title: z.string(),
+    type: z.enum(['artist', 'album', 'track']),
+    artist: z.string().optional(),
+    album: z.string().optional(),
+    genre: z.string(),
+    year: z.number().int().optional(),
+    comment: z.string().optional(),
+    coverImage: z.object({
+      url: z.string(),
+      alt: z.string(),
+    }),
+    listenUrl: z.string().optional(),
+    isDemo: z.boolean().default(true),
+  }),
+});
+
+const opensource = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/opensource' }),
+  schema: z.object({
+    name: z.string(),
+    category: z.string(),
+    description: z.string(),
+    comment: z.string().optional(),
+    status: z.enum(['uso_atualmente', 'ja_utilizei', 'recomendo']),
+    websiteUrl: z.string().optional(),
+    repoUrl: z.string().optional(),
+    license: z.string().optional(),
+    icon: z
+      .object({
+        url: z.string(),
+        alt: z.string(),
+      })
+      .optional(),
+    isDemo: z.boolean().default(true),
+  }),
+});
+
 export const collections = {
   articles,
   projects,
   games,
   movies,
+  music,
+  opensource,
 };

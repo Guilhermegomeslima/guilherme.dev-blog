@@ -1,0 +1,13 @@
+{
+  "title": "Artista Teste 01: Cyber Sound Collective",
+  "type": "artist",
+  "genre": "Synthwave / Dark Ambient",
+  "comment": "Composições sonoras imersivas e texturas eletrônicas analógicas para sessões de programação e concentração profunda.",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/cyber-sound-artist/600/600",
+    "alt": "Retrato conceitual do Artista Teste 01"
+  },
+  "listenUrl": "https://bandcamp.com",
+  "isDemo": true
+}
+

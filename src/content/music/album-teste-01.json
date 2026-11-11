@@ -1,0 +1,15 @@
+{
+  "title": "Álbum Teste 01: Neon Circuitry",
+  "type": "album",
+  "artist": "Artista Teste 01: Cyber Sound Collective",
+  "genre": "Darksynth / Cyberpunk",
+  "year": 2023,
+  "comment": "Álbum conceitual com sintetizadores modulares e progressões atmosféricas com foco contínuo.",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/neon-circuitry-album/600/600",
+    "alt": "Capa do Álbum Teste 01"
+  },
+  "listenUrl": "https://bandcamp.com",
+  "isDemo": true
+}
+

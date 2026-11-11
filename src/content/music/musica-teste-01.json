@@ -1,0 +1,16 @@
+{
+  "title": "Música Teste 01: Kernel Panic Odyssey",
+  "type": "track",
+  "artist": "Artista Teste 01: Cyber Sound Collective",
+  "album": "Álbum Teste 01: Neon Circuitry",
+  "genre": "Industrial Electronic",
+  "year": 2023,
+  "comment": "Faixa instrumental com linha de baixo pulsante, cadência estável e arpejos analógicos.",
+  "coverImage": {
+    "url": "https://picsum.photos/seed/kernel-panic-track/600/600",
+    "alt": "Arte do single da Música Teste 01"
+  },
+  "listenUrl": "https://bandcamp.com",
+  "isDemo": true
+}
+

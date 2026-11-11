@@ -56,8 +56,8 @@ export const categories: CategoryItem[] = [
     description:
       'Trilhas sonoras, seleções para foco em programação e descobertas sonoras.',
     href: '/musica/',
-    available: false,
-    badge: 'Em breve',
+    available: true,
+    badge: 'Disponível',
   },
   {
     id: 'livros',
@@ -76,8 +76,8 @@ export const categories: CategoryItem[] = [
     description:
       'Contribuições para a comunidade, projetos abertos e filosofia de software livre.',
     href: '/opensource/',
-    available: false,
-    badge: 'Em breve',
+    available: true,
+    badge: 'Disponível',
   },
   {
     id: 'artigos',

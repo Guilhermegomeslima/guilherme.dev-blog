@@ -1,0 +1,12 @@
+{
+  "name": "Ferramenta Teste 03",
+  "category": "Sistema & Utilitários",
+  "description": "Ferramenta modular de monitoramento de recursos de sistema em tempo real, visualização de processos e gráficos em ASCII.",
+  "comment": "Exemplo de utilitário de sistema com histórico de utilização prévia ('já utilizei') e licença Apache 2.0.",
+  "status": "ja_utilizei",
+  "license": "Apache-2.0",
+  "websiteUrl": "https://example.com",
+  "repoUrl": "https://github.com/example",
+  "isDemo": true
+}
+

@@ -1,0 +1,12 @@
+{
+  "name": "Ferramenta Teste 01",
+  "category": "Ambiente de Desenvolvimento",
+  "description": "Exemplo de utilitário open source para edição de código e fluxo de desenvolvimento em terminal.",
+  "comment": "Registro demonstrativo para validação de layout, responsividade e categorização de ferramentas abertas.",
+  "status": "uso_atualmente",
+  "license": "GPL-3.0",
+  "websiteUrl": "https://example.com",
+  "repoUrl": "https://github.com/example",
+  "isDemo": true
+}
+
