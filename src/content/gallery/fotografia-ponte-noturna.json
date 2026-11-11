@@ -1,0 +1,17 @@
+{
+  "title": "Silhueta Arquitetônica ao Entardecer",
+  "album": "Fotografia Urbana",
+  "albumSlug": "fotografia-urbana",
+  "category": "Fotografia",
+  "description": "Estrutura metálica de ponte suspensa contra o céu crepuscular com linhas industriais nítidas e iluminação de tráfego.",
+  "imageUrl": "https://picsum.photos/seed/fotografia-ponte-noturna/1920/1080",
+  "dimensions": {
+    "width": 1920,
+    "height": 1080
+  },
+  "credit": "Lorem Picsum (Placeholder para fins de demonstração visual)",
+  "license": "Creative Commons / Placeholder",
+  "featured": false,
+  "isDemo": true
+}
+

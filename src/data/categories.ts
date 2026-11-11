@@ -96,7 +96,7 @@ export const categories: CategoryItem[] = [
     description:
       'Registros visuais, fotografias noturnas, wallpapers cyberpunk e capturas de tela.',
     href: '/galeria/',
-    available: false,
-    badge: 'Em breve',
+    available: true,
+    badge: 'Disponível',
   },
 ];

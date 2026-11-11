@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import GalleryCard from '../../components/content/GalleryCard.astro';
+import GalleryLightbox from '../../components/content/GalleryLightbox.astro';
+import DemoNotice from '../../components/ui/DemoNotice.astro';
+import { withBase } from '../../utils/base';
+
+const allImages = await getCollection('gallery');
+
+// Extrai álbuns únicos
+const albums = Array.from(
+  new Set(allImages.map((img) => img.data.albumSlug)),
+).map((slug) => {
+  const item = allImages.find((img) => img.data.albumSlug === slug)!;
+  const count = allImages.filter((img) => img.data.albumSlug === slug).length;
+  return {
+    slug,
+    name: item.data.album,
+    count,
+  };
+});
+
+const hasDemoContent = allImages.some((img) => img.data.isDemo);
+---
+
+<BaseLayout
+  title="Galeria & Wallpapers — guilherme.dev"
+  description="Acervo visual de wallpapers cyberpunk, setups de desktop Linux e fotografias com metadados e visualizador ampliado."
+>
+  <div class="py-12 md:py-16">
+    <Container>
+      <SectionHeading
+        eyebrow="// ARQUIVO VISUAL"
+        title="Galeria & Wallpapers"
+        description="Imagens de alta resolução, composições visuais e capturas de ambiente organizadas por álbuns temáticos com visualização acessível."
+      />
+
+      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+
+      {/* Navegação por Álbuns */}
+      <div class="mb-10 flex flex-wrap items-center gap-2 font-mono text-xs">
+        <span class="text-text-muted mr-1">Filtrar por álbum:</span>
+        <a
+          href={withBase('/galeria/')}
+          class="rounded-full border border-accent/60 bg-accent/15 px-3 py-1 font-semibold text-accent shadow-xs"
+        >
+          Todos ({allImages.length})
+        </a>
+
+        {albums.map((album) => (
+          <a
+            href={withBase(`/galeria/${album.slug}/`)}
+            class="rounded-full border border-border/70 bg-surface px-3 py-1 text-text-muted hover:border-accent hover:text-text transition-colors"
+          >
+            {album.name} ({album.count})
+          </a>
+        ))}
+      </div>
+
+      {/* Grade de Imagens */}
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {allImages.map((image) => (
+          <GalleryCard image={image} />
+        ))}
+      </div>
+    </Container>
+  </div>
+
+  {/* Lightbox Modal Acessível */}
+  <GalleryLightbox />
+</BaseLayout>

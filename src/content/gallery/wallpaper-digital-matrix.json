@@ -1,0 +1,17 @@
+{
+  "title": "Fluxo de Dados e Circuitos",
+  "album": "Wallpapers Cyberpunk",
+  "albumSlug": "wallpapers",
+  "category": "Wallpapers",
+  "description": "Textura abstrata inspirada em circuitos integrados, nós de rede descentralizados e topologias de comunicação digital.",
+  "imageUrl": "https://picsum.photos/seed/wallpaper-digital-matrix/1920/1080",
+  "dimensions": {
+    "width": 1920,
+    "height": 1080
+  },
+  "credit": "Lorem Picsum (Placeholder para fins de demonstração visual)",
+  "license": "Creative Commons / Placeholder",
+  "featured": false,
+  "isDemo": true
+}
+

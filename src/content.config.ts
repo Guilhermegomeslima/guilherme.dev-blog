@@ -153,6 +153,28 @@ const books = defineCollection({
   }),
 });
 
+const gallery = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/gallery' }),
+  schema: z.object({
+    title: z.string(),
+    album: z.string(),
+    albumSlug: z.string(),
+    category: z.string(),
+    description: z.string(),
+    imageUrl: z.string(),
+    dimensions: z
+      .object({
+        width: z.number().int(),
+        height: z.number().int(),
+      })
+      .optional(),
+    credit: z.string(),
+    license: z.string(),
+    featured: z.boolean().default(false),
+    isDemo: z.boolean().default(true),
+  }),
+});
+
 export const collections = {
   articles,
   projects,
@@ -161,4 +183,5 @@ export const collections = {
   music,
   opensource,
   books,
+  gallery,
 };

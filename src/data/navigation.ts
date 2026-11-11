@@ -16,4 +16,5 @@ export const navigation: NavItem[] = [
   { label: 'Música', href: '/musica/', available: true },
   { label: 'Livros', href: '/livros/', available: true },
   { label: 'Open Source', href: '/opensource/', available: true },
+  { label: 'Galeria', href: '/galeria/', available: true },
 ];

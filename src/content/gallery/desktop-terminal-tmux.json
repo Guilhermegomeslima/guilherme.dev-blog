@@ -1,0 +1,17 @@
+{
+  "title": "Sessão Tmux e Neovim em Ação",
+  "album": "Linux & Desktop",
+  "albumSlug": "linux-desktop",
+  "category": "Linux/Desktop",
+  "description": "Painel de terminal dividido com monitoramento htop, buffers de código e logs de build em execução contínua.",
+  "imageUrl": "https://picsum.photos/seed/desktop-terminal-tmux/1920/1080",
+  "dimensions": {
+    "width": 1920,
+    "height": 1080
+  },
+  "credit": "Lorem Picsum (Placeholder para fins de demonstração visual)",
+  "license": "Creative Commons / Placeholder",
+  "featured": false,
+  "isDemo": true
+}
+

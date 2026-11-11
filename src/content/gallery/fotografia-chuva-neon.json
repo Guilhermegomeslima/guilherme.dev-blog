@@ -1,0 +1,17 @@
+{
+  "title": "Reflexos Noturnos sobre o Asfalto",
+  "album": "Fotografia Urbana",
+  "albumSlug": "fotografia-urbana",
+  "category": "Fotografia",
+  "description": "Cena urbana noturna após a chuva com reflexos de postes e letreiros luminosos criando contrastes de alta densidade.",
+  "imageUrl": "https://picsum.photos/seed/fotografia-chuva-neon/1920/1080",
+  "dimensions": {
+    "width": 1920,
+    "height": 1080
+  },
+  "credit": "Lorem Picsum (Placeholder para fins de demonstração visual)",
+  "license": "Creative Commons / Placeholder",
+  "featured": true,
+  "isDemo": true
+}
+

@@ -1,0 +1,77 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Container from '../../../components/ui/Container.astro';
+import SectionHeading from '../../../components/ui/SectionHeading.astro';
+import GalleryCard from '../../../components/content/GalleryCard.astro';
+import GalleryLightbox from '../../../components/content/GalleryLightbox.astro';
+import DemoNotice from '../../../components/ui/DemoNotice.astro';
+import Button from '../../../components/ui/Button.astro';
+import { withBase } from '../../../utils/base';
+
+export async function getStaticPaths() {
+  const allImages = await getCollection('gallery');
+  const uniqueSlugs = Array.from(
+    new Set(allImages.map((img) => img.data.albumSlug)),
+  );
+
+  return uniqueSlugs.map((slug) => {
+    const imagesInAlbum = allImages.filter(
+      (img) => img.data.albumSlug === slug,
+    );
+    const albumName = imagesInAlbum[0]?.data.album || slug;
+    return {
+      params: { album: slug },
+      props: {
+        albumSlug: slug,
+        albumName,
+        images: imagesInAlbum,
+      },
+    };
+  });
+}
+
+interface Props {
+  albumSlug: string;
+  albumName: string;
+  images: CollectionEntry<'gallery'>[];
+}
+
+const { albumSlug, albumName, images } = Astro.props;
+const hasDemoContent = images.some((img) => img.data.isDemo);
+---
+
+<BaseLayout
+  title={`${albumName} — Galeria Visual // guilherme.dev`}
+  description={`Álbum ${albumName} com registros visuais, metadados e visualizador em alta resolução.`}
+>
+  <div class="py-12 md:py-16">
+    <Container>
+      {/* Botão de retorno */}
+      <div class="mb-8">
+        <Button href={withBase('/galeria/')} variant="ghost" class="px-0">
+          &larr; Voltar para todos os álbuns da galeria
+        </Button>
+      </div>
+
+      <SectionHeading
+        eyebrow={`// ÁLBUM: ${albumSlug.toUpperCase()}`}
+        title={albumName}
+        description={`Coleção temática de imagens com metadados, créditos e ampliação acessível.`}
+      />
+
+      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+
+      {/* Grade de Imagens do Álbum */}
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {images.map((image) => (
+          <GalleryCard image={image} />
+        ))}
+      </div>
+    </Container>
+  </div>
+
+  {/* Lightbox Modal Acessível */}
+  <GalleryLightbox />
+</BaseLayout>

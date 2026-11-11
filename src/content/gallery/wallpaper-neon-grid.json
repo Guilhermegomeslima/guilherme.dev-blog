@@ -1,0 +1,17 @@
+{
+  "title": "Grid Neon e Perspectiva Infinita",
+  "album": "Wallpapers Cyberpunk",
+  "albumSlug": "wallpapers",
+  "category": "Wallpapers",
+  "description": "Composição geométrica com grades em perspectiva linear, tons de ciano fluorescente e estética retrowave/cyberpunk.",
+  "imageUrl": "https://picsum.photos/seed/wallpaper-neon-grid/1920/1080",
+  "dimensions": {
+    "width": 1920,
+    "height": 1080
+  },
+  "credit": "Lorem Picsum (Placeholder para fins de demonstração visual)",
+  "license": "Creative Commons / Placeholder",
+  "featured": true,
+  "isDemo": true
+}
+

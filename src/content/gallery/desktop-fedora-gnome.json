@@ -1,0 +1,17 @@
+{
+  "title": "Fedora Workstation Customizada",
+  "album": "Linux & Desktop",
+  "albumSlug": "linux-desktop",
+  "category": "Linux/Desktop",
+  "description": "Captura ilustrativa de ambiente GNOME minimalista com tema escuro, tipografia JetBrains Mono e barra de status enxuta.",
+  "imageUrl": "https://picsum.photos/seed/desktop-fedora-gnome/1920/1080",
+  "dimensions": {
+    "width": 1920,
+    "height": 1080
+  },
+  "credit": "Lorem Picsum (Placeholder para fins de demonstração visual)",
+  "license": "Creative Commons / Placeholder",
+  "featured": true,
+  "isDemo": true
+}
+
