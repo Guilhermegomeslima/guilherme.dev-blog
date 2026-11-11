@@ -81,7 +81,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | CNT-05 | Criar seção Jogos e validação dos cinco critérios                 | CNT-01       | P1         | 20/11     | a58d7b6   | Concluído |
 | CNT-06 | Criar cálculo/testes da média simples de jogos                    | CNT-05       | P1         | 22/11     | 40b06c5   | Concluído |
 | CNT-07 | Criar seção Filmes e validação dos seis critérios                 | CNT-01       | P1         | 28/11     | 4f749bb   | Concluído |
-| CNT-08 | Criar cálculo/testes da média simples de filmes                   | CNT-07       | P1         | 29/11     | —         | Pendente  |
+| CNT-08 | Criar cálculo/testes da média simples de filmes                   | CNT-07       | P1         | 29/11     | 3fa44b7   | Concluído |
 | CNT-09 | Criar seções Música e Open Source                                 | CNT-01       | P1         | 06/12     | —         | Pendente  |
 | CNT-10 | Definir modelo e criar seção Livros                               | CNT-01       | P1         | 16/12     | —         | Pendente  |
 | CNT-11 | Criar galeria com metadados e imagens externas permitidas         | CNT-01       | P1         | 20/12     | —         | Pendente  |
@@ -89,6 +89,37 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 **Aceitação:** conteúdo separado da interface; dados validados no build; notas entre 0 e 100; média sem pesos; URLs de imagens e créditos documentados; evitar seções vazias.
 
 > Ordem das seções na Fase 4 é **sugerida** e pode mudar conforme o conteúdo disponível. Não implementar toda a fase em um único commit.
+
+## Fase 4.5 — Inserção de conteúdo real (P1)
+
+> **Objetivo:** substituir gradualmente os conteúdos demonstrativos pelos meus dados, textos, avaliações e imagens reais, mantendo a separação entre conteúdo e interface.
+>
+> **Datas-alvo:** por enquanto, **sem datas fixas (`—`)**. O cadastro depende da preparação de conteúdo autoral e não precisa acompanhar o ritmo de programação. A ordem abaixo representa a **prioridade de execução**, não impede cadastrar dados de outra seção já pronta.
+>
+> **Critério de conclusão:** não considerar conteúdo fictício como informação pessoal real. Manter avisos de demonstração enquanto houver mocks publicados.
+
+| ID      | Item                                                                                | Dependências técnicas | Prioridade | Data alvo | Commit/PR | Status   |
+| ------- | ----------------------------------------------------------------------------------- | --------------------- | ---------- | --------- | --------- | -------- |
+| DATA-01 | Inserir jogos reais, informações, imagens e notas dos cinco critérios               | CNT-05, CNT-06        | P1         | —         | —         | Pendente |
+| DATA-02 | Cadastrar projetos reais com imagens, descrições e links conferidos                 | CNT-04                | P1         | —         | —         | Pendente |
+| DATA-03 | Escrever a trajetória no Linux e completar a timeline dos sistemas utilizados       | CNT-03                | P1         | —         | —         | Pendente |
+| DATA-04 | Inserir filmes reais, diretor, ano e avaliações dos seis critérios                  | CNT-07, CNT-08        | P1         | —         | —         | Pendente |
+| DATA-05 | Cadastrar livros reais com status de leitura, favoritos e opiniões                  | CNT-10                | P1         | —         | —         | Pendente |
+| DATA-06 | Publicar artigos autorais reais, revisando títulos, datas e categorias              | CNT-02                | P1         | —         | —         | Pendente |
+| DATA-07 | Cadastrar artistas, álbuns e músicas reais e recomendações de Open Source           | CNT-09                | P1         | —         | —         | Pendente |
+| DATA-08 | Substituir álbuns de teste por galerias reais, imagens autorizadas e créditos       | CNT-11                | P1         | —         | —         | Pendente |
+| DATA-09 | Remover ou despublicar os dados de demonstração restantes e validar todo o conteúdo | DATA-01 a DATA-08     | P1         | —         | —         | Pendente |
+
+**Aceitação:**
+
+1. Os conteúdos foram fornecidos ou aprovados pelo autor; não inventar experiências, opiniões, notas ou dados biográficos.
+2. As notas de jogos e filmes são calculadas pela média aritmética simples dos critérios definidos, sem pesos; validar cada nota entre 0 e 100.
+3. Imagens externas possuem URL funcional e uso permitido, com créditos quando exigidos; imagens do Lorem Picsum devem ser removidas ou mantidas apenas onde a demonstração ainda estiver explicitamente sinalizada.
+4. Links, rotas, metadados e apresentação em desktop/mobile foram conferidos.
+5. A tarefa DATA-09 só será concluída quando as seções publicadas não exibirem conteúdo fictício como real; caso uma seção permaneça demonstrativa, seu aviso deve continuar claro e a pendência registrada.
+6. Cada tarefa pode gerar vários commits pequenos, conforme `GIT_WORKFLOW.md`; o campo `Commit/PR` será preenchido somente após o versionamento.
+
+**Nota sobre o escopo:** a seção **Open Source** está incluída em `DATA-07`, junto da tarefa `CNT-09`, para não ficar sem cadastro real. A ordem dos nove itens acima segue a prioridade definida para o projeto.
 
 ### Fase 5 — Descoberta, qualidade e evolução (P1/P2)
 
