@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/call-of-duty-3/600/800",
-    "alt": "Capa provisória de Call of Duty 3",
-    "isPlaceholder": true
+    "url": "/images/games/call-of-duty-3.webp",
+    "alt": "Capa oficial do jogo Call of Duty 3",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 84,

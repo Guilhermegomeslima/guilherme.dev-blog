@@ -57,7 +57,7 @@ const currentStatus = statusConfig[data.status] || {
     {/* Capa em proporção vertical (pôster 3:4) */}
     <div class="relative aspect-[3/4] w-full overflow-hidden bg-surface-raised border-b border-border/60">
       <img
-        src={data.coverImage.url}
+        src={withBase(data.coverImage.url)}
         alt={data.coverImage.alt}
         width="600"
         height="800"

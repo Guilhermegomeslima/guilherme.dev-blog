@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/hearts-of-iron-iv/600/800",
-    "alt": "Capa provisória de Hearts of Iron IV",
-    "isPlaceholder": true
+    "url": "/images/games/hearts-of-iron-iv.webp",
+    "alt": "Capa oficial do jogo Hearts of Iron IV",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 87,

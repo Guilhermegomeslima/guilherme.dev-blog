@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Parado",
   "coverImage": {
-    "url": "https://picsum.photos/seed/resident-evil-5/600/800",
-    "alt": "Capa provisória de Resident Evil 5",
-    "isPlaceholder": true
+    "url": "/images/games/resident-evil-5.webp",
+    "alt": "Capa oficial do jogo Resident Evil 5",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

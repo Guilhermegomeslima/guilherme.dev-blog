@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Jogando",
   "coverImage": {
-    "url": "https://picsum.photos/seed/dynasty-warriors-5/600/800",
-    "alt": "Capa provisória de Dynasty Warriors 5",
-    "isPlaceholder": true
+    "url": "/images/games/dynasty-warriors-5.webp",
+    "alt": "Capa oficial do jogo Dynasty Warriors 5",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 80,

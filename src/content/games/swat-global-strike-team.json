@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/swat-global-strike-team/600/800",
-    "alt": "Capa provisória de Swat Global strike team",
-    "isPlaceholder": true
+    "url": "/images/games/swat-global-strike-team.webp",
+    "alt": "Capa oficial do jogo Swat Global strike team",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 87,

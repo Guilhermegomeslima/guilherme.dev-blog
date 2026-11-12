@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/samurai-warriors-5/600/800",
-    "alt": "Capa provisória de Samurai Warriors 5",
-    "isPlaceholder": true
+    "url": "/images/games/samurai-warriors-5.webp",
+    "alt": "Capa oficial do jogo Samurai Warriors 5",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 85,

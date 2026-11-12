@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/samurai-warriors-2/600/800",
-    "alt": "Capa provisória de Samurai Warriors 2",
-    "isPlaceholder": true
+    "url": "/images/games/samurai-warriors-2.webp",
+    "alt": "Capa oficial do jogo Samurai Warriors 2",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 87,

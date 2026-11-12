@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/age-of-history-3/600/800",
-    "alt": "Capa provisória de Age of History 3",
-    "isPlaceholder": true
+    "url": "/images/games/age-of-history-3.webp",
+    "alt": "Capa oficial do jogo Age of History 3",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 78,

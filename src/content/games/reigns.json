@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/reigns/600/800",
-    "alt": "Capa provisória de Reigns",
-    "isPlaceholder": true
+    "url": "/images/games/reigns.webp",
+    "alt": "Capa oficial do jogo Reigns",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 80,

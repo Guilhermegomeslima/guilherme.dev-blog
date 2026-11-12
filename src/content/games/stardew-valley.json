@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/stardew-valley/600/800",
-    "alt": "Capa provisória de Stardew Valley",
-    "isPlaceholder": true
+    "url": "/images/games/stardew-valley.webp",
+    "alt": "Capa oficial do jogo Stardew Valley",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 84,

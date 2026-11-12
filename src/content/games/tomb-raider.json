@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/tomb-raider/600/800",
-    "alt": "Capa provisória de Tomb Raider",
-    "isPlaceholder": true
+    "url": "/images/games/tomb-raider.webp",
+    "alt": "Capa oficial do jogo Tomb Raider",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 92,

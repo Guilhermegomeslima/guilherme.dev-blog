@@ -6,9 +6,9 @@
   "platform": "PC",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/victoria-ii/600/800",
-    "alt": "Capa provisória de Victoria II",
-    "isPlaceholder": true
+    "url": "/images/games/victoria-ii.webp",
+    "alt": "Capa oficial do jogo Victoria II",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 75,

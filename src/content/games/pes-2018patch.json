@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/pes-2018patch/600/800",
-    "alt": "Capa provisória de PES 2018/Patch",
-    "isPlaceholder": true
+    "url": "/images/games/pes-2018patch.webp",
+    "alt": "Capa oficial do jogo PES 2018/Patch",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 86,

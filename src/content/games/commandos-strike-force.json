@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/commandos-strike-force/600/800",
-    "alt": "Capa provisória de Commandos: Strike Force",
-    "isPlaceholder": true
+    "url": "/images/games/commandos-strike-force.webp",
+    "alt": "Capa oficial do jogo Commandos: Strike Force",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 80,

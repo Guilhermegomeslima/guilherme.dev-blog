@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/warriors-orochi-1/600/800",
-    "alt": "Capa provisória de Warriors Orochi 1",
-    "isPlaceholder": true
+    "url": "/images/games/warriors-orochi-1.webp",
+    "alt": "Capa oficial do jogo Warriors Orochi 1",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 87,

@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/dragon-ball-z-budokai-tenkaichi-3/600/800",
-    "alt": "Capa provisória de Dragon Ball Z: Budokai Tenkaichi 3",
-    "isPlaceholder": true
+    "url": "/images/games/dragon-ball-z-budokai-tenkaichi-3.webp",
+    "alt": "Capa oficial do jogo Dragon Ball Z: Budokai Tenkaichi 3",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 86,

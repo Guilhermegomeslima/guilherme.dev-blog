@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/splinter-cell-chaos-theory/600/800",
-    "alt": "Capa provisória de Splinter Cell: Chaos Theory",
-    "isPlaceholder": true
+    "url": "/images/games/splinter-cell-chaos-theory.webp",
+    "alt": "Capa oficial do jogo Splinter Cell: Chaos Theory",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 94,

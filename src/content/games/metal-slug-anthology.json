@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/metal-slug-anthology/600/800",
-    "alt": "Capa provisória de Metal Slug Anthology",
-    "isPlaceholder": true
+    "url": "/images/games/metal-slug-anthology.webp",
+    "alt": "Capa oficial do jogo Metal Slug Anthology",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 84,

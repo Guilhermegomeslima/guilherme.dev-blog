@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/mortal-kombat-shaolin-monks/600/800",
-    "alt": "Capa provisória de Mortal Kombat: Shaolin Monks",
-    "isPlaceholder": true
+    "url": "/images/games/mortal-kombat-shaolin-monks.webp",
+    "alt": "Capa oficial do jogo Mortal Kombat: Shaolin Monks",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 85,

@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Platinado",
   "coverImage": {
-    "url": "https://picsum.photos/seed/naruto-shippuden-ultimate-ninja-storm-3-fb/600/800",
-    "alt": "Capa provisória de Naruto Shippuden: Ultimate Ninja Storm 3 FB",
-    "isPlaceholder": true
+    "url": "/images/games/naruto-shippuden-ultimate-ninja-storm-3-fb.webp",
+    "alt": "Capa oficial do jogo Naruto Shippuden: Ultimate Ninja Storm 3 FB",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 94,

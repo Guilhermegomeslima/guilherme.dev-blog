@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/mortal-kombat-deception/600/800",
-    "alt": "Capa provisória de Mortal Kombat: Deception",
-    "isPlaceholder": true
+    "url": "/images/games/mortal-kombat-deception.webp",
+    "alt": "Capa oficial do jogo Mortal Kombat: Deception",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 83,

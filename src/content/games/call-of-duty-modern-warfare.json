@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/call-of-duty-modern-warfare/600/800",
-    "alt": "Capa provisória de Call of Duty: Modern Warfare",
-    "isPlaceholder": true
+    "url": "/images/games/call-of-duty-modern-warfare.webp",
+    "alt": "Capa oficial do jogo Call of Duty: Modern Warfare",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

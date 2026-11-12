@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Parado",
   "coverImage": {
-    "url": "https://picsum.photos/seed/mount-and-blade-warband/600/800",
-    "alt": "Capa provisória de Mount and Blade Warband",
-    "isPlaceholder": true
+    "url": "/images/games/mount-and-blade-warband.webp",
+    "alt": "Capa oficial do jogo Mount and Blade Warband",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 82,

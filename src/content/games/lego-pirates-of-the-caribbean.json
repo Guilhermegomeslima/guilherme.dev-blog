@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/lego-pirates-of-the-caribbean/600/800",
-    "alt": "Capa provisória de Lego Pirates of the Caribbean",
-    "isPlaceholder": true
+    "url": "/images/games/lego-pirates-of-the-caribbean.webp",
+    "alt": "Capa oficial do jogo Lego Pirates of the Caribbean",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 85,

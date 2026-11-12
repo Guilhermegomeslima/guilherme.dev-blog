@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/assassins-creed-iv-black-flag/600/800",
-    "alt": "Capa provisória de Assassin's Creed IV: Black Flag",
-    "isPlaceholder": true
+    "url": "/images/games/assassins-creed-iv-black-flag.webp",
+    "alt": "Capa oficial do jogo Assassin's Creed IV: Black Flag",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 96,

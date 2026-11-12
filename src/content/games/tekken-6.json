@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/tekken-6/600/800",
-    "alt": "Capa provisória de Tekken 6",
-    "isPlaceholder": true
+    "url": "/images/games/tekken-6.webp",
+    "alt": "Capa oficial do jogo Tekken 6",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

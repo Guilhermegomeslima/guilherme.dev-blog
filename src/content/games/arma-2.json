@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/arma-2/600/800",
-    "alt": "Capa provisória de Arma 2",
-    "isPlaceholder": true
+    "url": "/images/games/arma-2.webp",
+    "alt": "Capa oficial do jogo Arma 2",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 91,

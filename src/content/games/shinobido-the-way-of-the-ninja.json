@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/shinobido-the-way-of-the-ninja/600/800",
-    "alt": "Capa provisória de Shinobido: The Way of the Ninja",
-    "isPlaceholder": true
+    "url": "/images/games/shinobido-the-way-of-the-ninja.webp",
+    "alt": "Capa oficial do jogo Shinobido: The Way of the Ninja",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 94,

@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/red-dead-redemption/600/800",
-    "alt": "Capa provisória de Red Dead Redemption",
-    "isPlaceholder": true
+    "url": "/images/games/red-dead-redemption.webp",
+    "alt": "Capa oficial do jogo Red Dead Redemption",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 92,

@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/ultimate-chicken-horse/600/800",
-    "alt": "Capa provisória de Ultimate Chicken Horse",
-    "isPlaceholder": true
+    "url": "/images/games/ultimate-chicken-horse.webp",
+    "alt": "Capa oficial do jogo Ultimate Chicken Horse",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 83,

@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/guitar-hero-3/600/800",
-    "alt": "Capa provisória de Guitar Hero 3",
-    "isPlaceholder": true
+    "url": "/images/games/guitar-hero-3.webp",
+    "alt": "Capa oficial do jogo Guitar Hero 3",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 86,

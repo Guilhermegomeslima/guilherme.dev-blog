@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/god-of-war-ii/600/800",
-    "alt": "Capa provisória de God of War II",
-    "isPlaceholder": true
+    "url": "/images/games/god-of-war-ii.webp",
+    "alt": "Capa oficial do jogo God of War II",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 90,

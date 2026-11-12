@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/crash-nitro-kart/600/800",
-    "alt": "Capa provisória de Crash Nitro Kart",
-    "isPlaceholder": true
+    "url": "/images/games/crash-nitro-kart.webp",
+    "alt": "Capa oficial do jogo Crash Nitro Kart",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 79,

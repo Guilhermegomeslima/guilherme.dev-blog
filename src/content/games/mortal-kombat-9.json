@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Parado",
   "coverImage": {
-    "url": "https://picsum.photos/seed/mortal-kombat-9/600/800",
-    "alt": "Capa provisória de Mortal Kombat 9",
-    "isPlaceholder": true
+    "url": "/images/games/mortal-kombat-9.webp",
+    "alt": "Capa oficial do jogo Mortal Kombat 9",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 89,

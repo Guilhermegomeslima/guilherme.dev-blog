@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/europa-universalis-iii/600/800",
-    "alt": "Capa provisória de Europa Universalis III",
-    "isPlaceholder": true
+    "url": "/images/games/europa-universalis-iii.webp",
+    "alt": "Capa oficial do jogo Europa Universalis III",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 82,

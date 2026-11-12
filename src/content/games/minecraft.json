@@ -6,9 +6,9 @@
   "platform": "Mobile",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/minecraft/600/800",
-    "alt": "Capa provisória de Minecraft",
-    "isPlaceholder": true
+    "url": "/images/games/minecraft.webp",
+    "alt": "Capa oficial do jogo Minecraft",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 90,

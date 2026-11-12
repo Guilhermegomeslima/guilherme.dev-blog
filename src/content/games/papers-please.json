@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/papers-please/600/800",
-    "alt": "Capa provisória de Papers, Please",
-    "isPlaceholder": true
+    "url": "/images/games/papers-please.webp",
+    "alt": "Capa oficial do jogo Papers, Please",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 85,

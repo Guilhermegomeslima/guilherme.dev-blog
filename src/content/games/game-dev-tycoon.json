@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/game-dev-tycoon/600/800",
-    "alt": "Capa provisória de Game Dev Tycoon",
-    "isPlaceholder": true
+    "url": "/images/games/game-dev-tycoon.webp",
+    "alt": "Capa oficial do jogo Game Dev Tycoon",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 74,

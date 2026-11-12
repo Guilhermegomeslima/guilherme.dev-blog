@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/true-crime-new-york-city/600/800",
-    "alt": "Capa provisória de True Crime: New York City",
-    "isPlaceholder": true
+    "url": "/images/games/true-crime-new-york-city.webp",
+    "alt": "Capa oficial do jogo True Crime: New York City",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

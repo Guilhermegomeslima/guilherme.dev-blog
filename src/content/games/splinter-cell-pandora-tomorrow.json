@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/splinter-cell-pandora-tomorrow/600/800",
-    "alt": "Capa provisória de Splinter Cell: Pandora Tomorrow",
-    "isPlaceholder": true
+    "url": "/images/games/splinter-cell-pandora-tomorrow.webp",
+    "alt": "Capa oficial do jogo Splinter Cell: Pandora Tomorrow",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 90,

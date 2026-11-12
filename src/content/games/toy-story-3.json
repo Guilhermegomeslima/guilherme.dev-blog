@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/toy-story-3/600/800",
-    "alt": "Capa provisória de Toy story 3",
-    "isPlaceholder": true
+    "url": "/images/games/toy-story-3.webp",
+    "alt": "Capa oficial do jogo Toy story 3",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 81,

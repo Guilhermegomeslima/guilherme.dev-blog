@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/mortal-kombat-armageddon/600/800",
-    "alt": "Capa provisória de Mortal Kombat: Armageddon",
-    "isPlaceholder": true
+    "url": "/images/games/mortal-kombat-armageddon.webp",
+    "alt": "Capa oficial do jogo Mortal Kombat: Armageddon",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 78,

@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Parado",
   "coverImage": {
-    "url": "https://picsum.photos/seed/black/600/800",
-    "alt": "Capa provisória de Black",
-    "isPlaceholder": true
+    "url": "/images/games/black.webp",
+    "alt": "Capa oficial do jogo Black",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

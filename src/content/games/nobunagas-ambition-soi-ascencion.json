@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Descontinuado",
   "coverImage": {
-    "url": "https://picsum.photos/seed/nobunagas-ambition-soi-ascencion/600/800",
-    "alt": "Capa provisória de Nobunaga's Ambition: S.O.I. Ascencion",
-    "isPlaceholder": true
+    "url": "/images/games/nobunagas-ambition-soi-ascencion.webp",
+    "alt": "Capa oficial do jogo Nobunaga's Ambition: S.O.I. Ascencion",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 82,

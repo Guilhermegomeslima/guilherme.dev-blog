@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/plague-inc/600/800",
-    "alt": "Capa provisória de Plague Inc",
-    "isPlaceholder": true
+    "url": "/images/games/plague-inc.webp",
+    "alt": "Capa oficial do jogo Plague Inc",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 82,

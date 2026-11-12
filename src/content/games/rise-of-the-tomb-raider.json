@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/rise-of-the-tomb-raider/600/800",
-    "alt": "Capa provisória de Rise of the Tomb Raider",
-    "isPlaceholder": true
+    "url": "/images/games/rise-of-the-tomb-raider.webp",
+    "alt": "Capa oficial do jogo Rise of the Tomb Raider",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 93,

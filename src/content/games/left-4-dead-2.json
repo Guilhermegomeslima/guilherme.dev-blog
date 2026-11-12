@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/left-4-dead-2/600/800",
-    "alt": "Capa provisória de Left 4 Dead 2",
-    "isPlaceholder": true
+    "url": "/images/games/left-4-dead-2.webp",
+    "alt": "Capa oficial do jogo Left 4 Dead 2",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 86,

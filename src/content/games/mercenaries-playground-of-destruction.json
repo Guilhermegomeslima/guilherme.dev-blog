@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/mercenaries-playground-of-destruction/600/800",
-    "alt": "Capa provisória de Mercenaries: Playground of Destruction",
-    "isPlaceholder": true
+    "url": "/images/games/mercenaries-playground-of-destruction.webp",
+    "alt": "Capa oficial do jogo Mercenaries: Playground of Destruction",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 86,

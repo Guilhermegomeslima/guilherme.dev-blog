@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/gun/600/800",
-    "alt": "Capa provisória de Gun",
-    "isPlaceholder": true
+    "url": "/images/games/gun.webp",
+    "alt": "Capa oficial do jogo Gun",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 84,

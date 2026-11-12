@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/hitman-2-silent-assassin/600/800",
-    "alt": "Capa provisória de Hitman 2: Silent Assassin",
-    "isPlaceholder": true
+    "url": "/images/games/hitman-2-silent-assassin.webp",
+    "alt": "Capa oficial do jogo Hitman 2: Silent Assassin",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 84,

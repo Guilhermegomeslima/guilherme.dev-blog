@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/left-4-dead/600/800",
-    "alt": "Capa provisória de Left 4 Dead",
-    "isPlaceholder": true
+    "url": "/images/games/left-4-dead.webp",
+    "alt": "Capa oficial do jogo Left 4 Dead",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 85,

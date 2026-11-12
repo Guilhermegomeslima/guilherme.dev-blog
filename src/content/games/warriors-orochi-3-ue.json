@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/warriors-orochi-3-ue/600/800",
-    "alt": "Capa provisória de Warriors Orochi 3 U.E.",
-    "isPlaceholder": true
+    "url": "/images/games/warriors-orochi-3-ue.webp",
+    "alt": "Capa oficial do jogo Warriors Orochi 3 U.E.",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

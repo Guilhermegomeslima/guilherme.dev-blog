@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/call-of-duty-world-at-war/600/800",
-    "alt": "Capa provisória de Call of Duty: World at War",
-    "isPlaceholder": true
+    "url": "/images/games/call-of-duty-world-at-war.webp",
+    "alt": "Capa oficial do jogo Call of Duty: World at War",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 89,

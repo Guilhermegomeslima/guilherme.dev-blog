@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Jogando",
   "coverImage": {
-    "url": "https://picsum.photos/seed/shadow-of-the-colossus/600/800",
-    "alt": "Capa provisória de Shadow of the colossus",
-    "isPlaceholder": true
+    "url": "/images/games/shadow-of-the-colossus.webp",
+    "alt": "Capa oficial do jogo Shadow of the colossus",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 90,

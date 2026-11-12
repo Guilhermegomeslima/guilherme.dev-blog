@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/tony-hawks-underground-2/600/800",
-    "alt": "Capa provisória de Tony Hawk's Underground 2",
-    "isPlaceholder": true
+    "url": "/images/games/tony-hawks-underground-2.webp",
+    "alt": "Capa oficial do jogo Tony Hawk's Underground 2",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

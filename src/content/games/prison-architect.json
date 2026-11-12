@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/prison-architect/600/800",
-    "alt": "Capa provisória de Prison Architect",
-    "isPlaceholder": true
+    "url": "/images/games/prison-architect.webp",
+    "alt": "Capa oficial do jogo Prison Architect",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 87,

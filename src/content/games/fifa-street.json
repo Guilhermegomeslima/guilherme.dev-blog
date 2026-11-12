@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/fifa-street/600/800",
-    "alt": "Capa provisória de Fifa Street",
-    "isPlaceholder": true
+    "url": "/images/games/fifa-street.webp",
+    "alt": "Capa oficial do jogo Fifa Street",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

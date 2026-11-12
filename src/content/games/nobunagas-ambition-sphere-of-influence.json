@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/nobunagas-ambition-sphere-of-influence/600/800",
-    "alt": "Capa provisória de Nobunaga's Ambition: Sphere of Influence",
-    "isPlaceholder": true
+    "url": "/images/games/nobunagas-ambition-sphere-of-influence.webp",
+    "alt": "Capa oficial do jogo Nobunaga's Ambition: Sphere of Influence",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 94,

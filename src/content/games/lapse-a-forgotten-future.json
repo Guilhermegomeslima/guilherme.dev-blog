@@ -6,9 +6,9 @@
   "platform": "Mobile",
   "status": "Descontinuado",
   "coverImage": {
-    "url": "https://picsum.photos/seed/lapse-a-forgotten-future/600/800",
-    "alt": "Capa provisória de Lapse: A Forgotten Future",
-    "isPlaceholder": true
+    "url": "/images/games/lapse-a-forgotten-future.webp",
+    "alt": "Capa oficial do jogo Lapse: A Forgotten Future",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 80,

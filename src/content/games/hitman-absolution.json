@@ -6,9 +6,9 @@
   "platform": "Xbox 360",
   "status": "Parado",
   "coverImage": {
-    "url": "https://picsum.photos/seed/hitman-absolution/600/800",
-    "alt": "Capa provisória de Hitman: Absolution",
-    "isPlaceholder": true
+    "url": "/images/games/hitman-absolution.webp",
+    "alt": "Capa oficial do jogo Hitman: Absolution",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 87,

@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/asterix-at-the-olympic-games/600/800",
-    "alt": "Capa provisória de Asterix At The Olympic Games",
-    "isPlaceholder": true
+    "url": "/images/games/asterix-at-the-olympic-games.webp",
+    "alt": "Capa oficial do jogo Asterix At The Olympic Games",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 79,

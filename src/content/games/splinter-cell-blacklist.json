@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "https://picsum.photos/seed/splinter-cell-blacklist/600/800",
-    "alt": "Capa provisória de Splinter Cell Blacklist",
-    "isPlaceholder": true
+    "url": "/images/games/splinter-cell-blacklist.webp",
+    "alt": "Capa oficial do jogo Splinter Cell Blacklist",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 94,

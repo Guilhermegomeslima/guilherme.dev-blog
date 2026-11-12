@@ -6,9 +6,9 @@
   "platform": "PS2",
   "status": "Platinado",
   "coverImage": {
-    "url": "https://picsum.photos/seed/red-dead-revolver/600/800",
-    "alt": "Capa provisória de Red Dead Revolver",
-    "isPlaceholder": true
+    "url": "/images/games/red-dead-revolver.webp",
+    "alt": "Capa oficial do jogo Red Dead Revolver",
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 83,
