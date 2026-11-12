@@ -1,7 +1,10 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
 import type { CollectionEntry } from 'astro:content';
 import Card from '../ui/Card.astro';
 import Button from '../ui/Button.astro';
+import { withBase } from '../../utils/base';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -9,6 +12,22 @@ interface Props {
 
 const { project } = Astro.props;
 const { data } = project;
+
+// Resolve formato real do arquivo (webp, png, jpg) na pasta public/images/projects
+let resolvedImageUrl = data.image?.url;
+if (resolvedImageUrl && resolvedImageUrl.startsWith('/images/projects/')) {
+  const baseName = resolvedImageUrl
+    .replace(/^\/images\/projects\//, '')
+    .replace(/\.(webp|png|jpg|jpeg)$/, '');
+  const publicDir = path.resolve('./public/images/projects');
+  if (fs.existsSync(path.join(publicDir, `${baseName}.webp`))) {
+    resolvedImageUrl = `/images/projects/${baseName}.webp`;
+  } else if (fs.existsSync(path.join(publicDir, `${baseName}.png`))) {
+    resolvedImageUrl = `/images/projects/${baseName}.png`;
+  } else if (fs.existsSync(path.join(publicDir, `${baseName}.jpg`))) {
+    resolvedImageUrl = `/images/projects/${baseName}.jpg`;
+  }
+}
 ---
 
 <Card
@@ -16,10 +35,10 @@ const { data } = project;
   class="flex flex-col justify-between border-border/80 bg-surface/90 p-0 overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 group"
 >
   <div>
-    {data.image && (
+    {data.image && resolvedImageUrl && (
       <div class="relative aspect-video w-full overflow-hidden bg-surface-raised border-b border-border/60">
         <img
-          src={data.image.url}
+          src={withBase(resolvedImageUrl)}
           alt={data.image.alt}
           width="600"
           height="338"

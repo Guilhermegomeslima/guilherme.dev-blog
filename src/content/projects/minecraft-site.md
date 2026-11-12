@@ -1,11 +1,15 @@
 ---
-title: 'Minecraft Fanmade Site'
-description: 'Aplicação web temática inspirada na identidade visual e mecânicas do universo Minecraft com foco em fidelidade de layout.'
+title: 'Minecraft Fan Site'
+description: 'Página web temática desenvolvida de fã para fãs, explorando a estética, menus e identidade visual do universo Minecraft.'
 category: 'Front-end'
-tags: ['CSS', 'Design', 'Front-end']
-repoUrl: 'https://github.com/Guilhermegomeslima'
+tags: ['HTML5', 'CSS3', 'Design', 'Minecraft']
+repoUrl: 'https://github.com/Guilhermegomeslima/minecraftfansite'
+liveUrl: 'https://guilhermegomeslima.github.io/minecraftfansite/'
+image:
+  url: '/images/projects/minecraftfansite.webp'
+  alt: 'Interface do site temático Minecraft Fan Site'
 featured: false
 isDemo: false
 ---
 
-Laboratório prático de design de interface e CSS moderno, recriando menus, paleta de cores e tipografia icônica inspirados no popular jogo de sobrevivência e blocos.
+Projeto prático de desenvolvimento web e design de interface centrado na recriação da atmosfera e tipografia icônica de Minecraft. Estruturado em HTML5 e estilizado com CSS3, reúne referências, navegação temáticada e elementos visuais inspirados no universo do jogo.
