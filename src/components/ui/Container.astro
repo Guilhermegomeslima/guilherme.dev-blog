@@ -1,7 +1,18 @@
 ---
-// Largura máxima provisória: valor final pendente em DESIGN_SYSTEM.md (seção 5).
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const hasCustomMaxWidth = className && /\bmax-w-/.test(className);
 ---
 
-<div class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+<div
+  class:list={[
+    'mx-auto w-full px-4 sm:px-6 lg:px-8',
+    !hasCustomMaxWidth && 'max-w-5xl',
+    className,
+  ]}
+>
   <slot />
 </div>

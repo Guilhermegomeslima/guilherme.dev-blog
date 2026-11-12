@@ -23,7 +23,7 @@ const hasDemoContent = allProjects.some((p) => p.data.isDemo);
   description="Catálogo de projetos, experimentos web e repositórios desenvolvidos por Guilherme Gomes."
 >
   <div class="py-12 md:py-16">
-    <Container>
+    <Container class="max-w-[1150px]">
       <SectionHeading
         eyebrow="// ACERVO DE SOFTWARE"
         title="Projetos & Aplicações"
@@ -32,7 +32,7 @@ const hasDemoContent = allProjects.some((p) => p.data.isDemo);
 
       {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
 
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div class="flex flex-col gap-8">
         {sortedProjects.map((project) => (
           <ProjectCard project={project} />
         ))}
