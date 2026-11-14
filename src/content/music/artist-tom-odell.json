@@ -1,0 +1,12 @@
+{
+  "title": "Tom Odell",
+  "artist": "Tom Odell",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/tom-odell.jpg",
+    "alt": "Foto representativa de Tom Odell"
+  },
+  "listenUrl": "https://www.youtube.com/@TomOdellOfficial",
+  "favorite": false,
+  "isDemo": false
+}

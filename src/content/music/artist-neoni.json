@@ -1,0 +1,12 @@
+{
+  "title": "Neoni",
+  "artist": "Neoni",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/neoni.jpg",
+    "alt": "Foto representativa de Neoni"
+  },
+  "listenUrl": "https://www.youtube.com/@WeAreNeoni",
+  "favorite": false,
+  "isDemo": false
+}

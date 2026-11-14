@@ -1,0 +1,12 @@
+{
+  "title": "Nothing More",
+  "artist": "Nothing More",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/nothing-more.jpg",
+    "alt": "Foto representativa de Nothing More"
+  },
+  "listenUrl": "https://www.youtube.com/@NothingMoreMusic",
+  "favorite": false,
+  "isDemo": false
+}

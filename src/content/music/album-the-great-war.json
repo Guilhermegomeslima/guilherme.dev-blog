@@ -1,0 +1,13 @@
+{
+  "title": "The Great War",
+  "artist": "Sabaton",
+  "type": "album",
+  "year": 2019,
+  "coverImage": {
+    "url": "/images/music/artists/sabaton.jpg",
+    "alt": "Imagem de Sabaton para o álbum The Great War"
+  },
+  "listenUrl": "https://www.youtube.com/@Sabaton/releases",
+  "favorite": false,
+  "isDemo": false
+}

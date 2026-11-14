@@ -1,0 +1,12 @@
+{
+  "title": "Layto",
+  "artist": "Layto",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/layto.jpg",
+    "alt": "Foto representativa de Layto"
+  },
+  "listenUrl": "https://www.youtube.com/@LaytoOfficial",
+  "favorite": false,
+  "isDemo": false
+}

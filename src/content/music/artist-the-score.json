@@ -1,0 +1,12 @@
+{
+  "title": "The Score",
+  "artist": "The Score",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/the-score.jpg",
+    "alt": "Foto representativa de The Score"
+  },
+  "listenUrl": "https://www.youtube.com/@TheScoreMusic",
+  "favorite": false,
+  "isDemo": false
+}

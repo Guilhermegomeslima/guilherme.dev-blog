@@ -1,0 +1,12 @@
+{
+  "title": "Thousand Foot Krutch",
+  "artist": "Thousand Foot Krutch",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/thousand-foot-krutch.jpg",
+    "alt": "Foto representativa de Thousand Foot Krutch"
+  },
+  "listenUrl": "https://www.youtube.com/@tfkofficial",
+  "favorite": false,
+  "isDemo": false
+}

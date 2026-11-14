@@ -1,0 +1,13 @@
+{
+  "title": "Hybrid Theory",
+  "artist": "Linkin Park",
+  "type": "album",
+  "year": 2000,
+  "coverImage": {
+    "url": "/images/music/artists/linkin-park.jpg",
+    "alt": "Imagem de Linkin Park para o álbum Hybrid Theory"
+  },
+  "listenUrl": "https://www.youtube.com/@LinkinPark/releases",
+  "favorite": false,
+  "isDemo": false
+}

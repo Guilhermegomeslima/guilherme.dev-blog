@@ -1,0 +1,13 @@
+{
+  "title": "Awake",
+  "artist": "Skillet",
+  "type": "album",
+  "year": 2009,
+  "coverImage": {
+    "url": "/images/music/artists/skillet.webp",
+    "alt": "Imagem de Skillet para o álbum Awake"
+  },
+  "listenUrl": "https://www.youtube.com/@skilletband/releases",
+  "favorite": false,
+  "isDemo": false
+}

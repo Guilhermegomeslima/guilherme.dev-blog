@@ -1,0 +1,12 @@
+{
+  "title": "Sabaton",
+  "artist": "Sabaton",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/sabaton.jpg",
+    "alt": "Foto representativa de Sabaton"
+  },
+  "listenUrl": "https://www.youtube.com/@Sabaton",
+  "favorite": false,
+  "isDemo": false
+}

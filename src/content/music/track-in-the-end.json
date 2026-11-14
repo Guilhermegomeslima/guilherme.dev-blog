@@ -1,0 +1,12 @@
+{
+  "title": "In the End",
+  "artist": "Linkin Park",
+  "type": "track",
+  "coverImage": {
+    "url": "/images/music/artists/linkin-park.jpg",
+    "alt": "Imagem de Linkin Park para a faixa In the End"
+  },
+  "listenUrl": "https://www.youtube.com/watch?v=eVTXPUF4Oz4",
+  "favorite": false,
+  "isDemo": false
+}

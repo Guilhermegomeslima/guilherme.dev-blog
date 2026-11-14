@@ -1,0 +1,12 @@
+{
+  "title": "Chop Suey!",
+  "artist": "System of a Down",
+  "type": "track",
+  "coverImage": {
+    "url": "/images/music/artists/system-of-a-down.jpg",
+    "alt": "Imagem de System of a Down para a faixa Chop Suey!"
+  },
+  "listenUrl": "https://www.youtube.com/watch?v=CSvFpBOe8eY",
+  "favorite": false,
+  "isDemo": false
+}

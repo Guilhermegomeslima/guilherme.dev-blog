@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Card from '../ui/Card.astro';
+import { withBase } from '../../utils/base';
 
 interface Props {
   item: CollectionEntry<'music'>;
@@ -37,15 +38,36 @@ const currentType = typeLabels[data.type] || {
   <div>
     {/* Capa com Proporção Quadrada 1:1 */}
     <div class="relative aspect-square w-full overflow-hidden bg-surface-raised border-b border-border/60">
-      <img
-        src={data.coverImage.url}
-        alt={data.coverImage.alt}
-        width="600"
-        height="600"
-        loading="lazy"
-        decoding="async"
-        class="h-full w-full object-cover filter contrast-105 brightness-95 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
-      />
+      {data.coverImage ? (
+        <img
+          src={withBase(data.coverImage.url)}
+          alt={data.coverImage.alt}
+          width="600"
+          height="600"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover filter contrast-105 brightness-95 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
+        />
+      ) : (
+        <div class="flex h-full w-full flex-col justify-between p-6 bg-gradient-to-br from-surface to-surface-raised">
+          <span class="font-mono text-[10px] text-accent/80 uppercase tracking-widest mt-8">
+            // REGISTRO SONORO
+          </span>
+          <div>
+            <p class="font-display text-lg font-bold text-text leading-tight">
+              {data.title}
+            </p>
+            {data.artist && (
+              <p class="font-mono text-xs text-text-muted mt-1.5">
+                {data.artist}
+              </p>
+            )}
+          </div>
+          <span class="font-mono text-[10px] text-text-muted/60">
+            [ Imagem pendente ]
+          </span>
+        </div>
+      )}
 
       {/* Badge do Tipo (Artista / Álbum / Faixa) */}
       <div
@@ -66,10 +88,12 @@ const currentType = typeLabels[data.type] || {
 
     {/* Informações Textuais */}
     <div class="p-5">
-      <div class="mb-2 flex flex-wrap items-center justify-between gap-1 font-mono text-xs text-text-muted">
-        <span class="text-accent/90">{data.genre}</span>
-        {data.year && <span>{data.year}</span>}
-      </div>
+      {(data.genre || data.year) && (
+        <div class="mb-2 flex flex-wrap items-center justify-between gap-1 font-mono text-xs text-text-muted">
+          {data.genre && <span class="text-accent/90">{data.genre}</span>}
+          {data.year && <span>{data.year}</span>}
+        </div>
+      )}
 
       <h3 class="font-display text-lg font-bold tracking-tight text-text group-hover:text-accent transition-colors">
         {data.title}
@@ -96,7 +120,7 @@ const currentType = typeLabels[data.type] || {
         rel="noopener noreferrer"
         class="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-accent hover:underline"
       >
-        <span>Ouvir no Bandcamp / Streaming</span>
+        <span>Ouvir no YouTube</span>
         <span aria-hidden="true">&nearr;</span>
       </a>
     </div>

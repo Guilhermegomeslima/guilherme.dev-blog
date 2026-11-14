@@ -1,0 +1,13 @@
+{
+  "title": "Toxicity",
+  "artist": "System of a Down",
+  "type": "album",
+  "year": 2001,
+  "coverImage": {
+    "url": "/images/music/artists/system-of-a-down.jpg",
+    "alt": "Imagem de System of a Down para o álbum Toxicity"
+  },
+  "listenUrl": "https://www.youtube.com/@systemofadown/releases",
+  "favorite": false,
+  "isDemo": false
+}

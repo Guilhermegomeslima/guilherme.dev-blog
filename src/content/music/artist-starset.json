@@ -1,0 +1,12 @@
+{
+  "title": "Starset",
+  "artist": "Starset",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/starset.jpg",
+    "alt": "Foto representativa de Starset"
+  },
+  "listenUrl": "https://www.youtube.com/@starsetonline",
+  "favorite": false,
+  "isDemo": false
+}

@@ -1,0 +1,12 @@
+{
+  "title": "Get Out Alive",
+  "artist": "Three Days Grace",
+  "type": "track",
+  "coverImage": {
+    "url": "/images/music/artists/three-days-grace.jpg",
+    "alt": "Imagem de Three Days Grace para a faixa Get Out Alive"
+  },
+  "listenUrl": "https://www.youtube.com/watch?v=755_TZ0Knjw",
+  "favorite": false,
+  "isDemo": false
+}

@@ -1,0 +1,12 @@
+{
+  "title": "ATWA",
+  "artist": "System of a Down",
+  "type": "track",
+  "coverImage": {
+    "url": "/images/music/artists/system-of-a-down.jpg",
+    "alt": "Imagem de System of a Down para a faixa ATWA"
+  },
+  "listenUrl": "https://www.youtube.com/watch?v=r0w2kUSM9_Y",
+  "favorite": false,
+  "isDemo": false
+}

@@ -1,0 +1,12 @@
+{
+  "title": "Linkin Park",
+  "artist": "Linkin Park",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/linkin-park.jpg",
+    "alt": "Foto representativa de Linkin Park"
+  },
+  "listenUrl": "https://www.youtube.com/@LinkinPark",
+  "favorite": false,
+  "isDemo": false
+}

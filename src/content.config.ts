@@ -108,15 +108,17 @@ const music = defineCollection({
     type: z.enum(['artist', 'album', 'track']),
     artist: z.string().optional(),
     album: z.string().optional(),
-    genre: z.string(),
+    genre: z.string().optional(),
     year: z.number().int().optional(),
     comment: z.string().optional(),
-    coverImage: z.object({
-      url: z.string(),
-      alt: z.string(),
-    }),
+    coverImage: z
+      .object({
+        url: z.string(),
+        alt: z.string(),
+      })
+      .optional(),
     listenUrl: z.string().optional(),
-    isDemo: z.boolean().default(true),
+    isDemo: z.boolean().default(false),
   }),
 });
 

@@ -1,0 +1,12 @@
+{
+  "title": "Hero",
+  "artist": "Skillet",
+  "type": "track",
+  "coverImage": {
+    "url": "/images/music/artists/skillet.webp",
+    "alt": "Imagem de Skillet para a faixa Hero"
+  },
+  "listenUrl": "https://www.youtube.com/watch?v=uGcsIdGOuZY",
+  "favorite": false,
+  "isDemo": false
+}

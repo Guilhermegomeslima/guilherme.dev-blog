@@ -1,0 +1,12 @@
+{
+  "title": "System of a Down",
+  "artist": "System of a Down",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/system-of-a-down.jpg",
+    "alt": "Foto representativa de System of a Down"
+  },
+  "listenUrl": "https://www.youtube.com/@systemofadown",
+  "favorite": false,
+  "isDemo": false
+}

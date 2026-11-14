@@ -1,0 +1,12 @@
+{
+  "title": "Ruelle",
+  "artist": "Ruelle",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/ruelle.jpg",
+    "alt": "Foto representativa de Ruelle"
+  },
+  "listenUrl": "https://www.youtube.com/@RuelleMusic",
+  "favorite": false,
+  "isDemo": false
+}

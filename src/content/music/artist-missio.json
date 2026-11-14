@@ -1,0 +1,12 @@
+{
+  "title": "MISSIO",
+  "artist": "MISSIO",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/missio.jpg",
+    "alt": "Foto representativa de MISSIO"
+  },
+  "listenUrl": "https://www.youtube.com/@MISSIOMusic",
+  "favorite": false,
+  "isDemo": false
+}

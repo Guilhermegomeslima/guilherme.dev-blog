@@ -1,0 +1,12 @@
+{
+  "title": "Imagine Dragons",
+  "artist": "Imagine Dragons",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/imagine-dragons.jpg",
+    "alt": "Foto representativa de Imagine Dragons"
+  },
+  "listenUrl": "https://www.youtube.com/@ImagineDragons",
+  "favorite": false,
+  "isDemo": false
+}

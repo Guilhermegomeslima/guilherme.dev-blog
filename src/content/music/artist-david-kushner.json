@@ -1,0 +1,12 @@
+{
+  "title": "David Kushner",
+  "artist": "David Kushner",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/david-kushner.jpg",
+    "alt": "Foto representativa de David Kushner"
+  },
+  "listenUrl": "https://www.youtube.com/@DavidKushner",
+  "favorite": false,
+  "isDemo": false
+}

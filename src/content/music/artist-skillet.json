@@ -1,0 +1,12 @@
+{
+  "title": "Skillet",
+  "artist": "Skillet",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/skillet.webp",
+    "alt": "Foto representativa de Skillet"
+  },
+  "listenUrl": "https://www.youtube.com/@skilletband",
+  "favorite": false,
+  "isDemo": false
+}

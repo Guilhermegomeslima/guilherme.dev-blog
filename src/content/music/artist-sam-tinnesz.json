@@ -1,0 +1,12 @@
+{
+  "title": "Sam Tinnesz",
+  "artist": "Sam Tinnesz",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/sam-tinnesz.jpg",
+    "alt": "Foto representativa de Sam Tinnesz"
+  },
+  "listenUrl": "https://www.youtube.com/@SamTinnesz",
+  "favorite": false,
+  "isDemo": false
+}

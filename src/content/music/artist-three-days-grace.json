@@ -1,0 +1,12 @@
+{
+  "title": "Three Days Grace",
+  "artist": "Three Days Grace",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/three-days-grace.jpg",
+    "alt": "Foto representativa de Three Days Grace"
+  },
+  "listenUrl": "https://www.youtube.com/@ThreeDaysGraceVideos",
+  "favorite": false,
+  "isDemo": false
+}

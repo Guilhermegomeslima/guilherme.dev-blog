@@ -1,0 +1,12 @@
+{
+  "title": "Nirvana",
+  "artist": "Nirvana",
+  "type": "artist",
+  "coverImage": {
+    "url": "/images/music/artists/nirvana.jpg",
+    "alt": "Foto representativa de Nirvana"
+  },
+  "listenUrl": "https://www.youtube.com/@nirvana",
+  "favorite": false,
+  "isDemo": false
+}
