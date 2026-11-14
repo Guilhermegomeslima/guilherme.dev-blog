@@ -170,19 +170,20 @@ const gallery = defineCollection({
     title: z.string(),
     album: z.string(),
     albumSlug: z.string(),
-    category: z.string(),
-    description: z.string(),
+    category: z.string().optional(),
+    description: z.string().optional(),
     imageUrl: z.string(),
+    originalUrl: z.string().optional(),
     dimensions: z
       .object({
         width: z.number().int(),
         height: z.number().int(),
       })
       .optional(),
-    credit: z.string(),
-    license: z.string(),
+    credit: z.string().optional(),
+    license: z.string().optional(),
     featured: z.boolean().default(false),
-    isDemo: z.boolean().default(true),
+    isDemo: z.boolean().default(false),
   }),
 });
 

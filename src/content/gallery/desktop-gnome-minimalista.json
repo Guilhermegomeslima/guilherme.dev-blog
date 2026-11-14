@@ -1,0 +1,16 @@
+{
+  "title": "Desktop GNOME Minimalista",
+  "album": "Desktop Linux",
+  "albumSlug": "desktop",
+  "category": "Desktop Linux",
+  "imageUrl": "/images/gallery/desktop/desktop-gnome-minimalista-thumb.webp",
+  "originalUrl": "/images/gallery/desktop/desktop-gnome-minimalista.webp",
+  "dimensions": {
+    "width": 1920,
+    "height": 1080
+  },
+  "credit": "Guilherme",
+  "license": "Uso Pessoal",
+  "featured": false,
+  "isDemo": false
+}

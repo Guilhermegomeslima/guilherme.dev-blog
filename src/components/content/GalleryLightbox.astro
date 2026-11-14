@@ -5,9 +5,9 @@
   id="gallery-lightbox"
   aria-labelledby="lightbox-title"
   aria-describedby="lightbox-description"
-  class="m-auto w-[92vw] max-w-5xl rounded-xl border border-border/80 bg-surface/95 p-0 text-text backdrop:bg-bg/85 backdrop:backdrop-blur-md shadow-2xl overflow-hidden open:flex open:flex-col"
+  class="m-auto w-[94vw] max-w-5xl rounded-xl border border-border/80 bg-surface/95 p-0 text-text backdrop:bg-bg/85 backdrop:backdrop-blur-md shadow-2xl overflow-hidden open:flex open:flex-col"
 >
-  <div class="relative flex flex-col max-h-[90vh]">
+  <div class="relative flex flex-col max-h-[92vh]">
     {/* Barra de Topo do Modal */}
     <div class="flex items-center justify-between border-b border-border/60 bg-surface-raised px-4 py-3">
       <div class="flex items-center gap-2">
@@ -20,26 +20,66 @@
         <span id="lightbox-album" class="font-mono text-xs text-text-muted">
           Álbum
         </span>
+        <span class="text-border" aria-hidden="true">
+          ·
+        </span>
+        <span id="lightbox-counter" class="font-mono text-xs text-accent">
+          1 / 1
+        </span>
       </div>
 
-      <button
-        type="button"
-        id="lightbox-close-btn"
-        aria-label="Fechar visualização ampliada"
-        class="inline-flex min-h-8 min-w-8 items-center justify-center rounded border border-border/70 bg-surface px-2 py-1 font-mono text-xs text-text-muted hover:border-accent hover:text-accent focus-visible:outline-accent"
-      >
-        <span>Fechar [ESC]</span>
-      </button>
+      <div class="flex items-center gap-3">
+        <a
+          id="lightbox-original-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 rounded border border-accent/40 bg-accent/10 px-2.5 py-1 font-mono text-xs font-medium text-accent hover:bg-accent/20 transition-colors"
+        >
+          <span>Abrir original</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+
+        <button
+          type="button"
+          id="lightbox-close-btn"
+          aria-label="Fechar visualização ampliada"
+          class="inline-flex min-h-8 min-w-8 items-center justify-center rounded border border-border/70 bg-surface px-2.5 py-1 font-mono text-xs text-text-muted hover:border-accent hover:text-accent focus-visible:outline-accent cursor-pointer"
+        >
+          <span>Fechar [ESC]</span>
+        </button>
+      </div>
     </div>
 
-    {/* Imagem Ampliada */}
-    <div class="relative flex-1 overflow-auto bg-black/60 p-2 sm:p-6 flex items-center justify-center min-h-[300px]">
+    {/* Imagem Ampliada com Controles de Navegação */}
+    <div class="relative flex-1 overflow-hidden bg-black/70 p-2 sm:p-6 flex items-center justify-center min-h-[300px]">
+      {/* Botão Anterior */}
+      <button
+        type="button"
+        id="lightbox-prev-btn"
+        aria-label="Imagem anterior"
+        class="absolute left-2 sm:left-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-surface/80 font-mono text-lg text-text backdrop-blur-xs hover:border-accent hover:text-accent hover:bg-surface focus-visible:outline-accent transition-colors cursor-pointer"
+      >
+        <span aria-hidden="true">&larr;</span>
+      </button>
+
+      {/* Imagem */}
       <img
         id="lightbox-img"
         src=""
         alt=""
-        class="max-h-[65vh] w-auto max-w-full rounded border border-border/50 object-contain shadow-2xl"
+        class="max-h-[62vh] w-auto max-w-full rounded border border-border/50 object-contain shadow-2xl"
       />
+
+      {/* Botão Próximo */}
+      <button
+        type="button"
+        id="lightbox-next-btn"
+        aria-label="Próxima imagem"
+        class="absolute right-2 sm:right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-surface/80 font-mono text-lg text-text backdrop-blur-xs hover:border-accent hover:text-accent hover:bg-surface focus-visible:outline-accent transition-colors cursor-pointer"
+      >
+        <span aria-hidden="true">&rarr;</span>
+      </button>
     </div>
 
     {/* Ficha Técnica e Metadados da Imagem */}
@@ -60,18 +100,13 @@
           <strong class="text-text-muted">Resolução:</strong>{' '}
           <span id="lightbox-dimensions" class="text-text"></span>
         </div>
-        <div>
+        <div id="lightbox-credit-row">
           <strong class="text-text-muted">Créditos:</strong>{' '}
           <span id="lightbox-credit" class="text-text"></span>
         </div>
-        <div>
+        <div id="lightbox-license-row">
           <strong class="text-text-muted">Licença:</strong>{' '}
           <span id="lightbox-license" class="text-text"></span>
-        </div>
-        <div class="pt-1">
-          <span class="inline-block rounded bg-warm/20 text-warm border border-warm/40 px-1.5 py-0.5 text-[10px] uppercase font-semibold">
-            Amostra Demonstrativa
-          </span>
         </div>
       </div>
     </div>
@@ -84,51 +119,132 @@
       'gallery-lightbox',
     ) as HTMLDialogElement | null;
     const closeBtn = document.getElementById('lightbox-close-btn');
+    const prevBtn = document.getElementById('lightbox-prev-btn');
+    const nextBtn = document.getElementById('lightbox-next-btn');
     const imgElem = document.getElementById(
       'lightbox-img',
     ) as HTMLImageElement | null;
     const titleElem = document.getElementById('lightbox-title');
     const descElem = document.getElementById('lightbox-description');
     const albumElem = document.getElementById('lightbox-album');
+    const counterElem = document.getElementById('lightbox-counter');
     const dimElem = document.getElementById('lightbox-dimensions');
     const creditElem = document.getElementById('lightbox-credit');
     const licenseElem = document.getElementById('lightbox-license');
+    const creditRow = document.getElementById('lightbox-credit-row');
+    const licenseRow = document.getElementById('lightbox-license-row');
+    const originalLink = document.getElementById(
+      'lightbox-original-link',
+    ) as HTMLAnchorElement | null;
 
     if (!dialog) return;
 
-    // Abrir lightbox nos botões
-    const triggers = document.querySelectorAll('[data-gallery-trigger]');
-    triggers.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const url = btn.getAttribute('data-image-url') || '';
-        const title = btn.getAttribute('data-title') || '';
-        const desc = btn.getAttribute('data-desc') || '';
-        const album = btn.getAttribute('data-album') || '';
-        const dim = btn.getAttribute('data-dim') || '';
-        const credit = btn.getAttribute('data-credit') || '';
-        const license = btn.getAttribute('data-license') || '';
+    let triggers: HTMLElement[] = [];
+    let currentIndex = 0;
 
-        if (imgElem) {
-          imgElem.src = url;
-          imgElem.alt = title;
+    function renderItem(index: number) {
+      if (index < 0 || index >= triggers.length) return;
+      currentIndex = index;
+      const btn = triggers[currentIndex];
+
+      const url = btn.getAttribute('data-image-url') || '';
+      const originalUrl = btn.getAttribute('data-original-url') || url;
+      const title = btn.getAttribute('data-title') || '';
+      const desc = btn.getAttribute('data-desc') || '';
+      const album = btn.getAttribute('data-album') || '';
+      const dim = btn.getAttribute('data-dim') || '';
+      const credit = btn.getAttribute('data-credit') || '';
+      const license = btn.getAttribute('data-license') || '';
+
+      if (imgElem) {
+        imgElem.src = url;
+        imgElem.alt = title;
+      }
+      if (titleElem) titleElem.textContent = title;
+      if (descElem) {
+        descElem.textContent = desc;
+        descElem.style.display = desc ? 'block' : 'none';
+      }
+      if (albumElem) albumElem.textContent = album;
+      if (counterElem) {
+        counterElem.textContent = `${currentIndex + 1} / ${triggers.length}`;
+      }
+      if (dimElem) dimElem.textContent = dim || 'N/A';
+
+      if (creditRow && creditElem) {
+        if (credit) {
+          creditElem.textContent = credit;
+          creditRow.style.display = 'block';
+        } else {
+          creditRow.style.display = 'none';
         }
-        if (titleElem) titleElem.textContent = title;
-        if (descElem) descElem.textContent = desc;
-        if (albumElem) albumElem.textContent = album;
-        if (dimElem) dimElem.textContent = dim || 'N/A';
-        if (creditElem) creditElem.textContent = credit;
-        if (licenseElem) licenseElem.textContent = license;
+      }
 
+      if (licenseRow && licenseElem) {
+        if (license) {
+          licenseElem.textContent = license;
+          licenseRow.style.display = 'block';
+        } else {
+          licenseRow.style.display = 'none';
+        }
+      }
+
+      if (originalLink) {
+        originalLink.href = originalUrl;
+      }
+    }
+
+    function showPrev() {
+      if (triggers.length === 0) return;
+      const newIndex = (currentIndex - 1 + triggers.length) % triggers.length;
+      renderItem(newIndex);
+    }
+
+    function showNext() {
+      if (triggers.length === 0) return;
+      const newIndex = (currentIndex + 1) % triggers.length;
+      renderItem(newIndex);
+    }
+
+    // Coleta todos os triggers da página atual
+    triggers = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-gallery-trigger]'),
+    );
+
+    triggers.forEach((btn, index) => {
+      btn.onclick = () => {
+        renderItem(index);
         dialog.showModal();
-      });
+      };
     });
 
     closeBtn?.addEventListener('click', () => {
       dialog.close();
     });
 
+    prevBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPrev();
+    });
+
+    nextBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showNext();
+    });
+
+    // Navegação via teclado
+    dialog.onkeydown = (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        showPrev();
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        showNext();
+      }
+    };
+
     // Fechar ao clicar no backdrop fora do dialog
-    dialog.addEventListener('click', (event) => {
+    dialog.onclick = (event) => {
       const rect = dialog.getBoundingClientRect();
       const isInDialog =
         rect.top <= event.clientY &&
@@ -138,10 +254,9 @@
       if (!isInDialog) {
         dialog.close();
       }
-    });
+    };
   }
 
-  // Executa no load e após trocas de página
   setupLightbox();
   document.addEventListener('astro:page-load', setupLightbox);
 </script>

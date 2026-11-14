@@ -10,18 +10,26 @@ import { withBase } from '../../utils/base';
 
 const allImages = await getCollection('gallery');
 
-// Extrai álbuns únicos
+// Extrai álbuns únicos ordenados
+const albumOrder = ['wallpapers', 'desktop', 'ia'];
 const albums = Array.from(
   new Set(allImages.map((img) => img.data.albumSlug)),
-).map((slug) => {
-  const item = allImages.find((img) => img.data.albumSlug === slug)!;
-  const count = allImages.filter((img) => img.data.albumSlug === slug).length;
-  return {
-    slug,
-    name: item.data.album,
-    count,
-  };
-});
+)
+  .map((slug) => {
+    const item = allImages.find((img) => img.data.albumSlug === slug)!;
+    const count = allImages.filter((img) => img.data.albumSlug === slug).length;
+    return {
+      slug,
+      name: item.data.album,
+      count,
+    };
+  })
+  .sort((a, b) => {
+    const idxA = albumOrder.indexOf(a.slug);
+    const idxB = albumOrder.indexOf(b.slug);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    return a.name.localeCompare(b.name);
+  });
 
 const hasDemoContent = allImages.some((img) => img.data.isDemo);
 ---
