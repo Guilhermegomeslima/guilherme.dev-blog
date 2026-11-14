@@ -31,7 +31,7 @@ const formattedFinal = formatScore(finalScore);
 
 <BaseLayout
   title={`${data.title} — Avaliação de Jogos // guilherme.dev`}
-  description={data.description}
+  description={data.description || `Avaliação e notas técnicas de ${data.title} (${data.releaseYear}), para ${data.platform}.`}
   image={data.coverImage.url}
   noindex={data.isDemo}
 >
@@ -48,21 +48,39 @@ const formattedFinal = formatScore(finalScore);
       <div class="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-start border-b border-border/80 pb-12">
         <div class="md:col-span-5 lg:col-span-4">
           <div class="relative aspect-[3/4] overflow-hidden rounded-lg border border-border/80 bg-surface-raised shadow-xl">
-            <img
-              src={withBase(data.coverImage.url)}
-              alt={data.coverImage.alt}
-              width="600"
-              height="800"
-              loading="eager"
-              decoding="async"
-              class="h-full w-full object-cover filter contrast-110 brightness-95"
-            />
+            {!data.coverImage.isPlaceholder && data.coverImage.url ? (
+              <img
+                src={withBase(data.coverImage.url)}
+                alt={data.coverImage.alt}
+                width="600"
+                height="800"
+                loading="eager"
+                decoding="async"
+                class="h-full w-full object-cover filter contrast-110 brightness-95"
+              />
+            ) : (
+              <div class="flex h-full w-full flex-col justify-between p-8 bg-gradient-to-br from-surface to-surface-raised border border-border/40 select-none">
+                <div class="flex items-center justify-between font-mono text-xs text-accent">
+                  <span>// CARTUCHO / MÍDIA</span>
+                  <span>{data.platform}</span>
+                </div>
+                <div>
+                  <h2 class="font-display text-2xl font-bold text-text leading-tight">
+                    {data.title}
+                  </h2>
+                  <p class="font-mono text-sm text-text-muted mt-2">
+                    {data.developer || data.genre}
+                  </p>
+                </div>
+                <div class="flex items-center justify-between font-mono text-xs text-text-muted/60 pt-2 border-t border-border/40">
+                  <span>Lançamento: {data.releaseYear}</span>
+                  <span class="rounded border border-accent/40 bg-accent/10 px-2 py-0.5 text-accent font-mono text-[10px]">
+                    Capa Provisória
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
-          {data.coverImage.isPlaceholder && (
-            <p class="mt-2 text-center font-mono text-[11px] text-text-muted/70">
-              * Capa provisória para fins ilustrativos
-            </p>
-          )}
         </div>
 
         <div class="md:col-span-7 lg:col-span-8 flex flex-col justify-between">

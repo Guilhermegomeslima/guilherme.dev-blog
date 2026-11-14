@@ -56,15 +56,32 @@ const currentStatus = statusConfig[data.status] || {
   <a href={gameHref} class="flex flex-col h-full">
     {/* Capa em proporção vertical (pôster 3:4) */}
     <div class="relative aspect-[3/4] w-full overflow-hidden bg-surface-raised border-b border-border/60">
-      <img
-        src={withBase(data.coverImage.url)}
-        alt={data.coverImage.alt}
-        width="600"
-        height="800"
-        loading="lazy"
-        decoding="async"
-        class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
-      />
+      {!data.coverImage.isPlaceholder && data.coverImage.url ? (
+        <img
+          src={withBase(data.coverImage.url)}
+          alt={data.coverImage.alt}
+          width="600"
+          height="800"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
+        />
+      ) : (
+        <div class="flex h-full w-full flex-col justify-center items-center p-6 text-center bg-gradient-to-br from-surface via-surface-raised to-surface border border-border/40 select-none">
+          <span class="font-mono text-xs text-accent uppercase tracking-widest mb-2">
+            // CARTUCHO / MÍDIA
+          </span>
+          <h4 class="font-display text-lg font-bold text-text leading-tight group-hover:text-accent transition-colors">
+            {data.title}
+          </h4>
+          <p class="font-mono text-[11px] text-text-muted mt-2">
+            {data.developer || data.genre}
+          </p>
+          <span class="mt-4 rounded border border-border/60 bg-surface/80 px-2 py-0.5 font-mono text-[10px] text-text-muted">
+            Capa Provisória
+          </span>
+        </div>
+      )}
 
       {/* Badges Flutuantes: Status e Plataforma */}
       <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
@@ -97,11 +114,7 @@ const currentStatus = statusConfig[data.status] || {
         </span>
       </div>
 
-      {data.coverImage.isPlaceholder && (
-        <div class="absolute bottom-3 left-3 rounded border border-border/50 bg-surface/85 px-2 py-0.5 font-mono text-[9px] text-text-muted/80 backdrop-blur-xs">
-          Capa Provisória
-        </div>
-      )}
+
 
       {data.isDemo && (
         <div class="absolute bottom-3 right-3 rounded bg-warm/90 px-2 py-0.5 font-mono text-[10px] font-semibold text-bg uppercase">

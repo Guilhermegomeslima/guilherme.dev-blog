@@ -4,6 +4,7 @@ import Container from '../ui/Container.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
 import Card from '../ui/Card.astro';
 import { categories } from '../../data/categories';
+import { withBase } from '../../utils/base';
 ---
 
 <Section id="secoes">
@@ -42,7 +43,7 @@ import { categories } from '../../data/categories';
           <div class="mt-6 border-t border-border/40 pt-4">
             {item.available ? (
               <a
-                href={item.href}
+                href={withBase(item.href)}
                 class="group inline-flex items-center gap-2 font-mono text-xs text-accent transition-colors hover:text-accent-alt focus-visible:outline-accent"
               >
                 <span>Acessar seção</span>
