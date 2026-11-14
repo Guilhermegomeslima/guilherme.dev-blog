@@ -105,7 +105,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | DATA-03 | Escrever a trajetória no Linux e completar a timeline dos sistemas utilizados       | CNT-03                | P1         | —         | dad1ab4   | Concluído |
 | DATA-04 | Inserir filmes reais, diretor, ano e avaliações dos seis critérios                  | CNT-07, CNT-08        | P1         | —         | 75c5c3c   | Concluído |
 | DATA-05 | Cadastrar livros reais com status de leitura, favoritos e opiniões                  | CNT-10                | P1         | —         | 455b05b   | Concluído |
-| DATA-06 | Publicar artigos autorais reais, revisando títulos, datas e categorias              | CNT-02                | P1         | —         | —         | Pendente |
+| DATA-06 | Publicar artigos autorais reais, revisando títulos, datas e categorias              | CNT-02                | P1         | —         | be01720   | Concluído |
 | DATA-07 | Cadastrar artistas, álbuns e músicas reais e recomendações de Open Source           | CNT-09                | P1         | —         | —         | Pendente |
 | DATA-08 | Substituir álbuns de teste por galerias reais, imagens autorizadas e créditos       | CNT-11                | P1         | —         | —         | Pendente |
 | DATA-09 | Remover ou despublicar os dados de demonstração restantes e validar todo o conteúdo | DATA-01 a DATA-08     | P1         | —         | —         | Pendente |
