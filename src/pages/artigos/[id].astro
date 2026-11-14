@@ -95,7 +95,7 @@ const formattedDate = new Intl.DateTimeFormat('pt-BR', {
       {data.image && (
         <div class="my-8 overflow-hidden rounded-lg border border-border/70 bg-surface-raised">
           <img
-            src={data.image.url}
+            src={withBase(data.image.url)}
             alt={data.image.alt}
             width="1200"
             height="630"
@@ -103,9 +103,17 @@ const formattedDate = new Intl.DateTimeFormat('pt-BR', {
             decoding="async"
             class="h-auto w-full object-cover filter contrast-110 brightness-95"
           />
-          <p class="border-t border-border/40 bg-surface/80 px-4 py-2 font-mono text-[11px] text-text-muted/70">
-            [ Imagem ilustrativa de teste ]
-          </p>
+          {data.isDemo ? (
+            <p class="border-t border-border/40 bg-surface/80 px-4 py-2 font-mono text-[11px] text-text-muted/70">
+              [ Imagem ilustrativa de teste ]
+            </p>
+          ) : (
+            data.image.alt && (
+              <p class="border-t border-border/40 bg-surface/80 px-4 py-2 font-mono text-[11px] text-text-muted/70">
+                // {data.image.alt}
+              </p>
+            )
+          )}
         </div>
       )}
 

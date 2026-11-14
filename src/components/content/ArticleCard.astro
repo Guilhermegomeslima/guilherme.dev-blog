@@ -31,7 +31,7 @@ const articleHref = withBase(`/artigos/${id}/`);
         {data.image && (
           <div class="lg:col-span-6 relative aspect-video lg:aspect-auto overflow-hidden bg-surface-raised">
             <img
-              src={data.image.url}
+              src={withBase(data.image.url)}
               alt={data.image.alt}
               width="800"
               height="450"
@@ -111,7 +111,7 @@ const articleHref = withBase(`/artigos/${id}/`);
       {data.image && (
         <div class="relative aspect-video w-full overflow-hidden bg-surface-raised">
           <img
-            src={data.image.url}
+            src={withBase(data.image.url)}
             alt={data.image.alt}
             width="600"
             height="338"
