@@ -1,0 +1,15 @@
+{
+  "title": "Alerta Vermelho",
+  "director": "Rawson Marshall Thurber",
+  "releaseYear": 2021,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 83,
+    "screenplay": 82,
+    "audiovisual": 85,
+    "acting": 81,
+    "pacing": 85,
+    "feeling": 78
+  },
+  "isDemo": false
+}

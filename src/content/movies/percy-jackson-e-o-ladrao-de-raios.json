@@ -1,0 +1,15 @@
+{
+  "title": "Percy Jackson e o Ladrão de Raios",
+  "director": "Chris Columbus",
+  "releaseYear": 2010,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 84,
+    "screenplay": 82,
+    "audiovisual": 84,
+    "acting": 81,
+    "pacing": 85,
+    "feeling": 79
+  },
+  "isDemo": false
+}

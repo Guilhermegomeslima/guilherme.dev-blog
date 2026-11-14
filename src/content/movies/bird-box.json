@@ -1,0 +1,15 @@
+{
+  "title": "Bird Box",
+  "director": "Susanne Bier",
+  "releaseYear": 2018,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 82,
+    "screenplay": 82,
+    "audiovisual": 83,
+    "acting": 82,
+    "pacing": 80,
+    "feeling": 76
+  },
+  "isDemo": false
+}

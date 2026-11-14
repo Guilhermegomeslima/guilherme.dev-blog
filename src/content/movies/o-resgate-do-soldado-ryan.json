@@ -1,0 +1,15 @@
+{
+  "title": "O Resgate do Soldado Ryan",
+  "director": "Steven Spielberg",
+  "releaseYear": 1998,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 97,
+    "screenplay": 91,
+    "audiovisual": 95,
+    "acting": 90,
+    "pacing": 95,
+    "feeling": 97
+  },
+  "isDemo": false
+}

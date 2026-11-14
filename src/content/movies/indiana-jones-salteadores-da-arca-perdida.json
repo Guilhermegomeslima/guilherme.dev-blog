@@ -1,0 +1,15 @@
+{
+  "title": "Indiana Jones Salteadores da arca perdida",
+  "director": "Steven Spielberg",
+  "releaseYear": 1981,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 90,
+    "screenplay": 87,
+    "audiovisual": 87,
+    "acting": 88,
+    "pacing": 89,
+    "feeling": 92
+  },
+  "isDemo": false
+}

@@ -1,0 +1,15 @@
+{
+  "title": "divertidamente 2",
+  "director": "Kelsey Mann",
+  "releaseYear": 2024,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 75,
+    "screenplay": 66,
+    "audiovisual": 80,
+    "acting": 77,
+    "pacing": 72,
+    "feeling": 40
+  },
+  "isDemo": false
+}

@@ -31,7 +31,7 @@ const formattedFinal = formatScore(finalScore);
 
 <BaseLayout
   title={`${data.title} — Crítica de Cinema // guilherme.dev`}
-  description={data.description}
+  description={data.description || `Avaliação e notas cinematográficas de ${data.title} (${data.releaseYear}), dirigido por ${data.director}.`}
   image={data.coverImage?.url}
   noindex={data.isDemo}
 >
@@ -120,15 +120,17 @@ const formattedFinal = formatScore(finalScore);
 
       {/* Seções de Texto e Avaliação */}
       <div class="mt-8 space-y-10">
-        {/* Sinopse / Contexto */}
-        <section>
-          <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-2">
-            // SINOPSE & CONTEXTO
-          </span>
-          <p class="font-body text-base sm:text-lg leading-relaxed text-text-muted">
-            {data.description}
-          </p>
-        </section>
+        {/* Sinopse / Contexto (opcional) */}
+        {data.description && (
+          <section>
+            <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-2">
+              // SINOPSE & CONTEXTO
+            </span>
+            <p class="font-body text-base sm:text-lg leading-relaxed text-text-muted">
+              {data.description}
+            </p>
+          </section>
+        )}
 
         {/* Parecer Crítico */}
         {data.opinion && (

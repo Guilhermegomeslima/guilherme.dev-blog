@@ -1,0 +1,15 @@
+{
+  "title": "1917",
+  "director": "Sam Mendes",
+  "releaseYear": 2019,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 94,
+    "screenplay": 87,
+    "audiovisual": 94,
+    "acting": 91,
+    "pacing": 93,
+    "feeling": 91
+  },
+  "isDemo": false
+}

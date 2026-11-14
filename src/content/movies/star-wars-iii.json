@@ -1,0 +1,15 @@
+{
+  "title": "star wars III",
+  "director": "George Lucas",
+  "releaseYear": 2005,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 93,
+    "screenplay": 92,
+    "audiovisual": 94,
+    "acting": 91,
+    "pacing": 94,
+    "feeling": 97
+  },
+  "isDemo": false
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Percy Jackson e o Mar de Monstros",
+  "director": "Thor Freudenthal",
+  "releaseYear": 2013,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 84,
+    "screenplay": 83,
+    "audiovisual": 85,
+    "acting": 83,
+    "pacing": 86,
+    "feeling": 75
+  },
+  "isDemo": false
+}

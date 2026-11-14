@@ -1,0 +1,15 @@
+{
+  "title": "star wars VI",
+  "director": "Richard Marquand",
+  "releaseYear": 1983,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 91,
+    "screenplay": 90,
+    "audiovisual": 91,
+    "acting": 91,
+    "pacing": 87,
+    "feeling": 92
+  },
+  "isDemo": false
+}

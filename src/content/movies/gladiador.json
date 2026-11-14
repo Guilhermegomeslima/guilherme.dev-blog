@@ -1,0 +1,15 @@
+{
+  "title": "Gladiador",
+  "director": "Ridley Scott",
+  "releaseYear": 2000,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 91,
+    "screenplay": 90,
+    "audiovisual": 90,
+    "acting": 92,
+    "pacing": 94,
+    "feeling": 94
+  },
+  "isDemo": false
+}

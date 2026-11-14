@@ -1,0 +1,15 @@
+{
+  "title": "jumanji bem vindo a selva",
+  "director": "Jake Kasdan",
+  "releaseYear": 2017,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 82,
+    "screenplay": 82,
+    "audiovisual": 80,
+    "acting": 85,
+    "pacing": 84,
+    "feeling": 81
+  },
+  "isDemo": false
+}

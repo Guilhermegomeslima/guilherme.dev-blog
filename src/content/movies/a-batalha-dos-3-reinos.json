@@ -1,0 +1,15 @@
+{
+  "title": "A Batalha dos 3 Reinos",
+  "director": "John Woo",
+  "releaseYear": 2008,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 88,
+    "screenplay": 83,
+    "audiovisual": 87,
+    "acting": 85,
+    "pacing": 84,
+    "feeling": 85
+  },
+  "isDemo": false
+}

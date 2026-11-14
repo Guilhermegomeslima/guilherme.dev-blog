@@ -1,0 +1,15 @@
+{
+  "title": "star wars VII despertar da força",
+  "director": "J.J. Abrams",
+  "releaseYear": 2015,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 85,
+    "screenplay": 80,
+    "audiovisual": 86,
+    "acting": 86,
+    "pacing": 85,
+    "feeling": 83
+  },
+  "isDemo": false
+}

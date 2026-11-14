@@ -1,0 +1,15 @@
+{
+  "title": "detona ralph",
+  "director": "Rich Moore",
+  "releaseYear": 2012,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 76,
+    "screenplay": 71,
+    "audiovisual": 76,
+    "acting": 82,
+    "pacing": 80,
+    "feeling": 74
+  },
+  "isDemo": false
+}

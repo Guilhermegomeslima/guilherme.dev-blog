@@ -1,0 +1,15 @@
+{
+  "title": "John Wick 1",
+  "director": "Chad Stahelski",
+  "releaseYear": 2014,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 85,
+    "screenplay": 82,
+    "audiovisual": 86,
+    "acting": 86,
+    "pacing": 88,
+    "feeling": 86
+  },
+  "isDemo": false
+}

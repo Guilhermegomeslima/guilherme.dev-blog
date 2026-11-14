@@ -1,0 +1,15 @@
+{
+  "title": "indiana jones e o reino da caveira de cristal",
+  "director": "Steven Spielberg",
+  "releaseYear": 2008,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 87,
+    "screenplay": 86,
+    "audiovisual": 88,
+    "acting": 87,
+    "pacing": 87,
+    "feeling": 85
+  },
+  "isDemo": false
+}

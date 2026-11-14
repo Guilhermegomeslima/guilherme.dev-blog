@@ -1,0 +1,15 @@
+{
+  "title": "Céu e Inferno",
+  "director": "Akira Kurosawa",
+  "releaseYear": 1963,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 94,
+    "screenplay": 90,
+    "audiovisual": 86,
+    "acting": 90,
+    "pacing": 88,
+    "feeling": 94
+  },
+  "isDemo": false
+}

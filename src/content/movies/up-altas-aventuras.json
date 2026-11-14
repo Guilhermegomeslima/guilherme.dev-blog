@@ -1,0 +1,15 @@
+{
+  "title": "UP Altas Aventuras",
+  "director": "Pete Docter",
+  "releaseYear": 2009,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 87,
+    "screenplay": 85,
+    "audiovisual": 90,
+    "acting": 90,
+    "pacing": 89,
+    "feeling": 92
+  },
+  "isDemo": false
+}

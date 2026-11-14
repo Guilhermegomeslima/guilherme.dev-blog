@@ -1,0 +1,15 @@
+{
+  "title": "Rashomon",
+  "director": "Akira Kurosawa",
+  "releaseYear": 1950,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 89,
+    "screenplay": 89,
+    "audiovisual": 80,
+    "acting": 86,
+    "pacing": 80,
+    "feeling": 80
+  },
+  "isDemo": false
+}

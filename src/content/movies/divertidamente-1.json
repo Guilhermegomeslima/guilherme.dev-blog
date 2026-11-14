@@ -1,0 +1,15 @@
+{
+  "title": "divertidamente 1",
+  "director": "Pete Docter",
+  "releaseYear": 2015,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 77,
+    "screenplay": 70,
+    "audiovisual": 80,
+    "acting": 80,
+    "pacing": 76,
+    "feeling": 65
+  },
+  "isDemo": false
+}

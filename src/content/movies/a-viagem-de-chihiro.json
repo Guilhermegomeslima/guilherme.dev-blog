@@ -1,0 +1,15 @@
+{
+  "title": "A Viagem de Chihiro",
+  "director": "Hayao Miyazaki",
+  "releaseYear": 2001,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 90,
+    "screenplay": 88,
+    "audiovisual": 88,
+    "acting": 85,
+    "pacing": 88,
+    "feeling": 91
+  },
+  "isDemo": false
+}

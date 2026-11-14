@@ -1,0 +1,15 @@
+{
+  "title": "star wars IV",
+  "director": "George Lucas",
+  "releaseYear": 1977,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 90,
+    "screenplay": 90,
+    "audiovisual": 90,
+    "acting": 88,
+    "pacing": 86,
+    "feeling": 92
+  },
+  "isDemo": false
+}

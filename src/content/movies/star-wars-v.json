@@ -1,0 +1,15 @@
+{
+  "title": "star wars V",
+  "director": "Irvin Kershner",
+  "releaseYear": 1980,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 89,
+    "screenplay": 88,
+    "audiovisual": 90,
+    "acting": 89,
+    "pacing": 86,
+    "feeling": 90
+  },
+  "isDemo": false
+}

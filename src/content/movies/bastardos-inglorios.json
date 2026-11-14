@@ -1,0 +1,15 @@
+{
+  "title": "bastardos inglorios",
+  "director": "Quentin Tarantino",
+  "releaseYear": 2009,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 93,
+    "screenplay": 94,
+    "audiovisual": 89,
+    "acting": 98,
+    "pacing": 91,
+    "feeling": 92
+  },
+  "isDemo": false
+}

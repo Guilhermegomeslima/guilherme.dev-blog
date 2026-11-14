@@ -1,0 +1,15 @@
+{
+  "title": "Apocalypse Now Redux",
+  "director": "Francis Ford Coppola",
+  "releaseYear": 1979,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 95,
+    "screenplay": 92,
+    "audiovisual": 93,
+    "acting": 89,
+    "pacing": 87,
+    "feeling": 85
+  },
+  "isDemo": false
+}

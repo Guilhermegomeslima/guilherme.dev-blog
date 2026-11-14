@@ -1,0 +1,15 @@
+{
+  "title": "star wars II",
+  "director": "George Lucas",
+  "releaseYear": 2002,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 88,
+    "screenplay": 85,
+    "audiovisual": 89,
+    "acting": 85,
+    "pacing": 88,
+    "feeling": 89
+  },
+  "isDemo": false
+}

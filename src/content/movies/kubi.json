@@ -1,0 +1,15 @@
+{
+  "title": "Kubi",
+  "director": "Takeshi Kitano",
+  "releaseYear": 2023,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 81,
+    "screenplay": 75,
+    "audiovisual": 82,
+    "acting": 80,
+    "pacing": 81,
+    "feeling": 60
+  },
+  "isDemo": false
+}

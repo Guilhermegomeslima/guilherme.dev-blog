@@ -1,0 +1,15 @@
+{
+  "title": "Blade Runner - O Caçador de Androides",
+  "director": "Ridley Scott",
+  "releaseYear": 1982,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 85,
+    "screenplay": 85,
+    "audiovisual": 83,
+    "acting": 85,
+    "pacing": 85,
+    "feeling": 85
+  },
+  "isDemo": false
+}

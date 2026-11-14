@@ -1,0 +1,15 @@
+{
+  "title": "croods 1",
+  "director": "Kirk DeMicco e Chris Sanders",
+  "releaseYear": 2013,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 74,
+    "screenplay": 72,
+    "audiovisual": 78,
+    "acting": 80,
+    "pacing": 77,
+    "feeling": 70
+  },
+  "isDemo": false
+}

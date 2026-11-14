@@ -1,0 +1,15 @@
+{
+  "title": "O poderoso chefao",
+  "director": "Francis Ford Coppola",
+  "releaseYear": 1972,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 96,
+    "screenplay": 97,
+    "audiovisual": 91,
+    "acting": 96,
+    "pacing": 88,
+    "feeling": 95
+  },
+  "isDemo": false
+}

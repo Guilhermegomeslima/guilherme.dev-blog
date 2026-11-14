@@ -1,0 +1,15 @@
+{
+  "title": "Skyscraper",
+  "director": "Rawson Marshall Thurber",
+  "releaseYear": 2018,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 81,
+    "screenplay": 79,
+    "audiovisual": 85,
+    "acting": 82,
+    "pacing": 83,
+    "feeling": 77
+  },
+  "isDemo": false
+}

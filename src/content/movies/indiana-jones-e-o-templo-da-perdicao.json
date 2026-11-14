@@ -1,0 +1,15 @@
+{
+  "title": "Indiana Jones e o templo da perdição",
+  "director": "Steven Spielberg",
+  "releaseYear": 1984,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 88,
+    "screenplay": 84,
+    "audiovisual": 85,
+    "acting": 85,
+    "pacing": 85,
+    "feeling": 86
+  },
+  "isDemo": false
+}

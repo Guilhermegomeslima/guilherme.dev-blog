@@ -81,7 +81,7 @@ const movies = defineCollection({
     director: z.string(),
     releaseYear: z.number().int(),
     genre: z.string().default('Cinema'),
-    description: z.string(),
+    description: z.string().optional(),
     opinion: z.string().optional(),
     coverImage: z
       .object({
@@ -97,7 +97,7 @@ const movies = defineCollection({
       pacing: z.number().min(0).max(100),
       feeling: z.number().min(0).max(100),
     }),
-    isDemo: z.boolean().default(true),
+    isDemo: z.boolean().default(false),
   }),
 });
 

@@ -1,0 +1,15 @@
+{
+  "title": "star wars I",
+  "director": "George Lucas",
+  "releaseYear": 1999,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 85,
+    "screenplay": 84,
+    "audiovisual": 88,
+    "acting": 86,
+    "pacing": 85,
+    "feeling": 85
+  },
+  "isDemo": false
+}

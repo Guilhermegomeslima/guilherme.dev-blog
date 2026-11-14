@@ -1,0 +1,15 @@
+{
+  "title": "Resgate 2",
+  "director": "Sam Hargrave",
+  "releaseYear": 2023,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 88,
+    "screenplay": 80,
+    "audiovisual": 93,
+    "acting": 89,
+    "pacing": 89,
+    "feeling": 82
+  },
+  "isDemo": false
+}

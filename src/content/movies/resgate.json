@@ -1,0 +1,15 @@
+{
+  "title": "Resgate",
+  "director": "Sam Hargrave",
+  "releaseYear": 2020,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 91,
+    "screenplay": 80,
+    "audiovisual": 93,
+    "acting": 89,
+    "pacing": 94,
+    "feeling": 88
+  },
+  "isDemo": false
+}

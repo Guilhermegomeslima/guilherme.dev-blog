@@ -1,0 +1,15 @@
+{
+  "title": "Operação Invasão",
+  "director": "Gareth Evans",
+  "releaseYear": 2011,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 86,
+    "screenplay": 81,
+    "audiovisual": 87,
+    "acting": 91,
+    "pacing": 94,
+    "feeling": 87
+  },
+  "isDemo": false
+}

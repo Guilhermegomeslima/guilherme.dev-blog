@@ -1,0 +1,15 @@
+{
+  "title": "O grande Dave",
+  "director": "Brian Robbins",
+  "releaseYear": 2008,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 80,
+    "screenplay": 70,
+    "audiovisual": 75,
+    "acting": 79,
+    "pacing": 79,
+    "feeling": 77
+  },
+  "isDemo": false
+}

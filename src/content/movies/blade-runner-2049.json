@@ -1,0 +1,15 @@
+{
+  "title": "Blade Runner 2049",
+  "director": "Denis Villeneuve",
+  "releaseYear": 2017,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 87,
+    "screenplay": 86,
+    "audiovisual": 87,
+    "acting": 85,
+    "pacing": 87,
+    "feeling": 86
+  },
+  "isDemo": false
+}

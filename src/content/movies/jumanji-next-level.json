@@ -1,0 +1,15 @@
+{
+  "title": "jumanji next level",
+  "director": "Jake Kasdan",
+  "releaseYear": 2019,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 82,
+    "screenplay": 80,
+    "audiovisual": 82,
+    "acting": 84,
+    "pacing": 85,
+    "feeling": 80
+  },
+  "isDemo": false
+}

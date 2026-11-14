@@ -1,0 +1,15 @@
+{
+  "title": "Norbit",
+  "director": "Brian Robbins",
+  "releaseYear": 2007,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 83,
+    "screenplay": 82,
+    "audiovisual": 84,
+    "acting": 88,
+    "pacing": 85,
+    "feeling": 94
+  },
+  "isDemo": false
+}

@@ -1,0 +1,15 @@
+{
+  "title": "emoji 1",
+  "director": "Tony Leondis",
+  "releaseYear": 2017,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 71,
+    "screenplay": 64,
+    "audiovisual": 75,
+    "acting": 74,
+    "pacing": 77,
+    "feeling": 65
+  },
+  "isDemo": false
+}

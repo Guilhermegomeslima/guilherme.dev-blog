@@ -1,0 +1,15 @@
+{
+  "title": "John Wick 4",
+  "director": "Chad Stahelski",
+  "releaseYear": 2023,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 85,
+    "screenplay": 85,
+    "audiovisual": 86,
+    "acting": 89,
+    "pacing": 90,
+    "feeling": 87
+  },
+  "isDemo": false
+}

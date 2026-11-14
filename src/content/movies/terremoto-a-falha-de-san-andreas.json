@@ -1,0 +1,15 @@
+{
+  "title": "Terremoto A Falha de San Andreas",
+  "director": "Brad Peyton",
+  "releaseYear": 2015,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 85,
+    "screenplay": 81,
+    "audiovisual": 93,
+    "acting": 82,
+    "pacing": 86,
+    "feeling": 82
+  },
+  "isDemo": false
+}

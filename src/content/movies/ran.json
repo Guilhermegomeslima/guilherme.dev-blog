@@ -1,0 +1,15 @@
+{
+  "title": "Ran",
+  "director": "Akira Kurosawa",
+  "releaseYear": 1985,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 95,
+    "screenplay": 91,
+    "audiovisual": 88,
+    "acting": 86,
+    "pacing": 90,
+    "feeling": 96
+  },
+  "isDemo": false
+}

@@ -1,0 +1,15 @@
+{
+  "title": "John Wick 2",
+  "director": "Chad Stahelski",
+  "releaseYear": 2017,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 87,
+    "screenplay": 84,
+    "audiovisual": 86,
+    "acting": 89,
+    "pacing": 90,
+    "feeling": 87
+  },
+  "isDemo": false
+}

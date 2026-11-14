@@ -1,0 +1,15 @@
+{
+  "title": "Os suspeitos",
+  "director": "Denis Villeneuve",
+  "releaseYear": 2013,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 95,
+    "screenplay": 91,
+    "audiovisual": 89,
+    "acting": 96,
+    "pacing": 94,
+    "feeling": 96
+  },
+  "isDemo": false
+}

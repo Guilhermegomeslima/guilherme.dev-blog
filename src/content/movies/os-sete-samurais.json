@@ -1,0 +1,15 @@
+{
+  "title": "Os Sete Samurais",
+  "director": "Akira Kurosawa",
+  "releaseYear": 1954,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 90,
+    "screenplay": 89,
+    "audiovisual": 82,
+    "acting": 87,
+    "pacing": 82,
+    "feeling": 82
+  },
+  "isDemo": false
+}

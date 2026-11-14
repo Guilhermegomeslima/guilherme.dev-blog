@@ -1,0 +1,15 @@
+{
+  "title": "Indiana Jones e a última cruzada",
+  "director": "Steven Spielberg",
+  "releaseYear": 1989,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 92,
+    "screenplay": 89,
+    "audiovisual": 89,
+    "acting": 89,
+    "pacing": 90,
+    "feeling": 95
+  },
+  "isDemo": false
+}

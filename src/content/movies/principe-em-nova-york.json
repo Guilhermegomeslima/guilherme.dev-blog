@@ -1,0 +1,15 @@
+{
+  "title": "Príncipe em nova york",
+  "director": "John Landis",
+  "releaseYear": 1988,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 77,
+    "screenplay": 70,
+    "audiovisual": 79,
+    "acting": 80,
+    "pacing": 75,
+    "feeling": 80
+  },
+  "isDemo": false
+}

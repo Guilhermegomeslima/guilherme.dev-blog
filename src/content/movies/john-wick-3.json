@@ -1,0 +1,15 @@
+{
+  "title": "John Wick 3",
+  "director": "Chad Stahelski",
+  "releaseYear": 2019,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 86,
+    "screenplay": 84,
+    "audiovisual": 86,
+    "acting": 88,
+    "pacing": 90,
+    "feeling": 85
+  },
+  "isDemo": false
+}

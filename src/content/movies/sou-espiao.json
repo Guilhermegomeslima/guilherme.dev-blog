@@ -1,0 +1,15 @@
+{
+  "title": "Sou espião",
+  "director": "Betty Thomas",
+  "releaseYear": 2002,
+  "genre": "Cinema",
+  "scores": {
+    "direction": 78,
+    "screenplay": 74,
+    "audiovisual": 77,
+    "acting": 78,
+    "pacing": 79,
+    "feeling": 75
+  },
+  "isDemo": false
+}
