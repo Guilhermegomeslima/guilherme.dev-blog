@@ -1,0 +1,13 @@
+{
+  "name": "Git",
+  "category": "Controle de Versão",
+  "description": "Sistema de controle de versão distribuído, rápido e escalável para rastreamento de alterações em código-fonte.",
+  "icon": {
+    "url": "/images/opensource/git.png",
+    "alt": "Ícone oficial de Git"
+  },
+  "websiteUrl": "https://git-scm.com/",
+  "repoUrl": "https://github.com/git/git",
+  "license": "GPL-2.0",
+  "isDemo": false
+}

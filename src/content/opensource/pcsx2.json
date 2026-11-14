@@ -1,0 +1,13 @@
+{
+  "name": "PCSX2",
+  "category": "Emulação & Jogos",
+  "description": "Emulador de PlayStation 2 gratuito e de código aberto para Windows, Linux e macOS, com suporte a melhorias gráficas.",
+  "icon": {
+    "url": "/images/opensource/pcsx2.avif",
+    "alt": "Ícone oficial de PCSX2"
+  },
+  "websiteUrl": "https://pcsx2.net/",
+  "repoUrl": "https://github.com/PCSX2/pcsx2",
+  "license": "GPL-3.0",
+  "isDemo": false
+}

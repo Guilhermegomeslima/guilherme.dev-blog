@@ -129,7 +129,7 @@ const opensource = defineCollection({
     category: z.string(),
     description: z.string(),
     comment: z.string().optional(),
-    status: z.enum(['uso_atualmente', 'ja_utilizei', 'recomendo']),
+    status: z.enum(['uso_atualmente', 'ja_utilizei', 'recomendo']).optional(),
     websiteUrl: z.string().optional(),
     repoUrl: z.string().optional(),
     license: z.string().optional(),
@@ -139,7 +139,7 @@ const opensource = defineCollection({
         alt: z.string(),
       })
       .optional(),
-    isDemo: z.boolean().default(true),
+    isDemo: z.boolean().default(false),
   }),
 });
 

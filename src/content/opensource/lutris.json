@@ -1,0 +1,13 @@
+{
+  "name": "Lutris",
+  "category": "Jogos no Linux",
+  "description": "Plataforma aberta de jogos para Linux que unifica e facilita a instalação e execução de jogos via Wine, Proton e emuladores.",
+  "icon": {
+    "url": "/images/opensource/lutris.jpg",
+    "alt": "Ícone oficial de Lutris"
+  },
+  "websiteUrl": "https://lutris.net/",
+  "repoUrl": "https://github.com/lutris/lutris",
+  "license": "GPL-3.0",
+  "isDemo": false
+}

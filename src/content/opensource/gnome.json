@@ -1,0 +1,13 @@
+{
+  "name": "GNOME",
+  "category": "Ambiente Desktop",
+  "description": "Ambiente gráfico livre para sistemas Linux e Unix-like, focado em simplicidade, produtividade e integração moderna.",
+  "icon": {
+    "url": "/images/opensource/gnome.jpg",
+    "alt": "Ícone oficial de GNOME"
+  },
+  "websiteUrl": "https://www.gnome.org/",
+  "repoUrl": "https://gitlab.gnome.org/GNOME",
+  "license": "GPL / LGPL",
+  "isDemo": false
+}

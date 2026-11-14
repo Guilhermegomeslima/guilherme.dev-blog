@@ -1,0 +1,13 @@
+{
+  "name": "VLC",
+  "category": "Multimídia",
+  "description": "Reprodutor multimídia livre e multiplataforma capaz de reproduzir a maioria dos formatos de áudio, vídeo e protocolos de streaming.",
+  "icon": {
+    "url": "/images/opensource/vlc.jpg",
+    "alt": "Ícone oficial de VLC"
+  },
+  "websiteUrl": "https://www.videolan.org/vlc/",
+  "repoUrl": "https://code.videolan.org/videolan/vlc",
+  "license": "GPL-2.0+",
+  "isDemo": false
+}

@@ -1,0 +1,13 @@
+{
+  "name": "ONLYOFFICE Desktop Editors",
+  "category": "Suíte de Escritório",
+  "description": "Suíte de escritório de código aberto para edição de documentos de texto, planilhas, apresentações e formulários PDF.",
+  "icon": {
+    "url": "/images/opensource/onlyoffice.png",
+    "alt": "Ícone oficial de ONLYOFFICE Desktop Editors"
+  },
+  "websiteUrl": "https://www.onlyoffice.com/",
+  "repoUrl": "https://github.com/ONLYOFFICE/DesktopEditors",
+  "license": "AGPL-3.0",
+  "isDemo": false
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Sayonara Music Player",
+  "category": "Áudio & Música",
+  "description": "Reprodutor de áudio leve e rápido para Linux, escrito em C++ com Qt e GStreamer, voltado para organização de bibliotecas locais.",
+  "icon": {
+    "url": "/images/opensource/sayonara.png",
+    "alt": "Ícone oficial de Sayonara Music Player"
+  },
+  "websiteUrl": "https://sayonara-player.com/",
+  "repoUrl": "https://gitlab.com/luciocarreras/sayonara-player",
+  "license": "GPL-3.0",
+  "isDemo": false
+}

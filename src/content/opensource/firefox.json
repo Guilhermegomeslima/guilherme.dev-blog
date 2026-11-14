@@ -1,0 +1,13 @@
+{
+  "name": "Firefox",
+  "category": "Navegador Web",
+  "description": "Navegador web livre e de código aberto desenvolvido pela Mozilla Foundation, com foco em privacidade e padrões web abertos.",
+  "icon": {
+    "url": "/images/opensource/firefox.jpg",
+    "alt": "Ícone oficial de Firefox"
+  },
+  "websiteUrl": "https://www.mozilla.org/pt-BR/firefox/",
+  "repoUrl": "https://hg.mozilla.org/mozilla-central/",
+  "license": "MPL-2.0",
+  "isDemo": false
+}
