@@ -1,0 +1,12 @@
+{
+  "title": "Para Ensinar e Aprender Xadrez",
+  "author": "Adriano Caldeira",
+  "genre": "Estratégia / Enxadrismo",
+  "status": "lido",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/para-ensinar-e-aprender-xadrez.jpg",
+    "alt": "Capa do livro Para Ensinar e Aprender Xadrez"
+  },
+  "isDemo": false
+}

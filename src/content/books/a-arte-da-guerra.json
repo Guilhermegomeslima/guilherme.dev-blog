@@ -1,0 +1,12 @@
+{
+  "title": "A Arte da Guerra: Os Treze Capítulos",
+  "author": "Sun Tzu",
+  "genre": "Estratégia Militar",
+  "status": "lido",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/a-arte-da-guerra.jpg",
+    "alt": "Capa do livro A Arte da Guerra: Os Treze Capítulos"
+  },
+  "isDemo": false
+}

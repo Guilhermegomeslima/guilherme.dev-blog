@@ -1,0 +1,12 @@
+{
+  "title": "O Príncipe",
+  "author": "Nicolau Maquiavel",
+  "genre": "Filosofia Política / Estratégia",
+  "status": "quero_ler",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/o-principe.jpg",
+    "alt": "Capa do livro O Príncipe"
+  },
+  "isDemo": false
+}

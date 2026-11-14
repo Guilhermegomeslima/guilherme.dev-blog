@@ -1,0 +1,12 @@
+{
+  "title": "O Banquete",
+  "author": "Platão",
+  "genre": "Filosofia Clássica",
+  "status": "quero_ler",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/o-banquete.jpg",
+    "alt": "Capa do livro O Banquete"
+  },
+  "isDemo": false
+}

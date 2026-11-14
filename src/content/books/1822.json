@@ -1,0 +1,12 @@
+{
+  "title": "1822",
+  "author": "Laurentino Gomes",
+  "genre": "História do Brasil",
+  "status": "quero_ler",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/1822.jpg",
+    "alt": "Capa do livro 1822"
+  },
+  "isDemo": false
+}

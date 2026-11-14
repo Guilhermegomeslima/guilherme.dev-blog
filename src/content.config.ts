@@ -147,7 +147,7 @@ const books = defineCollection({
     title: z.string(),
     author: z.string(),
     year: z.number().int().optional(),
-    genre: z.string().default('Computação / Ficção Científica'),
+    genre: z.string().default('História & Filosofia'),
     status: z.enum(['lendo', 'lido', 'quero_ler']),
     favorite: z.boolean().default(false),
     coverImage: z
@@ -156,9 +156,9 @@ const books = defineCollection({
         alt: z.string(),
       })
       .optional(),
-    description: z.string(),
+    description: z.string().optional(),
     comment: z.string().optional(),
-    isDemo: z.boolean().default(true),
+    isDemo: z.boolean().default(false),
   }),
 });
 

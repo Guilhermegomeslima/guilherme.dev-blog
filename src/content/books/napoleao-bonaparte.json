@@ -1,0 +1,12 @@
+{
+  "title": "Napoleão Bonaparte",
+  "author": "Eduardo Almeida de Araújo (Hunter Books)",
+  "genre": "Biografia / História Moderna",
+  "status": "lido",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/napoleao-bonaparte.jpg",
+    "alt": "Capa do livro Napoleão Bonaparte"
+  },
+  "isDemo": false
+}

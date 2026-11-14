@@ -1,0 +1,12 @@
+{
+  "title": "Ética a Nicômaco",
+  "author": "Aristóteles",
+  "genre": "Filosofia Clássica / Ética",
+  "status": "quero_ler",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/etica-a-nicomaco.jpg",
+    "alt": "Capa do livro Ética a Nicômaco"
+  },
+  "isDemo": false
+}

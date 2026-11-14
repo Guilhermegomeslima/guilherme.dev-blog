@@ -1,0 +1,12 @@
+{
+  "title": "O Livro dos Cinco Anéis",
+  "author": "Miyamoto Musashi",
+  "genre": "Estratégia / Filosofia Marcial",
+  "status": "lido",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/o-livro-dos-cinco-aneis.jpg",
+    "alt": "Capa do livro O Livro dos Cinco Anéis"
+  },
+  "isDemo": false
+}

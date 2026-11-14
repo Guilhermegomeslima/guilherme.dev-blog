@@ -1,0 +1,12 @@
+{
+  "title": "Alexandre o Grande",
+  "author": "Marcelo Chaves Trevisan (Hunter Books)",
+  "genre": "Biografia / História Antiga",
+  "status": "lido",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/alexandre-o-grande.jpg",
+    "alt": "Capa do livro Alexandre o Grande"
+  },
+  "isDemo": false
+}

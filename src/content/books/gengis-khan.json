@@ -1,0 +1,12 @@
+{
+  "title": "Gêngis Khan",
+  "author": "Sidnei Lopes de Medeiros (Hunter Books)",
+  "genre": "Biografia / História Medieval",
+  "status": "lido",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/gengis-khan.jpg",
+    "alt": "Capa do livro Gêngis Khan"
+  },
+  "isDemo": false
+}

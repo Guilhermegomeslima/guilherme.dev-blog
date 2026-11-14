@@ -1,0 +1,12 @@
+{
+  "title": "1984",
+  "author": "George Orwell",
+  "genre": "Ficção Científica / Distopia",
+  "status": "lido",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/1984.jpg",
+    "alt": "Capa do livro 1984"
+  },
+  "isDemo": false
+}

@@ -1,0 +1,12 @@
+{
+  "title": "A Revolução dos Bichos",
+  "author": "George Orwell",
+  "genre": "Ficção / Sátira Política",
+  "status": "lido",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/a-revolucao-dos-bichos.jpg",
+    "alt": "Capa do livro A Revolução dos Bichos"
+  },
+  "isDemo": false
+}

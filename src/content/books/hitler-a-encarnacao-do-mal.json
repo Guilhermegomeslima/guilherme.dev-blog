@@ -1,0 +1,12 @@
+{
+  "title": "Hitler: A Encarnação do Mal",
+  "author": "Claudio Blanc",
+  "genre": "Biografia / Segunda Guerra Mundial",
+  "status": "lido",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/hitler-a-encarnacao-do-mal.jpg",
+    "alt": "Capa do livro Hitler: A Encarnação do Mal"
+  },
+  "isDemo": false
+}

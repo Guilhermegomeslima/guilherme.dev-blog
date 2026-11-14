@@ -1,0 +1,12 @@
+{
+  "title": "1889",
+  "author": "Laurentino Gomes",
+  "genre": "História do Brasil",
+  "status": "quero_ler",
+  "favorite": false,
+  "coverImage": {
+    "url": "/images/books/1889.jpg",
+    "alt": "Capa do livro 1889"
+  },
+  "isDemo": false
+}

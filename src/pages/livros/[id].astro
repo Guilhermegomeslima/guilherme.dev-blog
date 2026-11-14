@@ -46,7 +46,7 @@ const currentStatus = statusLabels[data.status] || {
 
 <BaseLayout
   title={`${data.title} — Ficha de Leitura // guilherme.dev`}
-  description={data.description}
+  description={data.description || `Ficha de leitura de ${data.title}, obra de ${data.author}.`}
   image={data.coverImage?.url}
   noindex={data.isDemo}
 >
@@ -65,7 +65,7 @@ const currentStatus = statusLabels[data.status] || {
           <div class="relative aspect-[2/3] overflow-hidden rounded-lg border border-border/80 bg-surface-raised shadow-xl">
             {data.coverImage ? (
               <img
-                src={data.coverImage.url}
+                src={withBase(data.coverImage.url)}
                 alt={data.coverImage.alt}
                 width="600"
                 height="900"
@@ -164,15 +164,17 @@ const currentStatus = statusLabels[data.status] || {
 
       {/* Seções de Texto e Resenha */}
       <div class="mt-8 space-y-10">
-        {/* Sinopse / Contexto */}
-        <section>
-          <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-2">
-            // SINOPSE & ESCOPO
-          </span>
-          <p class="font-body text-base sm:text-lg leading-relaxed text-text-muted">
-            {data.description}
-          </p>
-        </section>
+        {/* Sinopse / Contexto (opcional) */}
+        {data.description && (
+          <section>
+            <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-2">
+              // SINOPSE & ESCOPO
+            </span>
+            <p class="font-body text-base sm:text-lg leading-relaxed text-text-muted">
+              {data.description}
+            </p>
+          </section>
+        )}
 
         {/* Anotações e Comentário Editorial */}
         {data.comment && (

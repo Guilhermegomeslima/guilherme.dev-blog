@@ -47,7 +47,7 @@ const bookHref = withBase(`/livros/${id}/`);
     <div class="relative aspect-[2/3] w-full overflow-hidden bg-surface-raised border-b border-border/60">
       {data.coverImage ? (
         <img
-          src={data.coverImage.url}
+          src={withBase(data.coverImage.url)}
           alt={data.coverImage.alt}
           width="600"
           height="900"
@@ -116,9 +116,11 @@ const bookHref = withBase(`/livros/${id}/`);
 
         <p class="font-mono text-xs text-text-muted mt-1">Por {data.author}</p>
 
-        <p class="font-body mt-3 text-sm leading-relaxed text-text-muted line-clamp-2">
-          {data.description}
-        </p>
+        {data.description && (
+          <p class="font-body mt-3 text-sm leading-relaxed text-text-muted line-clamp-2">
+            {data.description}
+          </p>
+        )}
       </div>
 
       <div class="mt-4 pt-3 border-t border-border/40 flex items-center justify-between font-mono text-xs">
