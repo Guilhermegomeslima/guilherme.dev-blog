@@ -103,7 +103,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | DATA-01 | Inserir jogos reais, informações, imagens e notas dos cinco critérios               | CNT-05, CNT-06        | P1         | —         | 3f4fb7e   | Concluído |
 | DATA-02 | Cadastrar projetos reais com imagens, descrições e links conferidos                 | CNT-04                | P1         | —         | 3a5ea16   | Concluído |
 | DATA-03 | Escrever a trajetória no Linux e completar a timeline dos sistemas utilizados       | CNT-03                | P1         | —         | dad1ab4   | Concluído |
-| DATA-04 | Inserir filmes reais, diretor, ano e avaliações dos seis critérios                  | CNT-07, CNT-08        | P1         | —         | —         | Pendente |
+| DATA-04 | Inserir filmes reais, diretor, ano e avaliações dos seis critérios                  | CNT-07, CNT-08        | P1         | —         | 75c5c3c   | Concluído |
 | DATA-05 | Cadastrar livros reais com status de leitura, favoritos e opiniões                  | CNT-10                | P1         | —         | —         | Pendente |
 | DATA-06 | Publicar artigos autorais reais, revisando títulos, datas e categorias              | CNT-02                | P1         | —         | —         | Pendente |
 | DATA-07 | Cadastrar artistas, álbuns e músicas reais e recomendações de Open Source           | CNT-09                | P1         | —         | —         | Pendente |
