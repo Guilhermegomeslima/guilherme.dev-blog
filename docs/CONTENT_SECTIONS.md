@@ -11,7 +11,7 @@
 Especificar a estrutura visual, a experiência de navegação e as regras dos conteúdos da Fase 4. Este arquivo **complementa**, sem substituir, `REQUIREMENTS.md`, `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `CONTENT_GUIDE.md`, `GIT_WORKFLOW.md`, `ROADMAP.md` e `AGENTS.md`.
 
 - **[CONFIRMADO]** O blog é um site multipáginas em Astro, com TypeScript e Tailwind CSS 4, e conteúdo inicialmente gerenciado em arquivos locais.
-- **[CONFIRMADO]** Identidade visual global escura, cyberpunk cinematográfica, baseada na referência de Figma Make escolhida para a Home.
+- **[ATUALIZADO 2026-11-14]** A identidade visual vigente é o `DESIGN_SYSTEM_V2.md` (escura, editorial, vermelho envelhecido). As menções abaixo a neon, ciano/magenta, glitch/scanline e _timeline neon_ descrevem a identidade anterior e permanecem como histórico até as etapas VIS correspondentes (Linux: VIS-05; demais seções: VIS-06). A estrutura de conteúdo, dados, avisos e critérios de aceitação das seções **não mudam**.
 - **[CONFIRMADO]** As seções devem ser implementadas progressivamente, conforme o roadmap; evitar implementação simultânea de toda a Fase 4.
 - **[CONFIRMADO]** Primeiro desenvolver e validar com conteúdos demonstrativos; depois substituí-los por conteúdo real.
 - **[PROPOSTO]** Centralizar a apresentação dos avisos e dos metadados de demonstração em componentes reutilizáveis, sem acoplamento entre schemas e interface.
@@ -65,6 +65,8 @@ https://picsum.photos/seed/galeria-teste-01/1200/800
 - O Picsum utiliza fotografias de terceiros e oferece metadados de autores; quando necessário, consultar `https://picsum.photos/id/{id}/info` ou os metadados do serviço, em vez de inventar crédito. Conferir termos/licenças da fonte antes de uso definitivo.
 
 ## 3. Identidade e padrões de interface
+
+> **Nota (2026-11-14):** os itens visuais desta seção (neon ciano/magenta, glitch/scanline, timeline neon, luz ciano em hover) pertencem à identidade anterior. A referência vigente é `DESIGN_SYSTEM_V2.md`; cada seção será adaptada na etapa VIS indicada no `ROADMAP.md`, sem alterar dados nem comportamento. Regras de acessibilidade, navegação por teclado, responsividade e reuso de componentes continuam válidas.
 
 - Tema escuro global, neon ciano/magenta usado com moderação, composições editoriais e tipografia legível.
 - Header, navegação, rodapé, tokens e componentes existentes devem ser reutilizados.

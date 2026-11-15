@@ -2,7 +2,7 @@
 
 > **Status:** Em desenvolvimento · **Versão:** 0.4 · **Atualizado:** 2026-11-08
 > Planejamento **não é execução**. Nenhuma tarefa abaixo está presumida como implementada.
-> Fonte de requisitos: `REQUIREMENTS.md`. Guias: `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `CONTENT_GUIDE.md`, `GIT_WORKFLOW.md`.
+> Fonte de requisitos: `REQUIREMENTS.md`. Guias: `ARCHITECTURE.md`, `DESIGN_SYSTEM_V2.md` (referência visual vigente), `DESIGN_SYSTEM.md` (histórico), `CONTENT_GUIDE.md`, `GIT_WORKFLOW.md`.
 
 ## 1. Como usar
 
@@ -98,17 +98,17 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 >
 > **Critério de conclusão:** não considerar conteúdo fictício como informação pessoal real. Manter avisos de demonstração enquanto houver mocks publicados.
 
-| ID      | Item                                                                                | Dependências técnicas | Prioridade | Data alvo | Commit/PR | Status   |
-| ------- | ----------------------------------------------------------------------------------- | --------------------- | ---------- | --------- | --------- | -------- |
-| DATA-01 | Inserir jogos reais, informações, imagens e notas dos cinco critérios               | CNT-05, CNT-06        | P1         | —         | 3f4fb7e   | Concluído |
-| DATA-02 | Cadastrar projetos reais com imagens, descrições e links conferidos                 | CNT-04                | P1         | —         | 3a5ea16   | Concluído |
-| DATA-03 | Escrever a trajetória no Linux e completar a timeline dos sistemas utilizados       | CNT-03                | P1         | —         | dad1ab4   | Concluído |
-| DATA-04 | Inserir filmes reais, diretor, ano e avaliações dos seis critérios                  | CNT-07, CNT-08        | P1         | —         | 75c5c3c   | Concluído |
-| DATA-05 | Cadastrar livros reais com status de leitura, favoritos e opiniões                  | CNT-10                | P1         | —         | 455b05b   | Concluído |
-| DATA-06 | Publicar artigos autorais reais, revisando títulos, datas e categorias              | CNT-02                | P1         | —         | be01720   | Concluído |
+| ID      | Item                                                                                | Dependências técnicas | Prioridade | Data alvo | Commit/PR        | Status    |
+| ------- | ----------------------------------------------------------------------------------- | --------------------- | ---------- | --------- | ---------------- | --------- |
+| DATA-01 | Inserir jogos reais, informações, imagens e notas dos cinco critérios               | CNT-05, CNT-06        | P1         | —         | 3f4fb7e          | Concluído |
+| DATA-02 | Cadastrar projetos reais com imagens, descrições e links conferidos                 | CNT-04                | P1         | —         | 3a5ea16          | Concluído |
+| DATA-03 | Escrever a trajetória no Linux e completar a timeline dos sistemas utilizados       | CNT-03                | P1         | —         | dad1ab4          | Concluído |
+| DATA-04 | Inserir filmes reais, diretor, ano e avaliações dos seis critérios                  | CNT-07, CNT-08        | P1         | —         | 75c5c3c          | Concluído |
+| DATA-05 | Cadastrar livros reais com status de leitura, favoritos e opiniões                  | CNT-10                | P1         | —         | 455b05b          | Concluído |
+| DATA-06 | Publicar artigos autorais reais, revisando títulos, datas e categorias              | CNT-02                | P1         | —         | be01720          | Concluído |
 | DATA-07 | Cadastrar artistas, álbuns e músicas reais e recomendações de Open Source           | CNT-09                | P1         | —         | d10c65e, e747045 | Concluído |
-| DATA-08 | Substituir álbuns de teste por galerias reais, imagens autorizadas e créditos       | CNT-11                | P1         | —         | 9a4064b   | Concluído |
-| DATA-09 | Remover ou despublicar os dados de demonstração restantes e validar todo o conteúdo | DATA-01 a DATA-08     | P1         | —         | 7c6c97f   | Concluído |
+| DATA-08 | Substituir álbuns de teste por galerias reais, imagens autorizadas e créditos       | CNT-11                | P1         | —         | 9a4064b          | Concluído |
+| DATA-09 | Remover ou despublicar os dados de demonstração restantes e validar todo o conteúdo | DATA-01 a DATA-08     | P1         | —         | 7c6c97f          | Concluído |
 
 **Aceitação:**
 
@@ -120,6 +120,33 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 6. Cada tarefa pode gerar vários commits pequenos, conforme `GIT_WORKFLOW.md`; o campo `Commit/PR` será preenchido somente após o versionamento.
 
 **Nota sobre o escopo:** a seção **Open Source** está incluída em `DATA-07`, junto da tarefa `CNT-09`, para não ficar sem cadastro real. A ordem dos nove itens acima segue a prioridade definida para o projeto.
+
+## Fase 4.6 — Identidade visual 2.0 (P1)
+
+> **Objetivo:** reproduzir com máxima fidelidade a Home aprovada no Figma Make e migrar gradualmente o restante do site para a identidade descrita em `DESIGN_SYSTEM_V2.md`, **sem alterar dados reais, avaliações, schemas, rotas ou imagens de conteúdo**.
+>
+> **Datas-alvo:** sem datas (`—`). A ordem segue dependências e a disponibilidade de revisão do autor.
+>
+> **Decisões aprovadas (14/11/2026):** tokens e estilos V2 escopados à Home até a identidade ser validada; só depois migrar tokens compartilhados; fontes identificadas no protótipo (se possível) ou Cormorant Garamond + Inter como provisórias; fotografias dependem de arquivos originais ou de opções aprovadas pelo autor (Unsplash/Pexels com licença verificada); faixa editorial usa o artigo real "Por que escolhi Fedora (e por que continuo nele)"; rodapé apenas com links sociais reais (sem RSS); `AboutPreview` sai da Home (componente preservado); Sobre permanece independente.
+
+| ID     | Item                                                                                                                                                    | Dependências    | Prioridade | Data alvo | Commit/PR | Status     |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------- | --------- | --------- | ---------- |
+| VIS-01 | Registrar Design System 2.0 e referências; atualizar documentação e planejar a migração                                                                 | DATA-09         | P1         | —         | —         | Em revisão |
+| VIS-02 | Fundação V2 escopada: tokens `v2`, fontes locais, utilitários (eyebrow, foco, movimento reduzido), container largo da Home, sem afetar páginas internas | VIS-01          | P1         | —         | —         | Pendente   |
+| VIS-03 | Header, rodapé e Home fiéis ao protótipo (hero, passagem editorial, grade assimétrica de 9 categorias, faixa editorial com artigo real)                 | VIS-02          | P1         | —         | —         | Pendente   |
+| VIS-04 | Página Sobre na nova identidade                                                                                                                         | VIS-03          | P1         | —         | —         | Pendente   |
+| VIS-05 | Página Linux (crônica e timeline) na nova identidade                                                                                                    | VIS-03          | P1         | —         | —         | Pendente   |
+| VIS-06 | Catálogos e páginas restantes (Projetos, Jogos, Filmes, Livros, Artigos, Música, Open Source, Galeria) e migração dos tokens compartilhados             | VIS-03          | P1         | —         | —         | Pendente   |
+| VIS-07 | QA visual, acessibilidade, desempenho e deploy (Vercel e GitHub Pages)                                                                                  | VIS-04 a VIS-06 | P1         | —         | —         | Pendente   |
+
+**Critérios de aceitação por tarefa:**
+
+- **VIS-01:** `DESIGN_SYSTEM_V2.md` e `docs/references/` versionados; `AGENTS.md`, `DESIGN_SYSTEM.md`, `CONTENT_SECTIONS.md` e `ROADMAP.md` atualizados preservando o histórico; pendências de fontes, fotografias e conteúdo registradas; nenhum arquivo de código, estilo, conteúdo ou imagem alterado.
+- **VIS-02:** tokens e fontes V2 disponíveis sem alterar a aparência de nenhuma página interna (verificar por comparação de rotas); fontes com licença adequada e carregamento otimizado; `build`, `check` e `test` passam.
+- **VIS-03:** critérios de fidelidade de `DESIGN_SYSTEM_V2.md` §10.1 atendidos; comparação lado a lado com as referências em desktop e mobile documentada; exatamente nove categorias com links reais; sem seção Sobre na Home; faixa editorial com metadados reais do artigo (título, descrição e data da Content Collection); sem RSS nem links inventados; fotografias com origem e licença registradas e aprovadas pelo autor; hero e cards sem overflow; foco por teclado e `prefers-reduced-motion` respeitados.
+- **VIS-04 / VIS-05:** conteúdo real preservado; layout aprovado visualmente pelo autor; páginas acessíveis e responsivas.
+- **VIS-06:** funcionalidade preservada (filtros, notas, lightbox, rotas); imagens de Projetos sem cortes indevidos; médias de Jogos e Filmes inalteradas; tokens compartilhados migrados e duplicações eliminadas somente após aprovação.
+- **VIS-07:** critérios de `DESIGN_SYSTEM_V2.md` §10.2 e §10.3 verificados; build e testes passam; links, SEO e deploy conferidos nas duas hospedagens.
 
 ### Fase 5 — Descoberta, qualidade e evolução (P1/P2)
 
@@ -157,7 +184,7 @@ Uma tarefa somente vira **Concluído** quando:
 ## 5. Decisões que não devem ser inventadas
 
 - Domínio próprio, links pessoais e biografia final que ainda não tenham sido definidos;
-- Cores/tokens finais (a paleta é provisória);
+- Cores/tokens finais (a paleta é provisória; os valores V2 ainda precisam ser calibrados com o protótipo);
 - Quantidade de casas decimais das médias;
 - Modelo definitivo de livros/música;
 - Provedor futuro de imagens e backend do painel.

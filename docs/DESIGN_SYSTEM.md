@@ -1,5 +1,7 @@
 # Design System — blog pessoal
 
+> **[SUBSTITUÍDO PARCIALMENTE em 2026-11-14]** A referência visual vigente é [`DESIGN_SYSTEM_V2.md`](DESIGN_SYSTEM_V2.md) (identidade "arquivo pessoal nas sombras"). Este documento é **preservado como histórico** da identidade cyberpunk/Blade Runner e como **registro dos tokens e componentes atualmente implementados**, que continuam em uso nas páginas internas até as etapas VIS-04 a VIS-06 do `ROADMAP.md`. Onde houver conflito, vale o V2. Durante a migração, os tokens V2 são escopados à Home; os tokens abaixo permanecem em `src/styles/global.css` sem alteração até a migração dos tokens compartilhados ser aprovada.
+
 > **Status:** direção visual confirmada; tokens e componentes propostos · **Versão:** 0.1 · **Atualizado:** 2026-11-07
 
 ## 1. Identidade

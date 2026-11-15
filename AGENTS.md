@@ -1,6 +1,6 @@
 # AGENTS.md — instruções para agentes de desenvolvimento
 
-> **Status:** proposta para aprovação · **Versão:** 0.1 · **Atualizado:** 2026-11-07
+> **Status:** proposta para aprovação · **Versão:** 0.2 · **Atualizado:** 2026-11-14 (identidade visual atualizada para o Design System 2.0)
 > Este documento define como o Antigravity (ou outro agente) deve trabalhar **neste repositório**.
 > O agente NÃO está autorizado a iniciar tarefas novas, publicar, fazer commits ou alterar arquitetura por conta própria.
 
@@ -11,7 +11,7 @@ Blog pessoal e portfólio multipáginas, em português, desenvolvido com:
 - Astro + TypeScript + Tailwind CSS 4;
 - saída estática (SSG) no início, sem backend/banco de dados;
 - Markdown para conteúdo narrativo e JSON para registros estruturados;
-- tema escuro global, estética cyberpunk cinematográfica inspirada em Blade Runner;
+- tema escuro global; identidade vigente: **Design System 2.0** ("arquivo pessoal nas sombras": preto dominante, tipografia serifada editorial, vermelho envelhecido como acento). A identidade anterior (cyberpunk/Blade Runner, ciano e magenta) está preservada em `docs/DESIGN_SYSTEM.md` como histórico e ainda vigora nas páginas internas até suas etapas VIS;
 - Home, Sobre e rodapé com redes sociais como primeiro MVP;
 - outras seções acrescentadas gradualmente, conforme `ROADMAP.md`;
 - publicação local via arquivos/commits; painel próprio remoto apenas futuramente.
@@ -20,7 +20,7 @@ Blog pessoal e portfólio multipáginas, em português, desenvolvido com:
 
 1. `REQUIREMENTS.md` — escopo e decisões;
 2. `ARCHITECTURE.md` — organização técnica;
-3. `DESIGN_SYSTEM.md` — aparência e acessibilidade;
+3. `DESIGN_SYSTEM_V2.md` — **referência visual vigente** (aparência, acessibilidade, migração); `DESIGN_SYSTEM.md` — identidade anterior, tokens atuais em uso e histórico;
 4. `CONTENT_GUIDE.md` — conteúdo, dados e médias;
 5. `ROADMAP.md` — ordem, escopo e aceitação;
 6. `GIT_WORKFLOW.md` — versionamento.
@@ -91,10 +91,13 @@ Regras:
 
 ## 5. Design e experiência
 
-- Preservar identidade escura em **todas as páginas**, com base em `DESIGN_SYSTEM.md`.
-- Utilizar o Figma selecionado como **referência visual**, não especificação exata:
+- Preservar identidade escura em **todas as páginas**. A referência visual vigente é `DESIGN_SYSTEM_V2.md`; a Home aprovada (gravação e `docs/references/`) prevalece sobre qualquer exemplo ilustrativo.
+- A migração segue as etapas **VIS-01 a VIS-07** do `ROADMAP.md`. Durante a migração, os **tokens e estilos da V2 são escopados à Home** (e aos componentes de layout aprovados); as páginas internas mantêm a aparência atual até a etapa própria. Não alterar tokens compartilhados de `global.css` sem etapa VIS aprovada.
+- Não modificar dados, avaliações, schemas, rotas ou imagens de conteúdo por motivos visuais.
+- Fotografias e fontes da V2 só entram após verificação de origem/licença e aprovação do autor; não extrair imagens de capturas de tela.
+- Histórico: a referência anterior (Figma "Blog-Pessoal-Cyberpunk") foi substituída:
   https://www.figma.com/make/rcvx0jQ0gfulTn1owpG3bd/Blog-Pessoal-Cyberpunk?t=P4xgPHVx9xefWPZk-1
-- Priorizar legibilidade sobre efeitos: neon moderado, contraste suficiente, foco visível.
+- Priorizar legibilidade sobre efeitos: contraste suficiente, foco visível, movimento reduzido respeitado.
 - Implementar responsividade desde cada entrega, inclusive menu mobile.
 - Garantir controles acessíveis por teclado e respeitar `prefers-reduced-motion`.
 - Evitar animações pesadas, bibliotecas desnecessárias e JavaScript excessivo.
