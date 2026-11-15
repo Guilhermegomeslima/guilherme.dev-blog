@@ -1,49 +1,69 @@
 @import 'tailwindcss';
 
-@theme {
-  /* Cores provisórias — DESIGN_SYSTEM.md seção 3 */
-  --color-bg: #060910;
-  --color-surface: #0d1320;
-  --color-surface-raised: #141d2b;
-  --color-text: #eef3f7;
-  --color-text-muted: #a2adbb;
-  --color-border: #273546;
-  --color-accent: #61eaf1;
-  --color-accent-alt: #c96ad9;
-  --color-warm: #dc8c61;
-
-  /* Tipografia provisória — DESIGN_SYSTEM.md seção 4 */
-  --font-display:
-    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-body:
-    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
-}
-
 /*
- * Design System 2.0 (docs/DESIGN_SYSTEM_V2.md) — VIS-02
- * Tokens e fontes ESCOPADOS à nova identidade. Nenhum token acima foi alterado:
- * as páginas internas continuam com a aparência atual até suas etapas VIS.
- * Valores de cor provisórios (V2 §2.1), a calibrar com o protótipo na VIS-03.
+ * Design System 2.0 — guilherme.dev ("um arquivo pessoal nas sombras")
+ * Referência: docs/DESIGN_SYSTEM_V2.md (consolidado em VIS-06h).
+ *
+ * Todos os tokens da identidade sombria, cinematográfica e editorial estão
+ * unificados abaixo. Os nomes sem prefixo (`--color-bg`, `--font-display`, etc.)
+ * apontam para os tokens V2 correspondentes, eliminando a paleta cyberpunk legada.
  */
 @theme {
+  /* 1. Cores de fundo e superfícies */
   --color-v2-bg: #080808;
   --color-v2-surface: #141210;
   --color-v2-surface-raised: #1b1715;
+
+  --color-bg: var(--color-v2-bg);
+  --color-surface: var(--color-v2-surface);
+  --color-surface-raised: var(--color-v2-surface-raised);
+
+  /* 2. Cores de texto e hierarquia */
+  --color-v2-heading: #e7ded2;
   --color-v2-text: #e7ded2;
   --color-v2-text-muted: #a89f95;
-  --color-v2-border: #332b26;
+  --color-v2-muted: #a89f95;
+
+  --color-text: var(--color-v2-text);
+  --color-text-muted: var(--color-v2-text-muted);
+
+  /* 3. Cores de destaque (vermelho envelhecido e bronze/ocre quente) */
   --color-v2-accent: #79382f;
   --color-v2-accent-warm: #a18a70;
 
+  --color-accent: var(--color-v2-accent);
+  --color-warm: var(--color-v2-accent-warm);
+
+  /* 4. Bordas e divisórias */
+  --color-v2-border: #332b26;
+  --color-v2-border-hover: #4a3f37;
+
+  --color-border: var(--color-v2-border);
+
+  /* 5. Tipografia editorial */
   --font-v2-display: 'Cormorant Garamond', 'Times New Roman', serif;
   --font-v2-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-v2-mono: 'JetBrains Mono', ui-monospace, 'Liberation Mono', monospace;
 
-  /* Largura de conteúdo da Home V2 (~1380px nas referências) */
+  --font-display: var(--font-v2-display);
+  --font-body: var(--font-v2-sans);
+  --font-mono: var(--font-v2-mono);
+
+  /* 6. Espaçamentos e larguras reutilizáveis */
   --container-v2: 86.25rem;
+  --spacing-v2-section: 4rem;
+  --spacing-v2-section-lg: 6rem;
+
+  /* 7. Sombras e iluminação atmosférica */
+  --shadow-v2-card: 0 20px 50px rgba(0, 0, 0, 0.65);
+  --shadow-v2-elevated: 0 24px 60px rgba(0, 0, 0, 0.75);
+  --shadow-v2-glow: 0 0 32px rgba(121, 56, 47, 0.14);
+
+  /* 8. Transições e estados interativos */
+  --ease-v2-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-v2-fast: 200ms;
+  --duration-v2-base: 300ms;
+  --duration-v2-slow: 500ms;
 }
 
 /* Fontes locais (OFL), subset latin. Variáveis: cobrem os pesos 300–600 usados. */
@@ -79,7 +99,7 @@
   src: url('/fonts/jetbrains-mono-latin.woff2') format('woff2');
 }
 
-/* Utilitários V2 (usados somente por componentes V2) */
+/* Utilitários compartilhados do Design System 2.0 */
 @utility v2-eyebrow {
   font-family: var(--font-v2-sans);
   font-size: 0.6875rem;
@@ -95,12 +115,25 @@
   }
 }
 
-/* Movimento reduzido: aplicado dentro de qualquer wrapper com .v2-scope */
+@utility v2-divider {
+  border-color: var(--color-v2-border);
+}
+
+@utility v2-surface-panel {
+  border: 1px solid var(--color-v2-border);
+  background-color: var(--color-v2-surface);
+}
+
+/* Movimento reduzido respeitado globalmente e em .v2-scope */
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after,
   .v2-scope *,
   .v2-scope *::before,
   .v2-scope *::after {
-    animation: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
@@ -112,9 +145,9 @@
   }
 
   body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-body);
+    background-color: var(--color-v2-bg);
+    color: var(--color-v2-text);
+    font-family: var(--font-v2-sans);
     min-height: 100vh;
   }
 }

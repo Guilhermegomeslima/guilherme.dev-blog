@@ -20,20 +20,22 @@ const message = messages[variant];
 <div
   role="status"
   class:list={[
-    'relative overflow-hidden rounded-lg border border-warm/40 bg-surface-raised/70 p-4 text-xs font-mono text-text-muted backdrop-blur-xs',
+    'border-v2-accent-warm/40 bg-v2-surface-raised/85 text-v2-text-muted font-v2-mono relative overflow-hidden border p-4 text-xs',
     className,
   ]}
 >
   <div class="flex items-start gap-3">
     <span
-      class="mt-0.5 inline-block h-2 w-2 rounded-full bg-warm shadow-[0_0_8px_var(--color-warm)] motion-safe:animate-pulse"
+      class="bg-v2-accent-warm mt-1 inline-block h-1.5 w-1.5 shrink-0"
       aria-hidden="true"
     ></span>
     <div>
-      <span class="font-bold tracking-wider text-warm uppercase">
+      <span class="text-v2-accent-warm tracking-[0.16em] uppercase">
         [ AMBIENTE DE DEMONSTRAÇÃO // MOCK DATA ]
       </span>
-      <p class="font-body mt-1 text-xs leading-relaxed text-text">{message}</p>
+      <p class="font-v2-sans text-v2-text mt-1 text-xs leading-relaxed font-light">
+        {message}
+      </p>
     </div>
   </div>
 </div>

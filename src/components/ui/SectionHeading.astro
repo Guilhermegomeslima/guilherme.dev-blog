@@ -19,19 +19,15 @@ const {
 ---
 
 <div class:list={['mb-8 max-w-2xl', className]}>
-  {eyebrow && (
-    <p class="font-mono text-accent-alt mb-2 text-xs tracking-wider uppercase">
-      {eyebrow}
-    </p>
-  )}
+  {eyebrow && <p class="v2-eyebrow text-v2-accent-warm mb-2">{eyebrow}</p>}
   <HeadingTag
     id={id}
-    class="font-display text-text text-2xl font-bold tracking-tight sm:text-3xl"
+    class="font-v2-display text-v2-heading text-2xl font-medium tracking-tight sm:text-3xl"
   >
     {title}
   </HeadingTag>
   {description && (
-    <p class="font-body text-text-muted mt-3 text-base leading-relaxed">
+    <p class="font-v2-sans text-v2-text-muted mt-3 text-base leading-relaxed font-light">
       {description}
     </p>
   )}
