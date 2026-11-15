@@ -1,8 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
 import GalleryCard from '../../components/content/GalleryCard.astro';
 import GalleryLightbox from '../../components/content/GalleryLightbox.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
@@ -10,73 +8,393 @@ import { withBase } from '../../utils/base';
 
 const allImages = await getCollection('gallery');
 
-// Extrai álbuns únicos ordenados
 const albumOrder = ['wallpapers', 'desktop', 'ia'];
-const albums = Array.from(
-  new Set(allImages.map((img) => img.data.albumSlug)),
-)
+const albumMeta: Record<
+  string,
+  { code: string; subtitle: string; spanClass: string }
+> = {
+  wallpapers: {
+    code: 'COLEÇÃO 01',
+    subtitle:
+      'Fundos de tela, paisagens atmosféricas, gravuras históricas e composições para desktop em alta resolução.',
+    spanClass: 'lg:col-span-7',
+  },
+  desktop: {
+    code: 'COLEÇÃO 02',
+    subtitle:
+      'Capturas reais do ambiente GNOME e terminal Fastfetch em uso cotidiano no Fedora Linux.',
+    spanClass: 'lg:col-span-5',
+  },
+  ia: {
+    code: 'COLEÇÃO 03',
+    subtitle:
+      'Experimentos visuais e composições de estética cyberpunk geradas com inteligência artificial.',
+    spanClass: 'lg:col-span-12',
+  },
+};
+
+const albums = Array.from(new Set(allImages.map((img) => img.data.albumSlug)))
   .map((slug) => {
-    const item = allImages.find((img) => img.data.albumSlug === slug)!;
-    const count = allImages.filter((img) => img.data.albumSlug === slug).length;
+    const itemsInAlbum = allImages.filter((img) => img.data.albumSlug === slug);
+    const firstItem = itemsInAlbum[0]!;
+    const meta = albumMeta[slug] || {
+      code: 'COLEÇÃO',
+      subtitle: 'Coleção temática de registros visuais em alta resolução.',
+      spanClass: 'lg:col-span-4',
+    };
     return {
       slug,
-      name: item.data.album,
-      count,
+      name: firstItem.data.album,
+      count: itemsInAlbum.length,
+      coverUrl: firstItem.data.imageUrl,
+      coverAlt: firstItem.data.title,
+      ...meta,
     };
   })
   .sort((a, b) => {
     const idxA = albumOrder.indexOf(a.slug);
     const idxB = albumOrder.indexOf(b.slug);
     if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-    return a.name.localeCompare(b.name);
+    return a.name.localeCompare(b.name, 'pt-BR');
   });
+
+// Ordena as imagens mantendo a ordem dos álbuns (Wallpapers -> Desktop Linux -> IA) e depois título
+const sortedImages = [...allImages].sort((a, b) => {
+  const idxA = albumOrder.indexOf(a.data.albumSlug);
+  const idxB = albumOrder.indexOf(b.data.albumSlug);
+  if (idxA !== idxB) return idxA - idxB;
+  return a.data.title.localeCompare(b.data.title, 'pt-BR');
+});
 
 const hasDemoContent = allImages.some((img) => img.data.isDemo);
 ---
 
 <BaseLayout
+  variant="v2"
   title="Galeria & Wallpapers — guilherme.dev"
   description="Acervo visual de wallpapers cyberpunk, setups de desktop Linux e fotografias com metadados e visualizador ampliado."
 >
-  <div class="py-12 md:py-16">
-    <Container>
-      <SectionHeading
-        eyebrow="// ARQUIVO VISUAL"
-        title="Galeria & Wallpapers"
-        description="Imagens de alta resolução, composições visuais e capturas de ambiente organizadas por álbuns temáticos com visualização acessível."
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera de fundo sutil */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[520px] overflow-hidden"
+    >
+      <img
+        src={withBase('/images/home/galeria.webp')}
+        alt=""
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full object-cover object-center opacity-[0.14] blur-[2px] filter"
       />
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.86) 62%, #070709 100%);"
+      ></div>
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(180deg, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.85) 68%, #070709 100%);"
+      ></div>
+    </div>
 
-      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+    <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 sm:px-8">
+      {/* Abertura Editorial */}
+      <header class="border-b border-[var(--color-v2-border)] pt-12 pb-10 md:pt-16 md:pb-14">
+        <div class="mb-4 flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            class="inline-block h-px w-8 bg-[var(--color-v2-accent)]"
+          ></span>
+          <p class="v2-eyebrow text-[var(--color-v2-accent-warm)]">
+            ARQUIVO VISUAL / GALERIA & WALLPAPERS
+          </p>
+        </div>
 
-      {/* Navegação por Álbuns */}
-      <div class="mb-10 flex flex-wrap items-center gap-2 font-mono text-xs">
-        <span class="text-text-muted mr-1">Filtrar por álbum:</span>
-        <a
-          href={withBase('/galeria/')}
-          class="rounded-full border border-accent/60 bg-accent/15 px-3 py-1 font-semibold text-accent shadow-xs"
-        >
-          Todos ({allImages.length})
-        </a>
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.04] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-6xl">
+              Galeria &amp; Wallpapers.
+            </h1>
+          </div>
 
-        {albums.map((album) => (
-          <a
-            href={withBase(`/galeria/${album.slug}/`)}
-            class="rounded-full border border-border/70 bg-surface px-3 py-1 text-text-muted hover:border-accent hover:text-text transition-colors"
+          <div class="lg:col-span-5">
+            <p class="font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text)] sm:text-base">
+              Arquivo fotográfico e visual organizado em três coleções distintas
+              — <span class="text-[var(--color-v2-heading)]">Wallpapers</span>,{' '}
+              <span class="text-[var(--color-v2-heading)]">Desktop Linux</span>{' '}
+              e{' '}
+              <span class="text-[var(--color-v2-heading)]">
+                Imagens criadas com IA
+              </span>{' '}
+              — com metadados de resolução e visualização ampliada sem cortes.
+            </p>
+          </div>
+        </div>
+
+        {/* Painel de Síntese da Galeria */}
+        <div class="mt-8 grid grid-cols-2 gap-3 border-t border-[var(--color-v2-border)] pt-6 sm:grid-cols-4">
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Total no Arquivo
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {allImages.length} imagens
+            </strong>
+          </div>
+
+          {albums.map((alb) => (
+            <a
+              href={withBase(`/galeria/${alb.slug}/`)}
+              class="v2-focus group border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3 transition-colors hover:border-[var(--color-v2-accent-warm)]/50"
+            >
+              <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase group-hover:text-[var(--color-v2-accent-warm)]">
+                {alb.name}
+              </span>
+              <strong class="mt-1 flex items-baseline justify-between font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+                <span>
+                  {alb.count} {alb.count === 1 ? 'item' : 'itens'}
+                </span>
+                <span
+                  aria-hidden="true"
+                  class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-accent-warm)] transition-transform group-hover:translate-x-1"
+                >
+                  &rarr;
+                </span>
+              </strong>
+            </a>
+          ))}
+        </div>
+      </header>
+
+      {hasDemoContent && <DemoNotice variant="section" class="mt-8" />}
+
+      {/* Seção 01: Portais das Coleções Visuais */}
+      <section aria-label="Álbuns da galeria" class="mt-12">
+        <div class="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+          <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
+            01 // PORTAIS DE COLEÇÕES VISUAIS
+          </span>
+          <span class="font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+            Selecione um álbum para explorar sua coleção dedicada
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+          {albums.map((album) => (
+            <a
+              href={withBase(`/galeria/${album.slug}/`)}
+              class:list={[
+                'v2-focus group relative flex min-h-[260px] flex-col justify-between overflow-hidden border border-[var(--color-v2-border)] bg-[#050508] p-6 transition-all duration-500 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.8)] sm:min-h-[300px] sm:p-8',
+                album.spanClass,
+              ]}
+            >
+              {/* Imagem de fundo do portal */}
+              <img
+                src={withBase(album.coverUrl)}
+                alt={album.coverAlt}
+                width="1200"
+                height="675"
+                loading="eager"
+                decoding="async"
+                class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-45 brightness-90 contrast-110 transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:opacity-60"
+              />
+
+              {/* Gradiente escuro cinematográfico */}
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0"
+                style="background: linear-gradient(180deg, rgba(7, 7, 9, 0.55) 0%, rgba(7, 7, 9, 0.45) 40%, rgba(7, 7, 9, 0.94) 100%);"
+              />
+
+              {/* Topo do Portal */}
+              <div class="relative z-10 flex items-center justify-between gap-2">
+                <span class="border border-[var(--color-v2-accent-warm)]/50 bg-[#070709]/85 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase backdrop-blur-xs">
+                  {album.code}
+                </span>
+
+                <span class="border border-white/10 bg-[#070709]/85 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-heading)] uppercase backdrop-blur-xs">
+                  {album.count} {album.count === 1 ? 'registro' : 'registros'}
+                </span>
+              </div>
+
+              {/* Base do Portal */}
+              <div class="relative z-10 mt-12 max-w-2xl">
+                <h2 class="font-[family-name:var(--font-v2-display)] text-3xl leading-[1.08] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors group-hover:text-[var(--color-v2-accent-warm)] sm:text-4xl">
+                  {album.name}
+                </h2>
+                <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-text)] sm:text-sm">
+                  {album.subtitle}
+                </p>
+
+                <div class="mt-5 inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+                  <span>Explorar álbum dedicado</span>
+                  <span
+                    aria-hidden="true"
+                    class="transition-transform duration-200 group-hover:translate-x-1.5"
+                  >
+                    &rarr;
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Seção 02: Exposição Completa & Filtro Rápido */}
+      <section
+        aria-label="Exposição completa de imagens"
+        class="mt-20 border-t border-[var(--color-v2-border)] pt-12"
+      >
+        <div class="mb-8 flex flex-col gap-4 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-4 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+          <div
+            class="flex flex-wrap items-center gap-1.5"
+            role="group"
+            aria-label="Filtrar exposição por coleção"
           >
-            {album.name} ({album.count})
-          </a>
-        ))}
-      </div>
+            <button
+              type="button"
+              data-gallery-filter="all"
+              aria-pressed="true"
+              class="v2-focus cursor-pointer border border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-accent-warm)]/15 px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] text-[var(--color-v2-heading)] uppercase transition-colors duration-200"
+            >
+              Todos ({allImages.length})
+            </button>
 
-      {/* Grade de Imagens */}
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {allImages.map((image) => (
-          <GalleryCard image={image} />
-        ))}
-      </div>
-    </Container>
+            {albums.map((album) => (
+              <button
+                type="button"
+                data-gallery-filter={album.slug}
+                aria-pressed="false"
+                class="v2-focus cursor-pointer border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/70 px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] text-[var(--color-v2-muted)] uppercase transition-colors duration-200 hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-text)]"
+              >
+                {album.name} ({album.count})
+              </button>
+            ))}
+          </div>
+
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <label for="gallery-search" class="sr-only">
+              Buscar imagem por título
+            </label>
+            <input
+              id="gallery-search"
+              type="search"
+              placeholder="Buscar imagem por título..."
+              autocomplete="off"
+              class="v2-focus w-full border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)] px-3.5 py-2 font-[family-name:var(--font-v2-sans)] text-xs text-[var(--color-v2-heading)] placeholder:text-[var(--color-v2-muted)] focus:border-[var(--color-v2-accent-warm)]/60 sm:w-64"
+            />
+          </div>
+        </div>
+
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-2 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
+          <span class="tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+            02 // ACERVO COMPLETO
+          </span>
+          <span id="gallery-count-status" aria-live="polite">
+            Exibindo {sortedImages.length} de {sortedImages.length} imagens
+          </span>
+        </div>
+
+        {/* Grade Editorial de Imagens */}
+        <div
+          id="gallery-grid"
+          class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {sortedImages.map((image, idx) => (
+            <GalleryCard image={image} index={idx} />
+          ))}
+        </div>
+
+        <div
+          id="gallery-empty-state"
+          hidden
+          class="mt-10 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-12 text-center"
+        >
+          <p class="font-[family-name:var(--font-v2-display)] text-2xl text-[var(--color-v2-heading)]">
+            Nenhuma imagem encontrada para essa busca.
+          </p>
+          <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-muted)]">
+            Tente outro termo ou selecione "Todos".
+          </p>
+        </div>
+      </section>
+    </div>
   </div>
 
   {/* Lightbox Modal Acessível */}
   <GalleryLightbox />
 </BaseLayout>
+
+<script>
+  function initGalleryFilters() {
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-gallery-card]'),
+    );
+    if (cards.length === 0) return;
+
+    const filterBtns = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-gallery-filter]'),
+    );
+    const searchInput = document.getElementById(
+      'gallery-search',
+    ) as HTMLInputElement | null;
+    const countStatus = document.getElementById('gallery-count-status');
+    const emptyState = document.getElementById('gallery-empty-state');
+
+    let activeAlbum = 'all';
+    const total = cards.length;
+
+    function updateButtonStyles() {
+      for (const btn of filterBtns) {
+        const isSelected = btn.dataset.galleryFilter === activeAlbum;
+        btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+        if (isSelected) {
+          btn.className =
+            'v2-focus cursor-pointer border border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-accent-warm)]/15 px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] text-[var(--color-v2-heading)] uppercase transition-colors duration-200';
+        } else {
+          btn.className =
+            'v2-focus cursor-pointer border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/70 px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] text-[var(--color-v2-muted)] uppercase transition-colors duration-200 hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-text)]';
+        }
+      }
+    }
+
+    function applyFilter() {
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      let visibleCount = 0;
+
+      for (const card of cards) {
+        const matchesAlbum =
+          activeAlbum === 'all' || card.dataset.albumSlug === activeAlbum;
+        const matchesQuery =
+          !query || (card.dataset.title || '').includes(query);
+
+        const isVisible = matchesAlbum && matchesQuery;
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount++;
+      }
+
+      if (countStatus) {
+        countStatus.textContent = `Exibindo ${visibleCount} de ${total} imagens`;
+      }
+
+      if (emptyState) {
+        emptyState.hidden = visibleCount > 0;
+      }
+    }
+
+    for (const btn of filterBtns) {
+      btn.addEventListener('click', () => {
+        activeAlbum = btn.dataset.galleryFilter || 'all';
+        updateButtonStyles();
+        applyFilter();
+      });
+    }
+
+    searchInput?.addEventListener('input', applyFilter);
+  }
+
+  initGalleryFilters();
+</script>

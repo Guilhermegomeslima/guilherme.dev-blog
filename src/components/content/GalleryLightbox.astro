@@ -5,36 +5,54 @@
   id="gallery-lightbox"
   aria-labelledby="lightbox-title"
   aria-describedby="lightbox-description"
-  class="m-auto w-[94vw] max-w-5xl rounded-xl border border-border/80 bg-surface/95 p-0 text-text backdrop:bg-bg/85 backdrop:backdrop-blur-md shadow-2xl overflow-hidden open:flex open:flex-col"
+  class="m-auto w-[95vw] max-w-6xl overflow-hidden border border-[var(--color-v2-border-hover)] bg-[#070709]/98 p-0 text-[var(--color-v2-text)] shadow-[0_32px_90px_rgba(0,0,0,0.9)] backdrop:bg-black/90 backdrop:backdrop-blur-md open:flex open:flex-col"
 >
-  <div class="relative flex flex-col max-h-[92vh]">
+  <div class="relative flex max-h-[94vh] flex-col">
+    {/* Cantoneiras em bronze */}
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute top-0 left-0 z-30 h-4 w-4 border-t border-l border-[var(--color-v2-accent-warm)]"
+    ></span>
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute top-0 right-0 z-30 h-4 w-4 border-t border-r border-[var(--color-v2-accent-warm)]"
+    ></span>
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute bottom-0 left-0 z-30 h-4 w-4 border-b border-l border-[var(--color-v2-accent-warm)]"
+    ></span>
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute right-0 bottom-0 z-30 h-4 w-4 border-r border-b border-[var(--color-v2-accent-warm)]"
+    ></span>
+
     {/* Barra de Topo do Modal */}
-    <div class="flex items-center justify-between border-b border-border/60 bg-surface-raised px-4 py-3">
-      <div class="flex items-center gap-2">
-        <span class="font-mono text-xs text-accent uppercase tracking-wider">
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-v2-border)] bg-[var(--color-v2-surface)] px-4 py-3 sm:px-6">
+      <div class="flex flex-wrap items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.16em] uppercase">
+        <span class="text-[var(--color-v2-accent-warm)]">
           // VISUALIZADOR DE MÍDIA
         </span>
-        <span class="text-border" aria-hidden="true">
+        <span class="text-[var(--color-v2-border-hover)]" aria-hidden="true">
           ·
         </span>
-        <span id="lightbox-album" class="font-mono text-xs text-text-muted">
+        <span id="lightbox-album" class="text-[var(--color-v2-text)]">
           Álbum
         </span>
-        <span class="text-border" aria-hidden="true">
+        <span class="text-[var(--color-v2-border-hover)]" aria-hidden="true">
           ·
         </span>
-        <span id="lightbox-counter" class="font-mono text-xs text-accent">
+        <span id="lightbox-counter" class="text-[var(--color-v2-accent-warm)]">
           1 / 1
         </span>
       </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2.5">
         <a
           id="lightbox-original-link"
           href="#"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 rounded border border-accent/40 bg-accent/10 px-2.5 py-1 font-mono text-xs font-medium text-accent hover:bg-accent/20 transition-colors"
+          class="v2-focus inline-flex items-center gap-1.5 border border-[var(--color-v2-accent-warm)]/45 bg-[var(--color-v2-bg)] px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-accent-warm)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-heading)]"
         >
           <span>Abrir original</span>
           <span aria-hidden="true">&nearr;</span>
@@ -44,31 +62,31 @@
           type="button"
           id="lightbox-close-btn"
           aria-label="Fechar visualização ampliada"
-          class="inline-flex min-h-8 min-w-8 items-center justify-center rounded border border-border/70 bg-surface px-2.5 py-1 font-mono text-xs text-text-muted hover:border-accent hover:text-accent focus-visible:outline-accent cursor-pointer"
+          class="v2-focus inline-flex min-h-8 min-w-8 cursor-pointer items-center justify-center border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-bg)] px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-heading)]"
         >
           <span>Fechar [ESC]</span>
         </button>
       </div>
     </div>
 
-    {/* Imagem Ampliada com Controles de Navegação */}
-    <div class="relative flex-1 overflow-hidden bg-black/70 p-2 sm:p-6 flex items-center justify-center min-h-[300px]">
+    {/* Palco de Exibição da Fotografia Ampliada (sem cortes nem distorções) */}
+    <div class="relative flex min-h-[280px] flex-1 items-center justify-center overflow-hidden bg-[#040406] p-3 sm:min-h-[420px] sm:p-8">
       {/* Botão Anterior */}
       <button
         type="button"
         id="lightbox-prev-btn"
         aria-label="Imagem anterior"
-        class="absolute left-2 sm:left-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-surface/80 font-mono text-lg text-text backdrop-blur-xs hover:border-accent hover:text-accent hover:bg-surface focus-visible:outline-accent transition-colors cursor-pointer"
+        class="v2-focus absolute left-2 z-20 flex h-10 w-10 cursor-pointer items-center justify-center border border-[var(--color-v2-border-hover)] bg-[#070709]/90 font-[family-name:var(--font-v2-mono)] text-base text-[var(--color-v2-heading)] backdrop-blur-xs transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-accent-warm)] sm:left-5 sm:h-11 sm:w-11"
       >
         <span aria-hidden="true">&larr;</span>
       </button>
 
-      {/* Imagem */}
+      {/* Imagem Ampliada */}
       <img
         id="lightbox-img"
         src=""
         alt=""
-        class="max-h-[62vh] w-auto max-w-full rounded border border-border/50 object-contain shadow-2xl"
+        class="max-h-[65vh] w-auto max-w-full border border-[var(--color-v2-border)] object-contain shadow-[0_24px_60px_rgba(0,0,0,0.85)]"
       />
 
       {/* Botão Próximo */}
@@ -76,37 +94,49 @@
         type="button"
         id="lightbox-next-btn"
         aria-label="Próxima imagem"
-        class="absolute right-2 sm:right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-surface/80 font-mono text-lg text-text backdrop-blur-xs hover:border-accent hover:text-accent hover:bg-surface focus-visible:outline-accent transition-colors cursor-pointer"
+        class="v2-focus absolute right-2 z-20 flex h-10 w-10 cursor-pointer items-center justify-center border border-[var(--color-v2-border-hover)] bg-[#070709]/90 font-[family-name:var(--font-v2-mono)] text-base text-[var(--color-v2-heading)] backdrop-blur-xs transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-accent-warm)] sm:right-5 sm:h-11 sm:w-11"
       >
         <span aria-hidden="true">&rarr;</span>
       </button>
     </div>
 
     {/* Ficha Técnica e Metadados da Imagem */}
-    <div class="border-t border-border/60 bg-surface p-4 sm:p-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4 font-mono text-xs">
-      <div class="space-y-1.5 flex-1">
+    <div class="flex flex-col justify-between gap-4 border-t border-[var(--color-v2-border)] bg-[var(--color-v2-surface)] p-4 sm:flex-row sm:items-start sm:px-6 sm:py-5">
+      <div class="flex-1 space-y-1.5">
         <h3
           id="lightbox-title"
-          class="font-display text-lg font-bold text-text tracking-tight"
+          class="font-[family-name:var(--font-v2-display)] text-2xl font-normal tracking-[-0.01em] text-[var(--color-v2-heading)]"
         ></h3>
         <p
           id="lightbox-description"
-          class="font-body text-xs sm:text-sm text-text-muted leading-relaxed"
+          class="font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-muted)] sm:text-sm"
         ></p>
       </div>
 
-      <div class="space-y-1 border-t sm:border-t-0 sm:border-l border-border/50 pt-3 sm:pt-0 sm:pl-6 text-[11px] text-text-muted/80 min-w-[200px]">
+      <div class="min-w-[220px] space-y-1.5 border-t border-[var(--color-v2-border)] pt-3 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)] sm:border-t-0 sm:border-l sm:pt-0 sm:pl-6">
         <div id="lightbox-dimensions-row">
-          <strong class="text-text-muted">Resolução:</strong>{' '}
-          <span id="lightbox-dimensions" class="text-text"></span>
+          <strong class="font-normal tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase">
+            Resolução:
+          </strong>{' '}
+          <span
+            id="lightbox-dimensions"
+            class="text-[var(--color-v2-heading)]"
+          ></span>
         </div>
         <div id="lightbox-credit-row">
-          <strong class="text-text-muted">Créditos:</strong>{' '}
-          <span id="lightbox-credit" class="text-text"></span>
+          <strong class="font-normal tracking-[0.14em] text-[var(--color-v2-muted)] uppercase">
+            Créditos:
+          </strong>{' '}
+          <span id="lightbox-credit" class="text-[var(--color-v2-text)]"></span>
         </div>
         <div id="lightbox-license-row">
-          <strong class="text-text-muted">Licença:</strong>{' '}
-          <span id="lightbox-license" class="text-text"></span>
+          <strong class="font-normal tracking-[0.14em] text-[var(--color-v2-muted)] uppercase">
+            Licença:
+          </strong>{' '}
+          <span
+            id="lightbox-license"
+            class="text-[var(--color-v2-text)]"
+          ></span>
         </div>
       </div>
     </div>
@@ -142,7 +172,19 @@
     let triggers: HTMLElement[] = [];
     let currentIndex = 0;
 
+    function getActiveTriggers(): HTMLElement[] {
+      const all = Array.from(
+        document.querySelectorAll<HTMLElement>('[data-gallery-trigger]'),
+      );
+      const visible = all.filter((btn) => {
+        const card = btn.closest<HTMLElement>('[data-gallery-card]');
+        return !card || !card.hidden;
+      });
+      return visible.length > 0 ? visible : all;
+    }
+
     function renderItem(index: number) {
+      triggers = getActiveTriggers();
       if (index < 0 || index >= triggers.length) return;
       currentIndex = index;
       const btn = triggers[currentIndex];
@@ -195,27 +237,42 @@
     }
 
     function showPrev() {
+      triggers = getActiveTriggers();
       if (triggers.length === 0) return;
       const newIndex = (currentIndex - 1 + triggers.length) % triggers.length;
       renderItem(newIndex);
     }
 
     function showNext() {
+      triggers = getActiveTriggers();
       if (triggers.length === 0) return;
       const newIndex = (currentIndex + 1) % triggers.length;
       renderItem(newIndex);
     }
 
-    // Coleta todos os triggers da página atual
-    triggers = Array.from(
+    const allTriggers = Array.from(
       document.querySelectorAll<HTMLElement>('[data-gallery-trigger]'),
     );
 
-    triggers.forEach((btn, index) => {
-      btn.onclick = () => {
-        renderItem(index);
+    allTriggers.forEach((btn) => {
+      const openFromTrigger = () => {
+        triggers = getActiveTriggers();
+        const idx = triggers.indexOf(btn);
+        renderItem(idx !== -1 ? idx : 0);
         dialog.showModal();
       };
+
+      btn.onclick = openFromTrigger;
+
+      // Permite clicar também sobre a moldura da imagem no card para abrir o lightbox
+      const card = btn.closest<HTMLElement>('[data-gallery-card]');
+      const imgInCard = card?.querySelector<HTMLElement>(
+        'img:not([aria-hidden="true"])',
+      );
+      if (imgInCard) {
+        imgInCard.style.cursor = 'zoom-in';
+        imgInCard.onclick = openFromTrigger;
+      }
     });
 
     closeBtn?.addEventListener('click', () => {

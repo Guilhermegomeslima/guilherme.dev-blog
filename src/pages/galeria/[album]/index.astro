@@ -2,24 +2,36 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Container from '../../../components/ui/Container.astro';
-import SectionHeading from '../../../components/ui/SectionHeading.astro';
 import GalleryCard from '../../../components/content/GalleryCard.astro';
 import GalleryLightbox from '../../../components/content/GalleryLightbox.astro';
 import DemoNotice from '../../../components/ui/DemoNotice.astro';
-import Button from '../../../components/ui/Button.astro';
 import { withBase } from '../../../utils/base';
 
 export async function getStaticPaths() {
   const allImages = await getCollection('gallery');
+  const albumOrder = ['wallpapers', 'desktop', 'ia'];
   const uniqueSlugs = Array.from(
     new Set(allImages.map((img) => img.data.albumSlug)),
-  );
+  ).sort((a, b) => {
+    const idxA = albumOrder.indexOf(a);
+    const idxB = albumOrder.indexOf(b);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    return a.localeCompare(b, 'pt-BR');
+  });
+
+  const allAlbumsSummary = uniqueSlugs.map((slug) => {
+    const items = allImages.filter((img) => img.data.albumSlug === slug);
+    return {
+      slug,
+      name: items[0]?.data.album || slug,
+      count: items.length,
+    };
+  });
 
   return uniqueSlugs.map((slug) => {
-    const imagesInAlbum = allImages.filter(
-      (img) => img.data.albumSlug === slug,
-    );
+    const imagesInAlbum = allImages
+      .filter((img) => img.data.albumSlug === slug)
+      .sort((a, b) => a.data.title.localeCompare(b.data.title, 'pt-BR'));
     const albumName = imagesInAlbum[0]?.data.album || slug;
     return {
       params: { album: slug },
@@ -27,49 +39,192 @@ export async function getStaticPaths() {
         albumSlug: slug,
         albumName,
         images: imagesInAlbum,
+        allAlbums: allAlbumsSummary,
       },
     };
   });
+}
+
+interface AlbumSummary {
+  slug: string;
+  name: string;
+  count: number;
 }
 
 interface Props {
   albumSlug: string;
   albumName: string;
   images: CollectionEntry<'gallery'>[];
+  allAlbums?: AlbumSummary[];
 }
 
-const { albumSlug, albumName, images } = Astro.props;
+const { albumSlug, albumName, images, allAlbums = [] } = Astro.props;
 const hasDemoContent = images.some((img) => img.data.isDemo);
+
+const albumDescriptions: Record<string, { code: string; lead: string }> = {
+  wallpapers: {
+    code: 'COLEÇÃO 01 // WALLPAPERS',
+    lead: 'Seleção pessoal de papéis de parede, paisagens atmosféricas, gravuras históricas e composições de alta resolução para área de trabalho.',
+  },
+  desktop: {
+    code: 'COLEÇÃO 02 // DESKTOP LINUX',
+    lead: 'Registros visuais do meu ambiente de trabalho real no Fedora Linux com GNOME e terminal Fastfetch.',
+  },
+  ia: {
+    code: 'COLEÇÃO 03 // ARTE COM IA',
+    lead: 'Experimentos visuais e composições de atmosfera cyberpunk geradas com inteligência artificial.',
+  },
+};
+
+const currentMeta = albumDescriptions[albumSlug] || {
+  code: `COLEÇÃO // ${albumSlug.toUpperCase()}`,
+  lead: 'Coleção temática de imagens com metadados, créditos e ampliação acessível.',
+};
+
+const coverBackdrop = images[0]?.data.imageUrl || '/images/home/galeria.webp';
 ---
 
 <BaseLayout
+  variant="v2"
   title={`${albumName} — Galeria Visual // guilherme.dev`}
   description={`Álbum ${albumName} com registros visuais, metadados e visualizador em alta resolução.`}
 >
-  <div class="py-12 md:py-16">
-    <Container>
-      {/* Botão de retorno */}
-      <div class="mb-8">
-        <Button href={withBase('/galeria/')} variant="ghost" class="px-0">
-          &larr; Voltar para todos os álbuns da galeria
-        </Button>
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera de fundo derivada da própria coleção */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[500px] overflow-hidden"
+    >
+      <img
+        src={withBase(coverBackdrop)}
+        alt=""
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full scale-105 object-cover object-center opacity-[0.13] blur-2xl filter"
+      />
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.88) 65%, #070709 100%);"
+      ></div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 pt-10 sm:px-8 md:pt-14">
+      {/* Barra superior de retorno e alternância entre álbuns */}
+      <div class="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-[var(--color-v2-border)] pb-4">
+        <a
+          href={withBase('/galeria/')}
+          class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+        >
+          <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+            &larr;
+          </span>
+          <span>Voltar para todos os álbuns da galeria</span>
+        </a>
+
+        {allAlbums.length > 1 && (
+          <nav
+            aria-label="Alternar entre álbuns da galeria"
+            class="flex flex-wrap items-center gap-1.5"
+          >
+            {allAlbums.map((alb) => (
+              <a
+                href={withBase(`/galeria/${alb.slug}/`)}
+                aria-current={alb.slug === albumSlug ? 'page' : undefined}
+                class:list={[
+                  'v2-focus border px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] uppercase transition-colors',
+                  alb.slug === albumSlug
+                    ? 'border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-accent-warm)]/15 text-[var(--color-v2-heading)]'
+                    : 'border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/70 text-[var(--color-v2-muted)] hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-text)]',
+                ]}
+              >
+                {alb.name} ({alb.count})
+              </a>
+            ))}
+          </nav>
+        )}
       </div>
 
-      <SectionHeading
-        eyebrow={`// ÁLBUM: ${albumSlug.toUpperCase()}`}
-        title={albumName}
-        description={`Coleção temática de imagens com metadados, créditos e ampliação acessível.`}
-      />
+      {/* Cabeçalho Editorial do Álbum */}
+      <header class="border-b border-[var(--color-v2-border)] pb-10">
+        <div class="mb-4 flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            class="inline-block h-px w-8 bg-[var(--color-v2-accent)]"
+          ></span>
+          <p class="v2-eyebrow text-[var(--color-v2-accent-warm)]">
+            {currentMeta.code}
+          </p>
+        </div>
 
-      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.04] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-6xl">
+              {albumName}.
+            </h1>
+          </div>
+
+          <div class="lg:col-span-5">
+            <p class="font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text)] sm:text-base">
+              {currentMeta.lead}
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--color-v2-border)] pt-5 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
+          <span>
+            TOTAL NA COLEÇÃO:{' '}
+            <strong class="font-normal text-[var(--color-v2-heading)]">
+              {images.length}{' '}
+              {images.length === 1 ? 'registro visual' : 'registros visuais'}
+            </strong>
+          </span>
+
+          <span>
+            Clique em qualquer imagem ou em "Visualizar ampliado" para abrir no
+            lightbox
+          </span>
+        </div>
+      </header>
+
+      {hasDemoContent && <DemoNotice variant="section" class="mt-8" />}
 
       {/* Grade de Imagens do Álbum */}
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {images.map((image) => (
-          <GalleryCard image={image} />
+      <div
+        class:list={[
+          'mt-10 grid grid-cols-1 gap-6',
+          images.length === 2
+            ? 'lg:grid-cols-2 lg:gap-8'
+            : 'sm:grid-cols-2 lg:grid-cols-3',
+        ]}
+      >
+        {images.map((image, idx) => (
+          <GalleryCard image={image} index={idx} />
         ))}
       </div>
-    </Container>
+
+      {/* Rodapé de Navegação */}
+      <footer class="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--color-v2-border)] pt-8">
+        <a
+          href={withBase('/galeria/')}
+          class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] px-4 py-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
+        >
+          <span aria-hidden="true">&larr;</span>
+          <span>Voltar para a galeria principal</span>
+        </a>
+
+        <a
+          href={withBase('/')}
+          class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+        >
+          <span>Início</span>
+          <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+            &rarr;
+          </span>
+        </a>
+      </footer>
+    </div>
   </div>
 
   {/* Lightbox Modal Acessível */}

@@ -1,90 +1,174 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import Card from '../ui/Card.astro';
 import { withBase } from '../../utils/base';
 
 interface Props {
   image: CollectionEntry<'gallery'>;
+  index?: number;
+  featuredSpan?: boolean;
 }
 
-const { image } = Astro.props;
+const { image, index = 0, featuredSpan = false } = Astro.props;
 const { data } = image;
 
 const dimText = data.dimensions
   ? `${data.dimensions.width}×${data.dimensions.height}`
   : '';
 
+const isPortrait = data.dimensions
+  ? data.dimensions.height > data.dimensions.width
+  : false;
+
 const fullImageUrl = data.originalUrl || data.imageUrl;
+const num = String(index + 1).padStart(2, '0');
+
+const albumBadgeStyles: Record<string, string> = {
+  wallpapers:
+    'border-[var(--color-v2-accent-warm)]/45 bg-[#070709]/90 text-[var(--color-v2-accent-warm)]',
+  desktop: 'border-[var(--color-v2-accent)]/60 bg-[#070709]/90 text-[#e47986]',
+  ia: 'border-[var(--color-v2-border-hover)] bg-[#070709]/90 text-[var(--color-v2-heading)]',
+};
+
+const currentAlbumBadge =
+  albumBadgeStyles[data.albumSlug] ||
+  'border-[var(--color-v2-border)] bg-[#070709]/90 text-[var(--color-v2-text)]';
 ---
 
-<Card
-  as="article"
-  class="flex flex-col justify-between border-border/80 bg-surface/90 p-0 overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 group"
+<article
+  data-gallery-card
+  data-album-slug={data.albumSlug}
+  data-title={data.title.toLowerCase()}
+  class:list={[
+    'group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_22px_55px_rgba(0,0,0,0.7)]',
+    featuredSpan ? 'md:col-span-2' : '',
+  ]}
 >
-  <div>
-    {/* Imagem com Proporção Panorâmica 16:9 */}
-    <div class="relative aspect-[16/9] w-full overflow-hidden bg-surface-raised border-b border-border/60">
-      <img
-        src={withBase(data.imageUrl)}
-        alt={data.title}
-        width="800"
-        height="450"
-        loading="lazy"
-        decoding="async"
-        class="h-full w-full object-cover filter contrast-105 brightness-95 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
-      />
+  {/* Cantoneiras superiores discretas */}
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-px -left-px z-10 h-2.5 w-2.5 border-t border-l border-[var(--color-v2-accent-warm)]/50 transition-colors group-hover:border-[var(--color-v2-accent-warm)]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-px -right-px z-10 h-2.5 w-2.5 border-t border-r border-[var(--color-v2-accent-warm)]/50 transition-colors group-hover:border-[var(--color-v2-accent-warm)]"
+  ></span>
 
-      {/* Badges Flutuantes */}
-      <div class="absolute top-3 left-3 flex flex-wrap gap-1.5 items-center">
-        <span class="rounded border border-accent/40 bg-surface/90 px-2 py-0.5 font-mono text-[10px] font-semibold text-accent uppercase tracking-wider backdrop-blur-xs shadow-md">
+  <div>
+    {/* Moldura Fotográfica */}
+    <div
+      class:list={[
+        'relative w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508]',
+        featuredSpan ? 'aspect-[16/9]' : 'aspect-[16/10]',
+      ]}
+    >
+      {isPortrait ? (
+        /* Para obras verticais, preserva a imagem inteira centralizada sobre fundo escuro atmosférico */
+        <div class="relative flex h-full w-full items-center justify-center overflow-hidden bg-[#050508]">
+          <img
+            src={withBase(data.imageUrl)}
+            alt=""
+            aria-hidden="true"
+            width={data.dimensions?.width || 800}
+            height={data.dimensions?.height || 1200}
+            loading="lazy"
+            decoding="async"
+            class="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-20 blur-xl filter"
+          />
+          <img
+            src={withBase(data.imageUrl)}
+            alt={data.title}
+            width={data.dimensions?.width || 800}
+            height={data.dimensions?.height || 1200}
+            loading={index < 6 ? 'eager' : 'lazy'}
+            decoding="async"
+            class="relative z-10 h-full w-auto object-contain py-2 brightness-95 contrast-105 transition-transform duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
+          />
+        </div>
+      ) : (
+        <img
+          src={withBase(data.imageUrl)}
+          alt={data.title}
+          width={data.dimensions?.width || 800}
+          height={data.dimensions?.height || 450}
+          loading={index < 6 ? 'eager' : 'lazy'}
+          decoding="async"
+          class="h-full w-full object-cover brightness-[0.94] contrast-[1.04] transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
+        />
+      )}
+
+      {/* Vinheta sutil inferior */}
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#070709]/90 via-[#070709]/30 to-transparent"
+      ></div>
+
+      {/* Topo esquerdo: Álbum e Numeração */}
+      <div class="absolute top-3 left-3 z-20 flex flex-wrap items-center gap-1.5">
+        <span
+          class:list={[
+            'border px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] uppercase backdrop-blur-xs',
+            currentAlbumBadge,
+          ]}
+        >
           {data.album}
         </span>
 
         {dimText && (
-          <span class="rounded border border-border/70 bg-surface/90 px-1.5 py-0.5 font-mono text-[10px] text-text-muted backdrop-blur-xs">
+          <span class="border border-white/10 bg-[#070709]/85 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)] backdrop-blur-xs">
             {dimText}
           </span>
         )}
       </div>
 
+      {/* Topo direito: Índice */}
+      <div class="absolute top-3 right-3 z-20 border border-white/10 bg-[#070709]/85 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] backdrop-blur-xs">
+        #{num}
+      </div>
+
       {data.isDemo && (
-        <div class="absolute bottom-3 right-3 rounded bg-warm/90 px-2 py-0.5 font-mono text-[10px] font-semibold text-bg uppercase shadow-md">
+        <div class="absolute right-3 bottom-3 z-20 border border-[var(--color-v2-accent-warm)]/50 bg-[#070709]/90 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-accent-warm)] uppercase">
           Mock Data
         </div>
       )}
     </div>
 
-    {/* Informações da Imagem */}
+    {/* Ficha Editorial da Fotografia */}
     <div class="p-5">
-      <h3 class="font-display text-lg font-bold tracking-tight text-text group-hover:text-accent transition-colors">
+      <h3 class="font-[family-name:var(--font-v2-display)] text-2xl leading-[1.15] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)]">
         {data.title}
       </h3>
 
       {data.description && (
-        <p class="font-body mt-2 text-sm leading-relaxed text-text-muted">
+        <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-muted)]">
           {data.description}
         </p>
       )}
 
       {(data.credit || data.license) && (
-        <div class="mt-4 pt-3 border-t border-border/40 font-mono text-[11px] text-text-muted/80 space-y-1">
+        <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-[var(--color-v2-border)] pt-3 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)]">
           {data.credit && (
-            <div>
-              <strong class="text-text-muted">Créditos:</strong> {data.credit}
-            </div>
+            <span>
+              <strong class="font-normal tracking-[0.12em] text-[var(--color-v2-accent-warm)]/85 uppercase">
+                Créditos:
+              </strong>{' '}
+              {data.credit}
+            </span>
           )}
           {data.license && (
-            <div>
-              <strong class="text-text-muted">Licença:</strong> {data.license}
-            </div>
+            <span>
+              <strong class="font-normal tracking-[0.12em] text-[var(--color-v2-muted)] uppercase">
+                Licença:
+              </strong>{' '}
+              {data.license}
+            </span>
           )}
         </div>
       )}
     </div>
   </div>
 
-  {/* Ação de Ampliar Acessível */}
-  <div class="p-5 pt-0">
+  {/* Ação de Ampliar Acessível (preserva todos os data-* esperados pelo GalleryLightbox) */}
+  <div class="px-5 pb-5">
     <button
       type="button"
       data-gallery-trigger
@@ -96,10 +180,15 @@ const fullImageUrl = data.originalUrl || data.imageUrl;
       data-dim={dimText}
       data-credit={data.credit || ''}
       data-license={data.license || ''}
-      class="w-full inline-flex items-center justify-center gap-2 rounded border border-border/80 bg-surface-raised/80 py-2 px-3 font-mono text-xs font-semibold text-accent hover:border-accent hover:bg-surface-raised focus-visible:outline-accent transition-colors cursor-pointer"
+      class="v2-focus flex w-full cursor-pointer items-center justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/85 px-4 py-2.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-text)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
     >
       <span>Visualizar ampliado</span>
-      <span aria-hidden="true">&plus;</span>
+      <span
+        aria-hidden="true"
+        class="text-xs text-[var(--color-v2-accent-warm)]"
+      >
+        &plus;
+      </span>
     </button>
   </div>
-</Card>
+</article>
