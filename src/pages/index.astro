@@ -1,15 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/home/Hero.astro';
-import AboutPreview from '../components/home/AboutPreview.astro';
-import CategoryGrid from '../components/home/CategoryGrid.astro';
+import HeroV2 from '../components/home/HeroV2.astro';
+import CategoryPosterGrid from '../components/home/CategoryPosterGrid.astro';
+import EditorialStrip from '../components/home/EditorialStrip.astro';
 ---
 
 <BaseLayout
+  variant="v2"
   title="guilherme.dev — Blog pessoal e acervo tecnológico"
   description="Blog pessoal e portfólio de Guilherme Gomes: desenvolvimento web, Linux, projetos open source, leituras e cultura."
 >
-  <Hero />
-  <AboutPreview />
-  <CategoryGrid />
+  <HeroV2 />
+  <CategoryPosterGrid />
+  <EditorialStrip />
 </BaseLayout>

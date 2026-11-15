@@ -1,0 +1,62 @@
+---
+/**
+ * Cartão-pôster de categoria (docs/DESIGN_SYSTEM_V2.md §4.3).
+ * O cartão inteiro é um único link; sem links aninhados.
+ */
+import type { HomePosterCategory } from '../../data/homeCategories';
+import { withBase } from '../../utils/base';
+
+interface Props {
+  item: HomePosterCategory;
+}
+
+const { item } = Astro.props;
+---
+
+<a
+  href={withBase(item.href)}
+  class:list={[
+    'v2-focus group border-v2-border bg-v2-surface relative isolate block h-[19rem] overflow-hidden border transition-colors duration-300 hover:border-v2-text/70 focus-visible:border-v2-text/70 motion-reduce:transition-none sm:h-[21rem]',
+    item.height,
+    item.layout,
+  ]}
+>
+  <img
+    src={withBase(item.image.src)}
+    alt=""
+    width={item.image.width}
+    height={item.image.height}
+    loading="lazy"
+    decoding="async"
+    style={`object-position: ${item.image.position}`}
+    class="absolute inset-0 -z-20 h-full w-full object-cover brightness-[0.42] saturate-[0.55] transition-[filter] duration-500 group-hover:brightness-[0.62] group-focus-visible:brightness-[0.62] motion-reduce:transition-none"
+  />
+  <div
+    aria-hidden="true"
+    class="absolute inset-0 -z-10 bg-linear-to-t from-v2-bg/90 via-v2-bg/25 to-transparent"
+  ></div>
+
+  <span
+    aria-hidden="true"
+    class="font-v2-mono text-v2-text-muted/70 absolute top-7 left-6 text-[0.5625rem] tracking-[0.12em]"
+  >
+    {item.index}
+  </span>
+
+  <div class="absolute inset-x-6 bottom-6 flex items-end justify-between gap-4">
+    <div>
+      <p class="font-v2-sans text-v2-text-muted text-[0.5625rem] tracking-[0.2em] uppercase">
+        {item.label}
+      </p>
+      <h3 class="font-v2-display text-v2-text mt-2 text-[2.4rem] leading-none font-medium tracking-tight">
+        {item.title}
+      </h3>
+    </div>
+    <span
+      aria-hidden="true"
+      class="border-v2-text/40 text-v2-text group-hover:border-v2-accent group-hover:bg-v2-accent group-focus-visible:border-v2-accent group-focus-visible:bg-v2-accent mb-1 inline-flex size-[2.125rem] shrink-0 items-center justify-center border text-sm transition-colors duration-300 motion-reduce:transition-none"
+    >
+      →
+    </span>
+  </div>
+</a>

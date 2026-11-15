@@ -1,0 +1,49 @@
+---
+/**
+ * Rodapé do Design System 2.0 (docs/DESIGN_SYSTEM_V2.md §4.4).
+ * Apenas links sociais reais (src/data/social.ts); sem RSS.
+ */
+import { socialLinks, copyrightText } from '../../data/social';
+---
+
+<footer class="mx-auto w-full max-w-v2 px-6 pb-8 xl:px-0">
+  <div class="border-v2-border/80 border-t pt-14 lg:pt-16">
+    <div class="flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+      <p class="font-v2-display text-v2-text text-[1.75rem] leading-none font-semibold tracking-tight">
+        guilherme<span class="text-v2-accent-warm">.dev</span>
+      </p>
+      <p class="font-v2-display text-v2-text-muted text-base italic lg:text-center">
+        Arquivo pessoal sobre código, cultura e referências.
+      </p>
+      <nav aria-label="Redes sociais">
+        <ul class="flex flex-wrap items-center gap-x-7 gap-y-1">
+          {socialLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="v2-focus font-v2-mono text-v2-text-muted hover:text-v2-text inline-flex min-h-11 items-center text-[0.5625rem] tracking-[0.18em] uppercase transition-colors motion-reduce:transition-none"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between lg:mt-14">
+      <p class="font-v2-sans text-v2-text-muted/70 text-[0.625rem]">
+        {copyrightText}
+      </p>
+      <a
+        href="#top"
+        class="v2-focus font-v2-sans text-v2-text-muted hover:text-v2-text inline-flex min-h-11 items-center gap-3 text-[0.625rem] tracking-[0.18em] uppercase transition-colors motion-reduce:transition-none"
+      >
+        Voltar ao topo
+        <span aria-hidden="true">↑</span>
+      </a>
+    </div>
+  </div>
+</footer>

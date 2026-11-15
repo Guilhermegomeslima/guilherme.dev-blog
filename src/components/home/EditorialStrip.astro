@@ -1,0 +1,65 @@
+---
+/**
+ * Faixa editorial de fechamento (docs/DESIGN_SYSTEM_V2.md §4.4;
+ * references/home-footer.png). Usa um artigo REAL da Content Collection:
+ * título, descrição, categoria e data vêm do frontmatter. Se o artigo não
+ * existir, a faixa não é renderizada (nada é inventado).
+ */
+import { getEntry } from 'astro:content';
+import { withBase } from '../../utils/base';
+
+const article = await getEntry('articles', 'por-que-escolhi-fedora');
+
+const date = article?.data.publishedAt.toLocaleDateString('pt-BR', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+{article && (
+  <section
+    aria-labelledby="destaque-title"
+    class="mx-auto mt-28 w-full max-w-v2 px-6 lg:mt-36 xl:px-0"
+  >
+    <p class="font-v2-mono text-v2-text-muted mb-5 flex items-center gap-4 text-[0.5625rem] tracking-[0.2em] uppercase">
+      <span class="text-v2-accent">02</span>
+      <span>Destaque editorial</span>
+    </p>
+
+    <a
+      href={withBase(`/artigos/${article.id}/`)}
+      class="v2-focus group border-v2-border/80 relative block border-y py-12 lg:py-14"
+    >
+      <span
+        aria-hidden="true"
+        class="bg-v2-surface border-v2-border/80 absolute inset-0 border opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none"
+      />
+      <div class="relative grid items-end gap-8 transition-transform duration-300 group-hover:translate-x-[1.375rem] group-focus-visible:translate-x-[1.375rem] motion-reduce:transition-none lg:grid-cols-[minmax(0,1fr)_22.5rem_11.875rem] lg:gap-14">
+        <div>
+          <p class="font-v2-sans text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+            {article.data.category} / {date}
+          </p>
+          <h2
+            id="destaque-title"
+            class="font-v2-display text-v2-text mt-5 max-w-[40rem] text-[clamp(2rem,2.8vw,3.25rem)] leading-[1.05] font-medium tracking-[-0.01em]"
+          >
+            {article.data.title}
+          </h2>
+        </div>
+        <p class="font-v2-sans text-v2-text-muted text-xs leading-[1.7] font-light">
+          {article.data.description}
+        </p>
+        <span class="font-v2-sans text-v2-text inline-flex items-center gap-3 text-[0.625rem] tracking-[0.18em] uppercase">
+          Ler artigo
+          <span
+            aria-hidden="true"
+            class="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+          >
+            →
+          </span>
+        </span>
+      </div>
+    </a>
+  </section>
+)}

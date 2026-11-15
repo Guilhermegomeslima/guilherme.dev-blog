@@ -1,0 +1,43 @@
+---
+/**
+ * Introdução ao acervo + grade assimétrica das nove categorias
+ * (docs/DESIGN_SYSTEM_V2.md §4.2 e §4.3; references/home-cards.png).
+ */
+import CategoryPosterCard from './CategoryPosterCard.astro';
+import { homePosterCategories } from '../../data/homeCategories';
+---
+
+<section
+  id="acervo"
+  aria-labelledby="acervo-title"
+  class="mx-auto w-full max-w-v2 scroll-mt-4 px-6 pt-24 lg:pt-32 xl:px-0"
+>
+  <div class="border-v2-border/80 grid gap-8 border-b pb-11 lg:grid-cols-[16.5rem_minmax(0,1fr)_21.5rem] lg:gap-0">
+    <p class="font-v2-mono text-v2-text-muted flex items-start gap-4 pt-2 text-[0.5625rem] tracking-[0.2em] uppercase">
+      <span class="text-v2-accent">01</span>
+      <span
+        aria-hidden="true"
+        class="bg-v2-text-muted/40 mt-1.5 h-px w-6"
+      ></span>
+      Acervo
+    </p>
+    <h2
+      id="acervo-title"
+      class="font-v2-display text-v2-text max-w-[44rem] text-[clamp(2.5rem,3.45vw,4.1rem)] leading-[1.05] font-medium tracking-[-0.01em]"
+    >
+      Notas de campo, projetos e referências.
+    </h2>
+    <p class="font-v2-sans text-v2-text-muted self-end text-xs leading-[1.7] font-light">
+      Um arquivo vivo de tudo que estudo, construo, experimento e decido
+      guardar.
+    </p>
+  </div>
+
+  <ul class="mt-12 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:mt-[4.4rem] lg:grid-cols-12">
+    {homePosterCategories.map((item) => (
+      <li class:list={['flex', item.layout]}>
+        <CategoryPosterCard item={{ ...item, layout: 'w-full' }} />
+      </li>
+    ))}
+  </ul>
+</section>
