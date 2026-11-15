@@ -3,12 +3,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroV2 from '../components/home/HeroV2.astro';
 import CategoryPosterGrid from '../components/home/CategoryPosterGrid.astro';
 import EditorialStrip from '../components/home/EditorialStrip.astro';
+import { getWebSiteSchema } from '../utils/seo';
+
+const websiteSchema = getWebSiteSchema();
 ---
 
 <BaseLayout
   variant="v2"
   title="guilherme.dev — Blog pessoal e acervo tecnológico"
   description="Blog pessoal e portfólio de Guilherme Gomes: desenvolvimento web, Linux, projetos open source, leituras e cultura."
+  schema={websiteSchema}
 >
   <HeroV2 />
   <CategoryPosterGrid />

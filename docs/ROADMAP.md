@@ -144,7 +144,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | VIS-06f | Seção Open Source (catálogo editorial de ferramentas e rota `/open-source/`)                                                                            | VIS-03            | P1         | —         | 58b71e0   | Concluído |
 | VIS-06g | Seção Galeria (portais de álbuns, grid interna e lightbox acessível)                                                                                    | VIS-03            | P1         | —         | 73a7046   | Concluído |
 | VIS-06h | Consolidação dos tokens compartilhados, página 404 e limpeza de estilos legados                                                                         | VIS-06a a VIS-06g | P1         | —         | 50b158a   | Concluído |
-| VIS-07  | QA visual, acessibilidade, desempenho e deploy (Vercel e GitHub Pages)                                                                                  | VIS-04 a VIS-06h  | P1         | —         | —         | Concluído |
+| VIS-07  | QA visual, acessibilidade, desempenho e deploy (Vercel e GitHub Pages)                                                                                  | VIS-04 a VIS-06h  | P1         | —         | f4e6332   | Concluído |
 
 **Critérios de aceitação por tarefa:**
 
@@ -158,16 +158,16 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 ### Fase 5 — Descoberta, qualidade e evolução (P1/P2)
 
-| ID     | Item                                                                      | Dependências   | Prioridade | Data alvo | Commit/PR | Status   |
-| ------ | ------------------------------------------------------------------------- | -------------- | ---------- | --------- | --------- | -------- |
-| QLT-01 | Adicionar filtros úteis a jogos/filmes e outras listagens                 | CNT-05, CNT-07 | P1         | 24/12     | —         | Pendente |
-| QLT-02 | Adicionar busca local quando houver volume que justifique                 | CNT-02         | P1         | 26/12     | —         | Pendente |
-| QLT-03 | Revisar SEO por conteúdo, sitemap e compartilhamento social               | CNT-02         | P1         | 28/12     | —         | Pendente |
-| QLT-04 | Ampliar testes, verificações automáticas e CI quando necessário           | DEV-04         | P1         | 31/12     | —         | Pendente |
-| QLT-05 | Refinar desempenho, imagens e movimento reduzido                          | CNT-11         | P1         | 02/01     | —         | Pendente |
-| EVO-01 | Especificar autenticação e backend para painel próprio remoto             | MVP-07         | P2         | 09/01     | —         | Pendente |
-| EVO-02 | Decidir armazenamento externo próprio/de mídia                            | CNT-11         | P2         | 10/01     | —         | Pendente |
-| EVO-03 | Implementar painel administrativo próprio, após nova arquitetura aprovada | EVO-01, EVO-02 | P2         | 30/01     | —         | Pendente |
+| ID     | Item                                                                      | Dependências   | Prioridade | Data alvo | Commit/PR | Status    |
+| ------ | ------------------------------------------------------------------------- | -------------- | ---------- | --------- | --------- | --------- |
+| QLT-01 | Adicionar filtros úteis a jogos/filmes e outras listagens                 | CNT-05, CNT-07 | P1         | 24/12     | —         | Pendente  |
+| QLT-02 | Adicionar busca local quando houver volume que justifique                 | CNT-02         | P1         | 26/12     | —         | Pendente  |
+| QLT-03 | Revisar SEO por conteúdo, sitemap e compartilhamento social               | CNT-02         | P1         | 28/12     | —         | Concluído |
+| QLT-04 | Ampliar testes, verificações automáticas e CI quando necessário           | DEV-04         | P1         | 31/12     | —         | Pendente  |
+| QLT-05 | Refinar desempenho, imagens e movimento reduzido                          | CNT-11         | P1         | 02/01     | —         | Pendente  |
+| EVO-01 | Especificar autenticação e backend para painel próprio remoto             | MVP-07         | P2         | 09/01     | —         | Pendente  |
+| EVO-02 | Decidir armazenamento externo próprio/de mídia                            | CNT-11         | P2         | 10/01     | —         | Pendente  |
+| EVO-03 | Implementar painel administrativo próprio, após nova arquitetura aprovada | EVO-01, EVO-02 | P2         | 30/01     | —         | Pendente  |
 
 **Aceitação:** mudanças adicionais não comprometem a publicação atual; soluções externas são opcionais e justificadas, não introduzidas antecipadamente.
 

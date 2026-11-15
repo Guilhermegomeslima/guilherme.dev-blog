@@ -1,19 +1,22 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { withBase } from '../../utils/base';
+import { CANONICAL_SITE } from '../../utils/seo';
 
 const targetUrl = withBase('/opensource/');
+const canonicalUrl = `${CANONICAL_SITE}/opensource/`;
 ---
 
 <BaseLayout
   variant="v2"
   title="Redirecionando para Open Source... — guilherme.dev"
   description="Redirecionando para o catálogo de software livre e ferramentas open source."
+  noindex={true}
+  canonical={canonicalUrl}
 >
-  <head slot="head">
+  <Fragment slot="head">
     <meta http-equiv="refresh" content={`0;url=${targetUrl}`} />
-    <link rel="canonical" href={targetUrl} />
-  </head>
+  </Fragment>
 
   <div class="mx-auto max-w-lg px-5 py-24 text-center">
     <p class="v2-eyebrow mb-3 text-[var(--color-v2-accent-warm)]">

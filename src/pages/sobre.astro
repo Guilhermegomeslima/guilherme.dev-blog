@@ -5,12 +5,16 @@ import MissionSection from '../components/about/MissionSection.astro';
 import SkillsGrid from '../components/about/SkillsGrid.astro';
 import BeyondCodeSection from '../components/about/BeyondCodeSection.astro';
 import ProjectsList from '../components/about/ProjectsList.astro';
+import { getProfilePageSchema } from '../utils/seo';
+
+const profileSchema = getProfilePageSchema();
 ---
 
 <BaseLayout
   variant="v2"
   title="Sobre // Arquivo Pessoal — guilherme.dev"
   description="Arquivo pessoal e trajetória de Guilherme Gomes: estudante de ADS, desenvolvedor em aprendizado, entusiasta de Linux, competências técnicas e projetos."
+  schema={profileSchema}
 >
   <div class="mx-auto w-full max-w-v2 px-6 pb-20 xl:px-0">
     <DossierHero />
