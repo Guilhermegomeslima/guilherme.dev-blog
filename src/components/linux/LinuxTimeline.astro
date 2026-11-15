@@ -1,106 +1,123 @@
 ---
-import Card from '../ui/Card.astro';
+/**
+ * Timeline editorial de Sistemas Operacionais — Design System 2.0 (VIS-05).
+ * Substitui o brilho neon ciano por iluminação discreta em vermelho envelhecido
+ * e bronze, preservando integralmente os dados de `src/data/linuxTimeline.ts`.
+ */
 import { linuxTimeline } from '../../data/linuxTimeline';
 ---
 
-<div class="relative py-6">
-  {/* Linha vertical central luminosa (desktop) */}
+<div class="relative py-8">
+  <!-- Eixo vertical contínuo com iluminação sutil (esquerda no mobile, centro no desktop) -->
   <div
-    class="pointer-events-none absolute top-0 bottom-0 left-4 hidden w-0.5 -translate-x-1/2 bg-accent/40 shadow-[0_0_10px_var(--color-accent)] md:left-1/2 md:block"
     aria-hidden="true"
+    class="from-v2-border/50 via-v2-border to-v2-accent/80 pointer-events-none absolute top-0 bottom-0 left-4 w-px -translate-x-1/2 bg-linear-to-b md:left-1/2"
   ></div>
 
-  {/* Linha vertical à esquerda (mobile) */}
-  <div
-    class="pointer-events-none absolute top-0 bottom-0 left-4 w-0.5 -translate-x-1/2 bg-accent/40 shadow-[0_0_10px_var(--color-accent)] md:hidden"
-    aria-hidden="true"
-  ></div>
-
-  <div class="space-y-12">
+  <ol class="space-y-12 md:space-y-16">
     {linuxTimeline.map((item, index) => {
       const isEven = index % 2 === 0;
 
       return (
-        <div class="relative flex flex-col md:flex-row md:items-center">
-          {/* Marcador / Nó luminoso da linha do tempo */}
-          <div class="absolute left-4 z-10 -translate-x-1/2 md:left-1/2">
+        <li class="relative flex flex-col md:flex-row md:items-center">
+          {/* Marcador editorial no eixo */}
+          <div
+            aria-hidden="true"
+            class="absolute top-6 left-4 z-10 -translate-x-1/2 md:top-1/2 md:left-1/2 md:-translate-y-1/2"
+          >
             <span
               class:list={[
-                'flex h-5 w-5 items-center justify-center rounded-full border-2 bg-bg shadow-md',
+                'bg-v2-bg flex size-4 items-center justify-center border transition-colors',
                 item.current
-                  ? 'border-accent shadow-[0_0_12px_var(--color-accent)]'
-                  : 'border-border',
+                  ? 'border-v2-accent shadow-[0_0_18px_rgba(121,56,47,0.55)]'
+                  : 'border-v2-border',
               ]}
             >
               <span
                 class:list={[
-                  'h-2 w-2 rounded-full',
-                  item.current
-                    ? 'bg-accent motion-safe:animate-pulse'
-                    : 'bg-text-muted/60',
+                  'size-1.5',
+                  item.current ? 'bg-v2-accent' : 'bg-v2-accent-warm/70',
                 ]}
               />
             </span>
           </div>
 
-          {/* Conteúdo do Card alternado em desktop */}
+          {/* Painel de registro alternado no desktop */}
           <div
             class:list={[
-              'ml-10 md:ml-0 md:w-1/2',
-              isEven ? 'md:pr-12 md:text-right' : 'md:pl-12 md:ml-auto',
+              'ml-11 md:ml-0 md:w-1/2',
+              isEven ? 'md:pr-14' : 'md:ml-auto md:pl-14',
             ]}
           >
-            <Card
+            <article
               class:list={[
-                'border-border/80 bg-surface/90 p-5 backdrop-blur-xs transition-colors',
-                item.current &&
-                  'border-accent/50 shadow-lg shadow-accent/5 bg-surface/95',
+                'bg-v2-surface/65 relative border p-6 sm:p-7',
+                item.current
+                  ? 'border-v2-accent/80 bg-v2-surface shadow-[0_0_32px_rgba(121,56,47,0.14)]'
+                  : 'border-v2-border/80',
               ]}
             >
-              <div
-                class:list={[
-                  'mb-3 flex flex-wrap items-center gap-2 border-b border-border/50 pb-2.5 font-mono text-xs',
-                  isEven ? 'md:justify-end' : 'md:justify-start',
-                ]}
-              >
-                <span class="font-bold text-accent">{item.id}</span>
-                <span class="text-text-muted/60">·</span>
-                <span class="text-text-muted">{item.category}</span>
+              {/* Cantoneiras discretas no registro atual */}
+              {item.current && (
+                <>
+                  <span
+                    aria-hidden="true"
+                    class="border-v2-accent pointer-events-none absolute -top-px -left-px h-3 w-3 border-t border-l"
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="border-v2-accent-warm pointer-events-none absolute -right-px -bottom-px h-3 w-3 border-r border-b"
+                  />
+                </>
+              )}
+
+              <div class="border-v2-border/60 mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="font-v2-mono text-v2-accent text-[0.5625rem] tracking-[0.2em] uppercase">
+                    {item.id}
+                  </span>
+                  <span aria-hidden="true" class="text-v2-border">
+                    /
+                  </span>
+                  <span class="font-v2-mono text-v2-text-muted text-[0.5625rem] tracking-[0.16em] uppercase">
+                    {item.category}
+                  </span>
+                </div>
+
                 {item.current && (
-                  <span class="rounded bg-accent/15 px-2 py-0.5 text-[10px] font-semibold text-accent uppercase border border-accent/30">
+                  <span class="border-v2-accent/70 bg-v2-accent/20 font-v2-mono text-v2-text inline-flex items-center gap-1.5 border px-2 py-0.5 text-[0.5625rem] tracking-[0.18em] uppercase">
+                    <span
+                      aria-hidden="true"
+                      class="bg-v2-accent inline-block size-1.5"
+                    />
                     Atual
                   </span>
                 )}
               </div>
 
-              <h3 class="font-display text-lg font-bold tracking-tight text-text">
+              <h3 class="font-v2-display text-v2-text text-2xl leading-tight font-medium sm:text-[1.75rem]">
                 {item.name}
               </h3>
 
-              <p class="font-mono text-xs text-accent-alt mt-1">
+              <p class="font-v2-mono text-v2-accent-warm mt-1.5 text-[0.625rem] tracking-[0.16em] uppercase">
                 {item.period}
               </p>
 
-              <p class="font-body mt-3 text-sm leading-relaxed text-text-muted">
+              <p class="font-v2-sans text-v2-text-muted mt-4 text-sm leading-[1.8] font-light">
                 {item.description}
               </p>
 
-              <div
-                class:list={[
-                  'mt-4 flex flex-wrap gap-1.5',
-                  isEven ? 'md:justify-end' : 'md:justify-start',
-                ]}
-              >
+              <div class="border-v2-border/40 mt-5 flex flex-wrap gap-x-4 gap-y-1.5 border-t pt-3.5">
                 {item.tags.map((tag) => (
-                  <span class="rounded border border-border/50 bg-surface-raised px-2 py-0.5 font-mono text-[10px] text-text-muted">
+                  <span class="font-v2-mono text-v2-text-muted/80 text-[0.5625rem] tracking-[0.14em] uppercase">
                     #{tag}
                   </span>
                 ))}
               </div>
-            </Card>
+            </article>
           </div>
-        </div>
+        </li>
       );
     })}
-  </div>
+  </ol>
 </div>

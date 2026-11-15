@@ -1,575 +1,844 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
-import Card from '../../components/ui/Card.astro';
 import LinuxTimeline from '../../components/linux/LinuxTimeline.astro';
+import { withBase } from '../../utils/base';
+
+const chapterIndex = [
+  { id: 'cap-1', num: '01', label: 'Linux Desktop' },
+  { id: 'cap-2', num: '02', label: 'Antes do Linux' },
+  { id: 'cap-3', num: '03', label: 'LinuxFX' },
+  { id: 'cap-4', num: '04', label: 'Xubuntu' },
+  { id: 'cap-5', num: '05', label: 'Ubuntu & Jogos' },
+  { id: 'cap-6', num: '06', label: 'Fedora Workstation' },
+  { id: 'cap-7', num: '07', label: 'Aprendizados' },
+  { id: 'cronologia', num: '08', label: 'Linha do Tempo' },
+];
 ---
 
 <BaseLayout
+  variant="v2"
   title="Linux & Sistemas Operacionais — guilherme.dev"
   description="Minha trajetória com Linux: do Windows 11 ao Fedora. Como um notebook com pouca memória RAM me levou a descobrir um sistema operacional que acabou mudando minha relação com a tecnologia."
 >
-  <div class="py-12 md:py-16">
-    <Container class="max-w-4xl">
-      <SectionHeading
-        eyebrow="// ESTAÇÃO DE TRABALHO & SISTEMAS"
-        title="Minha trajetória com Linux: do Windows 11 ao Fedora"
-        description="Como um notebook com pouca memória RAM me levou a descobrir um sistema operacional que acabou mudando minha relação com a tecnologia."
+  <div class="mx-auto w-full max-w-v2 px-6 pb-20 xl:px-0">
+    <!-- Cabeçalho editorial da crônica -->
+    <header
+      aria-labelledby="linux-hero-title"
+      class="border-v2-border/80 relative isolate overflow-hidden border-b pt-12 pb-16 lg:pt-20 lg:pb-24"
+    >
+      <!-- Fotografia atmosférica sutil à direita (mesma linguagem visual da Home V2) -->
+      <img
+        src={withBase('/images/home/linux.webp')}
+        alt=""
+        width="900"
+        height="1350"
+        decoding="async"
+        class="pointer-events-none absolute top-0 right-0 -z-20 hidden h-full w-1/2 object-cover object-center opacity-30 brightness-[0.55] grayscale-[0.75] lg:block lg:[mask-image:linear-gradient(to_right,transparent,black_65%)]"
       />
+      <div
+        aria-hidden="true"
+        class="from-v2-bg pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-linear-to-t to-transparent"
+      ></div>
 
-      {/* Capítulos Editoriais */}
-      <div class="mt-12 space-y-16">
-        {/* Capítulo 1 */}
-        <section
-          aria-labelledby="cap-1-title"
-          class="border-b border-border/70 pb-12"
+      <!-- Detalhe arquivístico lateral -->
+      <div
+        aria-hidden="true"
+        class="font-v2-mono text-v2-text-muted/50 absolute top-12 right-0 hidden items-center gap-3 text-[0.5rem] tracking-[0.2em] uppercase lg:top-20 lg:flex"
+      >
+        <span>Crônica // SEC-02</span>
+        <span class="bg-v2-accent/80 h-px w-8"></span>
+      </div>
+
+      <div class="max-w-4xl">
+        <p class="v2-eyebrow text-v2-text-muted flex items-center gap-4 text-[0.625rem] tracking-[0.25em]">
+          <span aria-hidden="true" class="bg-v2-accent h-px w-7"></span>
+          Estação de trabalho &amp; sistemas
+          <span aria-hidden="true" class="text-v2-text-muted/50">
+            /
+          </span>
+          Linux
+        </p>
+
+        <h1
+          id="linux-hero-title"
+          class="font-v2-display text-v2-text mt-7 text-[clamp(2.5rem,4.6vw,4.9rem)] leading-[0.95] font-medium tracking-[-0.02em]"
         >
-          <div class="mb-2 font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-            Capítulo 01
-          </div>
-          <h2
-            id="cap-1-title"
-            class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl"
+          Minha trajetória com Linux:
+          <br />
+          do Windows 11{' '}
+          <em class="from-v2-text to-v2-text-muted bg-linear-to-r bg-clip-text pr-[0.08em] font-medium text-transparent italic">
+            ao Fedora.
+          </em>
+        </h1>
+
+        <p class="font-v2-sans text-v2-text-muted mt-8 max-w-[38rem] text-sm leading-[1.85] font-light sm:text-base">
+          Como um notebook com pouca memória RAM me levou a descobrir um sistema
+          operacional que acabou mudando minha relação com a tecnologia.
+        </p>
+      </div>
+
+      <!-- Sumário de capítulos e cronologia -->
+      <nav
+        aria-label="Índice da crônica"
+        class="border-v2-border/70 bg-v2-surface/45 mt-12 border p-4 sm:p-5 lg:mt-16"
+      >
+        <div class="border-v2-border/50 mb-3 flex items-center justify-between border-b pb-2.5">
+          <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+            Índice de leitura // 07 capítulos + cronologia
+          </span>
+          <span
+            aria-hidden="true"
+            class="font-v2-mono text-v2-text-muted/60 text-[0.5625rem]"
           >
-            Linux desktop: muito além dos servidores
-          </h2>
-          <div class="mt-4 space-y-4 font-body text-base leading-relaxed text-text-muted">
-            <p>
-              Quando alguém fala sobre Linux, é comum pensar em servidores,
-              terminais cheios de comandos e sistemas utilizados por
-              profissionais de tecnologia. Mas Linux também está presente em
-              computadores pessoais, com interfaces gráficas, navegadores,
-              programas de escritório, ferramentas de desenvolvimento e até
-              jogos.
-            </p>
-            <p>
-              Diferentemente do Windows, o universo Linux oferece diversas
-              distribuições, popularmente chamadas de <em>distros</em>. Cada uma
-              combina o kernel Linux com um conjunto de ferramentas, programas e
-              decisões próprias sobre como o sistema deve funcionar.
-            </p>
-            <p>
-              Ubuntu, Fedora, Debian e Xubuntu são alguns exemplos. Embora
-              compartilhem uma base tecnológica, podem proporcionar experiências
-              bastante diferentes.
-            </p>
-            <p>
-              Uma das características que mais me atrai nesse universo é a
-              liberdade de escolha. Poder decidir qual ambiente gráfico
-              utilizar, quais programas instalar e como organizar o próprio
-              sistema é algo que passei a valorizar cada vez mais.
-            </p>
-            <p>Mas nem sempre pensei assim.</p>
-            <p>
-              Minha entrada no Linux não aconteceu por uma grande convicção
-              sobre software livre ou por algum conhecimento avançado de
-              computação. Na verdade, começou com um problema muito mais
-              simples: <strong class="text-text">meu notebook não estava dando
-              conta do Windows 11.</strong>
-            </p>
-          </div>
-        </section>
+            OS-01 → OS-07
+          </span>
+        </div>
 
-        {/* Capítulo 2 */}
-        <section
-          aria-labelledby="cap-2-title"
-          class="border-b border-border/70 pb-12"
-        >
-          <div class="mb-2 font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-            Capítulo 02
-          </div>
-          <h2
-            id="cap-2-title"
-            class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl"
-          >
-            Antes do Linux: minha experiência com Windows
-          </h2>
-          <div class="mt-4 space-y-4 font-body text-base leading-relaxed text-text-muted">
-            <p>
-              Minha história com computadores começou no Windows. Durante a
-              infância e a adolescência, utilizei o Windows 8 e o Windows 8.1 em
-              um notebook equipado com um processador Intel Core Duo e apenas 2
-              GB de memória RAM.
-            </p>
-            <p>
-              Era um equipamento bastante limitado, mas foi nele que tive boa
-              parte das minhas primeiras experiências com computadores.
-            </p>
-            <p>
-              Depois de um tempo, o notebook acabou apresentando defeito, e
-              passei um longo período sem ter um computador próprio.
-            </p>
-            <p>
-              Isso mudou quando ganhei meu atual ASUS Vivobook 15, equipado com
-              um Intel Core i3 de 12ª geração. Na época, ele possuía apenas 4 GB
-              de memória RAM DDR4 — hoje já conta com 20 GB.
-            </p>
-            <p>O sistema instalado era o Windows 11.</p>
-            <p>
-              Apesar de o processador ser relativamente moderno, a pouca memória
-              RAM se tornou um grande problema. O sistema apresentava gargalos
-              que prejudicavam a utilização cotidiana. Mesmo assim, continuei
-              usando o Windows 11 por quase um ano.
-            </p>
-            <p>Chegou um momento em que percebi que precisava fazer alguma coisa.</p>
-            <p>
-              Considerei duas alternativas: instalar uma versão modificada e
-              mais enxuta do Windows 10, não oficial, ou experimentar Linux.
-            </p>
-            <p>Acabei escolhendo a segunda.</p>
-            <p>
-              Naquele momento, eu só queria utilizar melhor o hardware que tinha.
-              Não imaginava que aquela decisão acabaria se transformando em um
-              interesse tão grande pelo Linux.
-            </p>
-          </div>
-        </section>
+        <ol class="grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-4 lg:grid-cols-8">
+          {chapterIndex.map((item) => (
+            <li>
+              <a
+                href={`#${item.id}`}
+                class="v2-focus group flex items-baseline gap-2 py-1.5 transition-colors motion-reduce:transition-none"
+              >
+                <span class="font-v2-mono text-v2-accent text-[0.5625rem] tracking-[0.14em]">
+                  {item.num}
+                </span>
+                <span class="font-v2-sans text-v2-text-muted group-hover:text-v2-text text-xs font-light transition-colors motion-reduce:transition-none">
+                  {item.label}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </header>
 
-        {/* Capítulo 3 */}
-        <section
-          aria-labelledby="cap-3-title"
-          class="border-b border-border/70 pb-12"
-        >
-          <div class="mb-2 font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-            Capítulo 03
-          </div>
-          <h2
-            id="cap-3-title"
-            class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl"
-          >
-            LinuxFX: o erro de procurar outro Windows
-          </h2>
-          <div class="mt-4 space-y-4 font-body text-base leading-relaxed text-text-muted">
-            <p>Minha primeira distribuição foi o LinuxFX.</p>
-            <p>
-              A escolha tinha um motivo bastante específico: eu queria algo que
-              fosse o mais parecido possível com o Windows.
+    <!-- Corpo da Crônica Editorial (Capítulos 01 a 07) -->
+    <div class="divide-v2-border/70 divide-y">
+      <!-- Capítulo 01 -->
+      <section
+        id="cap-1"
+        aria-labelledby="cap-1-title"
+        class="scroll-mt-8 py-16 lg:py-24"
+      >
+        <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-[14rem_minmax(0,42rem)] lg:gap-14">
+          <aside class="lg:pt-2">
+            <div class="flex items-center gap-3">
+              <span class="font-v2-mono text-v2-accent text-[0.5625rem] tracking-[0.2em] uppercase">
+                Capítulo 01
+              </span>
+              <span aria-hidden="true" class="bg-v2-border h-px w-5"></span>
+            </div>
+            <p class="font-v2-mono text-v2-text-muted/75 mt-2 text-[0.625rem] tracking-[0.14em] uppercase">
+              Conceito &amp; Liberdade
             </p>
-            <p>
-              Instalei o sistema em dual boot, mantendo a possibilidade de
-              utilizar o Windows quando necessário.
-            </p>
-            <p>
-              Visualmente, o LinuxFX realmente tentava reproduzir a experiência
-              do sistema da Microsoft. O problema é que essa semelhança não
-              significava que ele seria a melhor opção para meu computador.
-            </p>
-            <p>
-              A distribuição não era tão leve quanto eu esperava. Além disso,
-              alguns recursos de personalização visual estavam associados a uma
-              versão Plus, oferecida inicialmente em um período gratuito de 30
-              dias.
-            </p>
-            <p>
-              Aquilo me incomodou. Eu tinha procurado Linux justamente para
-              encontrar uma alternativa mais leve e flexível, mas estava
-              experimentando algo que não atendia tão bem às minhas
-              necessidades.
-            </p>
-            <p>
-              Hoje considero que cometi um erro nessa primeira tentativa:
-              <strong class="text-text">procurei uma distribuição Linux querendo
-              que ela fosse praticamente igual ao Windows.</strong>
-            </p>
-            <p>
-              Em vez de conhecer as possibilidades de um sistema diferente,
-              tentei reproduzir a experiência que já conhecia.
-            </p>
-            <p>Minha trajetória com Linux poderia ter terminado ali.</p>
-            <p>Felizmente, decidi tentar outra distribuição.</p>
-          </div>
-        </section>
+          </aside>
 
-        {/* Capítulo 4 */}
-        <section
-          aria-labelledby="cap-4-title"
-          class="border-b border-border/70 pb-12"
-        >
-          <div class="mb-2 font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-            Capítulo 04
-          </div>
-          <h2
-            id="cap-4-title"
-            class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl"
-          >
-            Xubuntu: o verdadeiro ponto de virada
-          </h2>
-          <div class="mt-4 space-y-4 font-body text-base leading-relaxed text-text-muted">
-            <p>Depois do LinuxFX, instalei o Xubuntu.</p>
-            <p>Foi aqui que tudo começou a fazer sentido.</p>
-            <p>
-              O sistema era leve, responsivo e funcionava muito melhor com os
-              recursos disponíveis no notebook. O gargalo de desempenho que
-              havia motivado minha migração praticamente deixou de ser um
-              problema.
-            </p>
-            <p>
-              Visualmente, o Xubuntu parecia um pouco mais rústico do que aquilo
-              a que eu estava acostumado, mas isso não me incomodou. Pelo
-              contrário, comecei a gostar da simplicidade da interface.
-            </p>
-            <p>É claro que houve um período de adaptação.</p>
-            <p>
-              Eu precisava me acostumar com o terminal, descobrir onde estavam
-              determinadas configurações e entender uma interface diferente da
-              que utilizava no Windows.
-            </p>
-            <p>
-              Uma das situações mais engraçadas foi descobrir como desligar o
-              computador.
-            </p>
-            <p>
-              Durante a primeira semana, eu simplesmente não conseguia encontrar
-              o botão de desligar no Xubuntu. Minha solução foi utilizar um
-              atalho de teclado para desligar o notebook. Só depois descobri onde
-              estava a opção na interface.
-            </p>
-            <p>
-              Hoje acho graça disso, mas é um bom exemplo de como grande parte
-              das minhas dificuldades iniciais não tinha relação com problemas
-              técnicos complexos. Era, principalmente, uma questão de costume.
-            </p>
-            <p>
-              A distribuição também oferecia facilidades para instalar
-              programas, incluindo uma loja de aplicativos. Aos poucos, fui
-              deixando de depender exclusivamente da interface gráfica e comecei
-              a utilizar mais o terminal.
-            </p>
-            <p>
-              O que inicialmente parecia algo complicado passou a despertar
-              minha curiosidade.
-            </p>
-            <p>
-              E, principalmente, percebi que não sentia mais necessidade de
-              voltar ao Windows.
-            </p>
-            <p>
-              <strong class="text-text">O Xubuntu foi meu verdadeiro ponto de
-              virada.</strong> Ele resolveu o problema que me levou a
-              experimentar Linux e mostrou que eu poderia ter uma experiência
-              completa sem depender do sistema operacional que havia utilizado
-              durante tantos anos.
-            </p>
-          </div>
-        </section>
+          <div>
+            <h2
+              id="cap-1-title"
+              class="font-v2-display text-v2-text text-[clamp(1.85rem,2.8vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.01em]"
+            >
+              Linux desktop: muito além dos servidores
+            </h2>
 
-        {/* Capítulo 5 */}
-        <section
-          aria-labelledby="cap-5-title"
-          class="border-b border-border/70 pb-12"
-        >
-          <div class="mb-2 font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-            Capítulo 05
-          </div>
-          <h2
-            id="cap-5-title"
-            class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl"
-          >
-            Ubuntu: aprendizado, terminal e jogos
-          </h2>
-          <div class="mt-4 space-y-4 font-body text-base leading-relaxed text-text-muted">
-            <p>Algum tempo depois, fiz um upgrade de memória RAM no notebook.</p>
-            <p>Com mais recursos disponíveis, decidi experimentar o Ubuntu.</p>
-            <p>
-              Se o Xubuntu foi responsável por me conquistar, o Ubuntu ajudou a
-              consolidar minha experiência com Linux.
-            </p>
-            <p>
-              Passei a explorar mais o terminal, conhecer ferramentas do sistema
-              e aprender sobre o funcionamento das distribuições.
-            </p>
-            <p>
-              Também comecei a me interessar cada vez mais por jogos no Linux,
-              principalmente por causa do Proton, tecnologia que permite
-              executar muitos jogos desenvolvidos para Windows em sistemas
-              Linux.
-            </p>
-            <p>
-              Minha experiência com o Proton foi, de maneira geral, muito
-              positiva.
-            </p>
-            <p>
-              Ao contrário do que algumas pessoas imaginam, encontrei poucos
-              problemas com a maioria dos jogos que tentei executar. A
-              compatibilidade me surpreendeu e reforçou a ideia de que Linux já
-              podia atender muito bem às minhas necessidades.
-            </p>
-            <p>Mas nem tudo eram flores.</p>
-
-            <h3 class="pt-6 font-display text-xl font-bold tracking-tight text-text">
-              A novela dos jogos da Ubisoft
-            </h3>
-            <p>
-              Durante um período, executar jogos da Ubisoft foi uma verdadeira
-              aventura — e não no bom sentido.
-            </p>
-            <p>
-              O Ubisoft Connect, launcher utilizado pela empresa, frequentemente
-              se recusava a abrir. Eu testava diferentes versões do Proton,
-              procurava soluções alternativas e tentava todo tipo de gambiarra.
-            </p>
-            <p>
-              Às vezes, parecia que nem por reza braba o negócio funcionaria.
-            </p>
-            <p>
-              E quando finalmente conseguia abrir o launcher e iniciar o jogo,
-              ainda existia outro problema: travamentos que aconteciam
-              aproximadamente a cada 30 minutos, relacionados ao overlay do
-              Ubisoft Connect.
-            </p>
-            <p>
-              Era frustrante, principalmente porque os jogos em si nem sempre
-              eram o verdadeiro problema. Muitas dificuldades estavam associadas
-              ao software utilizado para executá-los.
-            </p>
-            <p>
-              Felizmente, esse cenário melhorou com atualizações e versões mais
-              recentes do Proton, e hoje já não enfrento aqueles mesmos
-              problemas.
-            </p>
-            <p>
-              Essa experiência também me ensinou algo importante: jogar no Linux
-              evoluiu bastante, mas a compatibilidade ainda pode depender de
-              launchers, atualizações e outros componentes além do próprio jogo.
-            </p>
-
-            <h3 class="pt-6 font-display text-xl font-bold tracking-tight text-text">
-              A insatisfação com os Snaps
-            </h3>
-            <p>
-              Com o passar do tempo, comecei a procurar maneiras de enxugar o
-              Ubuntu e aproveitar melhor os recursos do notebook.
-            </p>
-            <p>
-              Foi nesse processo que surgiu minha principal insatisfação com a
-              distribuição: os pacotes Snap.
-            </p>
-            <p>
-              Eu havia começado a associar Linux à liberdade de escolha.
-              Entretanto, no Ubuntu, percebia que determinados aplicativos eram
-              direcionados ao formato Snap, mesmo quando eu preferia utilizar
-              pacotes tradicionais pelo APT.
-            </p>
-            <p>
-              Isso me transmitia a sensação de estar preso a uma decisão que não
-              era minha.
-            </p>
-            <p>
-              Também me incomodava o armazenamento de revisões antigas de
-              pacotes Snap, que podiam ocupar espaço adicional no SSD.
-            </p>
-            <p>
-              Não significa que o Snap seja necessariamente ruim para todos. Ele
-              possui suas propostas e vantagens, mas a maneira como estava
-              integrado ao Ubuntu não combinava com aquilo que eu procurava.
-            </p>
-
-            <Card class="border-accent/30 bg-surface-raised/40 p-5">
-              <p class="font-body text-base font-semibold leading-relaxed text-text">
-                Para mim, Linux representava liberdade, e aquela experiência com
-                o Snap começou a parecer um cadeado.
+            <div class="font-v2-sans text-v2-text-muted mt-7 space-y-5 text-sm leading-[1.9] font-light sm:text-[0.96875rem]">
+              <p>
+                Quando alguém fala sobre Linux, é comum pensar em servidores,
+                terminais cheios de comandos e sistemas utilizados por
+                profissionais de tecnologia. Mas Linux também está presente em
+                computadores pessoais, com interfaces gráficas, navegadores,
+                programas de escritório, ferramentas de desenvolvimento e até
+                jogos.
               </p>
-            </Card>
-
-            <p>Foi então que decidi procurar outra distribuição.</p>
-          </div>
-        </section>
-
-        {/* Capítulo 6 */}
-        <section
-          aria-labelledby="cap-6-title"
-          class="border-b border-border/70 pb-12"
-        >
-          <div class="mb-2 font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-            Capítulo 06
-          </div>
-          <h2
-            id="cap-6-title"
-            class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl"
-          >
-            Fedora: encontrando meu lugar
-          </h2>
-          <div class="mt-4 space-y-4 font-body text-base leading-relaxed text-text-muted">
-            <p>
-              Depois da experiência com Ubuntu, cheguei ao Fedora Workstation.
-            </p>
-            <p>
-              Escolhi a edição com GNOME, ambiente gráfico com o qual fui me
-              acostumando e que hoje utilizo com diversas extensões.
-            </p>
-            <p>
-              Entre elas estão ferramentas como Blur my Shell, Dash to Dock e
-              ArcMenu, que me permitem adaptar a interface às minhas
-              preferências.
-            </p>
-            <p>
-              A personalização se tornou uma parte importante da experiência.
-              Gosto da possibilidade de configurar o ambiente de trabalho de
-              acordo com minhas necessidades, sem precisar reproduzir o visual
-              do Windows.
-            </p>
-            <p>
-              Além disso, encontrei no Fedora duas características que valorizo
-              bastante: estabilidade e desempenho.
-            </p>
-            <p>
-              O sistema funciona bem no meu notebook e me proporciona uma
-              experiência que considero equilibrada para estudar, desenvolver
-              projetos, navegar e jogar.
-            </p>
-            <p>Mas existe outro aspecto que merece destaque.</p>
-
-            <h3 class="pt-6 font-display text-xl font-bold tracking-tight text-text">
-              Minha preferência pelo Flatpak
-            </h3>
-            <p>O Fedora também consolidou minha admiração pelo Flatpak.</p>
-            <p>
-              Gosto da proposta de distribuir aplicações com um certo grau de
-              isolamento em relação ao restante do sistema, utilizando
-              permissões e mecanismos de sandbox.
-            </p>
-            <p>
-              Isso me transmite mais segurança e ajuda a organizar a instalação
-              dos programas.
-            </p>
-            <p>
-              É importante lembrar que o isolamento depende das permissões
-              concedidas a cada aplicativo: um Flatpak não fica necessariamente
-              impedido de acessar arquivos pessoais. Ainda assim, gosto bastante
-              da possibilidade de controlar esses acessos.
-            </p>
-            <p>
-              Atualmente, grande parte dos aplicativos que utilizo está
-              instalada nesse formato.
-            </p>
-            <p>
-              Minha preferência pelo Flatpak também combina com o que fui
-              aprendendo ao longo da minha trajetória: gosto de ter escolhas e
-              de entender melhor o funcionamento das ferramentas que utilizo.
-            </p>
-
-            <h3 class="pt-6 font-display text-xl font-bold tracking-tight text-text">
-              Um sistema definitivo?
-            </h3>
-            <p>
-              Hoje utilizo Fedora Workstation com GNOME no meu ASUS Vivobook 15.
-            </p>
-            <p>
-              Depois de passar por diferentes sistemas, sinto que finalmente
-              encontrei uma combinação muito próxima daquilo que procurava desde
-              o início.
-            </p>
-            <p>
-              Tenho desempenho, estabilidade, possibilidade de personalização e
-              um ambiente no qual me sinto confortável para estudar, programar e
-              realizar minhas atividades.
-            </p>
-            <p>
-              Às vezes, penso que o Fedora pode acabar sendo minha distribuição
-              definitiva.
-            </p>
-            <p>Mas ainda considero cedo para afirmar isso.</p>
-            <p>
-              Afinal, uma das melhores características do universo Linux é
-              justamente a possibilidade de continuar descobrindo coisas novas.
-            </p>
-          </div>
-        </section>
-
-        {/* Capítulo 7 */}
-        <section
-          aria-labelledby="cap-7-title"
-          class="border-b border-border/70 pb-12"
-        >
-          <div class="mb-2 font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-            Capítulo 07
-          </div>
-          <h2
-            id="cap-7-title"
-            class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl"
-          >
-            O que aprendi com essa trajetória
-          </h2>
-          <div class="mt-4 space-y-4 font-body text-base leading-relaxed text-text-muted">
-            <p>
-              Quando comecei a utilizar Linux, minha principal preocupação era
-              resolver um problema de desempenho.
-            </p>
-            <p>Hoje, minha relação com o sistema vai muito além disso.</p>
-            <p>
-              Aprendi a utilizar ferramentas que antes pareciam complicadas,
-              passei a entender melhor o funcionamento do computador e descobri
-              o quanto gosto de experimentar e personalizar meu ambiente.
-            </p>
-            <p>
-              Também percebi que migrar de sistema operacional não precisa ser
-              uma experiência perfeita desde o primeiro dia.
-            </p>
-            <p>
-              Minha primeira distribuição não deu certo. Tive dificuldades com o
-              terminal, demorei para encontrar coisas simples na interface e
-              enfrentei problemas com programas e jogos.
-            </p>
-            <p>Mesmo assim, continuei explorando.</p>
-            <p>
-              Atualmente, quando alguém demonstra interesse em Linux, costumo
-              incentivar a experiência. Às vezes, até ofereço um pendrive com
-              Fedora para a pessoa experimentar.
-            </p>
-            <p>
-              Também procuro ajudar nos primeiros passos, explicar o
-              funcionamento básico do sistema e mostrar como uma distribuição
-              adequada pode contribuir para aproveitar melhor o hardware
-              disponível.
-            </p>
-            <p>
-              Não acredito que todos precisem abandonar o Windows ou utilizar a
-              mesma distribuição que eu. Cada pessoa possui necessidades,
-              programas e preferências diferentes.
-            </p>
-            <p>Mas acredito que vale a pena conhecer as alternativas.</p>
-            <p>
-              No meu caso, Linux começou como uma solução para um notebook com
-              pouca RAM e acabou se tornando uma das áreas da tecnologia pelas
-              quais mais tenho interesse.
-            </p>
-
-            <Card class="border-accent/30 bg-surface-raised/40 p-5">
-              <p class="font-body text-base font-semibold leading-relaxed text-text">
-                Entrei no Linux procurando um Windows mais leve. Acabei ficando
-                porque descobri que não precisava de outro Windows.
+              <p>
+                Diferentemente do Windows, o universo Linux oferece diversas
+                distribuições, popularmente chamadas de{' '}
+                <em class="text-v2-text italic">distros</em>. Cada uma combina o
+                kernel Linux com um conjunto de ferramentas, programas e
+                decisões próprias sobre como o sistema deve funcionar.
               </p>
-            </Card>
+              <p>
+                Ubuntu, Fedora, Debian e Xubuntu são alguns exemplos. Embora
+                compartilhem uma base tecnológica, podem proporcionar
+                experiências bastante diferentes.
+              </p>
+              <p>
+                Uma das características que mais me atrai nesse universo é a
+                liberdade de escolha. Poder decidir qual ambiente gráfico
+                utilizar, quais programas instalar e como organizar o próprio
+                sistema é algo que passei a valorizar cada vez mais.
+              </p>
+              <p>Mas nem sempre pensei assim.</p>
+              <p>
+                Minha entrada no Linux não aconteceu por uma grande convicção
+                sobre software livre ou por algum conhecimento avançado de
+                computação. Na verdade, começou com um problema muito mais
+                simples:{' '}
+                <strong class="text-v2-text font-medium">
+                  meu notebook não estava dando conta do Windows 11.
+                </strong>
+              </p>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Linha do Tempo */}
-        <section aria-labelledby="timeline-title">
-          <div class="mb-2 font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-            // Cronologia
+      <!-- Capítulo 02 -->
+      <section
+        id="cap-2"
+        aria-labelledby="cap-2-title"
+        class="scroll-mt-8 py-16 lg:py-24"
+      >
+        <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-[14rem_minmax(0,42rem)] lg:gap-14">
+          <aside class="lg:pt-2">
+            <div class="flex items-center gap-3">
+              <span class="font-v2-mono text-v2-accent text-[0.5625rem] tracking-[0.2em] uppercase">
+                Capítulo 02
+              </span>
+              <span aria-hidden="true" class="bg-v2-border h-px w-5"></span>
+            </div>
+            <p class="font-v2-mono text-v2-text-muted/75 mt-2 text-[0.625rem] tracking-[0.14em] uppercase">
+              Windows 8 · 8.1 · 11
+            </p>
+          </aside>
+
+          <div>
+            <h2
+              id="cap-2-title"
+              class="font-v2-display text-v2-text text-[clamp(1.85rem,2.8vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.01em]"
+            >
+              Antes do Linux: minha experiência com Windows
+            </h2>
+
+            <div class="font-v2-sans text-v2-text-muted mt-7 space-y-5 text-sm leading-[1.9] font-light sm:text-[0.96875rem]">
+              <p>
+                Minha história com computadores começou no Windows. Durante a
+                infância e a adolescência, utilizei o Windows 8 e o Windows 8.1
+                em um notebook equipado com um processador Intel Core Duo e
+                apenas 2 GB de memória RAM.
+              </p>
+              <p>
+                Era um equipamento bastante limitado, mas foi nele que tive boa
+                parte das minhas primeiras experiências com computadores.
+              </p>
+              <p>
+                Depois de um tempo, o notebook acabou apresentando defeito, e
+                passei um longo período sem ter um computador próprio.
+              </p>
+              <p>
+                Isso mudou quando ganhei meu atual ASUS Vivobook 15, equipado
+                com um Intel Core i3 de 12ª geração. Na época, ele possuía
+                apenas 4 GB de memória RAM DDR4 — hoje já conta com 20 GB.
+              </p>
+              <p>O sistema instalado era o Windows 11.</p>
+              <p>
+                Apesar de o processador ser relativamente moderno, a pouca
+                memória RAM se tornou um grande problema. O sistema apresentava
+                gargalos que prejudicavam a utilização cotidiana. Mesmo assim,
+                continuei usando o Windows 11 por quase um ano.
+              </p>
+              <p>
+                Chegou um momento em que percebi que precisava fazer alguma
+                coisa.
+              </p>
+              <p>
+                Considerei duas alternativas: instalar uma versão modificada e
+                mais enxuta do Windows 10, não oficial, ou experimentar Linux.
+              </p>
+              <p>Acabei escolhendo a segunda.</p>
+              <p>
+                Naquele momento, eu só queria utilizar melhor o hardware que
+                tinha. Não imaginava que aquela decisão acabaria se
+                transformando em um interesse tão grande pelo Linux.
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <!-- Capítulo 03 -->
+      <section
+        id="cap-3"
+        aria-labelledby="cap-3-title"
+        class="scroll-mt-8 py-16 lg:py-24"
+      >
+        <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-[14rem_minmax(0,42rem)] lg:gap-14">
+          <aside class="lg:pt-2">
+            <div class="flex items-center gap-3">
+              <span class="font-v2-mono text-v2-accent text-[0.5625rem] tracking-[0.2em] uppercase">
+                Capítulo 03
+              </span>
+              <span aria-hidden="true" class="bg-v2-border h-px w-5"></span>
+            </div>
+            <p class="font-v2-mono text-v2-text-muted/75 mt-2 text-[0.625rem] tracking-[0.14em] uppercase">
+              Primeira Tentativa
+            </p>
+          </aside>
+
+          <div>
+            <h2
+              id="cap-3-title"
+              class="font-v2-display text-v2-text text-[clamp(1.85rem,2.8vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.01em]"
+            >
+              LinuxFX: o erro de procurar outro Windows
+            </h2>
+
+            <div class="font-v2-sans text-v2-text-muted mt-7 space-y-5 text-sm leading-[1.9] font-light sm:text-[0.96875rem]">
+              <p>Minha primeira distribuição foi o LinuxFX.</p>
+              <p>
+                A escolha tinha um motivo bastante específico: eu queria algo
+                que fosse o mais parecido possível com o Windows.
+              </p>
+              <p>
+                Instalei o sistema em dual boot, mantendo a possibilidade de
+                utilizar o Windows quando necessário.
+              </p>
+              <p>
+                Visualmente, o LinuxFX realmente tentava reproduzir a
+                experiência do sistema da Microsoft. O problema é que essa
+                semelhança não significava que ele seria a melhor opção para meu
+                computador.
+              </p>
+              <p>
+                A distribuição não era tão leve quanto eu esperava. Além disso,
+                alguns recursos de personalização visual estavam associados a
+                uma versão Plus, oferecida inicialmente em um período gratuito
+                de 30 dias.
+              </p>
+              <p>
+                Aquilo me incomodou. Eu tinha procurado Linux justamente para
+                encontrar uma alternativa mais leve e flexível, mas estava
+                experimentando algo que não atendia tão bem às minhas
+                necessidades.
+              </p>
+              <p>
+                Hoje considero que cometi um erro nessa primeira tentativa:
+                <strong class="text-v2-text font-medium">
+                  procurei uma distribuição Linux querendo que ela fosse
+                  praticamente igual ao Windows.
+                </strong>
+              </p>
+              <p>
+                Em vez de conhecer as possibilidades de um sistema diferente,
+                tentei reproduzir a experiência que já conhecia.
+              </p>
+              <p>Minha trajetória com Linux poderia ter terminado ali.</p>
+              <p>Felizmente, decidi tentar outra distribuição.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Capítulo 04 -->
+      <section
+        id="cap-4"
+        aria-labelledby="cap-4-title"
+        class="scroll-mt-8 py-16 lg:py-24"
+      >
+        <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-[14rem_minmax(0,42rem)] lg:gap-14">
+          <aside class="lg:pt-2">
+            <div class="flex items-center gap-3">
+              <span class="font-v2-mono text-v2-accent text-[0.5625rem] tracking-[0.2em] uppercase">
+                Capítulo 04
+              </span>
+              <span aria-hidden="true" class="bg-v2-border h-px w-5"></span>
+            </div>
+            <p class="font-v2-mono text-v2-text-muted/75 mt-2 text-[0.625rem] tracking-[0.14em] uppercase">
+              Ponto de Virada
+            </p>
+          </aside>
+
+          <div>
+            <h2
+              id="cap-4-title"
+              class="font-v2-display text-v2-text text-[clamp(1.85rem,2.8vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.01em]"
+            >
+              Xubuntu: o verdadeiro ponto de virada
+            </h2>
+
+            <div class="font-v2-sans text-v2-text-muted mt-7 space-y-5 text-sm leading-[1.9] font-light sm:text-[0.96875rem]">
+              <p>Depois do LinuxFX, instalei o Xubuntu.</p>
+              <p>Foi aqui que tudo começou a fazer sentido.</p>
+              <p>
+                O sistema era leve, responsivo e funcionava muito melhor com os
+                recursos disponíveis no notebook. O gargalo de desempenho que
+                havia motivado minha migração praticamente deixou de ser um
+                problema.
+              </p>
+              <p>
+                Visualmente, o Xubuntu parecia um pouco mais rústico do que
+                aquilo a que eu estava acostumado, mas isso não me incomodou.
+                Pelo contrário, comecei a gostar da simplicidade da interface.
+              </p>
+              <p>É claro que houve um período de adaptação.</p>
+              <p>
+                Eu precisava me acostumar com o terminal, descobrir onde estavam
+                determinadas configurações e entender uma interface diferente da
+                que utilizava no Windows.
+              </p>
+              <p>
+                Uma das situações mais engraçadas foi descobrir como desligar o
+                computador.
+              </p>
+              <p>
+                Durante a primeira semana, eu simplesmente não conseguia
+                encontrar o botão de desligar no Xubuntu. Minha solução foi
+                utilizar um atalho de teclado para desligar o notebook. Só
+                depois descobri onde estava a opção na interface.
+              </p>
+              <p>
+                Hoje acho graça disso, mas é um bom exemplo de como grande parte
+                das minhas dificuldades iniciais não tinha relação com problemas
+                técnicos complexos. Era, principalmente, uma questão de costume.
+              </p>
+              <p>
+                A distribuição também oferecia facilidades para instalar
+                programas, incluindo uma loja de aplicativos. Aos poucos, fui
+                deixando de depender exclusivamente da interface gráfica e
+                comecei a utilizar mais o terminal.
+              </p>
+              <p>
+                O que inicialmente parecia algo complicado passou a despertar
+                minha curiosidade.
+              </p>
+              <p>
+                E, principalmente, percebi que não sentia mais necessidade de
+                voltar ao Windows.
+              </p>
+              <p>
+                <strong class="text-v2-text font-medium">
+                  O Xubuntu foi meu verdadeiro ponto de virada.
+                </strong>{' '}
+                Ele resolveu o problema que me levou a experimentar Linux e
+                mostrou que eu poderia ter uma experiência completa sem depender
+                do sistema operacional que havia utilizado durante tantos anos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Capítulo 05 -->
+      <section
+        id="cap-5"
+        aria-labelledby="cap-5-title"
+        class="scroll-mt-8 py-16 lg:py-24"
+      >
+        <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-[14rem_minmax(0,42rem)] lg:gap-14">
+          <aside class="lg:pt-2">
+            <div class="flex items-center gap-3">
+              <span class="font-v2-mono text-v2-accent text-[0.5625rem] tracking-[0.2em] uppercase">
+                Capítulo 05
+              </span>
+              <span aria-hidden="true" class="bg-v2-border h-px w-5"></span>
+            </div>
+            <p class="font-v2-mono text-v2-text-muted/75 mt-2 text-[0.625rem] tracking-[0.14em] uppercase">
+              Proton &amp; Snap
+            </p>
+          </aside>
+
+          <div>
+            <h2
+              id="cap-5-title"
+              class="font-v2-display text-v2-text text-[clamp(1.85rem,2.8vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.01em]"
+            >
+              Ubuntu: aprendizado, terminal e jogos
+            </h2>
+
+            <div class="font-v2-sans text-v2-text-muted mt-7 space-y-5 text-sm leading-[1.9] font-light sm:text-[0.96875rem]">
+              <p>
+                Algum tempo depois, fiz um upgrade de memória RAM no notebook.
+              </p>
+              <p>
+                Com mais recursos disponíveis, decidi experimentar o Ubuntu.
+              </p>
+              <p>
+                Se o Xubuntu foi responsável por me conquistar, o Ubuntu ajudou
+                a consolidar minha experiência com Linux.
+              </p>
+              <p>
+                Passei a explorar mais o terminal, conhecer ferramentas do
+                sistema e aprender sobre o funcionamento das distribuições.
+              </p>
+              <p>
+                Também comecei a me interessar cada vez mais por jogos no Linux,
+                principalmente por causa do Proton, tecnologia que permite
+                executar muitos jogos desenvolvidos para Windows em sistemas
+                Linux.
+              </p>
+              <p>
+                Minha experiência com o Proton foi, de maneira geral, muito
+                positiva.
+              </p>
+              <p>
+                Ao contrário do que algumas pessoas imaginam, encontrei poucos
+                problemas com a maioria dos jogos que tentei executar. A
+                compatibilidade me surpreendeu e reforçou a ideia de que Linux
+                já podia atender muito bem às minhas necessidades.
+              </p>
+              <p>Mas nem tudo eram flores.</p>
+
+              <h3 class="border-v2-border/60 font-v2-display text-v2-text mt-10 border-t pt-8 text-2xl font-medium tracking-tight">
+                A novela dos jogos da Ubisoft
+              </h3>
+              <p>
+                Durante um período, executar jogos da Ubisoft foi uma verdadeira
+                aventura — e não no bom sentido.
+              </p>
+              <p>
+                O Ubisoft Connect, launcher utilizado pela empresa,
+                frequentemente se recusava a abrir. Eu testava diferentes
+                versões do Proton, procurava soluções alternativas e tentava
+                todo tipo de gambiarra.
+              </p>
+              <p>
+                Às vezes, parecia que nem por reza braba o negócio funcionaria.
+              </p>
+              <p>
+                E quando finalmente conseguia abrir o launcher e iniciar o jogo,
+                ainda existia outro problema: travamentos que aconteciam
+                aproximadamente a cada 30 minutos, relacionados ao overlay do
+                Ubisoft Connect.
+              </p>
+              <p>
+                Era frustrante, principalmente porque os jogos em si nem sempre
+                eram o verdadeiro problema. Muitas dificuldades estavam
+                associadas ao software utilizado para executá-los.
+              </p>
+              <p>
+                Felizmente, esse cenário melhorou com atualizações e versões
+                mais recentes do Proton, e hoje já não enfrento aqueles mesmos
+                problemas.
+              </p>
+              <p>
+                Essa experiência também me ensinou algo importante: jogar no
+                Linux evoluiu bastante, mas a compatibilidade ainda pode
+                depender de launchers, atualizações e outros componentes além do
+                próprio jogo.
+              </p>
+
+              <h3 class="border-v2-border/60 font-v2-display text-v2-text mt-10 border-t pt-8 text-2xl font-medium tracking-tight">
+                A insatisfação com os Snaps
+              </h3>
+              <p>
+                Com o passar do tempo, comecei a procurar maneiras de enxugar o
+                Ubuntu e aproveitar melhor os recursos do notebook.
+              </p>
+              <p>
+                Foi nesse processo que surgiu minha principal insatisfação com a
+                distribuição: os pacotes Snap.
+              </p>
+              <p>
+                Eu havia começado a associar Linux à liberdade de escolha.
+                Entretanto, no Ubuntu, percebia que determinados aplicativos
+                eram direcionados ao formato Snap, mesmo quando eu preferia
+                utilizar pacotes tradicionais pelo APT.
+              </p>
+              <p>
+                Isso me transmitia a sensação de estar preso a uma decisão que
+                não era minha.
+              </p>
+              <p>
+                Também me incomodava o armazenamento de revisões antigas de
+                pacotes Snap, que podiam ocupar espaço adicional no SSD.
+              </p>
+              <p>
+                Não significa que o Snap seja necessariamente ruim para todos.
+                Ele possui suas propostas e vantagens, mas a maneira como estava
+                integrado ao Ubuntu não combinava com aquilo que eu procurava.
+              </p>
+
+              <blockquote class="border-v2-border/80 bg-v2-surface/70 border-l-v2-accent my-8 border border-l-2 p-6 sm:p-7">
+                <p class="font-v2-display text-v2-text text-xl leading-relaxed italic sm:text-2xl">
+                  Para mim, Linux representava liberdade, e aquela experiência
+                  com o Snap começou a parecer um cadeado.
+                </p>
+              </blockquote>
+
+              <p>Foi então que decidi procurar outra distribuição.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Capítulo 06 -->
+      <section
+        id="cap-6"
+        aria-labelledby="cap-6-title"
+        class="scroll-mt-8 py-16 lg:py-24"
+      >
+        <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-[14rem_minmax(0,42rem)] lg:gap-14">
+          <aside class="lg:pt-2">
+            <div class="flex items-center gap-3">
+              <span class="font-v2-mono text-v2-accent text-[0.5625rem] tracking-[0.2em] uppercase">
+                Capítulo 06
+              </span>
+              <span aria-hidden="true" class="bg-v2-border h-px w-5"></span>
+            </div>
+            <p class="font-v2-mono text-v2-accent-warm mt-2 text-[0.625rem] tracking-[0.14em] uppercase">
+              Estação Atual · GNOME
+            </p>
+          </aside>
+
+          <div>
+            <h2
+              id="cap-6-title"
+              class="font-v2-display text-v2-text text-[clamp(1.85rem,2.8vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.01em]"
+            >
+              Fedora: encontrando meu lugar
+            </h2>
+
+            <div class="font-v2-sans text-v2-text-muted mt-7 space-y-5 text-sm leading-[1.9] font-light sm:text-[0.96875rem]">
+              <p>
+                Depois da experiência com Ubuntu, cheguei ao Fedora Workstation.
+              </p>
+              <p>
+                Escolhi a edição com GNOME, ambiente gráfico com o qual fui me
+                acostumando e que hoje utilizo com diversas extensões.
+              </p>
+              <p>
+                Entre elas estão ferramentas como Blur my Shell, Dash to Dock e
+                ArcMenu, que me permitem adaptar a interface às minhas
+                preferências.
+              </p>
+              <p>
+                A personalização se tornou uma parte importante da experiência.
+                Gosto da possibilidade de configurar o ambiente de trabalho de
+                acordo com minhas necessidades, sem precisar reproduzir o visual
+                do Windows.
+              </p>
+              <p>
+                Além disso, encontrei no Fedora duas características que
+                valorizo bastante: estabilidade e desempenho.
+              </p>
+              <p>
+                O sistema funciona bem no meu notebook e me proporciona uma
+                experiência que considero equilibrada para estudar, desenvolver
+                projetos, navegar e jogar.
+              </p>
+              <p>Mas existe outro aspecto que merece destaque.</p>
+
+              <h3 class="border-v2-border/60 font-v2-display text-v2-text mt-10 border-t pt-8 text-2xl font-medium tracking-tight">
+                Minha preferência pelo Flatpak
+              </h3>
+              <p>O Fedora também consolidou minha admiração pelo Flatpak.</p>
+              <p>
+                Gosto da proposta de distribuir aplicações com um certo grau de
+                isolamento em relação ao restante do sistema, utilizando
+                permissões e mecanismos de sandbox.
+              </p>
+              <p>
+                Isso me transmite mais segurança e ajuda a organizar a
+                instalação dos programas.
+              </p>
+              <p>
+                É importante lembrar que o isolamento depende das permissões
+                concedidas a cada aplicativo: um Flatpak não fica
+                necessariamente impedido de acessar arquivos pessoais. Ainda
+                assim, gosto bastante da possibilidade de controlar esses
+                acessos.
+              </p>
+              <p>
+                Atualmente, grande parte dos aplicativos que utilizo está
+                instalada nesse formato.
+              </p>
+              <p>
+                Minha preferência pelo Flatpak também combina com o que fui
+                aprendendo ao longo da minha trajetória: gosto de ter escolhas e
+                de entender melhor o funcionamento das ferramentas que utilizo.
+              </p>
+
+              <h3 class="border-v2-border/60 font-v2-display text-v2-text mt-10 border-t pt-8 text-2xl font-medium tracking-tight">
+                Um sistema definitivo?
+              </h3>
+              <p>
+                Hoje utilizo Fedora Workstation com GNOME no meu ASUS Vivobook
+                15.
+              </p>
+              <p>
+                Depois de passar por diferentes sistemas, sinto que finalmente
+                encontrei uma combinação muito próxima daquilo que procurava
+                desde o início.
+              </p>
+              <p>
+                Tenho desempenho, estabilidade, possibilidade de personalização
+                e um ambiente no qual me sinto confortável para estudar,
+                programar e realizar minhas atividades.
+              </p>
+              <p>
+                Às vezes, penso que o Fedora pode acabar sendo minha
+                distribuição definitiva.
+              </p>
+              <p>Mas ainda considero cedo para afirmar isso.</p>
+              <p>
+                Afinal, uma das melhores características do universo Linux é
+                justamente a possibilidade de continuar descobrindo coisas
+                novas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Capítulo 07 -->
+      <section
+        id="cap-7"
+        aria-labelledby="cap-7-title"
+        class="scroll-mt-8 py-16 lg:py-24"
+      >
+        <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-[14rem_minmax(0,42rem)] lg:gap-14">
+          <aside class="lg:pt-2">
+            <div class="flex items-center gap-3">
+              <span class="font-v2-mono text-v2-accent text-[0.5625rem] tracking-[0.2em] uppercase">
+                Capítulo 07
+              </span>
+              <span aria-hidden="true" class="bg-v2-border h-px w-5"></span>
+            </div>
+            <p class="font-v2-mono text-v2-text-muted/75 mt-2 text-[0.625rem] tracking-[0.14em] uppercase">
+              Síntese Pessoal
+            </p>
+          </aside>
+
+          <div>
+            <h2
+              id="cap-7-title"
+              class="font-v2-display text-v2-text text-[clamp(1.85rem,2.8vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.01em]"
+            >
+              O que aprendi com essa trajetória
+            </h2>
+
+            <div class="font-v2-sans text-v2-text-muted mt-7 space-y-5 text-sm leading-[1.9] font-light sm:text-[0.96875rem]">
+              <p>
+                Quando comecei a utilizar Linux, minha principal preocupação era
+                resolver um problema de desempenho.
+              </p>
+              <p>Hoje, minha relação com o sistema vai muito além disso.</p>
+              <p>
+                Aprendi a utilizar ferramentas que antes pareciam complicadas,
+                passei a entender melhor o funcionamento do computador e
+                descobri o quanto gosto de experimentar e personalizar meu
+                ambiente.
+              </p>
+              <p>
+                Também percebi que migrar de sistema operacional não precisa ser
+                uma experiência perfeita desde o primeiro dia.
+              </p>
+              <p>
+                Minha primeira distribuição não deu certo. Tive dificuldades com
+                o terminal, demorei para encontrar coisas simples na interface e
+                enfrentei problemas com programas e jogos.
+              </p>
+              <p>Mesmo assim, continuei explorando.</p>
+              <p>
+                Atualmente, quando alguém demonstra interesse em Linux, costumo
+                incentivar a experiência. Às vezes, até ofereço um pendrive com
+                Fedora para a pessoa experimentar.
+              </p>
+              <p>
+                Também procuro ajudar nos primeiros passos, explicar o
+                funcionamento básico do sistema e mostrar como uma distribuição
+                adequada pode contribuir para aproveitar melhor o hardware
+                disponível.
+              </p>
+              <p>
+                Não acredito que todos precisem abandonar o Windows ou utilizar
+                a mesma distribuição que eu. Cada pessoa possui necessidades,
+                programas e preferências diferentes.
+              </p>
+              <p>Mas acredito que vale a pena conhecer as alternativas.</p>
+              <p>
+                No meu caso, Linux começou como uma solução para um notebook com
+                pouca RAM e acabou se tornando uma das áreas da tecnologia pelas
+                quais mais tenho interesse.
+              </p>
+
+              <blockquote class="border-v2-border/80 bg-v2-surface/70 border-l-v2-accent mt-8 border border-l-2 p-6 sm:p-7">
+                <p class="font-v2-display text-v2-text text-xl leading-relaxed italic sm:text-2xl">
+                  Entrei no Linux procurando um Windows mais leve. Acabei
+                  ficando porque descobri que não precisava de outro Windows.
+                </p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção da Linha do Tempo de Sistemas Operacionais -->
+      <section
+        id="cronologia"
+        aria-labelledby="timeline-title"
+        class="scroll-mt-8 pt-20 pb-12 lg:pt-28"
+      >
+        <div class="grid gap-6 lg:grid-cols-[16.5rem_minmax(0,1fr)_20rem] lg:items-end lg:gap-0">
+          <p class="font-v2-mono text-v2-text-muted flex items-center gap-4 text-[0.5625rem] tracking-[0.2em] uppercase lg:self-start lg:pt-2">
+            <span class="text-v2-accent">08</span>
+            <span aria-hidden="true" class="bg-v2-border h-px w-6"></span>
+            <span>Cronologia</span>
+          </p>
+
           <h2
             id="timeline-title"
-            class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl"
+            class="font-v2-display text-v2-text max-w-[38rem] text-[clamp(2.1rem,3.2vw,3.5rem)] leading-[1.04] font-medium tracking-[-0.01em]"
           >
             Minha linha do tempo de sistemas operacionais
           </h2>
-          <p class="font-body mt-3 text-base leading-relaxed text-text-muted">
+
+          <p class="font-v2-sans text-v2-text-muted text-xs leading-[1.7] font-light lg:justify-self-end">
             Uma retrospectiva dos sistemas que fizeram parte da minha
             trajetória, da infância até meu ambiente atual.
           </p>
+        </div>
 
-          <div class="mt-10">
-            <LinuxTimeline />
-          </div>
+        <div class="mt-12 lg:mt-16">
+          <LinuxTimeline />
+        </div>
 
-          <p class="font-body mt-8 text-sm italic leading-relaxed text-text-muted">
-            Os períodos exatos ainda não foram definidos. O Fedora passou a fazer
-            parte da minha trajetória pouco antes do lançamento do Fedora 44.
-          </p>
-        </section>
-      </div>
-    </Container>
+        <p class="border-v2-border/60 font-v2-display text-v2-text-muted mt-10 border-t pt-6 text-center text-base italic">
+          Os períodos exatos ainda não foram definidos. O Fedora passou a fazer
+          parte da minha trajetória pouco antes do lançamento do Fedora 44.
+        </p>
+
+        <!-- Conexões editoriais com registros relacionados do blog -->
+        <div class="border-v2-border/80 bg-v2-surface/40 mt-14 grid grid-cols-1 divide-y divide-v2-border/60 border sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          <a
+            href={withBase('/artigos/por-que-escolhi-fedora/')}
+            class="v2-focus group hover:bg-v2-surface flex flex-col justify-between p-6 transition-colors motion-reduce:transition-none"
+          >
+            <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+              Artigo relacionado
+            </span>
+            <p class="font-v2-display text-v2-text group-hover:text-v2-accent-warm mt-2 text-xl leading-snug font-medium transition-colors">
+              Por que escolhi Fedora (e por que continuo nele) →
+            </p>
+          </a>
+
+          <a
+            href={withBase('/opensource/')}
+            class="v2-focus group hover:bg-v2-surface flex flex-col justify-between p-6 transition-colors motion-reduce:transition-none"
+          >
+            <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+              Ferramentas &amp; Liberdade
+            </span>
+            <p class="font-v2-display text-v2-text group-hover:text-v2-accent-warm mt-2 text-xl leading-snug font-medium transition-colors">
+              Catálogo de softwares Open Source que utilizo →
+            </p>
+          </a>
+
+          <a
+            href={withBase('/galeria/desktop/')}
+            class="v2-focus group hover:bg-v2-surface flex flex-col justify-between p-6 transition-colors motion-reduce:transition-none"
+          >
+            <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+              Registros Visuais
+            </span>
+            <p class="font-v2-display text-v2-text group-hover:text-v2-accent-warm mt-2 text-xl leading-snug font-medium transition-colors">
+              Álbum Desktop Linux na Galeria →
+            </p>
+          </a>
+        </div>
+      </section>
+    </div>
   </div>
 </BaseLayout>
