@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Parado",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/stalker-call-of-pripyat.webp",
     "alt": "Capa provisória de STALKER call of pripyat",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 90,

@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Platinado",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/nocturnal.webp",
     "alt": "Capa provisória de Nocturnal",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 85,

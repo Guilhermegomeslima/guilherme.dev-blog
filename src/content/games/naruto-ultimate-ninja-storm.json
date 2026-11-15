@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Jogando",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/naruto-ultimate-ninja-storm.webp",
     "alt": "Capa provisória de Naruto Ultimate Ninja Storm",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 90,

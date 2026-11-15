@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/metal-gear-solid-5-the-panthom-pain.webp",
     "alt": "Capa provisória de Metal Gear Solid 5 The Panthom Pain",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 98,

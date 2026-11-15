@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/astral-ascent.webp",
     "alt": "Capa provisória de Astral Ascent",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 87,

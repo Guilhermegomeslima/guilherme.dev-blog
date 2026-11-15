@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/stalker-shadow-of-chernobyl.webp",
     "alt": "Capa provisória de STALKER shadow of chernobyl",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

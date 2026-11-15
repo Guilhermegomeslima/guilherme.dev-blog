@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Platinado",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/sekiro-shadows-dies-twice.webp",
     "alt": "Capa provisória de Sekiro Shadows Dies Twice",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 97,

@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/pes-2017patch.webp",
     "alt": "Capa provisória de PES 2017/Patch",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 88,

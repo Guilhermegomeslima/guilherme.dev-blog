@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Descontinuado",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/stalker-clear-sky.webp",
     "alt": "Capa provisória de STALKER clear sky",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 91,

@@ -6,9 +6,9 @@
   "platform": "PC/Steam",
   "status": "Concluido",
   "coverImage": {
-    "url": "",
+    "url": "/images/games/metal-gear-solid-5-ground-zeroes.webp",
     "alt": "Capa provisória de Metal Gear Solid 5 Ground Zeroes",
-    "isPlaceholder": true
+    "isPlaceholder": false
   },
   "scores": {
     "mechanics": 91,
