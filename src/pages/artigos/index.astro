@@ -1,15 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
 import ArticleCard from '../../components/content/ArticleCard.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
+import { withBase } from '../../utils/base';
 
 const allArticles = await getCollection('articles');
 
 // Ordena artigos por data de publicação decrescente
-const sortedArticles = allArticles.sort(
+const sortedArticles = [...allArticles].sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
 
@@ -23,35 +22,147 @@ const recentArticles = sortedArticles.filter(
 );
 
 const hasDemoContent = allArticles.some((a) => a.data.isDemo);
+
+const categories = [...new Set(allArticles.map((a) => a.data.category))];
+const allTags = [...new Set(allArticles.flatMap((a) => a.data.tags))];
+
+const formatShortDate = (date: Date) =>
+  new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
 ---
 
 <BaseLayout
+  variant="v2"
   title="Artigos & Ensaios — guilherme.dev"
   description="Textos autorais, análises técnicas, documentação de aprendizado e reflexões sobre engenharia de software e Linux."
 >
-  <div class="py-12 md:py-16">
-    <Container>
-      <SectionHeading
-        eyebrow="// ARQUIVO EDITORIAL"
-        title="Artigos & Ensaios"
-        description="Publicações técnicas, anotações de arquitetura e explorações conceituais no formato de revista digital."
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera de fundo sutil */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[500px] overflow-hidden"
+    >
+      <img
+        src={withBase('/images/home/artigos.webp')}
+        alt=""
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full object-cover object-center opacity-[0.13] blur-[2px] filter"
       />
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.86) 62%, #070709 100%);"
+      ></div>
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(180deg, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.85) 68%, #070709 100%);"
+      ></div>
+    </div>
 
-      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
-
-      {featuredArticle && (
-        <div class="mb-12">
-          <ArticleCard article={featuredArticle} featured />
+    <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 sm:px-8">
+      {/* Abertura Editorial */}
+      <header class="border-b border-[var(--color-v2-border)] pt-12 pb-10 md:pt-16 md:pb-14">
+        <div class="mb-4 flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            class="inline-block h-px w-8 bg-[var(--color-v2-accent)]"
+          ></span>
+          <p class="v2-eyebrow text-[var(--color-v2-accent-warm)]">
+            ARQUIVO EDITORIAL / ARTIGOS & ENSAIOS
+          </p>
         </div>
+
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.04] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-6xl">
+              Artigos &amp; Ensaios.
+            </h1>
+          </div>
+
+          <div class="lg:col-span-5">
+            <p class="font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text)] sm:text-base">
+              Publicações técnicas, crônicas de uso real, anotações de
+              arquitetura e explorações conceituais sobre engenharia de software
+              e sistemas Linux.
+            </p>
+          </div>
+        </div>
+
+        {/* Barra de Metadados do Arquivo */}
+        <div class="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--color-v2-border)] pt-5 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <span>
+              PUBLICAÇÕES:{' '}
+              <strong class="font-normal text-[var(--color-v2-heading)]">
+                {String(allArticles.length).padStart(2, '0')}{' '}
+                {allArticles.length === 1
+                  ? 'ensaio autoral'
+                  : 'ensaios autorais'}
+              </strong>
+            </span>
+            <span class="hidden text-[var(--color-v2-border-hover)] sm:inline">
+              /
+            </span>
+            <span>
+              EDITORIA:{' '}
+              <strong class="font-normal text-[var(--color-v2-accent-warm)]">
+                {categories.join(' · ')}
+              </strong>
+            </span>
+          </div>
+
+          {allTags.length > 0 && (
+            <div class="flex flex-wrap items-center gap-2">
+              {allTags.map((tag) => (
+                <span class="text-[11px] text-[var(--color-v2-muted)]">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </header>
+
+      {hasDemoContent && <DemoNotice variant="section" class="mt-8" />}
+
+      {/* Artigo em Destaque */}
+      {featuredArticle && (
+        <section aria-label="Artigo em destaque" class="mt-12">
+          <div class="mb-5 flex items-center justify-between">
+            <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
+              01 // PUBLICAÇÃO EM DESTAQUE
+            </span>
+            <span class="font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+              Leitura longa
+            </span>
+          </div>
+
+          <ArticleCard article={featuredArticle} featured />
+        </section>
       )}
 
+      {/* Demais Publicações Recentes (quando houver mais de 1 artigo) */}
       {recentArticles.length > 0 && (
-        <div class="mt-12 border-t border-border/80 pt-10">
-          <div class="mb-6 flex items-center justify-between">
-            <h2 class="font-display text-xl font-bold tracking-tight text-text">
-              Publicações recentes
-            </h2>
-            <span class="font-mono text-xs text-text-muted">
+        <section
+          aria-label="Publicações recentes"
+          class="mt-16 border-t border-[var(--color-v2-border)] pt-12"
+        >
+          <div class="mb-8 flex items-baseline justify-between">
+            <div class="flex items-baseline gap-3">
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
+                02 //
+              </span>
+              <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)] sm:text-3xl">
+                Publicações Recentes
+              </h2>
+            </div>
+
+            <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
               {recentArticles.length}{' '}
               {recentArticles.length === 1 ? 'artigo' : 'artigos'}
             </span>
@@ -62,8 +173,56 @@ const hasDemoContent = allArticles.some((a) => a.data.isDemo);
               <ArticleCard article={article} />
             ))}
           </div>
-        </div>
+        </section>
       )}
-    </Container>
+
+      {/* Índice Cronológico Completo do Arquivo */}
+      {sortedArticles.length > 0 && (
+        <section
+          aria-label="Índice cronológico de publicações"
+          class="mt-16 border-t border-[var(--color-v2-border)] pt-12"
+        >
+          <div class="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+            <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-muted)] uppercase">
+              // ÍNDICE CRONOLÓGICO DO ARQUIVO
+            </span>
+            <span class="font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+              Ordenado por data de publicação
+            </span>
+          </div>
+
+          <div class="divide-y divide-[var(--color-v2-border)] border-y border-[var(--color-v2-border)]">
+            {sortedArticles.map((art, idx) => (
+              <a
+                href={withBase(`/artigos/${art.id}/`)}
+                class="v2-focus group flex flex-col justify-between gap-3 py-5 transition-colors hover:bg-[var(--color-v2-surface)]/50 sm:flex-row sm:items-center sm:px-4"
+              >
+                <div class="flex flex-wrap items-baseline gap-3 sm:gap-5">
+                  <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-accent-warm)]">
+                    Nº {String(sortedArticles.length - idx).padStart(2, '0')}
+                  </span>
+                  <span class="font-[family-name:var(--font-v2-display)] text-xl text-[var(--color-v2-heading)] transition-colors group-hover:text-[var(--color-v2-accent-warm)] sm:text-2xl">
+                    {art.data.title}
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-4 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
+                  <span class="hidden md:inline">{art.data.category}</span>
+                  <time datetime={art.data.publishedAt.toISOString()}>
+                    {formatShortDate(art.data.publishedAt)}
+                  </time>
+                  <span
+                    aria-hidden="true"
+                    class="text-[var(--color-v2-accent-warm)] transition-transform duration-200 group-hover:translate-x-1"
+                  >
+                    &rarr;
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
   </div>
 </BaseLayout>

@@ -2,24 +2,32 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
-import Button from '../../components/ui/Button.astro';
 import { withBase } from '../../utils/base';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles');
-  return articles.map((article) => ({
+  const sorted = [...articles].sort(
+    (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+  );
+
+  return sorted.map((article, index) => ({
     params: { id: article.id },
-    props: { article },
+    props: {
+      article,
+      prevArticle: index > 0 ? sorted[index - 1] : null,
+      nextArticle: index < sorted.length - 1 ? sorted[index + 1] : null,
+    },
   }));
 }
 
 interface Props {
   article: CollectionEntry<'articles'>;
+  prevArticle?: CollectionEntry<'articles'> | null;
+  nextArticle?: CollectionEntry<'articles'> | null;
 }
 
-const { article } = Astro.props;
+const { article, prevArticle = null, nextArticle = null } = Astro.props;
 const { data } = article;
 const { Content } = await render(article);
 
@@ -28,124 +36,282 @@ const formattedDate = new Intl.DateTimeFormat('pt-BR', {
   month: 'long',
   year: 'numeric',
 }).format(data.publishedAt);
+
+// Estimativa discreta de tempo de leitura baseada nas palavras do texto real
+const wordCount = (article.body || '')
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.round(wordCount / 200));
 ---
 
 <BaseLayout
+  variant="v2"
   title={`${data.title} — guilherme.dev`}
   description={data.description}
   image={data.image?.url}
   type="article"
   noindex={data.isDemo}
 >
-  <article class="py-12 md:py-16">
-    <Container class="max-w-3xl">
-      {/* Botão de retorno */}
-      <div class="mb-8">
-        <Button href={withBase('/artigos/')} variant="ghost" class="px-0">
-          &larr; Voltar para todos os artigos
-        </Button>
+  <article class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera sutil no topo */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[480px] overflow-hidden"
+    >
+      <img
+        src={withBase(data.image?.url || '/images/home/artigos.webp')}
+        alt=""
+        width="1200"
+        height="630"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full scale-105 object-cover object-center opacity-[0.10] blur-3xl filter"
+      />
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.88) 65%, #070709 100%);"
+      ></div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-[920px] px-5 pt-10 sm:px-8 md:pt-14">
+      {/* Barra superior de retorno e identificação editorial */}
+      <div class="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[var(--color-v2-border)] pb-4">
+        <a
+          href={withBase('/artigos/')}
+          class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+        >
+          <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+            &larr;
+          </span>
+          <span>Voltar para todos os artigos</span>
+        </a>
+
+        <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+          ARQUIVO EDITORIAL // LEITURA LONGA
+        </span>
       </div>
 
       {/* Cabeçalho do Artigo */}
-      <header class="border-b border-border/80 pb-8">
-        <div class="mb-3 flex flex-wrap items-center gap-3 font-mono text-xs">
-          <span class="text-accent uppercase tracking-wider">
+      <header class="mx-auto max-w-[820px] border-b border-[var(--color-v2-border)] pb-10">
+        <div class="mb-4 flex flex-wrap items-center gap-3 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] uppercase">
+          <span class="text-[var(--color-v2-accent-warm)]">
             // {data.category}
           </span>
-          <span class="text-border" aria-hidden="true">
-            |
+          <span class="text-[var(--color-v2-border-hover)]" aria-hidden="true">
+            ·
           </span>
           <time
             datetime={data.publishedAt.toISOString()}
-            class="text-text-muted"
+            class="text-[var(--color-v2-text)]"
           >
             {formattedDate}
           </time>
+          <span class="text-[var(--color-v2-border-hover)]" aria-hidden="true">
+            ·
+          </span>
+          <span class="text-[var(--color-v2-muted)]">
+            ~{readingMinutes} min de leitura
+          </span>
           {data.isDemo && (
             <>
-              <span class="text-border" aria-hidden="true">
-                |
+              <span
+                class="text-[var(--color-v2-border-hover)]"
+                aria-hidden="true"
+              >
+                ·
               </span>
-              <span class="rounded bg-warm/20 px-2 py-0.5 text-[10px] text-warm uppercase border border-warm/40">
+              <span class="border border-[var(--color-v2-accent-warm)]/50 px-2 py-0.5 text-[10px] text-[var(--color-v2-accent-warm)]">
                 Mock Data
               </span>
             </>
           )}
         </div>
 
-        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-text">
+        <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.06] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-[3.4rem]">
           {data.title}
         </h1>
 
-        <p class="font-body mt-4 text-lg leading-relaxed text-text-muted">
+        <p class="mt-6 font-[family-name:var(--font-v2-display)] text-xl leading-relaxed text-[var(--color-v2-text)] italic sm:text-2xl">
           {data.description}
         </p>
 
-        {/* Metadados de autoria */}
-        <div class="mt-6 flex items-center gap-3 border-t border-border/50 pt-4 font-mono text-xs text-text-muted">
-          <span class="text-accent">AUTOR:</span>
-          <span class="text-text font-medium">Guilherme Gomes</span>
+        {/* Metadados de Autoria e Tags */}
+        <div class="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--color-v2-border)] pt-5 font-[family-name:var(--font-v2-mono)] text-xs">
+          <div class="flex items-center gap-2.5">
+            <span
+              aria-hidden="true"
+              class="inline-block h-1.5 w-1.5 bg-[var(--color-v2-accent)]"
+            ></span>
+            <span class="tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+              Autor:
+            </span>
+            <span class="text-[var(--color-v2-heading)]">Guilherme Gomes</span>
+          </div>
+
+          {data.tags.length > 0 && (
+            <div class="flex flex-wrap items-center gap-2">
+              {data.tags.map((tag) => (
+                <span class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[var(--color-v2-muted)]">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </header>
 
       {/* Aviso de Conteúdo Demonstrativo */}
-      {data.isDemo && <DemoNotice variant="item" class="my-8" />}
-
-      {/* Imagem de Capa do Artigo */}
-      {data.image && (
-        <div class="my-8 overflow-hidden rounded-lg border border-border/70 bg-surface-raised">
-          <img
-            src={withBase(data.image.url)}
-            alt={data.image.alt}
-            width="1200"
-            height="630"
-            loading="eager"
-            decoding="async"
-            class="h-auto w-full object-cover filter contrast-110 brightness-95"
-          />
-          {data.isDemo ? (
-            <p class="border-t border-border/40 bg-surface/80 px-4 py-2 font-mono text-[11px] text-text-muted/70">
-              [ Imagem ilustrativa de teste ]
-            </p>
-          ) : (
-            data.image.alt && (
-              <p class="border-t border-border/40 bg-surface/80 px-4 py-2 font-mono text-[11px] text-text-muted/70">
-                // {data.image.alt}
-              </p>
-            )
-          )}
+      {data.isDemo && (
+        <div class="mx-auto max-w-[740px]">
+          <DemoNotice variant="item" class="my-8" />
         </div>
       )}
 
-      {/* Corpo do Artigo Renderizado em Markdown */}
-      <div class="mt-8 space-y-6 font-body text-base leading-relaxed text-text/90 [&>h2]:font-display [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:tracking-tight [&>h2]:text-text [&>h2]:mt-10 [&>h2]:mb-4 [&>h2]:border-b [&>h2]:border-border/60 [&>h2]:pb-2 [&>h3]:font-display [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-text [&>h3]:mt-8 [&>h3]:mb-3 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ul]:text-text-muted [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>ol]:text-text-muted [&>blockquote]:border-l-2 [&>blockquote]:border-accent [&>blockquote]:bg-surface/50 [&>blockquote]:p-4 [&>blockquote]:rounded-r [&>blockquote]:italic [&>blockquote]:text-text-muted [&>pre]:rounded-lg [&>pre]:border [&>pre]:border-border [&>pre]:bg-surface-raised [&>pre]:p-4 [&>pre]:overflow-x-auto [&>p>code]:rounded [&>p>code]:bg-surface-raised [&>p>code]:px-1.5 [&>p>code]:py-0.5 [&>p>code]:font-mono [&>p>code]:text-accent">
+      {/* Imagem de Capa do Artigo */}
+      {data.image && (
+        <figure class="relative my-10 border border-[var(--color-v2-border-hover)] bg-[#050508] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.75)]">
+          {/* Cantoneiras em bronze */}
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute -top-px -left-px h-3.5 w-3.5 border-t border-l border-[var(--color-v2-accent-warm)]"
+          />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute -top-px -right-px h-3.5 w-3.5 border-t border-r border-[var(--color-v2-accent-warm)]"
+          />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute -bottom-px -left-px h-3.5 w-3.5 border-b border-l border-[var(--color-v2-accent-warm)]"
+          />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute -bottom-px -right-px h-3.5 w-3.5 border-b border-r border-[var(--color-v2-accent-warm)]"
+          />
+
+          <div class="overflow-hidden border border-[var(--color-v2-border)] bg-[#070709]">
+            <img
+              src={withBase(data.image.url)}
+              alt={data.image.alt}
+              width="1200"
+              height="630"
+              loading="eager"
+              decoding="async"
+              class="h-auto w-full object-cover brightness-95 contrast-105"
+            />
+          </div>
+
+          {data.isDemo ? (
+            <figcaption class="px-3 pt-3 pb-1 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+              [ Imagem ilustrativa de teste ]
+            </figcaption>
+          ) : (
+            data.image.alt && (
+              <figcaption class="px-3 pt-3 pb-1 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+                // {data.image.alt}
+              </figcaption>
+            )
+          )}
+        </figure>
+      )}
+
+      {/* Corpo do Artigo em Coluna de Leitura Confortável */}
+      <div
+        data-article-prose
+        data-base={import.meta.env.BASE_URL}
+        class="v2-article-prose mx-auto mt-10 max-w-[720px] space-y-6 font-[family-name:var(--font-v2-sans)] text-[1.0625rem] leading-[1.88] font-light text-[var(--color-v2-text)] sm:text-[1.125rem] [&>blockquote]:my-8 [&>blockquote]:border-l-2 [&>blockquote]:border-[var(--color-v2-accent-warm)] [&>blockquote]:bg-[var(--color-v2-surface)]/80 [&>blockquote]:px-6 [&>blockquote]:py-4 [&>blockquote]:font-[family-name:var(--font-v2-display)] [&>blockquote]:text-xl [&>blockquote]:text-[var(--color-v2-heading)] [&>blockquote]:italic [&>h2]:mt-14 [&>h2]:mb-5 [&>h2]:border-b [&>h2]:border-[var(--color-v2-border)] [&>h2]:pb-3 [&>h2]:font-[family-name:var(--font-v2-display)] [&>h2]:text-3xl [&>h2]:leading-[1.15] [&>h2]:font-normal [&>h2]:tracking-[-0.01em] [&>h2]:text-[var(--color-v2-heading)] sm:[&>h2]:text-[2.15rem] [&>h3]:mt-10 [&>h3]:mb-4 [&>h3]:font-[family-name:var(--font-v2-display)] [&>h3]:text-2xl [&>h3]:leading-[1.2] [&>h3]:font-normal [&>h3]:text-[var(--color-v2-accent-warm)] [&>ol]:my-6 [&>ol]:list-decimal [&>ol]:space-y-3 [&>ol]:pl-6 [&>ol]:text-[var(--color-v2-text)] [&>ol>li::marker]:text-[var(--color-v2-accent-warm)] [&>p:first-of-type]:first-letter:float-left [&>p:first-of-type]:first-letter:mr-3.5 [&>p:first-of-type]:first-letter:font-[family-name:var(--font-v2-display)] [&>p:first-of-type]:first-letter:text-5xl [&>p:first-of-type]:first-letter:leading-[0.9] [&>p:first-of-type]:first-letter:text-[var(--color-v2-accent-warm)] [&>pre]:my-8 [&>pre]:overflow-x-auto [&>pre]:border [&>pre]:border-[var(--color-v2-border-hover)] [&>pre]:bg-[#050508] [&>pre]:p-5 [&>pre]:font-[family-name:var(--font-v2-mono)] [&>pre]:text-sm [&>ul]:my-6 [&>ul]:list-disc [&>ul]:space-y-3 [&>ul]:pl-6 [&>ul]:text-[var(--color-v2-text)] [&>ul>li::marker]:text-[var(--color-v2-accent-warm)] [&_a]:text-[var(--color-v2-accent-warm)] [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-[var(--color-v2-heading)] [&_code]:border [&_code]:border-[var(--color-v2-border)] [&_code]:bg-[var(--color-v2-surface)] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-[family-name:var(--font-v2-mono)] [&_code]:text-[0.875em] [&_code]:text-[var(--color-v2-accent-warm)] [&_img]:my-8 [&_img]:w-full [&_img]:border [&_img]:border-[var(--color-v2-border-hover)] [&_img]:bg-[#050508] [&_img]:p-1.5 [&_img]:shadow-[0_20px_50px_rgba(0,0,0,0.7)] [&_pre_code]:border-0 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-[var(--color-v2-text)] [&_strong]:font-medium [&_strong]:text-[var(--color-v2-heading)]"
+      >
         <Content />
       </div>
 
-      {/* Tags do Artigo e Rodapé de Leitura */}
-      <footer class="mt-12 border-t border-border/80 pt-8">
+      {/* Rodapé de Leitura e Tags */}
+      <footer class="mx-auto mt-16 max-w-[720px] border-t border-[var(--color-v2-border)] pt-8">
         {data.tags.length > 0 && (
           <div class="flex flex-wrap items-center gap-2">
-            <span class="font-mono text-xs text-text-muted uppercase">
-              Tags:
+            <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+              Tags do ensaio:
             </span>
             {data.tags.map((tag) => (
-              <span class="rounded border border-border/60 bg-surface-raised px-2.5 py-1 font-mono text-xs text-text-muted">
+              <span class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text)]">
                 #{tag}
               </span>
             ))}
           </div>
         )}
 
-        <div class="mt-8 flex justify-between border-t border-border/50 pt-6">
-          <Button href={withBase('/artigos/')} variant="secondary">
-            &larr; Voltar para a listagem
-          </Button>
-          <Button href={withBase('/')} variant="ghost">
-            Início &rarr;
-          </Button>
+        {(prevArticle || nextArticle) && (
+          <div class="mt-8 grid grid-cols-1 gap-4 border-t border-[var(--color-v2-border)] pt-8 sm:grid-cols-2">
+            {prevArticle ? (
+              <a
+                href={withBase(`/artigos/${prevArticle.id}/`)}
+                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 transition-colors hover:border-[var(--color-v2-border-hover)]"
+              >
+                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+                  &larr; Ensaio anterior
+                </span>
+                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
+                  {prevArticle.data.title}
+                </span>
+              </a>
+            ) : (
+              <div />
+            )}
+
+            {nextArticle && (
+              <a
+                href={withBase(`/artigos/${nextArticle.id}/`)}
+                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 text-right transition-colors hover:border-[var(--color-v2-border-hover)]"
+              >
+                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+                  Próximo ensaio &rarr;
+                </span>
+                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
+                  {nextArticle.data.title}
+                </span>
+              </a>
+            )}
+          </div>
+        )}
+
+        <div class="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--color-v2-border)] pt-6">
+          <a
+            href={withBase('/artigos/')}
+            class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] px-4 py-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
+          >
+            <span aria-hidden="true">&larr;</span>
+            <span>Voltar para a listagem</span>
+          </a>
+
+          <a
+            href={withBase('/')}
+            class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+          >
+            <span>Início</span>
+            <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+              &rarr;
+            </span>
+          </a>
         </div>
       </footer>
-    </Container>
+    </div>
   </article>
 </BaseLayout>
+
+<script>
+  // Garante compatibilidade das imagens inline do Markdown quando publicado em subcaminho (GitHub Pages)
+  const prose = document.querySelector<HTMLElement>('[data-article-prose]');
+  const base = prose?.dataset.base || '/';
+  if (prose && base !== '/') {
+    const cleanBase = base.endsWith('/') ? base.slice(0, -1) : base;
+    for (const img of prose.querySelectorAll<HTMLImageElement>('img')) {
+      const rawSrc = img.getAttribute('src');
+      if (
+        rawSrc &&
+        rawSrc.startsWith('/') &&
+        !rawSrc.startsWith(cleanBase + '/')
+      ) {
+        img.setAttribute('src', `${cleanBase}${rawSrc}`);
+      }
+    }
+  }
+</script>

@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import Card from '../ui/Card.astro';
 import { withBase } from '../../utils/base';
 
 interface Props {
@@ -21,15 +20,29 @@ const articleHref = withBase(`/artigos/${id}/`);
 ---
 
 {featured ? (
-  <Card
-    as="article"
-    interactive
-    class="border-accent/40 bg-surface/95 p-0 overflow-hidden shadow-lg shadow-accent/5"
-  >
-    <a href={articleHref} class="block group">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
+  <article class="group relative border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)]/85 transition-all duration-300 hover:border-[var(--color-v2-accent-warm)]/60 hover:shadow-[0_24px_60px_rgba(0,0,0,0.75)]">
+    {/* Cantoneiras em bronze */}
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-px -left-px z-10 h-3.5 w-3.5 border-t border-l border-[var(--color-v2-accent-warm)]"
+    />
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-px -right-px z-10 h-3.5 w-3.5 border-t border-r border-[var(--color-v2-accent-warm)]"
+    />
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -bottom-px -left-px z-10 h-3.5 w-3.5 border-b border-l border-[var(--color-v2-accent-warm)]"
+    />
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -bottom-px -right-px z-10 h-3.5 w-3.5 border-b border-r border-[var(--color-v2-accent-warm)]"
+    />
+
+    <a href={articleHref} class="v2-focus block">
+      <div class="grid grid-cols-1 lg:grid-cols-12">
         {data.image && (
-          <div class="lg:col-span-6 relative aspect-video lg:aspect-auto overflow-hidden bg-surface-raised">
+          <div class="relative aspect-video overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508] lg:col-span-6 lg:aspect-auto lg:border-r lg:border-b-0">
             <img
               src={withBase(data.image.url)}
               alt={data.image.alt}
@@ -37,10 +50,10 @@ const articleHref = withBase(`/artigos/${id}/`);
               height="450"
               loading="eager"
               decoding="async"
-              class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
+              class="h-full w-full object-cover brightness-95 contrast-105 transition-transform duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
             />
             <div
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent lg:hidden"
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#070709]/40"
               aria-hidden="true"
             />
           </div>
@@ -48,39 +61,51 @@ const articleHref = withBase(`/artigos/${id}/`);
 
         <div
           class:list={[
-            'p-6 sm:p-8 flex flex-col justify-between',
+            'flex flex-col justify-between p-6 sm:p-8 lg:p-10',
             data.image ? 'lg:col-span-6' : 'lg:col-span-12',
           ]}
         >
           <div>
-            <div class="mb-4 flex flex-wrap items-center gap-2">
-              <span class="rounded bg-accent/15 px-2.5 py-0.5 font-mono text-[11px] font-semibold tracking-wider text-accent uppercase border border-accent/30">
+            <div class="mb-5 flex flex-wrap items-center gap-3">
+              <span class="inline-flex items-center gap-1.5 border border-[var(--color-v2-accent-warm)]/55 bg-[var(--color-v2-accent)]/15 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+                <span
+                  aria-hidden="true"
+                  class="h-1.5 w-1.5 bg-[var(--color-v2-accent)]"
+                />
                 Destaque Editorial
               </span>
-              <span class="font-mono text-xs text-text-muted">
+
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-muted)] uppercase">
                 // {data.category}
               </span>
-              <span class="font-mono text-xs text-text-muted/60">·</span>
+
+              <span
+                class="text-[var(--color-v2-border-hover)]"
+                aria-hidden="true"
+              >
+                ·
+              </span>
+
               <time
                 datetime={data.publishedAt.toISOString()}
-                class="font-mono text-xs text-text-muted"
+                class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text)]"
               >
                 {formattedDate}
               </time>
             </div>
 
-            <h2 class="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-text transition-colors duration-200 group-hover:text-accent">
+            <h2 class="font-[family-name:var(--font-v2-display)] text-3xl leading-[1.08] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] sm:text-4xl">
               {data.title}
             </h2>
 
-            <p class="font-body mt-4 text-base leading-relaxed text-text-muted">
+            <p class="mt-4 font-[family-name:var(--font-v2-sans)] text-base leading-relaxed font-light text-[var(--color-v2-text)]">
               {data.description}
             </p>
 
             {data.tags.length > 0 && (
-              <div class="mt-6 flex flex-wrap gap-1.5">
+              <div class="mt-6 flex flex-wrap gap-2">
                 {data.tags.map((tag) => (
-                  <span class="rounded border border-border/60 bg-surface-raised px-2 py-0.5 font-mono text-[10px] text-text-muted">
+                  <span class="border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/80 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.12em] text-[var(--color-v2-muted)]">
                     #{tag}
                   </span>
                 ))}
@@ -88,68 +113,80 @@ const articleHref = withBase(`/artigos/${id}/`);
             )}
           </div>
 
-          <div class="mt-6 pt-4 border-t border-border/50 flex items-center justify-between font-mono text-xs text-accent">
-            <span>Ler artigo completo</span>
-            <span
-              aria-hidden="true"
-              class="transition-transform duration-200 group-hover:translate-x-1.5"
-            >
-              &rarr;
+          <div class="mt-8 flex items-center justify-between border-t border-[var(--color-v2-border)] pt-4 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] uppercase">
+            <span class="text-[var(--color-v2-muted)]">
+              Por{' '}
+              <strong class="font-normal text-[var(--color-v2-text)]">
+                Guilherme Gomes
+              </strong>
+            </span>
+
+            <span class="inline-flex items-center gap-2 text-[var(--color-v2-accent-warm)] transition-colors group-hover:text-[var(--color-v2-heading)]">
+              <span>Ler artigo completo</span>
+              <span
+                aria-hidden="true"
+                class="transition-transform duration-200 group-hover:translate-x-1.5"
+              >
+                &rarr;
+              </span>
             </span>
           </div>
         </div>
       </div>
     </a>
-  </Card>
+  </article>
 ) : (
-  <Card
-    as="article"
-    interactive
-    class="flex flex-col justify-between border-border/80 bg-surface/90 p-0 overflow-hidden transition-colors"
-  >
-    <a href={articleHref} class="flex flex-col h-full group">
-      {data.image && (
-        <div class="relative aspect-video w-full overflow-hidden bg-surface-raised">
-          <img
-            src={withBase(data.image.url)}
-            alt={data.image.alt}
-            width="600"
-            height="338"
-            loading="lazy"
-            decoding="async"
-            class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
-          />
-        </div>
-      )}
+  <article class="group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]">
+    <a href={articleHref} class="v2-focus flex h-full flex-col justify-between">
+      <div>
+        {data.image && (
+          <div class="relative aspect-video w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508]">
+            <img
+              src={withBase(data.image.url)}
+              alt={data.image.alt}
+              width="600"
+              height="338"
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full object-cover brightness-95 contrast-105 transition-transform duration-500 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
+            />
+          </div>
+        )}
 
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="mb-3 flex items-center justify-between font-mono text-xs text-text-muted">
-            <span class="text-accent/90">{data.category}</span>
-            <time datetime={data.publishedAt.toISOString()}>
+        <div class="p-6">
+          <div class="mb-3 flex items-center justify-between gap-2 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.14em] uppercase">
+            <span class="text-[var(--color-v2-accent-warm)]">
+              {data.category}
+            </span>
+            <time
+              datetime={data.publishedAt.toISOString()}
+              class="text-[var(--color-v2-muted)]"
+            >
               {formattedDate}
             </time>
           </div>
 
-          <h3 class="font-display text-lg font-bold tracking-tight text-text transition-colors duration-200 group-hover:text-accent">
+          <h3 class="font-[family-name:var(--font-v2-display)] text-2xl leading-[1.15] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)]">
             {data.title}
           </h3>
 
-          <p class="font-body mt-2 text-sm leading-relaxed text-text-muted line-clamp-3">
+          <p class="mt-3 line-clamp-3 font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-muted)]">
             {data.description}
           </p>
         </div>
+      </div>
 
-        <div class="mt-5 pt-3 border-t border-border/40 flex items-center justify-between font-mono text-xs text-accent">
+      <div class="px-6 pb-6">
+        <div class="flex items-center justify-between border-t border-[var(--color-v2-border)] pt-3.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors group-hover:text-[var(--color-v2-heading)]">
           <span>Acessar leitura</span>
           <span
             aria-hidden="true"
-            class="transition-transform duration-200 group-hover:translate-x-1"
+            class="text-[var(--color-v2-accent-warm)] transition-transform duration-200 group-hover:translate-x-1"
           >
             &rarr;
           </span>
         </div>
       </div>
     </a>
-  </Card>
+  </article>
 )}
