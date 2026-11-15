@@ -18,22 +18,22 @@ O objetivo desta nota é preservar as decisões e dúvidas para consulta futura,
 
 ## 2. Decisões e preferências expressas pelo autor
 
-| Assunto | Diretriz | Estado |
-| --- | --- | --- |
-| Público administrativo | Um único administrador, sem planos atuais de equipe | **Definido** |
-| Dispositivos | Principalmente computador; interface remota via navegador | **Definido** |
-| Acesso | Privado e com segurança forte | **Definido** |
-| Autenticação | Comparar GitHub, passkeys, Cloudflare Access e outras opções | **Em estudo** |
-| Recursos | Criar, editar, excluir, pré-visualizar, revisar e publicar todas as seções | **Definido como objetivo** |
-| Revisão | Pré-visualizar e confirmar antes de publicar | **Definido** |
-| Rascunhos | Preferência inicial por manter no navegador até a revisão | **Preferência**, com risco de perda documentado |
-| Publicação | Ação no painel → validação → atualização pública; sem commit/push por conteúdo | **Definido** |
-| Backend/API | Preferência por serviço separado; possibilidade de API própria | **Direção, não tecnologia escolhida** |
-| Persistência | Conteúdo externo ao código é candidato natural para edição sem Git | **Em estudo** |
-| Imagens | Upload pelo painel para armazenamento externo | **Objetivo definido; fornecedor pendente** |
-| Custo | Priorizar R$ 0/mês | **Restrição desejada**, não garantia |
-| Critério principal | Segurança e confiabilidade, sem tornar o blog lento | **Definido** |
-| Implementação atual | Somente planejamento, sem código | **Definido** |
+| Assunto                | Diretriz                                                                       | Estado                                          |
+| ---------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------- |
+| Público administrativo | Um único administrador, sem planos atuais de equipe                            | **Definido**                                    |
+| Dispositivos           | Principalmente computador; interface remota via navegador                      | **Definido**                                    |
+| Acesso                 | Privado e com segurança forte                                                  | **Definido**                                    |
+| Autenticação           | Comparar GitHub, passkeys, Cloudflare Access e outras opções                   | **Em estudo**                                   |
+| Recursos               | Criar, editar, excluir, pré-visualizar, revisar e publicar todas as seções     | **Definido como objetivo**                      |
+| Revisão                | Pré-visualizar e confirmar antes de publicar                                   | **Definido**                                    |
+| Rascunhos              | Preferência inicial por manter no navegador até a revisão                      | **Preferência**, com risco de perda documentado |
+| Publicação             | Ação no painel → validação → atualização pública; sem commit/push por conteúdo | **Definido**                                    |
+| Backend/API            | Preferência por serviço separado; possibilidade de API própria                 | **Direção, não tecnologia escolhida**           |
+| Persistência           | Conteúdo externo ao código é candidato natural para edição sem Git             | **Em estudo**                                   |
+| Imagens                | Upload pelo painel para armazenamento externo                                  | **Objetivo definido; fornecedor pendente**      |
+| Custo                  | Priorizar R$ 0/mês                                                             | **Restrição desejada**, não garantia            |
+| Critério principal     | Segurança e confiabilidade, sem tornar o blog lento                            | **Definido**                                    |
+| Implementação atual    | Somente planejamento, sem código                                               | **Definido**                                    |
 
 ## 3. Fronteiras da solução
 
@@ -103,13 +103,13 @@ guilherme.dev-admin/      # Possível repositório privado futuro
 
 ## 6. Autenticação: opções para estudo
 
-| Opção | Vantagens | Limitações e cuidados |
-| --- | --- | --- |
-| **Cloudflare Access** com identidade forte | Proteção de acesso anterior ao app; menos código próprio de login | Dependência de fornecedor; proteger também a API e validar identidade no backend |
-| **Login com GitHub (OAuth/OIDC)** | Conveniente para usuário único e ecossistema existente | Exige fluxo OAuth correto, verificação do identificador imutável do usuário, sessões seguras; não confundir login com permissão de escrita no repositório |
-| **Passkey/WebAuthn no próprio painel** | Resistente a phishing; sem senha convencional | Implementação, registro e recuperação de credenciais exigem cuidado; preferir bibliotecas/provedores maduros |
-| **E-mail + senha + MFA** | Controle sobre login tradicional | Maior superfície de manutenção: hashes, redefinição, MFA, bloqueios, recuperação |
-| **Magic link por e-mail** | Login sem senha local | Segurança e disponibilidade dependem do e-mail, entregabilidade e proteção contra abuso |
+| Opção                                      | Vantagens                                                         | Limitações e cuidados                                                                                                                                     |
+| ------------------------------------------ | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Cloudflare Access** com identidade forte | Proteção de acesso anterior ao app; menos código próprio de login | Dependência de fornecedor; proteger também a API e validar identidade no backend                                                                          |
+| **Login com GitHub (OAuth/OIDC)**          | Conveniente para usuário único e ecossistema existente            | Exige fluxo OAuth correto, verificação do identificador imutável do usuário, sessões seguras; não confundir login com permissão de escrita no repositório |
+| **Passkey/WebAuthn no próprio painel**     | Resistente a phishing; sem senha convencional                     | Implementação, registro e recuperação de credenciais exigem cuidado; preferir bibliotecas/provedores maduros                                              |
+| **E-mail + senha + MFA**                   | Controle sobre login tradicional                                  | Maior superfície de manutenção: hashes, redefinição, MFA, bloqueios, recuperação                                                                          |
+| **Magic link por e-mail**                  | Login sem senha local                                             | Segurança e disponibilidade dependem do e-mail, entregabilidade e proteção contra abuso                                                                   |
 
 **Critérios de avaliação:** resistência a phishing, recuperação após perda de dispositivo, custo real, segurança de sessão, logout/revogação, manutenção e proteção da API. Não desenvolver criptografia, armazenamento de senha ou implementação WebAuthn artesanal.
 
@@ -146,11 +146,11 @@ A modelagem deve preservar tipos de conteúdo, slugs, referências a imagens, da
 
 **Requisitos desejados:** upload no painel, URL pública estável para imagens publicadas, metadados de autoria/crédito, formato eficiente, miniaturas, controle de tamanho, possibilidade de exportação e custos previsíveis.
 
-| Candidato | Ponto forte | Questão a validar |
-| --- | --- | --- |
-| **Cloudflare R2** | Armazenamento de objetos com integração a Workers | Entrega pública, otimização, limites e cobranças |
-| **Cloudinary** | Transformações e otimização integradas | Créditos, tráfego, limites e dependência da plataforma |
-| **Supabase Storage** | Integração com serviços Supabase | Cotas, saída de dados, disponibilidade e políticas de acesso |
+| Candidato            | Ponto forte                                       | Questão a validar                                            |
+| -------------------- | ------------------------------------------------- | ------------------------------------------------------------ |
+| **Cloudflare R2**    | Armazenamento de objetos com integração a Workers | Entrega pública, otimização, limites e cobranças             |
+| **Cloudinary**       | Transformações e otimização integradas            | Créditos, tráfego, limites e dependência da plataforma       |
+| **Supabase Storage** | Integração com serviços Supabase                  | Cotas, saída de dados, disponibilidade e políticas de acesso |
 
 **Fluxo candidato:** o administrador solicita um upload autenticado; o backend autoriza tamanho, tipo, destino e validade; o navegador envia o arquivo com autorização temporária; a API registra a referência após confirmar o upload. Evitar chaves permanentes no cliente, arquivos executáveis, path traversal e exposição acidental de conteúdo privado. Disponibilizar versões responsivas/otimizadas sem destruir o original.
 
@@ -191,17 +191,17 @@ A modelagem deve preservar tipos de conteúdo, slugs, referências a imagens, da
 
 ## 11. Principais riscos e medidas de mitigação
 
-| Risco | Mitigação de planejamento |
-| --- | --- |
-| Vazamento de acesso administrativo | Autenticação consolidada, autorização em cada rota, MFA/passkey e segredos isolados |
-| API e banco tornarem o blog mais lento | SSR seletivo, cache e medições antes/depois |
-| Conteúdo perdido ou corrompido | Backup, histórico, exportação, validação, transações e rollback |
-| Rascunhos locais desaparecem | Avisos de persistência, recuperação/exportação; reavaliar salvamento remoto |
-| Plano gratuito insuficiente | Monitorar cotas, estimar consumo, política de gastos e plano de migração |
-| SEO prejudicado | HTML renderizado no servidor para conteúdo importante, sitemap e metadados dinâmicos |
-| Espelho GitHub Pages desatualizado | Decisão explícita sobre o papel do espelho antes de migrar rotas |
-| Migração de schemas alterar notas | Testes de equivalência com os registros reais e cálculos atuais |
-| Exclusões por engano | Confirmação, arquivamento, histórico e recuperação |
+| Risco                                  | Mitigação de planejamento                                                            |
+| -------------------------------------- | ------------------------------------------------------------------------------------ |
+| Vazamento de acesso administrativo     | Autenticação consolidada, autorização em cada rota, MFA/passkey e segredos isolados  |
+| API e banco tornarem o blog mais lento | SSR seletivo, cache e medições antes/depois                                          |
+| Conteúdo perdido ou corrompido         | Backup, histórico, exportação, validação, transações e rollback                      |
+| Rascunhos locais desaparecem           | Avisos de persistência, recuperação/exportação; reavaliar salvamento remoto          |
+| Plano gratuito insuficiente            | Monitorar cotas, estimar consumo, política de gastos e plano de migração             |
+| SEO prejudicado                        | HTML renderizado no servidor para conteúdo importante, sitemap e metadados dinâmicos |
+| Espelho GitHub Pages desatualizado     | Decisão explícita sobre o papel do espelho antes de migrar rotas                     |
+| Migração de schemas alterar notas      | Testes de equivalência com os registros reais e cálculos atuais                      |
+| Exclusões por engano                   | Confirmação, arquivamento, histórico e recuperação                                   |
 
 ## 12. Decisões pendentes — checklist para conversas futuras
 

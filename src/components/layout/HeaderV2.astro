@@ -39,10 +39,10 @@ const items = [
       href={withBase('/')}
       class="v2-focus group inline-flex min-h-11 items-center gap-2.5 py-3 lg:min-h-[4.7rem]"
     >
-      <span aria-hidden="true" class="text-v2-accent text-[0.625rem]">
+      <span aria-hidden="true" class="text-v2-accent text-[0.6875rem]">
         ✦
       </span>
-      <span class="font-v2-display text-v2-text text-[1.375rem] leading-none font-semibold tracking-tight">
+      <span class="font-v2-display text-v2-text text-[1.5625rem] leading-none font-semibold tracking-tight">
         guilherme<span class="text-v2-accent-warm">.dev</span>
       </span>
     </a>
@@ -77,7 +77,7 @@ const items = [
       aria-label="Principal"
       class="basis-full pb-3 max-lg:data-[collapsed=true]:hidden lg:basis-auto lg:pb-0"
     >
-      <ul class="flex flex-col lg:flex-row lg:items-center lg:gap-x-6">
+      <ul class="flex flex-col lg:flex-row lg:items-center lg:gap-x-4 xl:gap-x-6">
         {items.map((item) => {
           const targetHref = withBase(item.href);
           const isCurrent = normalize(currentPath) === normalize(targetHref);
@@ -87,7 +87,7 @@ const items = [
                 href={targetHref}
                 aria-current={isCurrent ? 'page' : undefined}
                 class:list={[
-                  'v2-focus relative inline-flex min-h-11 items-center font-v2-sans text-[0.65rem] tracking-[0.04em] transition-colors motion-reduce:transition-none lg:min-h-[4.7rem]',
+                  'v2-focus relative inline-flex min-h-11 items-center font-v2-sans text-[0.8125rem] tracking-[0.025em] transition-colors motion-reduce:transition-none lg:min-h-[4.7rem]',
                   isCurrent
                     ? 'text-v2-text after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-v2-accent max-lg:underline max-lg:decoration-v2-accent max-lg:underline-offset-8'
                     : 'text-v2-text-muted hover:text-v2-text',
