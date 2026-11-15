@@ -129,15 +129,15 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 >
 > **Decisões aprovadas (14/11/2026):** tokens e estilos V2 escopados à Home até a identidade ser validada; só depois migrar tokens compartilhados; fontes identificadas no protótipo (se possível) ou Cormorant Garamond + Inter como provisórias; fotografias dependem de arquivos originais ou de opções aprovadas pelo autor (Unsplash/Pexels com licença verificada); faixa editorial usa o artigo real "Por que escolhi Fedora (e por que continuo nele)"; rodapé apenas com links sociais reais (sem RSS); `AboutPreview` sai da Home (componente preservado); Sobre permanece independente.
 
-| ID     | Item                                                                                                                                                    | Dependências    | Prioridade | Data alvo | Commit/PR | Status     |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------- | --------- | --------- | ---------- |
-| VIS-01 | Registrar Design System 2.0 e referências; atualizar documentação e planejar a migração                                                                 | DATA-09         | P1         | —         | —         | Em revisão |
-| VIS-02 | Fundação V2 escopada: tokens `v2`, fontes locais, utilitários (eyebrow, foco, movimento reduzido), container largo da Home, sem afetar páginas internas | VIS-01          | P1         | —         | —         | Pendente   |
-| VIS-03 | Header, rodapé e Home fiéis ao protótipo (hero, passagem editorial, grade assimétrica de 9 categorias, faixa editorial com artigo real)                 | VIS-02          | P1         | —         | —         | Pendente   |
-| VIS-04 | Página Sobre na nova identidade                                                                                                                         | VIS-03          | P1         | —         | —         | Pendente   |
-| VIS-05 | Página Linux (crônica e timeline) na nova identidade                                                                                                    | VIS-03          | P1         | —         | —         | Pendente   |
-| VIS-06 | Catálogos e páginas restantes (Projetos, Jogos, Filmes, Livros, Artigos, Música, Open Source, Galeria) e migração dos tokens compartilhados             | VIS-03          | P1         | —         | —         | Pendente   |
-| VIS-07 | QA visual, acessibilidade, desempenho e deploy (Vercel e GitHub Pages)                                                                                  | VIS-04 a VIS-06 | P1         | —         | —         | Pendente   |
+| ID     | Item                                                                                                                                                    | Dependências    | Prioridade | Data alvo | Commit/PR | Status    |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------- | --------- | --------- | --------- |
+| VIS-01 | Registrar Design System 2.0 e referências; atualizar documentação e planejar a migração                                                                 | DATA-09         | P1         | —         | 0ccccb2   | Concluído |
+| VIS-02 | Fundação V2 escopada: tokens `v2`, fontes locais, utilitários (eyebrow, foco, movimento reduzido), container largo da Home, sem afetar páginas internas | VIS-01          | P1         | —         | —         | Pendente  |
+| VIS-03 | Header, rodapé e Home fiéis ao protótipo (hero, passagem editorial, grade assimétrica de 9 categorias, faixa editorial com artigo real)                 | VIS-02          | P1         | —         | —         | Pendente  |
+| VIS-04 | Página Sobre na nova identidade                                                                                                                         | VIS-03          | P1         | —         | —         | Pendente  |
+| VIS-05 | Página Linux (crônica e timeline) na nova identidade                                                                                                    | VIS-03          | P1         | —         | —         | Pendente  |
+| VIS-06 | Catálogos e páginas restantes (Projetos, Jogos, Filmes, Livros, Artigos, Música, Open Source, Galeria) e migração dos tokens compartilhados             | VIS-03          | P1         | —         | —         | Pendente  |
+| VIS-07 | QA visual, acessibilidade, desempenho e deploy (Vercel e GitHub Pages)                                                                                  | VIS-04 a VIS-06 | P1         | —         | —         | Pendente  |
 
 **Critérios de aceitação por tarefa:**
 
