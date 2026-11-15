@@ -143,8 +143,8 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | VIS-06e | Seção Música (artistas/bandas, álbuns e músicas na identidade V2)                                                                                       | VIS-03            | P1         | —         | 34bf85a   | Concluído |
 | VIS-06f | Seção Open Source (catálogo editorial de ferramentas e rota `/open-source/`)                                                                            | VIS-03            | P1         | —         | 58b71e0   | Concluído |
 | VIS-06g | Seção Galeria (portais de álbuns, grid interna e lightbox acessível)                                                                                    | VIS-03            | P1         | —         | 73a7046   | Concluído |
-| VIS-06h | Consolidação dos tokens compartilhados, página 404 e limpeza de estilos legados                                                                         | VIS-06a a VIS-06g | P1         | —         | —         | Concluído |
-| VIS-07  | QA visual, acessibilidade, desempenho e deploy (Vercel e GitHub Pages)                                                                                  | VIS-04 a VIS-06h  | P1         | —         | —         | Pendente  |
+| VIS-06h | Consolidação dos tokens compartilhados, página 404 e limpeza de estilos legados                                                                         | VIS-06a a VIS-06g | P1         | —         | 50b158a   | Concluído |
+| VIS-07  | QA visual, acessibilidade, desempenho e deploy (Vercel e GitHub Pages)                                                                                  | VIS-04 a VIS-06h  | P1         | —         | —         | Concluído |
 
 **Critérios de aceitação por tarefa:**
 

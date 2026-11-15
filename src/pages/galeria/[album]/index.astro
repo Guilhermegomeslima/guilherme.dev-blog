@@ -191,6 +191,7 @@ const coverBackdrop = images[0]?.data.imageUrl || '/images/home/galeria.webp';
       {hasDemoContent && <DemoNotice variant="section" class="mt-8" />}
 
       {/* Grade de Imagens do Álbum */}
+      <h2 class="sr-only">Fotografias do álbum {albumName}</h2>
       <div
         class:list={[
           'mt-10 grid grid-cols-1 gap-6',
