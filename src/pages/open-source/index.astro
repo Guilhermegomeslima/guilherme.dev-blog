@@ -1,13 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
-import Button from '../../components/ui/Button.astro';
 import { withBase } from '../../utils/base';
 
 const targetUrl = withBase('/opensource/');
 ---
 
 <BaseLayout
+  variant="v2"
   title="Redirecionando para Open Source... — guilherme.dev"
   description="Redirecionando para o catálogo de software livre e ferramentas open source."
 >
@@ -16,20 +15,24 @@ const targetUrl = withBase('/opensource/');
     <link rel="canonical" href={targetUrl} />
   </head>
 
-  <div class="py-20 text-center">
-    <Container class="max-w-md">
-      <p class="font-mono text-xs text-accent uppercase tracking-wider mb-2">
-        // REDIRECIONAMENTO
-      </p>
-      <h1 class="font-display text-2xl font-bold text-text mb-4">
-        Redirecionando para Open Source
-      </h1>
-      <p class="font-body text-sm text-text-muted mb-6">
-        Se você não for redirecionado automaticamente, utilize o link abaixo:
-      </p>
-      <Button href={targetUrl} variant="primary">
-        Acessar catálogo Open Source &rarr;
-      </Button>
-    </Container>
+  <div class="mx-auto max-w-lg px-5 py-24 text-center">
+    <p class="v2-eyebrow mb-3 text-[var(--color-v2-accent-warm)]">
+      // REDIRECIONAMENTO DE ROTA
+    </p>
+    <h1 class="font-[family-name:var(--font-v2-display)] text-3xl font-normal text-[var(--color-v2-heading)]">
+      Redirecionando para Open Source
+    </h1>
+    <p class="mt-3 font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-muted)]">
+      Se você não for redirecionado automaticamente, utilize o link abaixo:
+    </p>
+    <div class="mt-6">
+      <a
+        href={targetUrl}
+        class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-surface)] px-5 py-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase transition-colors hover:text-[var(--color-v2-accent-warm)]"
+      >
+        <span>Acessar diretório Open Source</span>
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
   </div>
 </BaseLayout>

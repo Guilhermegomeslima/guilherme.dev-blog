@@ -1,14 +1,16 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import Card from '../ui/Card.astro';
 import { withBase } from '../../utils/base';
 
 interface Props {
   tool: CollectionEntry<'opensource'>;
+  index?: number;
 }
 
-const { tool } = Astro.props;
+const { tool, index = 0 } = Astro.props;
 const { data } = tool;
+
+const num = String(index + 1).padStart(2, '0');
 
 const statusConfig: Record<
   string,
@@ -16,104 +18,193 @@ const statusConfig: Record<
 > = {
   uso_atualmente: {
     label: 'Uso atualmente',
-    badgeClass: 'border-accent/40 bg-accent/10 text-accent',
-    dotClass: 'bg-accent animate-pulse',
+    badgeClass:
+      'border-[var(--color-v2-accent)]/60 bg-[var(--color-v2-accent)]/12 text-[#e47986]',
+    dotClass: 'bg-[var(--color-v2-accent)] animate-pulse',
   },
   recomendo: {
     label: 'Recomendo',
-    badgeClass: 'border-warm/40 bg-warm/10 text-warm',
-    dotClass: 'bg-warm',
+    badgeClass:
+      'border-[var(--color-v2-accent-warm)]/55 bg-[var(--color-v2-accent-warm)]/12 text-[var(--color-v2-accent-warm)]',
+    dotClass: 'bg-[var(--color-v2-accent-warm)]',
   },
   ja_utilizei: {
     label: 'Já utilizei',
-    badgeClass: 'border-border/70 bg-surface-raised text-text-muted',
-    dotClass: 'bg-text-muted/60',
+    badgeClass:
+      'border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/80 text-[var(--color-v2-muted)]',
+    dotClass: 'bg-[var(--color-v2-muted)]',
   },
 };
 
 const currentStatus = data.status
   ? statusConfig[data.status] || {
       label: data.status,
-      badgeClass: 'border-border/70 bg-surface-raised text-text-muted',
-      dotClass: 'bg-text-muted',
+      badgeClass:
+        'border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/80 text-[var(--color-v2-muted)]',
+      dotClass: 'bg-[var(--color-v2-muted)]',
     }
   : null;
+
+function extractHostname(url?: string): string {
+  if (!url) return '';
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
+
+const websiteHost = extractHostname(data.websiteUrl);
+const repoHost = extractHostname(data.repoUrl);
 ---
 
-<Card
-  as="article"
-  class="flex flex-col justify-between border-border/80 bg-surface/90 p-6 transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 group"
+<article
+  data-os-card
+  data-name={data.name.toLowerCase()}
+  data-category={data.category}
+  data-description={data.description.toLowerCase()}
+  data-license={(data.license || '').toLowerCase()}
+  class="group relative border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
 >
-  <div>
-    {/* Cabeçalho com Categoria e Status */}
-    <div class="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-border/40 pb-3">
-      <span class="font-mono text-[11px] font-semibold text-accent/90 uppercase tracking-wider">
-        // {data.category}
+  {/* Cantoneiras discretas em bronze */}
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-px -left-px h-3 w-3 border-t border-l border-[var(--color-v2-accent-warm)]/55 transition-colors group-hover:border-[var(--color-v2-accent-warm)]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -bottom-px -right-px h-3 w-3 border-r border-b border-[var(--color-v2-accent-warm)]/55 transition-colors group-hover:border-[var(--color-v2-accent-warm)]"
+  ></span>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12">
+    {/* Coluna 1 (4 cols): Identificação, Ícone e Categoria */}
+    <div class="flex flex-col justify-between border-b border-[var(--color-v2-border)] p-6 lg:col-span-4 lg:border-r lg:border-b-0 sm:p-7">
+      <div>
+        <div class="mb-5 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] uppercase">
+            <span class="text-[var(--color-v2-accent-warm)]">FOS // {num}</span>
+            <span
+              aria-hidden="true"
+              class="text-[var(--color-v2-border-hover)]"
+            >
+              ·
+            </span>
+            <span class="border border-[var(--color-v2-accent-warm)]/35 bg-[var(--color-v2-bg)]/80 px-2 py-0.5 text-[var(--color-v2-accent-warm)]">
+              {data.category}
+            </span>
+          </div>
+
+          {currentStatus && (
+            <div
+              class:list={[
+                'inline-flex items-center gap-1.5 border px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.14em] uppercase',
+                currentStatus.badgeClass,
+              ]}
+            >
+              <span
+                class:list={[
+                  'h-1.5 w-1.5 rounded-full',
+                  currentStatus.dotClass,
+                ]}
+              />
+              <span>{currentStatus.label}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Ícone preservando proporções + Nome do Programa */}
+        <div class="flex items-center gap-4">
+          {data.icon && (
+            <div class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden border border-[var(--color-v2-border-hover)] bg-[#050508] p-1.5 shadow-[0_8px_20px_rgba(0,0,0,0.5)]">
+              <img
+                src={withBase(data.icon.url)}
+                alt={data.icon.alt}
+                width="56"
+                height="56"
+                loading="lazy"
+                decoding="async"
+                class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+          )}
+
+          <div>
+            <h3 class="font-[family-name:var(--font-v2-display)] text-2xl leading-[1.1] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] sm:text-[1.75rem]">
+              {data.name}
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      {/* Licença e selo Mock Data */}
+      <div class="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--color-v2-border)] pt-3.5 font-[family-name:var(--font-v2-mono)] text-[10px]">
+        {data.license ? (
+          <div class="flex items-center gap-2">
+            <span class="tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+              Licença:
+            </span>
+            <span class="border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/90 px-2 py-0.5 text-[var(--color-v2-text)]">
+              {data.license}
+            </span>
+          </div>
+        ) : (
+          <span class="text-[var(--color-v2-muted)]">Software Livre</span>
+        )}
+
+        {data.isDemo && (
+          <span class="border border-[var(--color-v2-accent-warm)]/50 px-2 py-0.5 text-[9px] text-[var(--color-v2-accent-warm)] uppercase">
+            Mock Data
+          </span>
+        )}
+      </div>
+    </div>
+
+    {/* Coluna 2 (5 cols): Descrição e Contexto Editorial */}
+    <div class="flex flex-col justify-center border-b border-[var(--color-v2-border)] p-6 lg:col-span-5 lg:border-r lg:border-b-0 sm:p-7">
+      <span class="mb-2 block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+        // FINALIDADE &amp; ESCOPO
       </span>
 
-      {currentStatus && (
-        <div
-          class:list={[
-            'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-medium',
-            currentStatus.badgeClass,
-          ]}
-        >
-          <span
-            class:list={['h-1.5 w-1.5 rounded-full', currentStatus.dotClass]}
-          ></span>
-          <span>{currentStatus.label}</span>
-        </div>
+      <p class="font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text)] sm:text-base">
+        {data.description}
+      </p>
+
+      {data.comment && (
+        <blockquote class="mt-4 border-l-2 border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-bg)]/60 px-4 py-2.5 font-[family-name:var(--font-v2-display)] text-base leading-relaxed text-[var(--color-v2-heading)] italic">
+          "{data.comment}"
+        </blockquote>
       )}
     </div>
 
-    {/* Ícone, Título e Licença */}
-    <div class="flex items-start justify-between gap-3">
-      <div class="flex items-center gap-3">
-        {data.icon && (
-          <img
-            src={withBase(data.icon.url)}
-            alt={data.icon.alt}
-            loading="lazy"
-            class="h-11 w-11 shrink-0 rounded-md border border-border/60 bg-surface-raised object-cover p-0.5"
-          />
-        )}
-        <h3 class="font-display text-xl font-bold tracking-tight text-text group-hover:text-accent transition-colors">
-          {data.name}
-        </h3>
-      </div>
+    {/* Coluna 3 (3 cols): Links Oficiais */}
+    <div class="flex flex-col justify-center gap-3 bg-[var(--color-v2-bg)]/45 p-6 lg:col-span-3 sm:p-7">
+      <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+        // ACESSO OFICIAL
+      </span>
 
-      {data.license && (
-        <span class="shrink-0 rounded border border-border/80 bg-surface-raised px-1.5 py-0.5 font-mono text-[10px] text-text-muted">
-          {data.license}
-        </span>
-      )}
-    </div>
-
-    {/* Descrição */}
-    <p class="font-body mt-3 text-sm leading-relaxed text-text-muted">
-      {data.description}
-    </p>
-
-    {/* Comentário editorial */}
-    {data.comment && (
-      <div class="mt-4 rounded border-l-2 border-accent/60 bg-surface-raised/40 p-3 font-body text-xs italic text-text-muted">
-        "{data.comment}"
-      </div>
-    )}
-  </div>
-
-  {/* Rodapé com links e aviso de mock */}
-  <div class="mt-6 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-border/40 font-mono text-xs">
-    <div class="flex items-center gap-4">
       {data.websiteUrl && (
         <a
           href={data.websiteUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-accent hover:underline flex items-center gap-1 font-medium"
+          class="v2-focus group/link flex items-center justify-between border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] px-4 py-3 transition-colors hover:border-[var(--color-v2-accent-warm)]/65"
         >
-          <span>Site oficial</span>
-          <span aria-hidden="true">&nearr;</span>
+          <div>
+            <span class="block font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-heading)] uppercase group-hover/link:text-[var(--color-v2-accent-warm)]">
+              Site oficial
+            </span>
+            {websiteHost && (
+              <span class="mt-0.5 block font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)]">
+                {websiteHost}
+              </span>
+            )}
+          </div>
+          <span
+            aria-hidden="true"
+            class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-accent-warm)] transition-transform duration-200 group-hover/link:translate-x-0.5"
+          >
+            &nearr;
+          </span>
         </a>
       )}
 
@@ -122,18 +213,26 @@ const currentStatus = data.status
           href={data.repoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-text-muted hover:text-text flex items-center gap-1"
+          class="v2-focus group/repo flex items-center justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/80 px-4 py-2.5 transition-colors hover:border-[var(--color-v2-border-hover)]"
         >
-          <span>Repositório</span>
-          <span aria-hidden="true">&nearr;</span>
+          <div>
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.14em] text-[var(--color-v2-text)] uppercase group-hover/repo:text-[var(--color-v2-heading)]">
+              Repositório
+            </span>
+            {repoHost && (
+              <span class="mt-0.5 block font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)]">
+                {repoHost}
+              </span>
+            )}
+          </div>
+          <span
+            aria-hidden="true"
+            class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)] transition-colors group-hover/repo:text-[var(--color-v2-accent-warm)]"
+          >
+            &nearr;
+          </span>
         </a>
       )}
     </div>
-
-    {data.isDemo && (
-      <span class="rounded bg-warm/90 px-2 py-0.5 text-[10px] font-semibold text-bg uppercase">
-        Mock Data
-      </span>
-    )}
   </div>
-</Card>
+</article>
