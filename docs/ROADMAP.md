@@ -160,8 +160,8 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 | ID     | Item                                                                      | Dependências   | Prioridade | Data alvo | Commit/PR | Status    |
 | ------ | ------------------------------------------------------------------------- | -------------- | ---------- | --------- | --------- | --------- |
-| QLT-01 | Adicionar filtros úteis a jogos/filmes e outras listagens                 | CNT-05, CNT-07 | P1         | 24/12     | —         | Pendente  |
-| QLT-02 | Adicionar busca local quando houver volume que justifique                 | CNT-02         | P1         | 26/12     | —         | Pendente  |
+| QLT-01 | Adicionar filtros úteis a jogos/filmes e outras listagens                 | CNT-05, CNT-07 | P1         | 24/12     | 2f1ea34   | Concluído |
+| QLT-02 | Adicionar busca local quando houver volume que justifique                 | CNT-02         | P1         | 26/12     | 2f1ea34   | Concluído |
 | QLT-03 | Revisar SEO por conteúdo, sitemap e compartilhamento social               | CNT-02         | P1         | 28/12     | 4cabd61   | Concluído |
 | QLT-04 | Ampliar testes, verificações automáticas e CI quando necessário           | DEV-04         | P1         | 31/12     | c01ade9   | Concluído |
 | QLT-05 | Refinar desempenho, imagens e movimento reduzido                          | CNT-11         | P1         | 02/01     | —         | Pendente  |
