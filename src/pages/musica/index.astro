@@ -1,96 +1,406 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
 import MusicCard from '../../components/content/MusicCard.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
+import { withBase } from '../../utils/base';
 
 const allMusic = await getCollection('music');
 
-const artists = allMusic.filter((item) => item.data.type === 'artist');
-const albums = allMusic.filter((item) => item.data.type === 'album');
-const tracks = allMusic.filter((item) => item.data.type === 'track');
+const artists = allMusic
+  .filter((item) => item.data.type === 'artist')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'pt-BR'));
+
+const albums = allMusic
+  .filter((item) => item.data.type === 'album')
+  .sort(
+    (a, b) =>
+      (b.data.year || 0) - (a.data.year || 0) ||
+      a.data.title.localeCompare(b.data.title, 'pt-BR'),
+  );
+
+const tracks = allMusic
+  .filter((item) => item.data.type === 'track')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'pt-BR'));
 
 const hasDemoContent = allMusic.some((m) => m.data.isDemo);
+
+// Mapa de associações reais entre artistas, álbuns e faixas do próprio acervo
+function getAlbumsForArtist(artistName?: string): string[] {
+  if (!artistName) return [];
+  const norm = artistName.trim().toLowerCase();
+  return albums
+    .filter((alb) => (alb.data.artist || '').trim().toLowerCase() === norm)
+    .map((alb) =>
+      alb.data.year ? `${alb.data.title} (${alb.data.year})` : alb.data.title,
+    );
+}
+
+function getTracksForArtist(artistName?: string): string[] {
+  if (!artistName) return [];
+  const norm = artistName.trim().toLowerCase();
+  return tracks
+    .filter((trk) => (trk.data.artist || '').trim().toLowerCase() === norm)
+    .map((trk) => trk.data.title);
+}
+
+const sectionFilters = [
+  { value: 'all', label: 'Todo o arquivo', count: allMusic.length },
+  { value: 'artist', label: 'Artistas', count: artists.length },
+  { value: 'album', label: 'Álbuns', count: albums.length },
+  { value: 'track', label: 'Faixas', count: tracks.length },
+];
 ---
 
 <BaseLayout
+  variant="v2"
   title="Música & Trilhas Sonoras — guilherme.dev"
   description="Artistas, álbuns e faixas selecionadas para foco em programação, imersão sonora e apreciação musical."
 >
-  <div class="py-12 md:py-16">
-    <Container>
-      <SectionHeading
-        eyebrow="// FREQUÊNCIAS & FOCO"
-        title="Música & Trilhas Sonoras"
-        description="Artistas, discos e faixas instrumentais sem rankings ou notas — apenas recomendações sonoras para foco e inspiração."
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera de fundo sutil */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[500px] overflow-hidden"
+    >
+      <img
+        src={withBase('/images/home/musica.webp')}
+        alt=""
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full object-cover object-center opacity-[0.13] blur-[2px] filter"
       />
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.86) 62%, #070709 100%);"
+      ></div>
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(180deg, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.85) 68%, #070709 100%);"
+      ></div>
+    </div>
 
-      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+    <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 sm:px-8">
+      {/* Abertura Editorial */}
+      <header class="border-b border-[var(--color-v2-border)] pt-12 pb-10 md:pt-16 md:pb-14">
+        <div class="mb-4 flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            class="inline-block h-px w-8 bg-[var(--color-v2-accent)]"
+          ></span>
+          <p class="v2-eyebrow text-[var(--color-v2-accent-warm)]">
+            ARQUIVO SONORO / MÚSICA & TRILHAS SONORAS
+          </p>
+        </div>
 
-      <div class="space-y-16">
-        {/* Seção: Artistas */}
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.04] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-6xl">
+              Música &amp; Trilhas Sonoras.
+            </h1>
+          </div>
+
+          <div class="lg:col-span-5">
+            <p class="font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text)] sm:text-base">
+              Coleção musical pessoal reunindo bandas, artistas, discos e faixas
+              que acompanham sessões de programação, estudo e cotidiano — sem
+              rankings ou notas numéricas.
+            </p>
+          </div>
+        </div>
+
+        {/* Painel de Síntese do Acervo Sonoro */}
+        <div class="mt-8 grid grid-cols-2 gap-3 border-t border-[var(--color-v2-border)] pt-6 sm:grid-cols-4">
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Total Catalogado
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {allMusic.length} registros
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Artistas &amp; Bandas
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {artists.length} perfis
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Álbuns Selecionados
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-accent-warm)]">
+              {albums.length} discos
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Faixas em Destaque
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {tracks.length} músicas
+            </strong>
+          </div>
+        </div>
+      </header>
+
+      {hasDemoContent && <DemoNotice variant="section" class="mt-8" />}
+
+      {/* Barra de Filtro por Categoria e Busca */}
+      <section
+        aria-label="Filtros do arquivo musical"
+        class="mt-8 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-4 sm:p-6"
+      >
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div
+            class="flex flex-wrap items-center gap-1.5"
+            role="group"
+            aria-label="Filtrar por seção musical"
+          >
+            {sectionFilters.map((sec, idx) => (
+              <button
+                type="button"
+                data-music-filter={sec.value}
+                aria-pressed={idx === 0 ? 'true' : 'false'}
+                class:list={[
+                  'v2-focus cursor-pointer border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] uppercase transition-colors duration-200',
+                  idx === 0
+                    ? 'border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-accent-warm)]/15 text-[var(--color-v2-heading)]'
+                    : 'border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/70 text-[var(--color-v2-muted)] hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-text)]',
+                ]}
+              >
+                <span>{sec.label}</span>
+                <span class="ml-1 text-[10px] opacity-70">({sec.count})</span>
+              </button>
+            ))}
+          </div>
+
+          <div class="w-full lg:max-w-xs">
+            <label for="music-search" class="sr-only">
+              Buscar por artista, álbum ou música
+            </label>
+            <input
+              id="music-search"
+              type="search"
+              placeholder="Buscar artista, álbum ou faixa..."
+              autocomplete="off"
+              class="v2-focus w-full border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)] px-3.5 py-2 font-[family-name:var(--font-v2-sans)] text-xs text-[var(--color-v2-heading)] placeholder:text-[var(--color-v2-muted)] focus:border-[var(--color-v2-accent-warm)]/60"
+            />
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-12 space-y-20">
+        {/* Seção 01: Artistas & Bandas */}
         {artists.length > 0 && (
-          <section>
-            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
-              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
-                <span class="text-accent font-mono text-sm">//</span> Artistas
-              </h2>
-              <span class="font-mono text-xs text-text-muted">
+          <section data-music-section="artist">
+            <div class="mb-8 flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--color-v2-border)] pb-4">
+              <div>
+                <div class="flex items-baseline gap-3">
+                  <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-accent)] uppercase">
+                    01 //
+                  </span>
+                  <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)] sm:text-3xl">
+                    Artistas &amp; Bandas
+                  </h2>
+                </div>
+                <p class="mt-1 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+                  Retratos e referências principais da coleção pessoal, com
+                  acesso direto aos canais oficiais.
+                </p>
+              </div>
+
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
                 {artists.length} {artists.length === 1 ? 'item' : 'itens'}
               </span>
             </div>
 
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-              {artists.map((item) => (
-                <MusicCard item={item} />
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {artists.map((item, idx) => (
+                <MusicCard
+                  item={item}
+                  index={idx}
+                  relatedAlbums={getAlbumsForArtist(item.data.title)}
+                  relatedTracks={getTracksForArtist(item.data.title)}
+                />
               ))}
             </div>
           </section>
         )}
 
-        {/* Seção: Álbuns */}
+        {/* Seção 02: Álbuns */}
         {albums.length > 0 && (
-          <section>
-            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
-              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
-                <span class="text-warm font-mono text-sm">//</span> Álbuns
-              </h2>
-              <span class="font-mono text-xs text-text-muted">
+          <section data-music-section="album">
+            <div class="mb-8 flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--color-v2-border)] pb-4">
+              <div>
+                <div class="flex items-baseline gap-3">
+                  <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
+                    02 //
+                  </span>
+                  <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)] sm:text-3xl">
+                    Álbuns
+                  </h2>
+                </div>
+                <p class="mt-1 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+                  Discos de referência associados aos artistas do acervo.
+                </p>
+              </div>
+
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
                 {albums.length} {albums.length === 1 ? 'item' : 'itens'}
               </span>
             </div>
 
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-              {albums.map((item) => (
-                <MusicCard item={item} />
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              {albums.map((item, idx) => (
+                <MusicCard
+                  item={item}
+                  index={idx}
+                  relatedTracks={getTracksForArtist(item.data.artist)}
+                />
               ))}
             </div>
           </section>
         )}
 
-        {/* Seção: Faixas / Músicas */}
+        {/* Seção 03: Faixas Selecionadas */}
         {tracks.length > 0 && (
-          <section>
-            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
-              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
-                <span class="text-text-muted font-mono text-sm">//</span> Faixas
-                Selecionadas
-              </h2>
-              <span class="font-mono text-xs text-text-muted">
+          <section data-music-section="track">
+            <div class="mb-8 flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--color-v2-border)] pb-4">
+              <div>
+                <div class="flex items-baseline gap-3">
+                  <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-muted)] uppercase">
+                    03 //
+                  </span>
+                  <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)] sm:text-3xl">
+                    Faixas Selecionadas
+                  </h2>
+                </div>
+                <p class="mt-1 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+                  Índice numerado de faixas com links diretos para escuta no
+                  YouTube.
+                </p>
+              </div>
+
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
                 {tracks.length} {tracks.length === 1 ? 'item' : 'itens'}
               </span>
             </div>
 
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-              {tracks.map((item) => (
-                <MusicCard item={item} />
+            <div class="border-x border-[var(--color-v2-border)]">
+              {tracks.map((item, idx) => (
+                <MusicCard
+                  item={item}
+                  index={idx}
+                  relatedAlbums={getAlbumsForArtist(item.data.artist)}
+                />
               ))}
             </div>
           </section>
         )}
       </div>
-    </Container>
+
+      {/* Estado vazio para busca sem resultados */}
+      <div
+        id="music-empty-state"
+        hidden
+        class="mt-10 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-12 text-center"
+      >
+        <p class="font-[family-name:var(--font-v2-display)] text-2xl text-[var(--color-v2-heading)]">
+          Nenhum registro sonoro encontrado para essa busca.
+        </p>
+        <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-muted)]">
+          Tente pesquisar por outro artista, álbum ou faixa.
+        </p>
+      </div>
+    </div>
   </div>
 </BaseLayout>
+
+<script>
+  function initMusicArchive() {
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-music-section]'),
+    );
+    if (sections.length === 0) return;
+
+    const filterButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-music-filter]'),
+    );
+    const searchInput = document.getElementById(
+      'music-search',
+    ) as HTMLInputElement | null;
+    const emptyState = document.getElementById('music-empty-state');
+
+    let activeType = 'all';
+
+    function updateFilterButtonStyles() {
+      for (const btn of filterButtons) {
+        const isSelected = btn.dataset.musicFilter === activeType;
+        btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+        if (isSelected) {
+          btn.className =
+            'v2-focus cursor-pointer border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-accent-warm)]/15 text-[var(--color-v2-heading)]';
+        } else {
+          btn.className =
+            'v2-focus cursor-pointer border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/70 text-[var(--color-v2-muted)] hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-text)]';
+        }
+      }
+    }
+
+    function applyFilter() {
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      let totalVisible = 0;
+
+      for (const section of sections) {
+        const secType = section.dataset.musicSection || '';
+        const matchesSectionType =
+          activeType === 'all' || activeType === secType;
+
+        const items = Array.from(
+          section.querySelectorAll<HTMLElement>('[data-music-item]'),
+        );
+        let sectionVisible = 0;
+
+        for (const item of items) {
+          const matchesQuery =
+            !query ||
+            (item.dataset.title || '').includes(query) ||
+            (item.dataset.artist || '').includes(query);
+
+          const isVisible = matchesSectionType && matchesQuery;
+          item.hidden = !isVisible;
+          if (isVisible) {
+            sectionVisible++;
+            totalVisible++;
+          }
+        }
+
+        section.hidden = sectionVisible === 0;
+      }
+
+      if (emptyState) {
+        emptyState.hidden = totalVisible > 0;
+      }
+    }
+
+    for (const btn of filterButtons) {
+      btn.addEventListener('click', () => {
+        activeType = btn.dataset.musicFilter || 'all';
+        updateFilterButtonStyles();
+        applyFilter();
+      });
+    }
+
+    searchInput?.addEventListener('input', applyFilter);
+  }
+
+  initMusicArchive();
+</script>

@@ -1,128 +1,356 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import Card from '../ui/Card.astro';
 import { withBase } from '../../utils/base';
 
 interface Props {
   item: CollectionEntry<'music'>;
+  index?: number;
+  relatedAlbums?: string[];
+  relatedTracks?: string[];
 }
 
-const { item } = Astro.props;
+const { item, index = 0, relatedAlbums = [], relatedTracks = [] } = Astro.props;
 const { data } = item;
 
-const typeLabels: Record<string, { label: string; badgeClass: string }> = {
-  artist: {
-    label: 'ARTISTA',
-    badgeClass: 'bg-accent/20 text-accent border-accent/40',
-  },
-  album: {
-    label: 'ÁLBUM',
-    badgeClass: 'bg-warm/20 text-warm border-warm/40',
-  },
-  track: {
-    label: 'FAIXA',
-    badgeClass: 'bg-surface-raised text-text-muted border-border/80',
-  },
-};
-
-const currentType = typeLabels[data.type] || {
-  label: data.type.toUpperCase(),
-  badgeClass: 'bg-surface-raised text-text-muted border-border/80',
-};
+const num = String(index + 1).padStart(2, '0');
 ---
 
-<Card
-  as="article"
-  class="flex flex-col justify-between border-border/80 bg-surface/90 p-0 overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 group"
->
-  <div>
-    {/* Capa com Proporção Quadrada 1:1 */}
-    <div class="relative aspect-square w-full overflow-hidden bg-surface-raised border-b border-border/60">
-      {data.coverImage ? (
-        <img
-          src={withBase(data.coverImage.url)}
-          alt={data.coverImage.alt}
-          width="600"
-          height="600"
-          loading="lazy"
-          decoding="async"
-          class="h-full w-full object-cover filter contrast-105 brightness-95 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
-        />
-      ) : (
-        <div class="flex h-full w-full flex-col justify-between p-6 bg-gradient-to-br from-surface to-surface-raised">
-          <span class="font-mono text-[10px] text-accent/80 uppercase tracking-widest mt-8">
-            // REGISTRO SONORO
-          </span>
-          <div>
-            <p class="font-display text-lg font-bold text-text leading-tight">
+{data.type === 'artist' && (
+  <article
+    data-music-item
+    data-type="artist"
+    data-title={data.title.toLowerCase()}
+    data-artist={(data.artist || data.title).toLowerCase()}
+    class="group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
+  >
+    <div>
+      {/* Fotografia do Artista / Banda (1:1 com enquadramento editorial) */}
+      <div class="relative aspect-square w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508]">
+        {data.coverImage ? (
+          <img
+            src={withBase(data.coverImage.url)}
+            alt={data.coverImage.alt}
+            width="600"
+            height="600"
+            loading={index < 6 ? 'eager' : 'lazy'}
+            decoding="async"
+            class="h-full w-full object-cover brightness-[0.92] contrast-[1.05] transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
+          />
+        ) : (
+          <div class="flex h-full w-full flex-col justify-between bg-[#070709] p-6 select-none">
+            <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
+              // ARTISTA
+            </span>
+            <p class="font-[family-name:var(--font-v2-display)] text-2xl text-[var(--color-v2-heading)]">
               {data.title}
             </p>
-            {data.artist && (
-              <p class="font-mono text-xs text-text-muted mt-1.5">
-                {data.artist}
-              </p>
-            )}
+            <span class="font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)]">
+              Arquivo Sonoro
+            </span>
           </div>
-          <span class="font-mono text-[10px] text-text-muted/60">
-            [ Imagem pendente ]
-          </span>
-        </div>
-      )}
+        )}
 
-      {/* Badge do Tipo (Artista / Álbum / Faixa) */}
-      <div
-        class:list={[
-          'absolute top-3 left-3 rounded border px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider backdrop-blur-xs shadow-md',
-          currentType.badgeClass,
-        ]}
-      >
-        {currentType.label}
+        {/* Vinheta atmosférica inferior */}
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#070709] via-[#070709]/45 to-transparent"
+        />
+
+        {/* Identificador discreto no topo */}
+        <div class="absolute top-3 left-3 flex items-center gap-2 border border-white/10 bg-[#070709]/85 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase backdrop-blur-xs">
+          <span>ART // {num}</span>
+        </div>
+
+        {data.isDemo && (
+          <div class="absolute top-3 right-3 border border-[var(--color-v2-accent-warm)]/50 bg-[#070709]/90 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-accent-warm)] uppercase">
+            Mock Data
+          </div>
+        )}
+
+        {/* Nome em destaque sobre a base da fotografia */}
+        <div class="absolute inset-x-4 bottom-3">
+          {data.genre && (
+            <span class="mb-1 block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-accent-warm)] uppercase">
+              {data.genre}
+            </span>
+          )}
+          <h3 class="font-[family-name:var(--font-v2-display)] text-2xl leading-[1.1] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] sm:text-[1.65rem]">
+            {data.title}
+          </h3>
+        </div>
       </div>
 
-      {data.isDemo && (
-        <div class="absolute bottom-3 right-3 rounded bg-warm/90 px-2 py-0.5 font-mono text-[10px] font-semibold text-bg uppercase shadow-md">
-          Mock Data
+      {/* Metadados e Associações no Acervo */}
+      <div class="p-4 sm:p-5">
+        {data.comment && (
+          <p class="mb-3 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-text)]">
+            {data.comment}
+          </p>
+        )}
+
+        {relatedAlbums.length > 0 || relatedTracks.length > 0 ? (
+          <div class="space-y-1.5 font-[family-name:var(--font-v2-mono)] text-[10px]">
+            {relatedAlbums.length > 0 && (
+              <div class="flex flex-wrap items-baseline gap-1.5">
+                <span class="tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase">
+                  Álbum no acervo:
+                </span>
+                <span class="text-[var(--color-v2-text)]">
+                  {relatedAlbums.join(' · ')}
+                </span>
+              </div>
+            )}
+            {relatedTracks.length > 0 && (
+              <div class="flex flex-wrap items-baseline gap-1.5">
+                <span class="tracking-[0.14em] text-[var(--color-v2-muted)] uppercase">
+                  {relatedTracks.length === 1 ? 'Faixa:' : 'Faixas:'}
+                </span>
+                <span class="text-[var(--color-v2-muted)]">
+                  {relatedTracks.join(' · ')}
+                </span>
+              </div>
+            )}
+          </div>
+        ) : (
+          <p class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-muted)] uppercase">
+            Artista / Banda do acervo pessoal
+          </p>
+        )}
+      </div>
+    </div>
+
+    {/* Link Externo */}
+    {data.listenUrl && (
+      <div class="px-4 pb-4 sm:px-5 sm:pb-5">
+        <div class="border-t border-[var(--color-v2-border)] pt-3">
+          <a
+            href={data.listenUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="v2-focus inline-flex w-full items-center justify-between font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+          >
+            <span>Canal no YouTube</span>
+            <span
+              aria-hidden="true"
+              class="text-[var(--color-v2-accent-warm)] transition-transform duration-200 group-hover:translate-x-0.5"
+            >
+              &nearr;
+            </span>
+          </a>
         </div>
-      )}
-    </div>
+      </div>
+    )}
+  </article>
+)}
 
-    {/* Informações Textuais */}
-    <div class="p-5">
-      {(data.genre || data.year) && (
-        <div class="mb-2 flex flex-wrap items-center justify-between gap-1 font-mono text-xs text-text-muted">
-          {data.genre && <span class="text-accent/90">{data.genre}</span>}
-          {data.year && <span>{data.year}</span>}
+{data.type === 'album' && (
+  <article
+    data-music-item
+    data-type="album"
+    data-title={data.title.toLowerCase()}
+    data-artist={(data.artist || '').toLowerCase()}
+    class="group relative border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
+  >
+    {/* Cantoneiras discretas em bronze */}
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-px -left-px h-2.5 w-2.5 border-t border-l border-[var(--color-v2-accent-warm)]/55"
+    />
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -bottom-px -right-px h-2.5 w-2.5 border-r border-b border-[var(--color-v2-accent-warm)]/55"
+    />
+
+    <div class="grid grid-cols-1 sm:grid-cols-[168px_1fr]">
+      {/* Capa 1:1 emoldurada como encarte físico */}
+      <div class="relative aspect-square w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508] sm:border-r sm:border-b-0">
+        {data.coverImage ? (
+          <img
+            src={withBase(data.coverImage.url)}
+            alt={data.coverImage.alt}
+            width="600"
+            height="600"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-cover brightness-95 contrast-105 transition-transform duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
+          />
+        ) : (
+          <div class="flex h-full w-full flex-col justify-between bg-[#070709] p-5 select-none">
+            <span class="font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+              // ÁLBUM
+            </span>
+            <p class="font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)]">
+              {data.title}
+            </p>
+          </div>
+        )}
+
+        {/* Moldura interna sutil de encarte */}
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-2 border border-white/10"
+        />
+      </div>
+
+      {/* Ficha do Álbum */}
+      <div class="flex flex-col justify-between p-5 sm:p-6">
+        <div>
+          <div class="mb-2 flex flex-wrap items-center justify-between gap-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] uppercase">
+            <span class="text-[var(--color-v2-accent-warm)]">
+              ÁLBUM // {num}
+            </span>
+            {data.year && (
+              <span class="border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/80 px-2 py-0.5 text-[var(--color-v2-text)]">
+                {data.year}
+              </span>
+            )}
+          </div>
+
+          <h3 class="font-[family-name:var(--font-v2-display)] text-2xl leading-[1.12] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] sm:text-3xl">
+            {data.title}
+          </h3>
+
+          {data.artist && (
+            <p class="mt-1.5 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+              Artista:{' '}
+              <strong class="font-medium text-[var(--color-v2-text)]">
+                {data.artist}
+              </strong>
+            </p>
+          )}
+
+          {data.comment && (
+            <p class="mt-3 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-muted)]">
+              {data.comment}
+            </p>
+          )}
+
+          {relatedTracks.length > 0 && (
+            <div class="mt-4 border-t border-[var(--color-v2-border)] pt-2.5 font-[family-name:var(--font-v2-mono)] text-[10px]">
+              <span class="tracking-[0.14em] text-[var(--color-v2-muted)] uppercase">
+                Faixas destacadas do artista:{' '}
+              </span>
+              <span class="text-[var(--color-v2-text)]">
+                {relatedTracks.join(' · ')}
+              </span>
+            </div>
+          )}
         </div>
-      )}
 
-      <h3 class="font-display text-lg font-bold tracking-tight text-text group-hover:text-accent transition-colors">
-        {data.title}
-      </h3>
-
-      {data.artist && data.type !== 'artist' && (
-        <p class="font-mono text-xs text-text-muted mt-1">Por {data.artist}</p>
-      )}
-
-      {data.comment && (
-        <p class="font-body mt-3 text-sm leading-relaxed text-text-muted line-clamp-3">
-          {data.comment}
-        </p>
-      )}
+        {data.listenUrl && (
+          <div class="mt-5 border-t border-[var(--color-v2-border)] pt-3">
+            <a
+              href={data.listenUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-accent-warm)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+            >
+              <span>Acessar discografia no YouTube</span>
+              <span aria-hidden="true">&nearr;</span>
+            </a>
+          </div>
+        )}
+      </div>
     </div>
-  </div>
+  </article>
+)}
 
-  {/* Link de Escuta Opcional */}
-  {data.listenUrl && (
-    <div class="p-5 pt-0">
-      <a
-        href={data.listenUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-accent hover:underline"
-      >
-        <span>Ouvir no YouTube</span>
-        <span aria-hidden="true">&nearr;</span>
-      </a>
+{data.type === 'track' && (
+  <article
+    data-music-item
+    data-type="track"
+    data-title={data.title.toLowerCase()}
+    data-artist={(data.artist || '').toLowerCase()}
+    class="group relative flex flex-col justify-between gap-4 border-b border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/45 px-4 py-4 transition-colors duration-200 first:border-t hover:bg-[var(--color-v2-surface)]/90 sm:flex-row sm:items-center sm:px-6 sm:py-5"
+  >
+    <div class="flex items-center gap-4 sm:gap-5">
+      {/* Numeração da Faixa */}
+      <span class="w-7 shrink-0 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-accent-warm)]">
+        {num}
+      </span>
+
+      {/* Miniatura 1:1 (reaproveitando imagem do artista quando existente) */}
+      <div class="relative h-14 w-14 shrink-0 overflow-hidden border border-[var(--color-v2-border-hover)] bg-[#050508]">
+        {data.coverImage ? (
+          <img
+            src={withBase(data.coverImage.url)}
+            alt={data.coverImage.alt}
+            width="112"
+            height="112"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-cover brightness-95 contrast-105 transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            class="flex h-full w-full items-center justify-center bg-[#070709] font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-accent-warm)]"
+          >
+            FAIXA
+          </div>
+        )}
+      </div>
+
+      {/* Título e Artista da Faixa */}
+      <div>
+        <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <h3 class="font-[family-name:var(--font-v2-display)] text-2xl leading-none font-normal text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)]">
+            {data.title}
+          </h3>
+          {data.year && (
+            <span class="font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+              ({data.year})
+            </span>
+          )}
+        </div>
+
+        <div class="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+          {data.artist && (
+            <span>
+              Por{' '}
+              <strong class="font-normal text-[var(--color-v2-text)]">
+                {data.artist}
+              </strong>
+            </span>
+          )}
+          {relatedAlbums.length > 0 && (
+            <>
+              <span
+                aria-hidden="true"
+                class="text-[var(--color-v2-border-hover)]"
+              >
+                ·
+              </span>
+              <span class="font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)]">
+                Álbum no acervo: {relatedAlbums.join(', ')}
+              </span>
+            </>
+          )}
+        </div>
+
+        {data.comment && (
+          <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+            {data.comment}
+          </p>
+        )}
+      </div>
     </div>
-  )}
-</Card>
+
+    {/* Ação de Escuta Externa */}
+    {data.listenUrl && (
+      <div class="flex items-center justify-end sm:shrink-0">
+        <a
+          href={data.listenUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/85 px-3.5 py-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-text)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
+        >
+          <span>Ouvir no YouTube</span>
+          <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+            &nearr;
+          </span>
+        </a>
+      </div>
+    )}
+  </article>
+)}
