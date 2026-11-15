@@ -1,0 +1,131 @@
+---
+/**
+ * Registro 004 — Além do código
+ * Apresenta interesses pessoais e referências reais (história, leitura, xadrez,
+ * jogos, cinema, música e open source) em painéis editoriais assimétricos.
+ */
+import { withBase } from '../../utils/base';
+
+const personalInterests = [
+  {
+    code: '04.I',
+    title: 'História, leitura & estratégia',
+    description:
+      'Além do código, busco referências constantes na história, na literatura e na estratégia através do xadrez, mantendo o hábito de estudar obras clássicas, biografias e ensaios históricos.',
+    links: [
+      { label: 'Biblioteca de livros', href: '/livros/' },
+      { label: 'Artigos & ensaios', href: '/artigos/' },
+    ],
+    span: 'lg:col-span-7',
+  },
+  {
+    code: '04.II',
+    title: 'Cultura, narrativa & repertório',
+    description:
+      'Exploração de videogames com boa narrativa e direção estética, cinema autoral e trilhas sonoras que acompanham as horas de programação e estudo.',
+    links: [
+      { label: 'Catálogo de jogos', href: '/jogos/' },
+      { label: 'Arquivo de filmes', href: '/filmes/' },
+      { label: 'Música', href: '/musica/' },
+    ],
+    span: 'lg:col-span-5',
+  },
+];
+
+const interestTags = [
+  'História',
+  'Leitura',
+  'Xadrez',
+  'Ecossistema Open Source',
+  'Linux',
+  'Jogos & Narrativa',
+  'Cinema',
+];
+---
+
+<section
+  aria-labelledby="alem-do-codigo-title"
+  class="border-v2-border/80 border-b py-20 lg:py-28"
+>
+  <!-- Cabeçalho editorial -->
+  <div class="grid gap-6 lg:grid-cols-[16.5rem_minmax(0,1fr)_20rem] lg:items-end lg:gap-0">
+    <p class="font-v2-mono text-v2-text-muted flex items-center gap-4 text-[0.5625rem] tracking-[0.2em] uppercase lg:self-start lg:pt-2">
+      <span class="text-v2-accent">004</span>
+      <span aria-hidden="true" class="bg-v2-border h-px w-6"></span>
+      <span>Além do código</span>
+    </p>
+
+    <h2
+      id="alem-do-codigo-title"
+      class="font-v2-display text-v2-text max-w-[38rem] text-[clamp(2.1rem,3.2vw,3.5rem)] leading-[1.04] font-medium tracking-[-0.01em]"
+    >
+      Interesses pessoais e horizontes culturais.
+    </h2>
+
+    <p class="font-v2-sans text-v2-text-muted text-xs leading-[1.7] font-light lg:justify-self-end">
+      Referências intelectuais e culturais que alimentam o repertório registrado
+      neste arquivo.
+    </p>
+  </div>
+
+  <!-- Painéis editoriais assimétricos (7 / 5 colunas no desktop) -->
+  <div class="mt-14 grid grid-cols-1 gap-6 lg:mt-20 lg:grid-cols-12">
+    {personalInterests.map((panel) => (
+      <article
+        class:list={[
+          'border-v2-border/80 bg-v2-surface/50 relative flex flex-col justify-between border p-7 sm:p-9',
+          panel.span,
+        ]}
+      >
+        <div>
+          <div class="border-v2-border/60 mb-5 flex items-center justify-between border-b pb-3">
+            <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+              Registro {panel.code}
+            </span>
+            <span
+              aria-hidden="true"
+              class="border-v2-accent/60 h-2 w-2 border-t border-r"
+            />
+          </div>
+
+          <h3 class="font-v2-display text-v2-text text-2xl leading-[1.12] font-medium sm:text-[1.75rem]">
+            {panel.title}
+          </h3>
+
+          <p class="font-v2-sans text-v2-text-muted mt-4 text-sm leading-[1.8] font-light">
+            {panel.description}
+          </p>
+        </div>
+
+        <div class="border-v2-border/50 mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t pt-4">
+          {panel.links.map((link) => (
+            <a
+              href={withBase(link.href)}
+              class="v2-focus group font-v2-sans text-v2-text hover:text-v2-accent-warm inline-flex items-center gap-2 text-[0.625rem] tracking-[0.18em] uppercase transition-colors motion-reduce:transition-none"
+            >
+              <span>{link.label}</span>
+              <span
+                aria-hidden="true"
+                class="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+              >
+                →
+              </span>
+            </a>
+          ))}
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <!-- Faixa discreta de interesses complementares (dados reais do dossiê) -->
+  <div class="border-v2-border/60 mt-6 flex flex-wrap items-center justify-between gap-4 border px-6 py-4">
+    <span class="font-v2-mono text-v2-text-muted/80 text-[0.5625rem] tracking-[0.2em] uppercase">
+      Interesses complementares
+    </span>
+    <ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
+      {interestTags.map((item) => (
+        <li class="font-v2-sans text-v2-text text-xs font-light">{item}</li>
+      ))}
+    </ul>
+  </div>
+</section>

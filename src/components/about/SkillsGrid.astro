@@ -1,6 +1,9 @@
 ---
-import Card from '../ui/Card.astro';
-
+/**
+ * Registro 003 — Conhecimentos e ferramentas
+ * Apresenta as tecnologias e ferramentas reais organizadas por categorias
+ * em formato de índice editorial, sem barras de progresso ou porcentagens.
+ */
 interface SkillGroup {
   category: string;
   code: string;
@@ -10,30 +13,33 @@ interface SkillGroup {
 const skillGroups: SkillGroup[] = [
   {
     category: 'Linguagens & Fundamentos',
-    code: 'MOD.LANG',
+    code: '03.A // MOD.LANG',
     skills: [
       { name: 'TypeScript', tag: 'Core' },
       { name: 'JavaScript (ES6+)', tag: 'Core' },
       { name: 'HTML5 & CSS3', tag: 'Web' },
       { name: 'Java', tag: 'POO / Algoritmos' },
       { name: 'SQL', tag: 'Bancos de dados' },
+      { name: 'C / C++', tag: 'Fundamentos' },
     ],
   },
   {
     category: 'Ambiente & Ferramentas',
-    code: 'MOD.ENV',
+    code: '03.B // MOD.ENV',
     skills: [
       { name: 'Fedora Linux', tag: 'SO diário' },
       { name: 'GNOME Shell', tag: 'Desktop' },
       { name: 'Git & GitHub', tag: 'Versionamento' },
       { name: 'Astro', tag: 'Static Site' },
+      { name: 'React', tag: 'Interfaces' },
       { name: 'Tailwind CSS', tag: 'Estilos' },
       { name: 'VS Code', tag: 'Editor' },
+      { name: 'PostgreSQL', tag: 'Dados' },
     ],
   },
   {
     category: 'Interesses Técnicos & Arquitetura',
-    code: 'MOD.SYS',
+    code: '03.C // MOD.SYS',
     skills: [
       { name: 'Desenvolvimento Web', tag: 'Prática' },
       { name: 'Sistemas Operacionais', tag: 'Estudo ativo' },
@@ -45,41 +51,64 @@ const skillGroups: SkillGroup[] = [
 ];
 ---
 
-<section class="border-b border-border/80 py-12">
-  <div class="mb-8">
-    <p class="font-mono text-xs tracking-wider text-accent-alt uppercase">
-      // COMPETÊNCIAS & AMBIENTE TÉCNICO
+<section
+  aria-labelledby="conhecimentos-title"
+  class="border-v2-border/80 border-b py-20 lg:py-28"
+>
+  <!-- Cabeçalho editorial -->
+  <div class="grid gap-6 lg:grid-cols-[16.5rem_minmax(0,1fr)_20rem] lg:items-end lg:gap-0">
+    <p class="font-v2-mono text-v2-text-muted flex items-center gap-4 text-[0.5625rem] tracking-[0.2em] uppercase lg:self-start lg:pt-2">
+      <span class="text-v2-accent">003</span>
+      <span aria-hidden="true" class="bg-v2-border h-px w-6"></span>
+      <span>Conhecimentos</span>
     </p>
-    <h2 class="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl mt-1">
-      Matriz de conhecimentos
+
+    <h2
+      id="conhecimentos-title"
+      class="font-v2-display text-v2-text max-w-[38rem] text-[clamp(2.1rem,3.2vw,3.5rem)] leading-[1.04] font-medium tracking-[-0.01em]"
+    >
+      Repertório técnico e ferramentas.
     </h2>
-    <p class="font-body text-sm text-text-muted mt-2 max-w-2xl">
+
+    <p class="font-v2-sans text-v2-text-muted text-xs leading-[1.7] font-light lg:justify-self-end">
       Linguagens, ferramentas cotidianas e tópicos de engenharia computacional
       explorados no aprendizado e nos projetos.
     </p>
   </div>
 
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+  <!-- Grade editorial em 3 colunas separadas por linhas finas -->
+  <div class="border-v2-border/80 mt-14 grid grid-cols-1 divide-y divide-v2-border/70 border lg:mt-20 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
     {skillGroups.map((group) => (
-      <Card class="flex flex-col border-border/70 bg-surface/80 p-5">
-        <div class="mb-4 flex items-center justify-between border-b border-border/50 pb-2.5">
-          <h3 class="font-display text-base font-bold text-text">
+      <div class="bg-v2-surface/40 flex flex-col justify-between p-7 sm:p-9">
+        <div>
+          <div class="border-v2-border/60 mb-6 flex items-center justify-between border-b pb-4">
+            <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.18em] uppercase">
+              {group.code}
+            </span>
+            <span
+              aria-hidden="true"
+              class="bg-v2-accent/70 inline-block h-1 w-1"
+            />
+          </div>
+
+          <h3 class="font-v2-display text-v2-text text-2xl font-medium tracking-tight">
             {group.category}
           </h3>
-          <span class="font-mono text-[11px] text-accent/80">{group.code}</span>
-        </div>
 
-        <ul class="space-y-2.5 font-mono text-xs">
-          {group.skills.map((skill) => (
-            <li class="flex items-center justify-between rounded bg-surface-raised/60 px-2.5 py-1.5 border border-border/40">
-              <span class="text-text font-medium">{skill.name}</span>
-              <span class="text-[10px] text-text-muted uppercase">
-                {skill.tag}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </Card>
+          <ul class="divide-v2-border/40 mt-6 divide-y">
+            {group.skills.map((skill) => (
+              <li class="flex items-baseline justify-between gap-4 py-3">
+                <span class="font-v2-sans text-v2-text text-sm font-normal">
+                  {skill.name}
+                </span>
+                <span class="font-v2-mono text-v2-text-muted text-[0.625rem] tracking-[0.12em] uppercase">
+                  {skill.tag}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     ))}
   </div>
 </section>
