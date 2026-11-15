@@ -2,145 +2,264 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
 import RatingPanel from '../../components/content/RatingPanel.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
-import Button from '../../components/ui/Button.astro';
-import Card from '../../components/ui/Card.astro';
 import { withBase } from '../../utils/base';
 import { calculateGameScore, formatScore } from '../../utils/ratings';
 
 export async function getStaticPaths() {
   const games = await getCollection('games');
-  return games.map((game) => ({
+  const sorted = [...games].sort(
+    (a, b) =>
+      b.data.releaseYear - a.data.releaseYear ||
+      a.data.title.localeCompare(b.data.title, 'pt-BR'),
+  );
+
+  return sorted.map((game, index) => ({
     params: { id: game.id },
-    props: { game },
+    props: {
+      game,
+      prevGame: index > 0 ? sorted[index - 1] : null,
+      nextGame: index < sorted.length - 1 ? sorted[index + 1] : null,
+    },
   }));
 }
 
 interface Props {
   game: CollectionEntry<'games'>;
+  prevGame?: CollectionEntry<'games'> | null;
+  nextGame?: CollectionEntry<'games'> | null;
 }
 
-const { game } = Astro.props;
-const { data } = game;
+const { game, prevGame = null, nextGame = null } = Astro.props;
+const { data, id } = game;
 
 const finalScore = calculateGameScore(data.scores);
 const formattedFinal = formatScore(finalScore);
+
+const statusLabels: Record<string, string> = {
+  Platinado: 'Platinado',
+  Concluido: 'Concluído',
+  Jogando: 'Jogando',
+  Parado: 'Parado',
+  Descontinuado: 'Descontinuado',
+};
+
+const statusLabel = statusLabels[data.status] || data.status;
 ---
 
 <BaseLayout
+  variant="v2"
   title={`${data.title} — Avaliação de Jogos // guilherme.dev`}
-  description={data.description || `Avaliação e notas técnicas de ${data.title} (${data.releaseYear}), para ${data.platform}.`}
+  description={
+    data.description ||
+    `Avaliação e notas técnicas de ${data.title} (${data.releaseYear}), para ${data.platform}.`
+  }
   image={data.coverImage.url}
   noindex={data.isDemo}
 >
-  <div class="py-12 md:py-16">
-    <Container class="max-w-4xl">
-      {/* Botão de retorno */}
-      <div class="mb-8">
-        <Button href={withBase('/jogos/')} variant="ghost" class="px-0">
-          &larr; Voltar para catálogo de jogos
-        </Button>
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera sutil derivada da própria capa do jogo */}
+    {!data.coverImage.isPlaceholder && data.coverImage.url && (
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-x-0 top-0 h-[520px] overflow-hidden"
+      >
+        <img
+          src={withBase(data.coverImage.url)}
+          alt=""
+          width="600"
+          height="800"
+          loading="eager"
+          decoding="async"
+          class="h-full w-full scale-110 object-cover object-center opacity-[0.10] blur-3xl filter"
+        />
+        <div
+          class="absolute inset-0"
+          style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.88) 65%, #070709 100%);"
+        />
+      </div>
+    )}
+
+    <div class="relative mx-auto w-full max-w-[1040px] px-5 pt-10 sm:px-8 md:pt-14">
+      {/* Barra superior de retorno e identificação do registro */}
+      <div class="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-[var(--color-v2-border)] pb-4">
+        <a
+          href={withBase('/jogos/')}
+          class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+        >
+          <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+            &larr;
+          </span>
+          <span>Voltar para catálogo de jogos</span>
+        </a>
+
+        <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+          REGISTRO LÚDICO // {id}
+        </span>
       </div>
 
-      {/* Hero com Capa e Dados Principais */}
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-start border-b border-border/80 pb-12">
+      {/* Hero do Dossiê: Capa 3:4 + Ficha Técnica + Nota Geral */}
+      <div class="grid grid-cols-1 gap-8 border-b border-[var(--color-v2-border)] pb-12 md:grid-cols-12 md:items-start lg:gap-12">
+        {/* Coluna da Capa (3:4) */}
         <div class="md:col-span-5 lg:col-span-4">
-          <div class="relative aspect-[3/4] overflow-hidden rounded-lg border border-border/80 bg-surface-raised shadow-xl">
-            {!data.coverImage.isPlaceholder && data.coverImage.url ? (
-              <img
-                src={withBase(data.coverImage.url)}
-                alt={data.coverImage.alt}
-                width="600"
-                height="800"
-                loading="eager"
-                decoding="async"
-                class="h-full w-full object-cover filter contrast-110 brightness-95"
-              />
-            ) : (
-              <div class="flex h-full w-full flex-col justify-between p-8 bg-gradient-to-br from-surface to-surface-raised border border-border/40 select-none">
-                <div class="flex items-center justify-between font-mono text-xs text-accent">
-                  <span>// CARTUCHO / MÍDIA</span>
-                  <span>{data.platform}</span>
+          <div class="relative mx-auto max-w-[340px] border border-[var(--color-v2-border-hover)] bg-[#050508] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.75)] md:mx-0 md:max-w-none">
+            {/* Cantoneiras em bronze */}
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute -top-px -left-px h-3.5 w-3.5 border-t border-l border-[var(--color-v2-accent-warm)]"
+            ></span>
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute -top-px -right-px h-3.5 w-3.5 border-t border-r border-[var(--color-v2-accent-warm)]"
+            ></span>
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute -bottom-px -left-px h-3.5 w-3.5 border-b border-l border-[var(--color-v2-accent-warm)]"
+            ></span>
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute -bottom-px -right-px h-3.5 w-3.5 border-b border-r border-[var(--color-v2-accent-warm)]"
+            ></span>
+
+            <div class="relative aspect-[3/4] overflow-hidden border border-[var(--color-v2-border)] bg-[#070709]">
+              {!data.coverImage.isPlaceholder && data.coverImage.url ? (
+                <img
+                  src={withBase(data.coverImage.url)}
+                  alt={data.coverImage.alt}
+                  width="600"
+                  height="800"
+                  loading="eager"
+                  decoding="async"
+                  class="h-full w-full object-cover brightness-[0.97] contrast-[1.03]"
+                />
+              ) : (
+                <div class="flex h-full w-full flex-col justify-between bg-[#070709] p-8 select-none">
+                  <div class="flex items-center justify-between font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-accent-warm)]">
+                    <span>// CARTUCHO / MÍDIA</span>
+                    <span>{data.platform}</span>
+                  </div>
+                  <div>
+                    <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+                      {data.title}
+                    </h2>
+                    <p class="mt-2 font-[family-name:var(--font-v2-mono)] text-sm text-[var(--color-v2-muted)]">
+                      {data.developer || data.genre}
+                    </p>
+                  </div>
+                  <div class="flex items-center justify-between border-t border-[var(--color-v2-border)] pt-3 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
+                    <span>Lançamento: {data.releaseYear}</span>
+                    <span class="border border-[var(--color-v2-accent-warm)]/40 px-2 py-0.5 text-[10px] text-[var(--color-v2-accent-warm)]">
+                      Capa Provisória
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <h2 class="font-display text-2xl font-bold text-text leading-tight">
-                    {data.title}
-                  </h2>
-                  <p class="font-mono text-sm text-text-muted mt-2">
-                    {data.developer || data.genre}
-                  </p>
-                </div>
-                <div class="flex items-center justify-between font-mono text-xs text-text-muted/60 pt-2 border-t border-border/40">
-                  <span>Lançamento: {data.releaseYear}</span>
-                  <span class="rounded border border-accent/40 bg-accent/10 px-2 py-0.5 text-accent font-mono text-[10px]">
-                    Capa Provisória
-                  </span>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
 
-        <div class="md:col-span-7 lg:col-span-8 flex flex-col justify-between">
+        {/* Coluna de Informações e Síntese Analítica */}
+        <div class="flex flex-col justify-between md:col-span-7 lg:col-span-8">
           <div>
-            <div class="mb-3 flex flex-wrap items-center gap-2 font-mono text-xs">
-              <span class="text-accent uppercase tracking-wider font-semibold">
+            {/* Eyebrow de Categoria & Ano */}
+            <div class="mb-3 flex flex-wrap items-center gap-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] uppercase">
+              <span class="text-[var(--color-v2-accent-warm)]">
                 // {data.genre}
               </span>
-              <span class="text-border" aria-hidden="true">
+              <span
+                class="text-[var(--color-v2-border-hover)]"
+                aria-hidden="true"
+              >
                 ·
               </span>
-              <span class="text-text-muted">{data.releaseYear}</span>
+              <span class="text-[var(--color-v2-text)]">
+                {data.releaseYear}
+              </span>
               {data.developer && (
                 <>
-                  <span class="text-border" aria-hidden="true">
+                  <span
+                    class="text-[var(--color-v2-border-hover)]"
+                    aria-hidden="true"
+                  >
                     ·
                   </span>
-                  <span class="text-text-muted">{data.developer}</span>
+                  <span class="text-[var(--color-v2-muted)]">
+                    {data.developer}
+                  </span>
                 </>
               )}
             </div>
 
-            <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-text">
+            {/* Título da Obra */}
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.06] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl">
               {data.title}
             </h1>
 
-            {/* Metadados: Plataforma e Status */}
-            <div class="mt-4 flex flex-wrap items-center gap-2 font-mono text-xs">
-              <div class="rounded border border-border/70 bg-surface px-2.5 py-1 text-text-muted">
-                <span class="text-text-muted/70 mr-1">Plataforma:</span>
-                <strong class="text-text font-semibold">{data.platform}</strong>
+            {/* Grade de Ficha Técnica */}
+            <dl class="mt-6 grid grid-cols-2 gap-3 border-y border-[var(--color-v2-border)] py-5 sm:grid-cols-4">
+              <div>
+                <dt class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+                  Plataforma
+                </dt>
+                <dd class="mt-1 font-[family-name:var(--font-v2-sans)] text-sm font-medium text-[var(--color-v2-heading)]">
+                  {data.platform}
+                </dd>
               </div>
 
-              <div class="rounded border border-accent/40 bg-surface px-2.5 py-1 text-accent font-semibold">
-                <span class="text-text-muted/70 mr-1">Status:</span>
-                <span>{data.status}</span>
+              <div>
+                <dt class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+                  Status
+                </dt>
+                <dd class="mt-1 font-[family-name:var(--font-v2-sans)] text-sm font-medium text-[var(--color-v2-accent-warm)]">
+                  {statusLabel}
+                </dd>
               </div>
-            </div>
+
+              <div>
+                <dt class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+                  Estúdio / Dev
+                </dt>
+                <dd class="mt-1 font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-text)]">
+                  {data.developer || '—'}
+                </dd>
+              </div>
+
+              <div>
+                <dt class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+                  Lançamento
+                </dt>
+                <dd class="mt-1 font-[family-name:var(--font-v2-mono)] text-sm text-[var(--color-v2-text)]">
+                  {data.releaseYear}
+                </dd>
+              </div>
+            </dl>
 
             {data.description && (
-              <p class="font-body mt-4 text-base leading-relaxed text-text-muted">
+              <p class="mt-6 font-[family-name:var(--font-v2-sans)] text-base leading-relaxed font-light text-[var(--color-v2-text)]">
                 {data.description}
               </p>
             )}
           </div>
 
-          <div class="mt-8 rounded-lg border border-accent/30 bg-surface-raised/50 p-4 flex items-center justify-between">
+          {/* Selo de Média Geral de Avaliação */}
+          <div class="mt-8 flex flex-wrap items-center justify-between gap-4 border border-[var(--color-v2-accent-warm)]/35 bg-[var(--color-v2-surface)]/90 p-5 sm:p-6">
             <div>
-              <span class="font-mono text-xs text-text-muted uppercase block">
+              <span class="block font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
                 Média Geral de Avaliação
               </span>
-              <span class="font-mono text-[11px] text-text-muted/70">
-                Escala uniforme de 0 a 100
+              <span class="mt-1 block font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+                Escala uniforme de 0 a 100 · cinco critérios de peso equivalente
               </span>
             </div>
-            <div class="text-right">
-              <span class="font-display text-3xl font-extrabold text-accent drop-shadow-[0_0_10px_var(--color-accent)]">
+
+            <div class="flex items-baseline gap-1.5">
+              <span class="font-[family-name:var(--font-v2-display)] text-4xl leading-none font-normal text-[var(--color-v2-heading)] sm:text-5xl">
                 {formattedFinal}
               </span>
-              <span class="font-mono text-xs text-text-muted/60">/ 100</span>
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-accent-warm)]">
+                / 100
+              </span>
             </div>
           </div>
         </div>
@@ -149,32 +268,88 @@ const formattedFinal = formatScore(finalScore);
       {/* Aviso de mock data */}
       {data.isDemo && <DemoNotice variant="item" class="my-8" />}
 
-      {/* Seção das Notas em 5 Eixos */}
+      {/* Painel das Notas em 5 Eixos */}
       <div class="my-10">
         <RatingPanel scores={data.scores} />
       </div>
 
-      {/* Parecer / Opinião Crítica */}
+      {/* Parecer / Opinião Crítica (quando preenchido) */}
       {data.opinion && (
-        <div class="mt-10 border-t border-border/80 pt-8">
-          <h2 class="font-display text-2xl font-bold tracking-tight text-text mb-4">
-            Parecer Crítico
-          </h2>
-          <Card class="border-border/70 bg-surface/80 p-6 font-body text-base leading-relaxed text-text-muted">
+        <section class="mt-10 border-t border-[var(--color-v2-border)] pt-8">
+          <div class="mb-4 flex items-center gap-2.5">
+            <span
+              aria-hidden="true"
+              class="inline-block h-1.5 w-1.5 bg-[var(--color-v2-accent)]"
+            />
+            <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              Parecer Crítico
+            </h2>
+          </div>
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 p-6 font-[family-name:var(--font-v2-sans)] text-base leading-relaxed font-light text-[var(--color-v2-text)]">
             <p>{data.opinion}</p>
-          </Card>
-        </div>
+          </div>
+        </section>
       )}
 
-      {/* Ações de navegação no rodapé da página */}
-      <div class="mt-12 flex justify-between border-t border-border/60 pt-6">
-        <Button href={withBase('/jogos/')} variant="secondary">
-          &larr; Voltar para catálogo
-        </Button>
-        <Button href={withBase('/')} variant="ghost">
-          Início &rarr;
-        </Button>
-      </div>
-    </Container>
+      {/* Navegação entre Obras e Rodapé da Página */}
+      <nav
+        aria-label="Navegação do catálogo de jogos"
+        class="mt-12 border-t border-[var(--color-v2-border)] pt-8"
+      >
+        {(prevGame || nextGame) && (
+          <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {prevGame ? (
+              <a
+                href={withBase(`/jogos/${prevGame.id}/`)}
+                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 transition-colors hover:border-[var(--color-v2-border-hover)]"
+              >
+                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+                  &larr; Registro anterior
+                </span>
+                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
+                  {prevGame.data.title} ({prevGame.data.releaseYear})
+                </span>
+              </a>
+            ) : (
+              <div />
+            )}
+
+            {nextGame && (
+              <a
+                href={withBase(`/jogos/${nextGame.id}/`)}
+                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 text-right transition-colors hover:border-[var(--color-v2-border-hover)]"
+              >
+                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+                  Próximo registro &rarr;
+                </span>
+                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
+                  {nextGame.data.title} ({nextGame.data.releaseYear})
+                </span>
+              </a>
+            )}
+          </div>
+        )}
+
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <a
+            href={withBase('/jogos/')}
+            class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] px-4 py-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
+          >
+            <span aria-hidden="true">&larr;</span>
+            <span>Voltar para catálogo</span>
+          </a>
+
+          <a
+            href={withBase('/')}
+            class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+          >
+            <span>Início</span>
+            <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+              &rarr;
+            </span>
+          </a>
+        </div>
+      </nav>
+    </div>
   </div>
 </BaseLayout>

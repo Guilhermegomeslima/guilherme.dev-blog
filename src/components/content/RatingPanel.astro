@@ -1,5 +1,4 @@
 ---
-import Card from '../ui/Card.astro';
 import {
   calculateGameScore,
   calculateMovieScore,
@@ -25,19 +24,76 @@ const formattedFinal = formatScore(finalScore);
 
 const criteriaList = isMovie
   ? [
-      { label: 'Direção', score: (scores as MovieScores).direction },
-      { label: 'Roteiro', score: (scores as MovieScores).screenplay },
-      { label: 'Audiovisual', score: (scores as MovieScores).audiovisual },
-      { label: 'Atuação', score: (scores as MovieScores).acting },
-      { label: 'Ritmo', score: (scores as MovieScores).pacing },
-      { label: 'Feeling', score: (scores as MovieScores).feeling },
+      {
+        code: '01',
+        label: 'Direção',
+        description: 'Condução formal, mise-en-scène e coesão autoral',
+        score: (scores as MovieScores).direction,
+      },
+      {
+        code: '02',
+        label: 'Roteiro',
+        description: 'Estrutura dramática, diálogos e desenvolvimento temático',
+        score: (scores as MovieScores).screenplay,
+      },
+      {
+        code: '03',
+        label: 'Audiovisual',
+        description: 'Fotografia, direção de arte, desenho de som e trilha',
+        score: (scores as MovieScores).audiovisual,
+      },
+      {
+        code: '04',
+        label: 'Atuação',
+        description: 'Presença cênica, entrega dramática e verossimilhança',
+        score: (scores as MovieScores).acting,
+      },
+      {
+        code: '05',
+        label: 'Ritmo',
+        description: 'Montagem, cadência narrativa e sustentação do interesse',
+        score: (scores as MovieScores).pacing,
+      },
+      {
+        code: '06',
+        label: 'Feeling',
+        description: 'Ressonância subjetiva, impacto pessoal e permanência',
+        score: (scores as MovieScores).feeling,
+      },
     ]
   : [
-      { label: 'Mecânica', score: (scores as GameScores).mechanics },
-      { label: 'Enredo', score: (scores as GameScores).plot },
-      { label: 'Estética', score: (scores as GameScores).aesthetics },
-      { label: 'Retenção', score: (scores as GameScores).retention },
-      { label: 'Feeling', score: (scores as GameScores).feeling },
+      {
+        code: '01',
+        label: 'Mecânica',
+        description:
+          'Sistemas de jogo, controles, resposta e desenho de desafios',
+        score: (scores as GameScores).mechanics,
+      },
+      {
+        code: '02',
+        label: 'Enredo',
+        description: 'Construção de mundo, narrativa, personagens e escrita',
+        score: (scores as GameScores).plot,
+      },
+      {
+        code: '03',
+        label: 'Estética',
+        description: 'Direção de arte, atmosfera visual, trilha sonora e áudio',
+        score: (scores as GameScores).aesthetics,
+      },
+      {
+        code: '04',
+        label: 'Retenção',
+        description: 'Ritmo de progressão, engajamento e fator de revisitação',
+        score: (scores as GameScores).retention,
+      },
+      {
+        code: '05',
+        label: 'Feeling',
+        description:
+          'Impacto subjetivo, identidade e memória afetiva da experiência',
+        score: (scores as GameScores).feeling,
+      },
     ];
 
 const validCount = criteriaList.filter(
@@ -49,51 +105,106 @@ const hasNullCriterion = criteriaList.some(
 const subtitle = isMovie
   ? 'Métricas Cinematográficas'
   : 'Métricas de Desempenho';
+const equalWeightLabel =
+  validCount > 0 ? `${Math.round((100 / validCount) * 10) / 10}% por eixo` : '';
 ---
 
-<Card
+<section
+  aria-label={subtitle}
   class:list={[
-    'border-border/80 bg-surface/90 p-6 backdrop-blur-xs shadow-lg',
+    'relative border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/85 p-6 sm:p-8',
     className,
   ]}
 >
-  <div class="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-border/50 pb-4">
+  {/* Cantoneiras discretas em bronze */}
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-px -left-px h-3 w-3 border-t border-l border-[var(--color-v2-accent-warm)]/60"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-px -right-px h-3 w-3 border-t border-r border-[var(--color-v2-accent-warm)]/60"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -bottom-px -left-px h-3 w-3 border-b border-l border-[var(--color-v2-accent-warm)]/60"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -bottom-px -right-px h-3 w-3 border-b border-r border-[var(--color-v2-accent-warm)]/60"
+  ></span>
+
+  {/* Cabeçalho do Painel */}
+  <div class="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-[var(--color-v2-border)] pb-5">
     <div>
-      <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-        // AVALIAÇÃO TÉCNICA
-      </span>
-      <h3 class="font-display text-lg font-bold text-text mt-0.5">
+      <div class="mb-2 flex items-center gap-2.5">
+        <span
+          aria-hidden="true"
+          class="inline-block h-1.5 w-1.5 bg-[var(--color-v2-accent)]"
+        ></span>
+        <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
+          AVALIAÇÃO TÉCNICA // {criteriaList.length} DIMENSÕES
+        </span>
+      </div>
+      <h3 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] sm:text-3xl">
         {subtitle}
       </h3>
     </div>
 
     {/* Placa da Nota Final em Destaque */}
-    <div class="flex items-center gap-3 rounded-lg border border-accent/40 bg-surface-raised/80 px-4 py-2">
-      <span class="font-mono text-xs text-text-muted uppercase">
-        Nota Final:
+    <div class="flex items-baseline gap-3 border border-[var(--color-v2-accent-warm)]/35 bg-[var(--color-v2-bg)]/90 px-4 py-2.5">
+      <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+        Média Final
       </span>
-      <span class="font-display text-2xl font-extrabold text-accent drop-shadow-[0_0_8px_var(--color-accent)]">
-        {formattedFinal}
-      </span>
-      <span class="font-mono text-xs text-text-muted/60">/ 100</span>
+      <div class="flex items-baseline gap-1">
+        <span class="font-[family-name:var(--font-v2-display)] text-3xl leading-none font-normal text-[var(--color-v2-heading)]">
+          {formattedFinal}
+        </span>
+        <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-accent-warm)]">
+          / 100
+        </span>
+      </div>
     </div>
   </div>
 
-  {/* Gráfico de Barras dos Critérios */}
-  <div class="space-y-4">
+  {/* Lista dos Critérios de Avaliação */}
+  <div class="space-y-6">
     {criteriaList.map((crit) => (
-      <div>
-        <div class="mb-1.5 flex items-center justify-between font-mono text-xs">
-          <span class="text-text font-medium">{crit.label}</span>
-          {crit.score !== null && crit.score !== undefined ? (
-            <span class="text-accent">{crit.score} / 100</span>
-          ) : (
-            <span class="text-text-muted italic">N/A (Não aplicável)</span>
-          )}
+      <div class="group/crit">
+        <div class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+          <div class="flex items-baseline gap-3">
+            <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.14em] text-[var(--color-v2-accent-warm)]/75">
+              {crit.code}
+            </span>
+            <span class="font-[family-name:var(--font-v2-sans)] text-sm font-medium tracking-[0.02em] text-[var(--color-v2-heading)]">
+              {crit.label}
+            </span>
+            <span class="hidden font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)] sm:inline">
+              — {crit.description}
+            </span>
+          </div>
+
+          <div class="flex items-baseline gap-2 font-[family-name:var(--font-v2-mono)] text-xs">
+            {crit.score !== null && crit.score !== undefined ? (
+              <>
+                <span class="text-sm font-normal text-[var(--color-v2-heading)]">
+                  {crit.score}
+                </span>
+                <span class="text-[11px] text-[var(--color-v2-muted)]">
+                  / 100
+                </span>
+              </>
+            ) : (
+              <span class="text-[11px] text-[var(--color-v2-muted)] italic">
+                N/A (Não aplicável)
+              </span>
+            )}
+          </div>
         </div>
 
+        {/* Barra de Medição */}
         <div
-          class="h-2 w-full overflow-hidden rounded-full bg-surface-raised border border-border/40"
+          class="relative h-2 w-full overflow-hidden border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]"
           role="progressbar"
           aria-valuenow={crit.score ?? 0}
           aria-valuemin="0"
@@ -104,24 +215,40 @@ const subtitle = isMovie
               : `Nota de ${crit.label}: Não aplicável`
           }
         >
+          {/* Marcações de escala (25%, 50%, 75%) */}
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-y-0 left-1/4 z-10 w-px bg-white/[0.06]"
+          />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-y-0 left-2/4 z-10 w-px bg-white/[0.08]"
+          />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-y-0 left-3/4 z-10 w-px bg-white/[0.06]"
+          />
+
           {crit.score !== null && crit.score !== undefined ? (
             <div
-              class="h-full rounded-full bg-gradient-to-r from-accent/70 to-accent transition-all duration-500 shadow-[0_0_6px_var(--color-accent)]"
-              style={`width: ${crit.score}%;`}
+              class="h-full transition-all duration-500"
+              style={`width: ${crit.score}%; background: linear-gradient(90deg, rgba(139, 30, 45, 0.85) 0%, rgba(198, 166, 107, 0.95) 100%);`}
             />
           ) : (
-            <div class="h-full w-full bg-border/20" />
+            <div class="h-full w-full bg-white/[0.03]" />
           )}
         </div>
       </div>
     ))}
   </div>
 
-  <div class="mt-6 border-t border-border/40 pt-3 text-right">
-    <span class="font-mono text-[11px] text-text-muted/70">
+  {/* Rodapé Metodológico */}
+  <div class="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--color-v2-border)] pt-4 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+    <span>Pesos equivalentes ({equalWeightLabel})</span>
+    <span>
       {hasNullCriterion
         ? `* Média aritmética simples sem pesos calculada a partir dos ${validCount} eixos aplicáveis (Enredo N/A).`
         : `* Média aritmética simples sem pesos calculada a partir dos ${validCount} eixos.`}
     </span>
   </div>
-</Card>
+</section>

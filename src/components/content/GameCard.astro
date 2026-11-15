@@ -1,14 +1,14 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import Card from '../ui/Card.astro';
 import { calculateGameScore, formatScore } from '../../utils/ratings';
 import { withBase } from '../../utils/base';
 
 interface Props {
   game: CollectionEntry<'games'>;
+  index?: number;
 }
 
-const { game } = Astro.props;
+const { game, index = 0 } = Astro.props;
 const { data, id } = game;
 
 const finalScore = calculateGameScore(data.scores);
@@ -21,73 +21,105 @@ const statusConfig: Record<
 > = {
   Platinado: {
     label: 'Platinado',
-    badgeClass: 'border-warm/50 bg-warm/15 text-warm',
+    badgeClass:
+      'border-[var(--color-v2-accent-warm)]/55 bg-[#070709]/92 text-[var(--color-v2-accent-warm)]',
+    dotClass: 'bg-[var(--color-v2-accent-warm)]',
   },
   Concluido: {
     label: 'Concluído',
-    badgeClass: 'border-accent/40 bg-accent/15 text-accent',
+    badgeClass:
+      'border-[var(--color-v2-border-hover)] bg-[#070709]/90 text-[var(--color-v2-text)]',
   },
   Jogando: {
     label: 'Jogando',
-    badgeClass: 'border-accent/60 bg-surface/90 text-accent font-semibold',
-    dotClass: 'bg-accent animate-pulse',
+    badgeClass:
+      'border-[var(--color-v2-accent)]/70 bg-[#070709]/92 text-[#e47986]',
+    dotClass: 'bg-[var(--color-v2-accent)] animate-pulse',
   },
   Parado: {
     label: 'Parado',
-    badgeClass: 'border-border/70 bg-surface-raised text-text-muted',
+    badgeClass:
+      'border-[var(--color-v2-border)] bg-[#070709]/88 text-[var(--color-v2-muted)]',
   },
   Descontinuado: {
     label: 'Descontinuado',
-    badgeClass: 'border-border/60 bg-surface-raised text-text-muted/70',
+    badgeClass:
+      'border-[var(--color-v2-border)] bg-[#070709]/88 text-[var(--color-v2-muted)]/75',
   },
 };
 
 const currentStatus = statusConfig[data.status] || {
   label: data.status,
-  badgeClass: 'border-border/60 bg-surface-raised text-text-muted',
+  badgeClass:
+    'border-[var(--color-v2-border)] bg-[#070709]/88 text-[var(--color-v2-muted)]',
 };
+
+const miniAxes = [
+  { key: 'MEC', val: data.scores.mechanics },
+  { key: 'ENR', val: data.scores.plot },
+  { key: 'EST', val: data.scores.aesthetics },
+  { key: 'RET', val: data.scores.retention },
+  { key: 'FEE', val: data.scores.feeling },
+];
 ---
 
-<Card
-  as="article"
-  interactive
-  class="flex flex-col justify-between border-border/80 bg-surface/90 p-0 overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 group"
+<article
+  data-game-card
+  data-title={data.title.toLowerCase()}
+  data-genre={data.genre.toLowerCase()}
+  data-developer={(data.developer || '').toLowerCase()}
+  data-status={data.status}
+  data-platform={data.platform}
+  data-year={data.releaseYear}
+  data-score={finalScore}
+  data-index={index}
+  class="group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
 >
-  <a href={gameHref} class="flex flex-col h-full">
-    {/* Capa em proporção vertical (pôster 3:4) */}
-    <div class="relative aspect-[3/4] w-full overflow-hidden bg-surface-raised border-b border-border/60">
+  <a
+    href={gameHref}
+    class="v2-focus flex h-full flex-col justify-between"
+    aria-label={`${data.title} (${data.releaseYear}) — Nota ${formattedFinal} de 100`}
+  >
+    {/* Moldura da Capa 3:4 */}
+    <div class="relative aspect-[3/4] w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508]">
       {!data.coverImage.isPlaceholder && data.coverImage.url ? (
         <img
           src={withBase(data.coverImage.url)}
           alt={data.coverImage.alt}
           width="600"
           height="800"
-          loading="lazy"
+          loading={index < 8 ? 'eager' : 'lazy'}
           decoding="async"
-          class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105 group-hover:brightness-100"
+          class="h-full w-full object-cover brightness-[0.94] contrast-[1.04] transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
         />
       ) : (
-        <div class="flex h-full w-full flex-col justify-center items-center p-6 text-center bg-gradient-to-br from-surface via-surface-raised to-surface border border-border/40 select-none">
-          <span class="font-mono text-xs text-accent uppercase tracking-widest mb-2">
-            // CARTUCHO / MÍDIA
+        <div class="flex h-full w-full flex-col items-center justify-center bg-[#070709] p-6 text-center select-none">
+          <span class="mb-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
+            // MÍDIA CATALOGADA
           </span>
-          <h4 class="font-display text-lg font-bold text-text leading-tight group-hover:text-accent transition-colors">
+          <h4 class="font-[family-name:var(--font-v2-display)] text-xl font-normal text-[var(--color-v2-heading)] transition-colors group-hover:text-[var(--color-v2-accent-warm)]">
             {data.title}
           </h4>
-          <p class="font-mono text-[11px] text-text-muted mt-2">
+          <p class="mt-2 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
             {data.developer || data.genre}
           </p>
-          <span class="mt-4 rounded border border-border/60 bg-surface/80 px-2 py-0.5 font-mono text-[10px] text-text-muted">
+          <span class="mt-4 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)] px-2.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)]">
             Capa Provisória
           </span>
         </div>
       )}
 
-      {/* Badges Flutuantes: Status e Plataforma */}
-      <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+      {/* Vinheta sutil inferior para leitura dos metadados sobre a capa */}
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#070709]/95 via-[#070709]/40 to-transparent"
+      ></div>
+
+      {/* Topo esquerdo: Status no acervo */}
+      <div class="absolute top-3 left-3 flex flex-col items-start gap-1.5">
         <div
           class:list={[
-            'inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider backdrop-blur-xs shadow-md',
+            'inline-flex items-center gap-1.5 border px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] uppercase backdrop-blur-xs',
             currentStatus.badgeClass,
           ]}
         >
@@ -98,63 +130,85 @@ const currentStatus = statusConfig[data.status] || {
           )}
           <span>{currentStatus.label}</span>
         </div>
-
-        {data.platform && (
-          <span class="rounded border border-border/70 bg-surface/90 px-1.5 py-0.5 font-mono text-[10px] text-text-muted backdrop-blur-xs shadow-xs">
-            {data.platform}
-          </span>
-        )}
       </div>
 
-      {/* Badge Flutuante da Nota Final */}
-      <div class="absolute top-3 right-3 rounded-md border border-accent/40 bg-surface/90 px-2.5 py-1 backdrop-blur-xs shadow-md">
-        <span class="font-mono text-[10px] text-text-muted mr-1">SCORE:</span>
-        <span class="font-display text-sm font-extrabold text-accent drop-shadow-[0_0_6px_var(--color-accent)]">
+      {/* Topo direito: Medalhão da Nota Final */}
+      <div class="absolute top-3 right-3 flex items-baseline gap-1 border border-[var(--color-v2-border-hover)] bg-[#070709]/92 px-2.5 py-1 backdrop-blur-xs transition-colors duration-300 group-hover:border-[var(--color-v2-accent-warm)]/60">
+        <span class="font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.14em] text-[var(--color-v2-muted)] uppercase">
+          MÉDIA
+        </span>
+        <span class="font-[family-name:var(--font-v2-display)] text-lg leading-none font-normal text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
           {formattedFinal}
         </span>
       </div>
 
-
+      {/* Base da capa: Plataforma e Ano */}
+      <div class="absolute inset-x-3 bottom-2.5 flex items-center justify-between font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.12em]">
+        <span class="border border-white/10 bg-[#070709]/85 px-2 py-0.5 text-[var(--color-v2-text)] backdrop-blur-xs">
+          {data.platform}
+        </span>
+        <span class="text-[var(--color-v2-text)]/90">{data.releaseYear}</span>
+      </div>
 
       {data.isDemo && (
-        <div class="absolute bottom-3 right-3 rounded bg-warm/90 px-2 py-0.5 font-mono text-[10px] font-semibold text-bg uppercase">
+        <div class="absolute right-3 bottom-10 border border-[var(--color-v2-accent-warm)]/50 bg-[#070709]/90 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-accent-warm)] uppercase">
           Mock Data
         </div>
       )}
     </div>
 
-    {/* Conteúdo textual */}
-    <div class="p-5 flex-1 flex flex-col justify-between">
+    {/* Corpo Editorial do Card */}
+    <div class="flex flex-1 flex-col justify-between p-4 sm:p-5">
       <div>
-        <div class="mb-2 flex items-center justify-between font-mono text-xs text-text-muted">
-          <span class="text-accent/90">{data.genre}</span>
-          <span>{data.releaseYear}</span>
+        <div class="mb-1.5 flex items-center justify-between gap-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-accent-warm)]/85 uppercase">
+          <span class="truncate">{data.genre}</span>
         </div>
 
-        <h3 class="font-display text-lg font-bold tracking-tight text-text group-hover:text-accent transition-colors">
+        <h3 class="font-[family-name:var(--font-v2-display)] text-[1.35rem] leading-[1.15] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)]">
           {data.title}
         </h3>
 
         {data.developer && (
-          <p class="font-mono text-xs text-text-muted mt-1">{data.developer}</p>
+          <p class="mt-1 truncate font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+            {data.developer}
+          </p>
         )}
 
         {data.description && (
-          <p class="font-body mt-2 text-xs leading-relaxed text-text-muted line-clamp-2">
+          <p class="mt-2 line-clamp-2 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-muted)]">
             {data.description}
           </p>
         )}
       </div>
 
-      <div class="mt-4 pt-3 border-t border-border/40 flex items-center justify-between font-mono text-xs text-accent">
-        <span>Ver análise completa</span>
-        <span
-          aria-hidden="true"
-          class="transition-transform duration-200 group-hover:translate-x-1"
+      {/* Micro-leitura dos 5 Critérios + Call-to-action */}
+      <div class="mt-4 border-t border-[var(--color-v2-border)] pt-3">
+        <div
+          class="grid grid-cols-5 gap-1 text-center font-[family-name:var(--font-v2-mono)]"
+          aria-label="Notas nos 5 critérios: Mecânica, Enredo, Estética, Retenção e Feeling"
         >
-          &rarr;
-        </span>
+          {miniAxes.map((axis) => (
+            <div class="border border-white/[0.04] bg-[var(--color-v2-bg)]/70 py-1">
+              <span class="block text-[8px] tracking-[0.12em] text-[var(--color-v2-muted)]">
+                {axis.key}
+              </span>
+              <span class="mt-0.5 block text-[11px] text-[var(--color-v2-text)]">
+                {axis.val !== null && axis.val !== undefined ? axis.val : '—'}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-3 flex items-center justify-between font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors group-hover:text-[var(--color-v2-heading)]">
+          <span>Ficha & avaliação</span>
+          <span
+            aria-hidden="true"
+            class="text-[var(--color-v2-accent-warm)] transition-transform duration-200 group-hover:translate-x-1"
+          >
+            &rarr;
+          </span>
+        </div>
       </div>
     </div>
   </a>
-</Card>
+</article>

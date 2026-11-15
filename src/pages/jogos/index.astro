@@ -1,51 +1,454 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
 import GameCard from '../../components/content/GameCard.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
+import { calculateGameScore, formatScore } from '../../utils/ratings';
+import { withBase } from '../../utils/base';
 
 const allGames = await getCollection('games');
 
-// Ordena jogos por ano de lançamento decrescente
-const sortedGames = allGames.sort(
-  (a, b) => b.data.releaseYear - a.data.releaseYear,
+// Ordena jogos por ano de lançamento decrescente (ordem padrão original preservada)
+const sortedGames = [...allGames].sort(
+  (a, b) =>
+    b.data.releaseYear - a.data.releaseYear ||
+    a.data.title.localeCompare(b.data.title, 'pt-BR'),
 );
 
 const hasDemoContent = allGames.some((g) => g.data.isDemo);
+
+// Estatísticas reais do acervo
+const totalGames = allGames.length;
+const countPlatinado = allGames.filter(
+  (g) => g.data.status === 'Platinado',
+).length;
+const countConcluido = allGames.filter(
+  (g) => g.data.status === 'Concluido',
+).length;
+const countJogando = allGames.filter((g) => g.data.status === 'Jogando').length;
+const countParado = allGames.filter((g) => g.data.status === 'Parado').length;
+const countDescontinuado = allGames.filter(
+  (g) => g.data.status === 'Descontinuado',
+).length;
+
+const globalAverage =
+  totalGames > 0
+    ? formatScore(
+        allGames.reduce(
+          (acc, g) => acc + calculateGameScore(g.data.scores),
+          0,
+        ) / totalGames,
+      )
+    : '0';
+
+// Lista de plataformas reais ordenadas por frequência
+const platformMap = new Map<string, number>();
+for (const g of allGames) {
+  platformMap.set(g.data.platform, (platformMap.get(g.data.platform) || 0) + 1);
+}
+const platforms = [...platformMap.entries()].sort((a, b) => b[1] - a[1]);
+
+const statusFilters = [
+  { value: 'all', label: 'Todos', count: totalGames },
+  { value: 'Platinado', label: 'Platinado', count: countPlatinado },
+  { value: 'Concluido', label: 'Concluído', count: countConcluido },
+  { value: 'Jogando', label: 'Jogando', count: countJogando },
+  { value: 'Parado', label: 'Parado', count: countParado },
+  { value: 'Descontinuado', label: 'Descontinuado', count: countDescontinuado },
+];
 ---
 
 <BaseLayout
+  variant="v2"
   title="Jogos & Avaliações — guilherme.dev"
   description="Catálogo de jogos analisados sob 5 dimensões técnicas e narrativas: Mecânica, Enredo, Estética, Retenção e Feeling."
 >
-  <div class="py-12 md:py-16">
-    <Container>
-      <SectionHeading
-        eyebrow="// ACERVO LÚDICO"
-        title="Jogos & Avaliações"
-        description="Registros analíticos e notas ponderadas em 5 eixos para cada obra experimentada."
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera de fundo sutil */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[500px] overflow-hidden"
+    >
+      <img
+        src={withBase('/images/home/jogos.webp')}
+        alt=""
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full object-cover object-center opacity-[0.13] blur-[2px] filter"
       />
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.86) 62%, #070709 100%);"
+      ></div>
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(180deg, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.85) 68%, #070709 100%);"
+      ></div>
+    </div>
 
-      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+    <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 sm:px-8">
+      {/* Abertura Editorial */}
+      <header class="border-b border-[var(--color-v2-border)] pt-12 pb-10 md:pt-16 md:pb-14">
+        <div class="mb-4 flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            class="inline-block h-px w-8 bg-[var(--color-v2-accent)]"
+          ></span>
+          <p class="v2-eyebrow text-[var(--color-v2-accent-warm)]">
+            ARQUIVO LÚDICO / JOGOS & AVALIAÇÕES
+          </p>
+        </div>
 
-      {/* Resumo do Acervo */}
-      <div class="mb-10 flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-4 font-mono text-xs text-text-muted">
-        <span>
-          Total catalogado:{' '}
-          <strong class="text-text">{allGames.length} obras</strong>
-        </span>
-        <span class="text-text-muted/70">
-          * Ordenadas cronologicamente por ano de lançamento
-        </span>
-      </div>
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.04] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-6xl">
+              Jogos &amp; Avaliações.
+            </h1>
+          </div>
 
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-        {sortedGames.map((game) => (
-          <GameCard game={game} />
+          <div class="lg:col-span-5">
+            <p class="font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text)] sm:text-base">
+              Registros analíticos e notas em cinco dimensões de peso igual —
+              <span class="text-[var(--color-v2-heading)]">Mecânica</span>,{' '}
+              <span class="text-[var(--color-v2-heading)]">Enredo</span>,{' '}
+              <span class="text-[var(--color-v2-heading)]">Estética</span>,{' '}
+              <span class="text-[var(--color-v2-heading)]">Retenção</span> e{' '}
+              <span class="text-[var(--color-v2-heading)]">Feeling</span> — para
+              cada obra experimentada ao longo de diferentes gerações.
+            </p>
+          </div>
+        </div>
+
+        {/* Painel de Síntese do Acervo */}
+        <div class="mt-8 grid grid-cols-2 gap-3 border-t border-[var(--color-v2-border)] pt-6 sm:grid-cols-4">
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Total Catalogado
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {totalGames} obras
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Concluídos &amp; Platinados
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {countConcluido}{' '}
+              <span class="text-sm text-[var(--color-v2-muted)]">·</span>{' '}
+              <span class="text-[var(--color-v2-accent-warm)]">
+                {countPlatinado} plat.
+              </span>
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Em Andamento
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {countJogando} jogando
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Média do Acervo (0–100)
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-accent-warm)]">
+              {globalAverage}{' '}
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
+                / 100
+              </span>
+            </strong>
+          </div>
+        </div>
+      </header>
+
+      {hasDemoContent && <DemoNotice variant="section" class="mt-8" />}
+
+      {/* Barra de Filtros, Busca e Ordenação */}
+      <section
+        aria-label="Filtros e ordenação do catálogo de jogos"
+        class="mt-8 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-4 sm:p-6"
+      >
+        {/* Linha 1: Filtro por Status */}
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-v2-border)] pb-4">
+          <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+            Status no Acervo:
+          </span>
+
+          <div
+            class="flex flex-wrap items-center gap-1.5"
+            role="group"
+            aria-label="Filtrar por status do jogo"
+          >
+            {statusFilters.map((st, idx) => (
+              <button
+                type="button"
+                data-status-btn={st.value}
+                aria-pressed={idx === 0 ? 'true' : 'false'}
+                class:list={[
+                  'v2-focus cursor-pointer border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] uppercase transition-colors duration-200',
+                  idx === 0
+                    ? 'border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-accent-warm)]/15 text-[var(--color-v2-heading)]'
+                    : 'border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/70 text-[var(--color-v2-muted)] hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-text)]',
+                ]}
+              >
+                <span>{st.label}</span>
+                <span class="ml-1 text-[10px] opacity-70">({st.count})</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Linha 2: Busca, Plataforma e Ordenação */}
+        <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-12">
+          <div class="md:col-span-5">
+            <label for="games-search" class="sr-only">
+              Buscar jogo por título, estúdio ou gênero
+            </label>
+            <input
+              id="games-search"
+              type="search"
+              placeholder="Buscar por título, estúdio ou gênero..."
+              autocomplete="off"
+              class="v2-focus w-full border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)] px-3.5 py-2 font-[family-name:var(--font-v2-sans)] text-xs text-[var(--color-v2-heading)] placeholder:text-[var(--color-v2-muted)] focus:border-[var(--color-v2-accent-warm)]/60"
+            />
+          </div>
+
+          <div class="md:col-span-3">
+            <label for="games-platform" class="sr-only">
+              Filtrar por plataforma
+            </label>
+            <select
+              id="games-platform"
+              class="v2-focus w-full border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)] px-3 py-2 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text)] focus:border-[var(--color-v2-accent-warm)]/60"
+            >
+              <option value="all">Todas as plataformas ({totalGames})</option>
+              {platforms.map(([plat, count]) => (
+                <option value={plat}>
+                  {plat} ({count})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div class="md:col-span-4">
+            <label for="games-sort" class="sr-only">
+              Ordenar catálogo de jogos
+            </label>
+            <select
+              id="games-sort"
+              class="v2-focus w-full border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)] px-3 py-2 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text)] focus:border-[var(--color-v2-accent-warm)]/60"
+            >
+              <option value="year-desc">
+                Ordenar: Ano de lançamento (mais recentes)
+              </option>
+              <option value="score-desc">Ordenar: Maior nota geral</option>
+              <option value="score-asc">Ordenar: Menor nota geral</option>
+              <option value="year-asc">
+                Ordenar: Ano de lançamento (mais antigos)
+              </option>
+              <option value="title-asc">Ordenar: Ordem alfabética (A–Z)</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Linha 3: Contador e Reset */}
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--color-v2-border)] pt-3 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+          <span id="games-count-status" aria-live="polite">
+            Exibindo{' '}
+            <strong class="text-[var(--color-v2-heading)]">{totalGames}</strong>{' '}
+            de{' '}
+            <strong class="text-[var(--color-v2-heading)]">{totalGames}</strong>{' '}
+            obras catalogadas
+          </span>
+
+          <div class="flex items-center gap-4">
+            <button
+              id="games-reset-btn"
+              type="button"
+              hidden
+              class="v2-focus cursor-pointer text-[11px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase underline underline-offset-4 hover:text-[var(--color-v2-heading)]"
+            >
+              Limpar filtros
+            </button>
+            <span class="hidden sm:inline">
+              * Média aritmética simples de 5 eixos (0–100)
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Grade de Capas 3:4 */}
+      <div
+        id="games-grid"
+        class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+      >
+        {sortedGames.map((game, index) => (
+          <GameCard game={game} index={index} />
         ))}
       </div>
-    </Container>
+
+      {/* Estado vazio para busca sem resultados */}
+      <div
+        id="games-empty-state"
+        hidden
+        class="mt-10 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-12 text-center"
+      >
+        <p class="font-[family-name:var(--font-v2-display)] text-2xl text-[var(--color-v2-heading)]">
+          Nenhum jogo encontrado com os filtros selecionados.
+        </p>
+        <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-muted)]">
+          Tente buscar outro título, plataforma ou redefinir os filtros ativos.
+        </p>
+      </div>
+    </div>
   </div>
 </BaseLayout>
+
+<script>
+  function initGamesCatalog() {
+    const grid = document.getElementById('games-grid');
+    if (!grid) return;
+
+    const cards = Array.from(
+      grid.querySelectorAll<HTMLElement>('[data-game-card]'),
+    );
+    const searchInput = document.getElementById(
+      'games-search',
+    ) as HTMLInputElement | null;
+    const platformSelect = document.getElementById(
+      'games-platform',
+    ) as HTMLSelectElement | null;
+    const sortSelect = document.getElementById(
+      'games-sort',
+    ) as HTMLSelectElement | null;
+    const statusButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-status-btn]'),
+    );
+    const countStatus = document.getElementById('games-count-status');
+    const resetBtn = document.getElementById(
+      'games-reset-btn',
+    ) as HTMLButtonElement | null;
+    const emptyState = document.getElementById('games-empty-state');
+
+    let activeStatus = 'all';
+    const total = cards.length;
+
+    function updateStatusButtonStyles() {
+      for (const btn of statusButtons) {
+        const isSelected = btn.dataset.statusBtn === activeStatus;
+        btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+        if (isSelected) {
+          btn.className =
+            'v2-focus cursor-pointer border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-accent-warm)]/15 text-[var(--color-v2-heading)]';
+        } else {
+          btn.className =
+            'v2-focus cursor-pointer border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/70 text-[var(--color-v2-muted)] hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-text)]';
+        }
+      }
+    }
+
+    function applyFiltersAndSort() {
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      const platform = platformSelect?.value || 'all';
+      const sortBy = sortSelect?.value || 'year-desc';
+
+      const sorted = [...cards].sort((a, b) => {
+        const yearA = Number(a.dataset.year || 0);
+        const yearB = Number(b.dataset.year || 0);
+        const scoreA = Number(a.dataset.score || 0);
+        const scoreB = Number(b.dataset.score || 0);
+        const titleA = a.dataset.title || '';
+        const titleB = b.dataset.title || '';
+
+        if (sortBy === 'score-desc') {
+          return (
+            scoreB - scoreA ||
+            yearB - yearA ||
+            titleA.localeCompare(titleB, 'pt-BR')
+          );
+        }
+        if (sortBy === 'score-asc') {
+          return (
+            scoreA - scoreB ||
+            yearB - yearA ||
+            titleA.localeCompare(titleB, 'pt-BR')
+          );
+        }
+        if (sortBy === 'year-asc') {
+          return yearA - yearB || titleA.localeCompare(titleB, 'pt-BR');
+        }
+        if (sortBy === 'title-asc') {
+          return titleA.localeCompare(titleB, 'pt-BR');
+        }
+        return yearB - yearA || titleA.localeCompare(titleB, 'pt-BR');
+      });
+
+      let visibleCount = 0;
+
+      for (const card of sorted) {
+        const matchesStatus =
+          activeStatus === 'all' || card.dataset.status === activeStatus;
+        const matchesPlatform =
+          platform === 'all' || card.dataset.platform === platform;
+        const matchesQuery =
+          !query ||
+          (card.dataset.title || '').includes(query) ||
+          (card.dataset.genre || '').includes(query) ||
+          (card.dataset.developer || '').includes(query);
+
+        const isVisible = matchesStatus && matchesPlatform && matchesQuery;
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount++;
+        grid!.appendChild(card);
+      }
+
+      if (countStatus) {
+        countStatus.innerHTML = `Exibindo <strong class="text-[var(--color-v2-heading)]">${visibleCount}</strong> de <strong class="text-[var(--color-v2-heading)]">${total}</strong> obras catalogadas`;
+      }
+
+      const hasActiveFilters =
+        activeStatus !== 'all' ||
+        platform !== 'all' ||
+        query.length > 0 ||
+        sortBy !== 'year-desc';
+
+      if (resetBtn) {
+        resetBtn.hidden = !hasActiveFilters;
+      }
+
+      if (emptyState) {
+        emptyState.hidden = visibleCount > 0;
+      }
+    }
+
+    for (const btn of statusButtons) {
+      btn.addEventListener('click', () => {
+        activeStatus = btn.dataset.statusBtn || 'all';
+        updateStatusButtonStyles();
+        applyFiltersAndSort();
+      });
+    }
+
+    searchInput?.addEventListener('input', applyFiltersAndSort);
+    platformSelect?.addEventListener('change', applyFiltersAndSort);
+    sortSelect?.addEventListener('change', applyFiltersAndSort);
+
+    resetBtn?.addEventListener('click', () => {
+      activeStatus = 'all';
+      if (searchInput) searchInput.value = '';
+      if (platformSelect) platformSelect.value = 'all';
+      if (sortSelect) sortSelect.value = 'year-desc';
+      updateStatusButtonStyles();
+      applyFiltersAndSort();
+    });
+  }
+
+  initGamesCatalog();
+</script>
