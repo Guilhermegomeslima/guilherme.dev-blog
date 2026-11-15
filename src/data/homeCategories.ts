@@ -31,9 +31,9 @@ const presentation: Record<
   projetos: {
     label: 'Código e experimentos',
     image: {
-      src: '/images/home/projetos.webp',
-      width: 1400,
-      height: 933,
+      src: '/images/home/projetos-card.webp',
+      width: 1191,
+      height: 445,
       position: '50% 40%',
     },
     layout: wide,
@@ -42,9 +42,9 @@ const presentation: Record<
   linux: {
     label: 'Sistemas e liberdade',
     image: {
-      src: '/images/home/linux.webp',
-      width: 900,
-      height: 1350,
+      src: '/images/home/linux-card.webp',
+      width: 1199,
+      height: 674,
       position: '50% 45%',
     },
     layout: narrow,
@@ -53,9 +53,9 @@ const presentation: Record<
   jogos: {
     label: 'Mundos e experiências',
     image: {
-      src: '/images/home/jogos.webp',
-      width: 900,
-      height: 1350,
+      src: '/images/home/jogos-card.webp',
+      width: 1400,
+      height: 875,
       position: '50% 40%',
     },
     layout: narrow,
@@ -64,9 +64,9 @@ const presentation: Record<
   filmes: {
     label: 'Cinema e narrativa',
     image: {
-      src: '/images/home/filmes.webp',
-      width: 900,
-      height: 600,
+      src: '/images/home/filmes-card.webp',
+      width: 1200,
+      height: 1600,
       position: '35% 50%',
     },
     layout: narrow,
@@ -75,9 +75,9 @@ const presentation: Record<
   musica: {
     label: 'Sons e descobertas',
     image: {
-      src: '/images/home/musica.webp',
-      width: 1400,
-      height: 2100,
+      src: '/images/home/musica-card.webp',
+      width: 910,
+      height: 604,
       position: '50% 78%',
     },
     layout: wide,
@@ -86,9 +86,9 @@ const presentation: Record<
   livros: {
     label: 'Histórias e ideias',
     image: {
-      src: '/images/home/livros.webp',
-      width: 900,
-      height: 551,
+      src: '/images/home/livros-card.webp',
+      width: 768,
+      height: 1365,
       position: '50% 50%',
     },
     layout: narrow,
@@ -97,9 +97,9 @@ const presentation: Record<
   opensource: {
     label: 'Ferramentas e liberdade',
     image: {
-      src: '/images/home/open-source.webp',
-      width: 900,
-      height: 600,
+      src: '/images/home/open-source-card.webp',
+      width: 1170,
+      height: 1439,
       position: '50% 50%',
     },
     layout: narrow,
@@ -108,9 +108,9 @@ const presentation: Record<
   artigos: {
     label: 'Registros e reflexões',
     image: {
-      src: '/images/home/artigos.webp',
-      width: 900,
-      height: 599,
+      src: '/images/home/artigos-card.webp',
+      width: 736,
+      height: 1288,
       position: '50% 50%',
     },
     layout: narrow,
@@ -120,9 +120,9 @@ const presentation: Record<
     label: 'Imagens e atmosferas',
     // Em tablet (2 colunas) a última categoria ocupa a linha inteira.
     image: {
-      src: '/images/home/galeria.webp',
-      width: 1400,
-      height: 933,
+      src: '/images/home/galeria-card.webp',
+      width: 1200,
+      height: 672,
       position: '50% 55%',
     },
     layout: `sm:col-span-2 ${wide}`,
@@ -147,4 +147,3 @@ export const homePosterCategories: HomePosterCategory[] = Object.keys(
     },
   ];
 });
-
