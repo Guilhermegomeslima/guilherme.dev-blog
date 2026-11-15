@@ -175,13 +175,23 @@ const licenses = [
           <h2 class="font-[family-name:var(--font-v2-mono)] text-xs font-normal tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
             01 // FICHAS DO DIRETÓRIO
           </h2>
-          <span
-            id="os-count-status"
-            aria-live="polite"
-            class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]"
-          >
-            Exibindo {sortedTools.length} de {sortedTools.length} programas
-          </span>
+          <div class="flex items-center gap-4">
+            <span
+              id="os-count-status"
+              aria-live="polite"
+              class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]"
+            >
+              Exibindo {sortedTools.length} de {sortedTools.length} programas
+            </span>
+            <button
+              id="os-reset-btn"
+              type="button"
+              hidden
+              class="v2-focus cursor-pointer font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase underline underline-offset-4 hover:text-[var(--color-v2-heading)]"
+            >
+              Limpar filtros
+            </button>
+          </div>
         </div>
 
         <div id="os-list" class="space-y-5">
@@ -307,6 +317,8 @@ const licenses = [
 </BaseLayout>
 
 <script>
+  import { matchesSearchTerms } from '../../utils/search';
+
   function initOpenSourceDirectory() {
     const cards = Array.from(
       document.querySelectorAll<HTMLElement>('[data-os-card]'),
@@ -320,6 +332,9 @@ const licenses = [
       'os-search',
     ) as HTMLInputElement | null;
     const countStatus = document.getElementById('os-count-status');
+    const resetBtn = document.getElementById(
+      'os-reset-btn',
+    ) as HTMLButtonElement | null;
     const emptyState = document.getElementById('os-empty-state');
 
     let activeCat = 'all';
@@ -340,7 +355,7 @@ const licenses = [
     }
 
     function applyFilter() {
-      const query = (searchInput?.value || '').trim().toLowerCase();
+      const query = (searchInput?.value || '').trim();
       let visibleCount = 0;
 
       for (const card of cards) {
@@ -348,10 +363,10 @@ const licenses = [
           activeCat === 'all' || card.dataset.category === activeCat;
         const matchesQuery =
           !query ||
-          (card.dataset.name || '').includes(query) ||
-          (card.dataset.category || '').toLowerCase().includes(query) ||
-          (card.dataset.description || '').includes(query) ||
-          (card.dataset.license || '').includes(query);
+          matchesSearchTerms(
+            `${card.dataset.name || ''} ${card.dataset.category || ''} ${card.dataset.description || ''} ${card.dataset.license || ''}`,
+            query,
+          );
 
         const isVisible = matchesCat && matchesQuery;
         card.hidden = !isVisible;
@@ -360,6 +375,11 @@ const licenses = [
 
       if (countStatus) {
         countStatus.textContent = `Exibindo ${visibleCount} de ${total} programas`;
+      }
+
+      const hasActiveFilters = activeCat !== 'all' || query.length > 0;
+      if (resetBtn) {
+        resetBtn.hidden = !hasActiveFilters;
       }
 
       if (emptyState) {
@@ -376,6 +396,13 @@ const licenses = [
     }
 
     searchInput?.addEventListener('input', applyFilter);
+
+    resetBtn?.addEventListener('click', () => {
+      activeCat = 'all';
+      if (searchInput) searchInput.value = '';
+      updateButtonStyles();
+      applyFilter();
+    });
   }
 
   initOpenSourceDirectory();

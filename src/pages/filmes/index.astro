@@ -268,6 +268,8 @@ const decades = [...decadeMap.entries()].sort((a, b) => b[0] - a[0]);
 </BaseLayout>
 
 <script>
+  import { matchesSearchTerms } from '../../utils/search';
+
   function initMoviesCatalog() {
     const grid = document.getElementById('movies-grid');
     if (!grid) return;
@@ -336,9 +338,10 @@ const decades = [...decadeMap.entries()].sort((a, b) => b[0] - a[0]);
         const matchesDecade = decade === 'all' || cardDecade === decade;
         const matchesQuery =
           !query ||
-          (card.dataset.title || '').includes(query) ||
-          (card.dataset.director || '').includes(query) ||
-          (card.dataset.genre || '').includes(query);
+          matchesSearchTerms(
+            `${card.dataset.title || ''} ${card.dataset.director || ''} ${card.dataset.genre || ''}`,
+            query,
+          );
 
         const isVisible = matchesDecade && matchesQuery;
         card.hidden = !isVisible;

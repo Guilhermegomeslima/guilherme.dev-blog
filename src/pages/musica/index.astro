@@ -195,6 +195,30 @@ const sectionFilters = [
             />
           </div>
         </div>
+
+        {/* Linha 2: Contador dinâmico e Limpar filtros */}
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--color-v2-border)] pt-3 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+          <span id="music-count-status" aria-live="polite">
+            Exibindo{' '}
+            <strong class="text-[var(--color-v2-heading)]">
+              {allMusic.length}
+            </strong>{' '}
+            de{' '}
+            <strong class="text-[var(--color-v2-heading)]">
+              {allMusic.length}
+            </strong>{' '}
+            registros sonoros
+          </span>
+
+          <button
+            id="music-reset-btn"
+            type="button"
+            hidden
+            class="v2-focus cursor-pointer text-[11px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase underline underline-offset-4 hover:text-[var(--color-v2-heading)]"
+          >
+            Limpar filtros
+          </button>
+        </div>
       </section>
 
       <div class="mt-12 space-y-20">
@@ -325,6 +349,8 @@ const sectionFilters = [
 </BaseLayout>
 
 <script>
+  import { matchesSearchTerms } from '../../utils/search';
+
   function initMusicArchive() {
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>('[data-music-section]'),
@@ -337,9 +363,17 @@ const sectionFilters = [
     const searchInput = document.getElementById(
       'music-search',
     ) as HTMLInputElement | null;
+    const countStatus = document.getElementById('music-count-status');
+    const resetBtn = document.getElementById(
+      'music-reset-btn',
+    ) as HTMLButtonElement | null;
     const emptyState = document.getElementById('music-empty-state');
 
     let activeType = 'all';
+    const allItems = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-music-item]'),
+    );
+    const total = allItems.length;
 
     function updateFilterButtonStyles() {
       for (const btn of filterButtons) {
@@ -356,7 +390,7 @@ const sectionFilters = [
     }
 
     function applyFilter() {
-      const query = (searchInput?.value || '').trim().toLowerCase();
+      const query = (searchInput?.value || '').trim();
       let totalVisible = 0;
 
       for (const section of sections) {
@@ -372,8 +406,10 @@ const sectionFilters = [
         for (const item of items) {
           const matchesQuery =
             !query ||
-            (item.dataset.title || '').includes(query) ||
-            (item.dataset.artist || '').includes(query);
+            matchesSearchTerms(
+              `${item.dataset.title || ''} ${item.dataset.artist || ''}`,
+              query,
+            );
 
           const isVisible = matchesSectionType && matchesQuery;
           item.hidden = !isVisible;
@@ -384,6 +420,15 @@ const sectionFilters = [
         }
 
         section.hidden = sectionVisible === 0;
+      }
+
+      if (countStatus) {
+        countStatus.innerHTML = `Exibindo <strong class="text-[var(--color-v2-heading)]">${totalVisible}</strong> de <strong class="text-[var(--color-v2-heading)]">${total}</strong> registros sonoros`;
+      }
+
+      const hasActiveFilters = activeType !== 'all' || query.length > 0;
+      if (resetBtn) {
+        resetBtn.hidden = !hasActiveFilters;
       }
 
       if (emptyState) {
@@ -400,6 +445,13 @@ const sectionFilters = [
     }
 
     searchInput?.addEventListener('input', applyFilter);
+
+    resetBtn?.addEventListener('click', () => {
+      activeType = 'all';
+      if (searchInput) searchInput.value = '';
+      updateFilterButtonStyles();
+      applyFilter();
+    });
   }
 
   initMusicArchive();

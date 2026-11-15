@@ -181,6 +181,30 @@ const shelfFilters = [
             />
           </div>
         </div>
+
+        {/* Linha 2: Contador dinâmico e Limpar filtros */}
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--color-v2-border)] pt-3 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+          <span id="books-count-status" aria-live="polite">
+            Exibindo{' '}
+            <strong class="text-[var(--color-v2-heading)]">
+              {allBooks.length}
+            </strong>{' '}
+            de{' '}
+            <strong class="text-[var(--color-v2-heading)]">
+              {allBooks.length}
+            </strong>{' '}
+            volumes
+          </span>
+
+          <button
+            id="books-reset-btn"
+            type="button"
+            hidden
+            class="v2-focus cursor-pointer text-[11px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase underline underline-offset-4 hover:text-[var(--color-v2-heading)]"
+          >
+            Limpar filtros
+          </button>
+        </div>
       </section>
 
       {/* Estantes da Biblioteca */}
@@ -297,6 +321,8 @@ const shelfFilters = [
 </BaseLayout>
 
 <script>
+  import { matchesSearchTerms } from '../../utils/search';
+
   function initBooksLibrary() {
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>('[data-book-section]'),
@@ -309,9 +335,17 @@ const shelfFilters = [
     const searchInput = document.getElementById(
       'books-search',
     ) as HTMLInputElement | null;
+    const countStatus = document.getElementById('books-count-status');
+    const resetBtn = document.getElementById(
+      'books-reset-btn',
+    ) as HTMLButtonElement | null;
     const emptyState = document.getElementById('books-empty-state');
 
     let activeShelf = 'all';
+    const allCards = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-book-card]'),
+    );
+    const total = allCards.length;
 
     function updateShelfButtonStyles() {
       for (const btn of shelfButtons) {
@@ -328,7 +362,7 @@ const shelfFilters = [
     }
 
     function applyFilter() {
-      const query = (searchInput?.value || '').trim().toLowerCase();
+      const query = (searchInput?.value || '').trim();
       let totalVisible = 0;
 
       for (const section of sections) {
@@ -346,9 +380,10 @@ const shelfFilters = [
 
           const matchesQuery =
             !query ||
-            (card.dataset.title || '').includes(query) ||
-            (card.dataset.author || '').includes(query) ||
-            (card.dataset.genre || '').includes(query);
+            matchesSearchTerms(
+              `${card.dataset.title || ''} ${card.dataset.author || ''} ${card.dataset.genre || ''}`,
+              query,
+            );
 
           const isVisible = matchesShelf && matchesQuery;
           card.hidden = !isVisible;
@@ -359,6 +394,15 @@ const shelfFilters = [
         }
 
         section.hidden = sectionVisible === 0;
+      }
+
+      if (countStatus) {
+        countStatus.innerHTML = `Exibindo <strong class="text-[var(--color-v2-heading)]">${totalVisible}</strong> de <strong class="text-[var(--color-v2-heading)]">${total}</strong> volumes`;
+      }
+
+      const hasActiveFilters = activeShelf !== 'all' || query.length > 0;
+      if (resetBtn) {
+        resetBtn.hidden = !hasActiveFilters;
       }
 
       if (emptyState) {
@@ -375,6 +419,13 @@ const shelfFilters = [
     }
 
     searchInput?.addEventListener('input', applyFilter);
+
+    resetBtn?.addEventListener('click', () => {
+      activeShelf = 'all';
+      if (searchInput) searchInput.value = '';
+      updateShelfButtonStyles();
+      applyFilter();
+    });
   }
 
   initBooksLibrary();

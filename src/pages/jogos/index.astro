@@ -313,6 +313,8 @@ const statusFilters = [
 </BaseLayout>
 
 <script>
+  import { matchesSearchTerms } from '../../utils/search';
+
   function initGamesCatalog() {
     const grid = document.getElementById('games-grid');
     if (!grid) return;
@@ -400,9 +402,10 @@ const statusFilters = [
           platform === 'all' || card.dataset.platform === platform;
         const matchesQuery =
           !query ||
-          (card.dataset.title || '').includes(query) ||
-          (card.dataset.genre || '').includes(query) ||
-          (card.dataset.developer || '').includes(query);
+          matchesSearchTerms(
+            `${card.dataset.title || ''} ${card.dataset.genre || ''} ${card.dataset.developer || ''}`,
+            query,
+          );
 
         const isVisible = matchesStatus && matchesPlatform && matchesQuery;
         card.hidden = !isVisible;

@@ -293,9 +293,19 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
           <span class="tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
             02 // ACERVO COMPLETO
           </span>
-          <span id="gallery-count-status" aria-live="polite">
-            Exibindo {sortedImages.length} de {sortedImages.length} imagens
-          </span>
+          <div class="flex items-center gap-4">
+            <span id="gallery-count-status" aria-live="polite">
+              Exibindo {sortedImages.length} de {sortedImages.length} imagens
+            </span>
+            <button
+              id="gallery-reset-btn"
+              type="button"
+              hidden
+              class="v2-focus cursor-pointer text-[11px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase underline underline-offset-4 hover:text-[var(--color-v2-heading)]"
+            >
+              Limpar filtros
+            </button>
+          </div>
         </div>
 
         {/* Grade Editorial de Imagens */}
@@ -329,6 +339,8 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
 </BaseLayout>
 
 <script>
+  import { matchesSearchTerms } from '../../utils/search';
+
   function initGalleryFilters() {
     const cards = Array.from(
       document.querySelectorAll<HTMLElement>('[data-gallery-card]'),
@@ -342,6 +354,9 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
       'gallery-search',
     ) as HTMLInputElement | null;
     const countStatus = document.getElementById('gallery-count-status');
+    const resetBtn = document.getElementById(
+      'gallery-reset-btn',
+    ) as HTMLButtonElement | null;
     const emptyState = document.getElementById('gallery-empty-state');
 
     let activeAlbum = 'all';
@@ -362,14 +377,14 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
     }
 
     function applyFilter() {
-      const query = (searchInput?.value || '').trim().toLowerCase();
+      const query = (searchInput?.value || '').trim();
       let visibleCount = 0;
 
       for (const card of cards) {
         const matchesAlbum =
           activeAlbum === 'all' || card.dataset.albumSlug === activeAlbum;
         const matchesQuery =
-          !query || (card.dataset.title || '').includes(query);
+          !query || matchesSearchTerms(card.dataset.title || '', query);
 
         const isVisible = matchesAlbum && matchesQuery;
         card.hidden = !isVisible;
@@ -378,6 +393,11 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
 
       if (countStatus) {
         countStatus.textContent = `Exibindo ${visibleCount} de ${total} imagens`;
+      }
+
+      const hasActiveFilters = activeAlbum !== 'all' || query.length > 0;
+      if (resetBtn) {
+        resetBtn.hidden = !hasActiveFilters;
       }
 
       if (emptyState) {
@@ -394,6 +414,13 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
     }
 
     searchInput?.addEventListener('input', applyFilter);
+
+    resetBtn?.addEventListener('click', () => {
+      activeAlbum = 'all';
+      if (searchInput) searchInput.value = '';
+      updateButtonStyles();
+      applyFilter();
+    });
   }
 
   initGalleryFilters();
