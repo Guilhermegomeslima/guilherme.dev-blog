@@ -320,6 +320,31 @@ Não declarar “pixel-perfect” sem medir/comparar; tampouco prometer cópia e
 - **Validação visual:** quadros da gravação podem ser extraídos com `ffmpeg` (vídeo original preservado) para analisar efeitos, animações e rolagem; comparação desktop e mobile durante a implementação.
 - **Preservação:** nenhum conteúdo real, avaliação, schema, rota ou imagem de conteúdo é alterado; compatibilidade com Vercel e GitHub Pages mantida.
 
+## 11.2 Recursos confirmados na VIS-02 (14/11/2026)
+
+**Tipografia (código do protótipo, confirmada pelo autor):** Cormorant Garamond (500, 600, itálico 500), Inter (300, 400, 500) e JetBrains Mono (400). Hospedadas localmente em `public/fonts/` (subset latin, WOFF2 variável, licença OFL, `font-display: swap`), sem `@import` externo. Tokens: `--font-v2-display`, `--font-v2-sans`, `--font-v2-mono`.
+
+**Fotografias (URLs do protótipo, Unsplash License):** convertidas para WebP em `public/images/home/` (arquivos `hero`, `projetos`, `linux`, `jogos`, `filmes`, `musica`, `livros`, `open-source`, `artigos`, `galeria`). Identificadores Unsplash de origem:
+
+| Uso         | Identificador `photo-…`    | Largura baixada |
+| ----------- | -------------------------- | --------------- |
+| hero        | 1683455235050-a87ed1e92b84 | 2200            |
+| projetos    | 1791276077168-b144ddc6b8d5 | 1400            |
+| linux       | 1683560485483-181974bbec9b | 900             |
+| jogos       | 1753164717773-2a876ce888ba | 900             |
+| filmes      | 1674880944509-7a85ece31e1e | 900             |
+| musica      | 1697037491746-8c206af749de | 1400            |
+| livros      | 1582740512100-ffdf7c317826 | 900             |
+| open-source | 1545659705-c769b5c3d132    | 900             |
+| artigos     | 1610338732118-09d3b6fd030c | 900             |
+| galeria     | 1755146759567-cfc7ef9d9dcc | 1400            |
+
+As fotografias originais são coloridas; o aspecto escuro e dessaturado do protótipo vem de overlay/tratamento por CSS, a reproduzir na VIS-03. **[PENDENTE]** Nomes dos fotógrafos para crédito individual (a licença não exige, mas o registro de autoria é desejável).
+
+**Tokens V2** (`--color-v2-*`, `--container-v2`) e utilitários (`v2-eyebrow`, `v2-focus`, `.v2-scope` para movimento reduzido) estão em `src/styles/global.css`, **sem alterar nenhum token existente**. Valores de cor ainda provisórios.
+
+**Comportamento observado na gravação:** sem animação contínua nem parallax; header não fixo; hover dos cards com borda clara e botão de seta preenchido em vinho; hover da faixa editorial com fundo elevado; detalhes do hero (coordenadas, índice `001` com linha vermelha, `DESCER`).
+
 ---
 
 ## 12. Instrução curta para agentes de implementação

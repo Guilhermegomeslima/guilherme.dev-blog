@@ -22,6 +22,90 @@
     'Courier New', monospace;
 }
 
+/*
+ * Design System 2.0 (docs/DESIGN_SYSTEM_V2.md) — VIS-02
+ * Tokens e fontes ESCOPADOS à nova identidade. Nenhum token acima foi alterado:
+ * as páginas internas continuam com a aparência atual até suas etapas VIS.
+ * Valores de cor provisórios (V2 §2.1), a calibrar com o protótipo na VIS-03.
+ */
+@theme {
+  --color-v2-bg: #080808;
+  --color-v2-surface: #141210;
+  --color-v2-surface-raised: #1b1715;
+  --color-v2-text: #e7ded2;
+  --color-v2-text-muted: #a89f95;
+  --color-v2-border: #332b26;
+  --color-v2-accent: #79382f;
+  --color-v2-accent-warm: #a18a70;
+
+  --font-v2-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-v2-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-v2-mono: 'JetBrains Mono', ui-monospace, 'Liberation Mono', monospace;
+
+  /* Largura de conteúdo da Home V2 (~1380px nas referências) */
+  --container-v2: 86.25rem;
+}
+
+/* Fontes locais (OFL), subset latin. Variáveis: cobrem os pesos 300–600 usados. */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500 600;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-normal-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-italic-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url('/fonts/inter-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-latin.woff2') format('woff2');
+}
+
+/* Utilitários V2 (usados somente por componentes V2) */
+@utility v2-eyebrow {
+  font-family: var(--font-v2-sans);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+@utility v2-focus {
+  &:focus-visible {
+    outline: 2px solid var(--color-v2-accent-warm);
+    outline-offset: 4px;
+  }
+}
+
+/* Movimento reduzido: aplicado dentro de qualquer wrapper com .v2-scope */
+@media (prefers-reduced-motion: reduce) {
+  .v2-scope *,
+  .v2-scope *::before,
+  .v2-scope *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @layer base {
   html {
     color-scheme: dark;
