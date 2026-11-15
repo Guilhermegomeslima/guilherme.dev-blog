@@ -39,4 +39,3 @@ export function matchesSearchTerms(
   const terms = normalizedQuery.split(' ').filter(Boolean);
   return terms.every((term) => normalizedTarget.includes(term));
 }
-
