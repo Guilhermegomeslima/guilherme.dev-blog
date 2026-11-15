@@ -1,22 +1,25 @@
 # CONTENT_SECTIONS.md — Planejamento das seções de conteúdo
 
 > **Projeto:** `guilherme.dev-blog`  
-> **Status:** planejamento aprovado em linhas gerais; detalhes marcados como propostas  
-> **Versão:** 1.0  
-> **Data:** 2026-11-10  
-> **Escopo:** Fase 4 — `CNT-01` a `CNT-11`
+> **Status:** registro histórico da Fase 4, **concluída**; critérios e decisões originais preservados  
+> **Versão original:** 1.0 · **Data original:** 2026-11-10 · **Revisão de status:** 2026-11-15  
+> **Escopo:** Fase 4 — `CNT-01` a `CNT-11`; a implementação atual prevalece sobre os exemplos deste planejamento.
 
 ## 1. Objetivo e hierarquia
 
-Especificar a estrutura visual, a experiência de navegação e as regras dos conteúdos da Fase 4. Este arquivo **complementa**, sem substituir, `REQUIREMENTS.md`, `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `CONTENT_GUIDE.md`, `GIT_WORKFLOW.md`, `ROADMAP.md` e `AGENTS.md`.
+Registrar as diretrizes que orientaram a Fase 4. Esta etapa **já foi executada**; os exemplos e os verbos de implementação abaixo permanecem como memória de projeto, não como tarefas novas. Para o estado vigente, consultar `docs/REQUIREMENTS.md`, `docs/ARCHITECTURE.md`, `docs/DESIGN_SYSTEM_V2.md`, `src/content.config.ts` e `docs/ROADMAP.md`.
 
 - **[CONFIRMADO]** O blog é um site multipáginas em Astro, com TypeScript e Tailwind CSS 4, e conteúdo inicialmente gerenciado em arquivos locais.
-- **[ATUALIZADO 2026-11-14]** A identidade visual vigente é o `DESIGN_SYSTEM_V2.md` (escura, editorial, vermelho envelhecido). As menções abaixo a neon, ciano/magenta, glitch/scanline e _timeline neon_ descrevem a identidade anterior e permanecem como histórico até as etapas VIS correspondentes (Linux: VIS-05; demais seções: VIS-06). A estrutura de conteúdo, dados, avisos e critérios de aceitação das seções **não mudam**.
-- **[CONFIRMADO]** As seções devem ser implementadas progressivamente, conforme o roadmap; evitar implementação simultânea de toda a Fase 4.
-- **[CONFIRMADO]** Primeiro desenvolver e validar com conteúdos demonstrativos; depois substituí-los por conteúdo real.
+- **[REVISADO 2026-11-15]** A identidade vigente é o `DESIGN_SYSTEM_V2.md` em **todas as páginas**. Neon, ciano/magenta, glitch/scanline e _timeline neon_ abaixo são registros da fase cyberpunk anterior, não orientações ativas. As etapas VIS-01 a VIS-07 já estão concluídas.
+- **[HISTÓRICO]** As seções foram implementadas progressivamente; CNT-01 a CNT-11 estão concluídas no roadmap.
+- **[HISTÓRICO]** O fluxo inicial usou conteúdo demonstrativo e depois passou à inserção de conteúdo real (DATA-01 a DATA-09 concluídas).
 - **[PROPOSTO]** Centralizar a apresentação dos avisos e dos metadados de demonstração em componentes reutilizáveis, sem acoplamento entre schemas e interface.
 
 **Regra de precedência:** seguir a orientação explícita mais recente do autor. Ao detectar divergência técnica relevante entre documentos ou código existente, relatar o conflito antes da implementação afetada. Não reestruturar o projeto apenas para se ajustar a exemplos deste arquivo.
+
+### Estado implementado em 15/11/2026
+
+O ZIP contém oito coleções definidas em `src/content.config.ts`: `articles`, `projects`, `games`, `movies`, `books`, `music`, `opensource` e `gallery`. Linux usa `src/data/linuxTimeline.ts`. As nove áreas de conteúdo têm páginas próprias e identidade V2. Busca e filtros locais foram incorporados na Fase 5. As regras exatas de schema, `isDemo`, notas e interface devem ser verificadas no código atual.
 
 ## 2. Padrão global de demonstração (_mock data_)
 
@@ -66,7 +69,7 @@ https://picsum.photos/seed/galeria-teste-01/1200/800
 
 ## 3. Identidade e padrões de interface
 
-> **Nota (2026-11-14):** os itens visuais desta seção (neon ciano/magenta, glitch/scanline, timeline neon, luz ciano em hover) pertencem à identidade anterior. A referência vigente é `DESIGN_SYSTEM_V2.md`; cada seção será adaptada na etapa VIS indicada no `ROADMAP.md`, sem alterar dados nem comportamento. Regras de acessibilidade, navegação por teclado, responsividade e reuso de componentes continuam válidas.
+> **Nota (2026-11-15):** esta seção registra a identidade cyberpunk anterior. A migração VIS foi concluída; as regras visuais ativas estão em `DESIGN_SYSTEM_V2.md`. Os bullets históricos abaixo não autorizam reintroduzir neon/glitch. Regras de acessibilidade, teclado, responsividade e reuso continuam válidas.
 
 - Tema escuro global, neon ciano/magenta usado com moderação, composições editoriais e tipografia legível.
 - Header, navegação, rodapé, tokens e componentes existentes devem ser reutilizados.

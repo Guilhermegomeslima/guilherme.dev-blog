@@ -1,12 +1,13 @@
 # Design System — blog pessoal
 
-> **[SUBSTITUÍDO PARCIALMENTE em 2026-11-14]** A referência visual vigente é [`DESIGN_SYSTEM_V2.md`](DESIGN_SYSTEM_V2.md) (identidade "arquivo pessoal nas sombras"). Este documento é **preservado como histórico** da identidade cyberpunk/Blade Runner e como **registro dos tokens e componentes atualmente implementados**, que continuam em uso nas páginas internas até as etapas VIS-04 a VIS-06 do `ROADMAP.md`. Onde houver conflito, vale o V2. Durante a migração, os tokens V2 são escopados à Home; os tokens abaixo permanecem em `src/styles/global.css` sem alteração até a migração dos tokens compartilhados ser aprovada.
+> **DOCUMENTO HISTÓRICO — identidade cyberpunk substituída integralmente pelo [Design System 2.0](DESIGN_SYSTEM_V2.md).** A migração VIS-01 a VIS-07 terminou. Nenhum token, cor ou efeito listado abaixo deve ser tratado como requisito vigente.
+> **Revisão do status histórico:** 2026-11-15. Este documento foi preservado para registrar a origem das decisões de design, não para orientar novas telas.
 
-> **Status:** direção visual confirmada; tokens e componentes propostos · **Versão:** 0.1 · **Atualizado:** 2026-11-07
+> **Status original (07/11/2026):** direção visual cyberpunk confirmada à época; substituída pelo Design System 2.0.
 
 ## 1. Identidade
 
-**[CONFIRMADO]** A identidade é **cyberpunk cinematográfica**, inspirada na atmosfera de _Blade Runner_, aplicada a **todas as páginas**. O tema será **escuro apenas**, inicialmente. O objetivo não é copiar a franquia, e sim combinar tecnologia, fotografia noturna, hierarquia editorial e usabilidade.
+**[HISTÓRICO]** A identidade **anterior** era cyberpunk cinematográfica, inspirada na atmosfera de _Blade Runner_. Ela orientou o primeiro MVP, mas **não é mais aplicada às páginas atuais**. Os exemplos restantes preservam a especificação de época.
 
 **[CONFIRMADO] Referência preferida:** primeiro protótipo do Figma Make:  
 https://www.figma.com/make/rcvx0jQ0gfulTn1owpG3bd/Blog-Pessoal-Cyberpunk?t=P4xgPHVx9xefWPZk-1
@@ -125,7 +126,7 @@ Os valores abaixo são **[PROPOSTO]**, ponto de partida técnico, **não extraí
 
 A Home pode ser mais cinematográfica e usar grids assimétricos; Artigos, Sobre e Linux podem ter colunas de leitura; Jogos pode ter filtros e rankings. **Isso não altera o sistema visual:** fundo, tokens, tipografia, padrões de navegação, detalhes e comportamento permanecem compartilhados.
 
-## 11. Aprovações futuras
+## 11. Aprovações futuras (registro histórico, não pendências atuais)
 
 - [PENDENTE] Validar paleta em telas reais.
 - [PENDENTE] Escolher fontes.

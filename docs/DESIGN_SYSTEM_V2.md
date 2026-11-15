@@ -1,9 +1,9 @@
 # Design System 2.0 — guilherme.dev
 
-> **Estado:** direção visual da **Home aprovada pelo autor**, a ser reproduzida com máxima fidelidade. Diretrizes das páginas internas consolidadas, ainda sujeitas a validação visual individual.  
-> **Data de referência:** 14/11/2026 · **Documento:** proposta para futura adoção no repositório.  
-> **Escopo:** reformulação **visual**, preservando conteúdo, URLs, modelos de dados e funcionalidades já existentes.  
-> **Regra de prioridade:** a **gravação e as capturas da Home aprovada** prevalecem sobre exemplos ilustrativos e valores sugeridos neste documento.
+> **Estado:** identidade visual **implementada em todas as páginas**; VIS-01 a VIS-07 concluídas no roadmap.  
+> **Data da especificação original:** 14/11/2026 · **Revisão documental:** 15/11/2026.  
+> **Escopo:** registro da identidade aprovada e das diretrizes de manutenção, preservando dados, URLs e funcionalidades.  
+> **Regra de prioridade:** a implementação aprovada e as referências da Home prevalecem sobre exemplos ilustrativos antigos. Mudanças futuras exigem aprovação.
 
 ## 0. Referências oficiais e modo de utilização
 
@@ -69,7 +69,7 @@
 | `--accent`         | `#79382F`   | acento vermelho de navegação e estados selecionados |
 | `--accent-warm`    | `#A18A70`   | eventual detalhe quente, não obrigatório            |
 
-**[PENDENTE]** Capturar as cores **reais** do protótipo (se o arquivo fonte estiver acessível), conferir contraste e corrigir os tokens. Não obrigar cada seção a ter uma cor diferente; o usuário quis **explorar** essa possibilidade, não aprovou uma distribuição fixa.
+**[IMPLEMENTADO]** Os tokens de cores V2 estão definidos em `src/styles/global.css` e aplicados globalmente. Os valores acima são a especificação de partida; não alterá-los apenas para reproduzir valores hipotéticos do protótipo.
 
 ### 2.2 Fotografia e sobreposições
 
@@ -94,7 +94,7 @@
 | Microtextos e navegação   | sans-serif discreta, caixa alta e tracking moderado quando apropriado       |
 | Numeração/labels          | tipografia pequena, legível, sem excesso de contraste reduzido              |
 
-**[PENDENTE]** Identificar fontes reais usadas no protótipo, pesos, espaçamento e licença. Cormorant Garamond, EB Garamond ou fontes equivalentes são apenas alternativas, **não** fontes aprovadas. Evitar substituições antes de tentar identificar a tipografia utilizada.
+**[HISTÓRICO]** Na concepção, as famílias do protótipo ainda precisavam ser identificadas. A implementação aprovada adotou **Cormorant Garamond, Inter e JetBrains Mono**, com fontes locais WOFF2 em `public/fonts/` (ver §11.2 e `src/styles/global.css`). Não substituir fontes por exemplos antigos.
 
 ### 2.4 Geometria, respiro e molduras
 
@@ -102,7 +102,7 @@
 - Ritmo editorial: hero amplo, transição deliberada, acervo visual denso o bastante para não parecer vazio.
 - Alinhamentos e espaçamentos constantes nos limites da grid, embora os cartões tenham dimensões distintas.
 - A assimetria é **intencional** e exclusiva das áreas que dela se beneficiem; não copiar essa composição em catálogos com centenas de registros.
-- **[PENDENTE]** Larguras, paddings, alturas e breakpoints: medir e comparar visualmente com a referência; não tratar aproximações deste documento como especificação exata.
+- **[IMPLEMENTADO]** Larguras, espaçamentos, alturas e breakpoints estão no CSS e nos componentes atuais. A comparação com protótipo foi etapa de VIS-07; não tratar números ilustrativos deste documento como substitutos do código.
 
 ## 3. Header global
 
@@ -114,7 +114,7 @@ Navegação existente a preservar: **Home, Sobre, Projetos, Linux, Jogos, Filmes
 
 ## 4. Home — composição aprovada (referência-mestra)
 
-**[APROVADO]** A Home mostrada na gravação é o padrão visual a reproduzir. Não solicitar uma nova geração criativa em substituição à Home já aprovada. O objetivo da futura implementação é **fidelidade visual**, com adaptações necessárias para performance, acessibilidade e responsividade.
+**[IMPLEMENTADO]** A Home foi desenvolvida a partir da gravação e é a referência visual vigente. Não solicitar uma nova geração criativa em substituição à composição aprovada. Preservar **fidelidade visual**, performance, acessibilidade e responsividade.
 
 ### 4.1 Hero
 
@@ -223,7 +223,7 @@ Nomes acima são **exemplos**, não ordem para criar arquivos ou reescrever comp
 - Respeitar `prefers-reduced-motion`; transições curtas, sem efeitos infinitos, rolagem forçada ou parallax que prejudique uso.
 - Imagens decorativas usam descrição vazia quando correto; imagens informativas têm texto alternativo específico.
 
-**[PENDENTE]** Testar protótipo e implementação nas larguras de referência reais (celular, tablet e desktop). Não afirmar que a Home está aprovada no mobile somente com base na gravação desktop.
+**[HISTÓRICO]** A etapa de implementação exigiu testar desktop, tablet e celular. Revisões futuras de responsividade devem ser feitas no produto atual; a gravação desktop isolada não comprova a experiência mobile.
 
 ## 8. Imagens, carregamento e publicação
 
@@ -234,9 +234,9 @@ Nomes acima são **exemplos**, não ordem para criar arquivos ou reescrever comp
 - Não alterar a fonte de verdade dos conteúdos, nomes dos jogos, notas, imagens da galeria ou links.
 - Verificar direitos/autorização de uso das fotografias e outros recursos do protótipo antes da publicação definitiva.
 
-## 9. Estratégia de migração visual
+## 9. Histórico da migração visual concluída
 
-**[DIRETRIZ]** Implementar em pequenas etapas, sempre preservando a base real de conteúdo:
+**[HISTÓRICO]** As etapas abaixo documentam como a migração VIS-01 a VIS-07 foi executada, sempre preservando a base real de conteúdo. **Não constituem um novo plano de implementação**:
 
 1. **Inventário prévio:** ler `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DESIGN_SYSTEM.md`, `docs/CONTENT_SECTIONS.md`, `docs/ROADMAP.md` e componentes atuais; mapear dependências.
 2. **Registrar referências:** adicionar o novo documento e as imagens de referência, sem mexer no site.
@@ -249,7 +249,7 @@ Nomes acima são **exemplos**, não ordem para criar arquivos ou reescrever comp
 
 **Controle de mudanças:** commits pequenos e convencionais; **não commitar nem fazer push sem autorização do autor**. Não reexecutar importações reais, não mudar schemas, não remover dados reais e não redesenhar todos os catálogos de uma vez.
 
-### 9.1 Backlog sugerido para o roadmap (ainda não inserido)
+### 9.1 Backlog original (já registrado e concluído no roadmap)
 
 | ID sugerido | Trabalho                           | Condição de conclusão                           |
 | ----------- | ---------------------------------- | ----------------------------------------------- |
@@ -261,9 +261,11 @@ Nomes acima são **exemplos**, não ordem para criar arquivos ou reescrever comp
 | VIS-06      | Catálogos e páginas restantes      | funcionalidade preservada, visual consistente   |
 | VIS-07      | QA visual, a11y e deploy           | verificações e revisão final aprovadas          |
 
-Sem prazos artificiais: seguir a ordem de dependências e a disponibilidade de revisão do autor.
+A execução e seus commits estão em `docs/ROADMAP.md`. Este backlog resumido é histórico; o roadmap registra também as subetapas VIS-06a a VIS-06h.
 
-## 10. Critérios de aceitação
+## 10. Critérios originais de aceitação (checklist histórico)
+
+O checklist abaixo foi escrito para a migração. O roadmap registra a conclusão das etapas VIS; as caixas não são um relatório de testes executados nesta revisão documental.
 
 ### 10.1 Home — fidelidade
 
@@ -297,7 +299,9 @@ Fazer comparação por capturas **lado a lado** entre protótipo e implementaç�
 
 Não declarar “pixel-perfect” sem medir/comparar; tampouco prometer cópia exata quando os assets originais não estiverem disponíveis.
 
-## 11. Decisões abertas
+## 11. Questões abertas no documento original (histórico)
+
+Os itens abaixo foram registrados antes da implementação e **não devem ser reinterpretados como tarefas pendentes**. O código atual já contém fontes, tokens, breakpoints, imagens e componentes; conferir o repositório antes de reabrir qualquer decisão.
 
 - [ ] Famílias tipográficas reais e licenças.
 - [ ] Arquivos originais e direitos das fotografias do hero e dos nove cards.
@@ -312,7 +316,7 @@ Não declarar “pixel-perfect” sem medir/comparar; tampouco prometer cópia e
 ## 11.1 Decisões aprovadas pelo autor (14/11/2026)
 
 - **Documentação:** este documento é a referência visual vigente; `DESIGN_SYSTEM.md` permanece como histórico e registro dos tokens atuais.
-- **Tokens:** estilos e tokens V2 **escopados à Home** inicialmente. As páginas internas não mudam de aparência antes das suas etapas; a migração dos tokens compartilhados ocorre após validação da nova identidade (VIS-06).
+- **Tokens (decisão histórica):** a V2 começou escopada à Home; após VIS-06h, os tokens compartilhados foram consolidados em `src/styles/global.css` para todo o site.
 - **Fontes:** tentar identificar as fontes reais do protótipo; se impossível, usar Cormorant Garamond (display) e Inter (texto/rótulos) como provisórias, comparadas visualmente com as referências. Sem dependências desnecessárias; preferir arquivos locais com licença OFL.
 - **Fotografias:** verificar se os arquivos originais do protótipo podem ser obtidos (nunca extrair das capturas). Caso contrário, apresentar opções de Unsplash/Pexels, com origem e licença, para aprovação **antes** de incorporar.
 - **Faixa editorial (§4.4):** usar o artigo real "Por que escolhi Fedora (e por que continuo nele)", com título, descrição e data lidos da Content Collection, sem rótulo "demonstrativo" e sem texto inventado. Se o artigo não estiver disponível, registrar a pendência.
@@ -320,7 +324,9 @@ Não declarar “pixel-perfect” sem medir/comparar; tampouco prometer cópia e
 - **Validação visual:** quadros da gravação podem ser extraídos com `ffmpeg` (vídeo original preservado) para analisar efeitos, animações e rolagem; comparação desktop e mobile durante a implementação.
 - **Preservação:** nenhum conteúdo real, avaliação, schema, rota ou imagem de conteúdo é alterado; compatibilidade com Vercel e GitHub Pages mantida.
 
-## 11.2 Recursos confirmados na VIS-02 (14/11/2026)
+## 11.2 Recursos confirmados na VIS-02 (14/11/2026) — registro original
+
+Esta seção documenta os recursos disponíveis no momento da fundação V2. A implementação final evoluiu na VIS-03 e nas demais etapas; os cards atuais da Home também usam arquivos locais `*-card.webp` definidos em `src/data/homeCategories.ts`. Para referências operacionais, consultar esse arquivo e `public/images/home/`.
 
 **Tipografia (código do protótipo, confirmada pelo autor):** Cormorant Garamond (500, 600, itálico 500), Inter (300, 400, 500) e JetBrains Mono (400). Hospedadas localmente em `public/fonts/` (subset latin, WOFF2 variável, licença OFL, `font-display: swap`), sem `@import` externo. Tokens: `--font-v2-display`, `--font-v2-sans`, `--font-v2-mono`.
 
@@ -339,9 +345,9 @@ Não declarar “pixel-perfect” sem medir/comparar; tampouco prometer cópia e
 | artigos     | 1610338732118-09d3b6fd030c | 900             |
 | galeria     | 1755146759567-cfc7ef9d9dcc | 1400            |
 
-As fotografias originais são coloridas; o aspecto escuro e dessaturado do protótipo vem de overlay/tratamento por CSS, a reproduzir na VIS-03. **[PENDENTE]** Nomes dos fotógrafos para crédito individual (a licença não exige, mas o registro de autoria é desejável).
+As fotografias originais são coloridas; o aspecto escuro e dessaturado é obtido com tratamento de CSS. **Registro original:** a identificação nominal dos fotógrafos não estava consolidada neste documento; conferir metadados/licenças existentes antes de alterar créditos.
 
-**Tokens V2** (`--color-v2-*`, `--container-v2`) e utilitários (`v2-eyebrow`, `v2-focus`, `.v2-scope` para movimento reduzido) estão em `src/styles/global.css`, **sem alterar nenhum token existente**. Valores de cor ainda provisórios.
+**Tokens V2** (`--color-v2-*`, `--container-v2`) e utilitários (`v2-eyebrow`, `v2-focus`, `.v2-scope`) estão em `src/styles/global.css` e já foram consolidados. Os valores documentados como provisórios na fase de design correspondem ao ponto de partida do sistema atual; mudanças de cor exigem revisão visual.
 
 **Comportamento observado na gravação:** sem animação contínua nem parallax; header não fixo; hover dos cards com borda clara e botão de seta preenchido em vinho; hover da faixa editorial com fundo elevado; detalhes do hero (coordenadas, índice `001` com linha vermelha, `DESCER`).
 
@@ -349,6 +355,6 @@ As fotografias originais são coloridas; o aspecto escuro e dessaturado do prot�
 
 ## 12. Instrução curta para agentes de implementação
 
-> A Home mostrada em `references/home-hero.png`, `references/home-cards.png`, `references/home-footer.png` e na gravação aprovada em 14/11/2026 é a **referência visual prioritária**. Não a reinvente. Consulte a arquitetura e a implementação atual, planeje a migração visual por etapas e preserve integralmente dados, rotas e funcionalidades. Confronte capturas do resultado com a referência antes de sugerir conclusão. Peça aprovação para mudanças e jamais execute commit ou push sem autorização.
+> A Home mostrada em `references/home-hero.png`, `references/home-cards.png`, `references/home-footer.png` e na gravação aprovada em 14/11/2026 é uma **referência visual prioritária já implementada**. Não a reinvente. Consulte a implementação atual e preserve dados, rotas, notas, imagens e funcionalidades. Qualquer redesign necessita de tarefa e aprovação. Jamais execute commit ou push sem autorização.
 
-**Status final deste documento:** especificação pronta para **revisão e adoção**, não autorização para editar o projeto automaticamente.
+**Status final deste documento:** registro do Design System 2.0 **vigente**, não autorização para editar o projeto automaticamente.

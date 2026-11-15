@@ -1,11 +1,12 @@
 # Fluxo de trabalho Git
 
-> **Status:** proposta pronta para revisão · **Versão:** 0.1 · **Atualizado:** 2026-11-07
+> **Status:** regras de versionamento em uso · **Revisão documental:** 2026-11-15.
+> Aplicável ao código e ao conteúdo da versão SSG atual; operações Git continuam exigindo autorização.
 > Complementa `REQUIREMENTS.md` e `ARCHITECTURE.md`. O projeto é individual.
 
 ## 1. Objetivo e decisões
 
-- **[CONFIRMADO]** Começar apenas com a branch `main`.
+- **[IMPLEMENTADO]** A branch `main` é a principal, com integração a deploys automáticos.
 - **[CONFIRMADO]** Manter commits pequenos, com escopo de funcionalidade ou etapa específica.
 - **[PROPOSTO]** Usar Conventional Commits em português ou inglês de forma consistente. Os exemplos abaixo usam inglês para os tipos e português para as descrições.
 - **[PROPOSTO]** `main` deve permanecer executável: cada commit de implementação deve passar nas verificações aplicáveis.
@@ -114,8 +115,12 @@ Não exigir PR, code review externo ou regras de proteção como pré-requisito 
 - Pode existir implementação pronta **aguardando autorização de commit**; isso não equivale a publicação.
 - Não definir datas fictícias: prazo é opcional.
 
-## 9. Pendências
+## 9. Estado implementado e informações atuais
 
-- **[PENDENTE]** Identidade do repositório e URL remota.
-- **[PENDENTE]** Comandos exatos de lint, format, check e test após inicialização.
-- **[PENDENTE]** Hospedagem e política de deploy.
+- **Repositório:** o código configura duas hospedagens, mas o URL Git remoto não foi inferido apenas do ZIP; conferir `git remote -v` no repositório local antes de documentar o remote como fato.
+- **Scripts existentes:** `npm run dev`, `npm run check`, `npm run test`, `npm run format`, `npm run format:check`, `npm run build`, `npm run preview`, `npm run verify`.
+- **Deploy:** Vercel principal (integração com GitHub) e GitHub Pages espelho (`.github/workflows/deploy.yml`).
+- **CI:** workflow do Pages executa formatação, check, testes, build e auditoria de integridade antes de publicar.
+- **Autorização:** agentes não executam commits, pushes ou deploy manual sem aprovação expressa do autor.
+
+Este documento descreve somente o fluxo Git atualmente utilizado; não é uma especificação de sistemas de publicação alternativos.

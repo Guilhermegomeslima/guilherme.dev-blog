@@ -1,134 +1,86 @@
-# guilherme.dev — Blog Pessoal e Portfólio
+# guilherme.dev — Blog pessoal e portfólio
 
-Blog pessoal e acervo tecnológico desenvolvido com Astro 6, TypeScript e Tailwind CSS 4, com estética cyberpunk cinematográfica inspirada em _Blade Runner_ e geração 100% estática (SSG).
+Blog pessoal, portfólio e acervo editorial em português. Construído em **Astro 6 + TypeScript + Tailwind CSS 4**, com **geração estática (SSG)** e a identidade visual **Design System 2.0**: cinematográfica, sombria, tipografia editorial e acentos vermelho envelhecido. A identidade cyberpunk anterior é mantida somente como histórico em `docs/DESIGN_SYSTEM.md`.
 
-## 🌐 Acesso Online
+## Acesso online
 
-- **Deploy Principal (Vercel):** [https://guilhermegomesdev-blog.vercel.app/](https://guilhermegomesdev-blog.vercel.app/)
-- **Deploy Secundário (GitHub Pages):** [https://guilhermegomeslima.github.io/guilherme.dev-blog/](https://guilhermegomeslima.github.io/guilherme.dev-blog/)
+- **Vercel (site principal):** https://guilhermegomesdev-blog.vercel.app/
+- **GitHub Pages (espelho):** https://guilhermegomeslima.github.io/guilherme.dev-blog/
 
----
+As URLs canônicas e os metadados de SEO priorizam a hospedagem principal.
 
-## 📖 Documentação do Projeto
+## Seções disponíveis
 
-Toda a especificação, regras e planejamento do projeto estão documentados na raiz e na pasta `docs/`:
+Home, Sobre, Projetos, Linux, Jogos, Filmes, Livros, Artigos, Música, Open Source e Galeria. Jogos, Filmes, Livros e Artigos incluem páginas individuais; a Galeria possui rotas por álbum e lightbox. Os catálogos relevantes possuem filtros, busca e contadores acessíveis.
 
-- [AGENTS.md](AGENTS.md) — Instruções operacionais para agentes e pair programming
-- [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) — Requisitos de negócio e escopo funcional
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — Arquitetura técnica e organização do repositório
-- [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) — Identidade visual cyberpunk, tokens e componentes
-- [docs/CONTENT_GUIDE.md](docs/CONTENT_GUIDE.md) — Guia de redação, formatos (Markdown/JSON) e critérios de avaliação
-- [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md) — Fluxo Git e convenção de commits
-- [docs/ROADMAP.md](docs/ROADMAP.md) — Fases de desenvolvimento, cronograma e tarefas
+## Tecnologia e organização
 
----
-
-## 🚀 Tecnologias
-
-- **Framework:** [Astro](https://astro.build/) (v6)
-- **Linguagem:** [TypeScript](https://www.typescriptlang.org/) (modo estrito)
-- **Estilização:** [Tailwind CSS 4](https://tailwindcss.com/) com tokens semânticos via `@theme`
-- **Formatação de Código:** [Prettier](https://prettier.io/) com `prettier-plugin-astro`
-- **Geração:** Estática (SSG — HTML/CSS/JS puros em `dist/`)
-- **CI/CD:** GitHub Actions (`.github/workflows/deploy.yml`) e Vercel Git Integration
-
----
-
-## 📁 Estrutura do Repositório
+- **Framework:** Astro `^6.4.8` (conforme `package.json` do snapshot)
+- **Linguagem:** TypeScript; **estilo:** Tailwind CSS `^4.3.5`
+- **Dados:** oito Content Collections Astro; Markdown em Artigos/Projetos, JSON nos demais catálogos
+- **Avaliações:** `src/utils/ratings.ts` (médias de Jogos e Filmes)
+- **Busca:** `src/utils/search.ts` (normalização de acentos, espaços, termos)
+- **SEO:** canonical, dados estruturados, metadados sociais, sitemap e robots
+- **Deploy:** Vercel (principal) e GitHub Actions → GitHub Pages (espelho)
+- **Qualidade:** Astro Check, Node test runner, Prettier, build estático e auditoria de links/imagens
 
 ```text
 guilherme.dev-blog/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # CI/CD automático para GitHub Pages
-├── docs/                       # Especificações e planejamento do projeto
-├── public/                     # Recursos estáticos públicos (favicon.svg, etc.)
+├── .github/workflows/deploy.yml
+├── docs/                     # Documentação e referências da identidade visual
+├── public/fonts/             # Cormorant Garamond, Inter, JetBrains Mono
+├── public/images/            # Imagens locais e recursos públicos
 ├── src/
-│   ├── components/
-│   │   ├── about/              # Componentes da página Sobre (dossiê cyberpunk)
-│   │   ├── home/               # Componentes da Home (Hero, AboutPreview, CategoryGrid)
-│   │   ├── layout/             # Header com menu responsivo e Footer social
-│   │   └── ui/                 # Primitives reutilizáveis (Section, Card, Button, etc.)
-│   ├── data/                   # Fontes de dados tipadas (navigation, categories, social)
-│   ├── layouts/                # BaseLayout com SEO, Open Graph e acessibilidade
-│   ├── pages/                  # Rotas estáticas (index.astro, sobre.astro, 404.astro)
-│   ├── styles/                 # Estilos globais e tokens Tailwind 4 (global.css)
-│   └── utils/                  # Utilitários de rota e base path (base.ts)
-├── astro.config.mjs            # Configuração Astro (suporte duplo Vercel & GitHub Pages)
-├── vercel.json                 # Configuração de deploy estático na Vercel
-├── package.json                # Dependências e scripts de validação
-├── tsconfig.json               # Configuração TypeScript estrita
-└── README.md                   # Visão geral e documentação de execução
+│   ├── components/           # about, content, home, layout, linux e ui
+│   ├── content/              # 8 coleções Markdown/JSON
+│   ├── content.config.ts     # Loaders e schemas das coleções
+│   ├── data/                 # Navegação, sociais, categorias e timeline Linux
+│   ├── layouts/              # BaseLayout
+│   ├── pages/                # Páginas, detalhes, 404, sitemap, robots
+│   ├── styles/global.css     # Design System 2.0
+│   └── utils/                # base, ratings, search, seo e testes
+├── astro.config.mjs
+├── vercel.json
+└── package.json
 ```
 
----
+## Executar localmente
 
-## 🛠️ Como Executar Localmente
-
-### Pré-requisitos
-
-- Node.js >= 22 (recomendado 22.12+)
-- npm >= 10
-
-### Instalação
+**Pré-requisitos:** Node.js 22 (ou versão compatível com o projeto) e npm.
 
 ```bash
-npm install
+npm ci                # Instala dependências do package-lock.json
+npm run dev           # Desenvolvimento local
+npm run check         # Diagnóstico Astro/TypeScript
+npm run test          # Testes unitários
+npm run format:check  # Verificação Prettier sem alterações
+npm run build         # Build estático para dist/
+npm run preview       # Preview local do build
+npm run verify        # Check + testes + formatação + build + auditoria do dist/
 ```
 
-### Comandos Disponíveis
+`npm run format` modifica arquivos; use apenas quando desejar formatar o projeto. Para simular o build do **GitHub Pages** com base de subdiretório, execute `GITHUB_ACTIONS=true npm run build`.
 
-```bash
-# Iniciar o servidor local de desenvolvimento
-npm run dev
+## Publicação atual
 
-# Checagem de tipos estrita e diagnóstico do Astro
-npm run check
+O conteúdo é editado nos arquivos de `src/content/`; mudanças versionadas e enviadas ao GitHub podem disparar novos builds. O `astro.config.mjs` usa `site` e `base` diferentes para Vercel (`/`) e GitHub Pages (`/guilherme.dev-blog/`). O workflow `.github/workflows/deploy.yml` verifica código e gera o espelho; `vercel.json` configura o deploy principal e headers de cache.
 
-# Formatar automaticamente todo o projeto com Prettier
-npm run format
+**Não existe painel administrativo, banco de dados ou API de escrita nesta versão.** Nenhuma tecnologia futura foi escolhida nesta revisão documental.
 
-# Verificar conformidade de formatação sem alterar arquivos
-npm run format:check
+## Documentação
 
-# Gerar o build estático para produção (dist/)
-npm run build
+- [`AGENTS.md`](AGENTS.md) — regras de execução para agentes; alterações Git exigem aprovação
+- [`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md) — requisitos e comportamento implementado
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — arquitetura atual, dados, rotas e hospedagem
+- [`docs/DESIGN_SYSTEM_V2.md`](docs/DESIGN_SYSTEM_V2.md) — identidade visual vigente
+- [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) — identidade cyberpunk original (histórico)
+- [`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md) — estrutura editorial e regras de notas
+- [`docs/CONTENT_SECTIONS.md`](docs/CONTENT_SECTIONS.md) — planejamento histórico das seções da Fase 4
+- [`docs/GIT_WORKFLOW.md`](docs/GIT_WORKFLOW.md) — fluxo de versionamento
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) — tarefas, status e commits registrados
 
-# Pré-visualizar o build localmente
-npm run preview
+## Status
 
-# Pipeline completo de validação (check + format:check + build)
-npm run verify
-```
+Fases 0–4, inserção de conteúdos reais, migração visual VIS-01 a VIS-07 e tarefas de qualidade QLT-01 a QLT-05 estão marcadas **concluídas no roadmap enviado**. Itens EVO permanecem pendentes, sem especificação técnica nesta revisão.
 
----
-
-## 🚢 Deploy e Publicação
-
-O projeto suporta **deploy simultâneo** em duas plataformas sem conflitos de rotas:
-
-1. **Vercel (Deploy Principal na raiz `/`):**
-   - Configurado via `vercel.json` e integração direta com o GitHub.
-   - Qualquer push na branch `main` dispara o build automático via Vercel.
-   - URL: `https://guilhermegomesdev-blog.vercel.app/`
-
-2. **GitHub Pages (Deploy Secundário em `/guilherme.dev-blog/`):**
-   - Automatizado via workflow do GitHub Actions em `.github/workflows/deploy.yml`.
-   - O utilitário `withBase` em conjunto com a detecção `GITHUB_ACTIONS=true` no `astro.config.mjs` prefixa automaticamente assets e rotas internas.
-   - URL: `https://guilhermegomeslima.github.io/guilherme.dev-blog/`
-
----
-
-## 📌 Status do Projeto
-
-- **Fase 1 — Fundação:** Concluída (`DEV-01` a `DEV-05`)
-- **Fase 2 — Base visual e navegação:** Concluída (`UI-01` a `UI-05`)
-- **Fase 3 — MVP (P0):** Concluída (`MVP-01` a `MVP-07`)
-  - `MVP-01`: Hero cyberpunk e apresentação
-  - `MVP-02`: Resumo Sobre com perfil real
-  - `MVP-03`: Grid com 9 módulos/seções do acervo
-  - `MVP-04`: Dossiê Sobre completo com efeito de scan/glitch e projetos do GitHub
-  - `MVP-05`: Acessibilidade (skip link, reduced motion), responsividade e performance
-  - `MVP-06`: Metadados completos Open Graph, Twitter Cards e página 404 personalizada
-  - `MVP-07`: Deploys simultâneos funcionais em Vercel e GitHub Pages
-- **Próxima fase:** Fase 4 — Conteúdo e páginas temáticas (P1)
+> Os arquivos Markdown deste pacote foram revisados a partir de um ZIP do projeto em 15/11/2026. A revisão **não alterou nem executou código do blog**, e não representa validação em navegador ou publicação remota.

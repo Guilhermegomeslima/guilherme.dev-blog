@@ -1,7 +1,7 @@
 # Roadmap de desenvolvimento do blog
 
-> **Status:** Em desenvolvimento · **Versão:** 0.4 · **Atualizado:** 2026-11-08
-> Planejamento **não é execução**. Nenhuma tarefa abaixo está presumida como implementada.
+> **Status:** MVP, conteúdo, identidade visual V2 e qualidade concluídos; EVO-01 a EVO-03 pendentes · **Revisão documental:** 2026-11-15.
+> Este roadmap registra **execução real conforme os commits já anotados**. Datas-alvo antigas permanecem por rastreabilidade; não representam necessariamente datas de conclusão.
 > Fonte de requisitos: `REQUIREMENTS.md`. Guias: `ARCHITECTURE.md`, `DESIGN_SYSTEM_V2.md` (referência visual vigente), `DESIGN_SYSTEM.md` (histórico), `CONTENT_GUIDE.md`, `GIT_WORKFLOW.md`.
 
 ## 1. Como usar
@@ -18,7 +18,7 @@ Como o projeto é individual, **não há colunas Dono e Revisor**. O modelo foi 
 | Commit/PR    | Hash, link ou identificador **somente depois** de existir  |
 | Status       | Pendente, Em andamento, Em revisão, Concluído ou Bloqueado |
 
-Atualize o status quando houver evidência de implementação; marcar `Concluído` exige checar os critérios de aceitação. Se uma tarefa crescer demais, crie subitens `ID.a`, `ID.b` ou IDs novos sem perder rastreabilidade.
+Atualize o status somente com evidências de implementação; `Concluído` exige critérios de aceitação verificados. Os hashes registrados são preservados. Datas-alvo históricas não devem ser reinterpretadas como datas em que houve entrega.
 
 ## 2. Fases e entregas
 
@@ -88,7 +88,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 **Aceitação:** conteúdo separado da interface; dados validados no build; notas entre 0 e 100; média sem pesos; URLs de imagens e créditos documentados; evitar seções vazias.
 
-> Ordem das seções na Fase 4 é **sugerida** e pode mudar conforme o conteúdo disponível. Não implementar toda a fase em um único commit.
+> **Registro histórico:** a Fase 4 foi concluída; a ordem abaixo foi a proposta original. Não reabrir etapas concluídas sem uma nova tarefa autorizada.
 
 ## Fase 4.5 — Inserção de conteúdo real (P1)
 
@@ -123,11 +123,11 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 
 ## Fase 4.6 — Identidade visual 2.0 (P1)
 
-> **Objetivo:** reproduzir com máxima fidelidade a Home aprovada no Figma Make e migrar gradualmente o restante do site para a identidade descrita em `DESIGN_SYSTEM_V2.md`, **sem alterar dados reais, avaliações, schemas, rotas ou imagens de conteúdo**.
+> **Objetivo histórico, concluído:** reproduzir a Home aprovada e migrar todo o site para `DESIGN_SYSTEM_V2.md`, **sem alterar dados reais, avaliações, schemas, rotas ou imagens de conteúdo**. VIS-01 a VIS-07 estão concluídas.
 >
 > **Datas-alvo:** sem datas (`—`). A ordem segue dependências e a disponibilidade de revisão do autor.
 >
-> **Decisões aprovadas (14/11/2026):** tokens e estilos V2 escopados à Home até a identidade ser validada; só depois migrar tokens compartilhados; fontes identificadas no protótipo (se possível) ou Cormorant Garamond + Inter como provisórias; fotografias dependem de arquivos originais ou de opções aprovadas pelo autor (Unsplash/Pexels com licença verificada); faixa editorial usa o artigo real "Por que escolhi Fedora (e por que continuo nele)"; rodapé apenas com links sociais reais (sem RSS); `AboutPreview` sai da Home (componente preservado); Sobre permanece independente.
+> **Decisões de execução (14/11/2026, históricas):** tokens V2 inicialmente escopados à Home até a identidade ser validada; depois consolidar tokens compartilhados; fontes identificadas no protótipo (se possível) ou Cormorant Garamond + Inter como provisórias; fotografias dependem de arquivos originais ou de opções aprovadas pelo autor (Unsplash/Pexels com licença verificada); faixa editorial usa o artigo real "Por que escolhi Fedora (e por que continuo nele)"; rodapé apenas com links sociais reais (sem RSS); `AboutPreview` sai da Home (componente preservado); Sobre permanece independente.
 
 | ID      | Item                                                                                                                                                    | Dependências      | Prioridade | Data alvo | Commit/PR | Status    |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ---------- | --------- | --------- | --------- |
@@ -156,7 +156,7 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 - **VIS-06h:** migração definitiva dos tokens compartilhados em `global.css` e `BaseLayout.astro`, atualização da página `404.astro` e eliminação de duplicações temporárias somente após aprovação visual de `VIS-06a` a `VIS-06g`.
 - **VIS-07:** critérios de `DESIGN_SYSTEM_V2.md` §10.2 e §10.3 verificados; build e testes passam; links, SEO e deploy conferidos nas duas hospedagens.
 
-### Fase 5 — Descoberta, qualidade e evolução (P1/P2)
+### Fase 5 — Qualidade concluída; evolução pendente (P1/P2)
 
 | ID     | Item                                                                      | Dependências   | Prioridade | Data alvo | Commit/PR | Status    |
 | ------ | ------------------------------------------------------------------------- | -------------- | ---------- | --------- | --------- | --------- |
@@ -168,6 +168,8 @@ Atualize o status quando houver evidência de implementação; marcar `Concluíd
 | EVO-01 | Especificar autenticação e backend para painel próprio remoto             | MVP-07         | P2         | 09/01     | —         | Pendente  |
 | EVO-02 | Decidir armazenamento externo próprio/de mídia                            | CNT-11         | P2         | 10/01     | —         | Pendente  |
 | EVO-03 | Implementar painel administrativo próprio, após nova arquitetura aprovada | EVO-01, EVO-02 | P2         | 30/01     | —         | Pendente  |
+
+**Situação em 15/11/2026:** QLT-01 a QLT-05 concluídas e registradas; EVO-01 a EVO-03 continuam **Pendente**. A presente revisão documental não especifica, aprova nem inicia essas tarefas.
 
 **Aceitação:** mudanças adicionais não comprometem a publicação atual; soluções externas são opcionais e justificadas, não introduzidas antecipadamente.
 
@@ -192,7 +194,7 @@ Uma tarefa somente vira **Concluído** quando:
 ## 5. Decisões que não devem ser inventadas
 
 - Domínio próprio, links pessoais e biografia final que ainda não tenham sido definidos;
-- Cores/tokens finais (a paleta é provisória; os valores V2 ainda precisam ser calibrados com o protótipo);
-- Quantidade de casas decimais das médias;
-- Modelo definitivo de livros/música;
-- Provedor futuro de imagens e backend do painel.
+- Cores/tokens V2 vigentes: definidos no código e aprovados visualmente; não recalibrar por suposição;
+- Política de alteração das médias: a implementação atual já usa `formatScore` (inteiro ou uma casa decimal). Não redefinir sem nova decisão;
+- Modelos atuais de livros/música: conferir schemas já implementados em `src/content.config.ts`; não substituir por modelos hipotéticos;
+- Tecnologias ou serviços para iniciativas futuras: nenhuma decisão é tomada nesta revisão.

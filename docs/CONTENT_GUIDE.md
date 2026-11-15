@@ -1,27 +1,25 @@
 # Guia de conteúdo e publicação
 
-> **Status:** guia inicial, com modelos sugeridos · **Versão:** 0.1 · **Atualizado:** 2026-11-07
+> **Status:** guia editorial da versão estática em produção · **Revisado:** 2026-11-15. Exemplos abaixo são ilustrativos; schemas válidos em `src/content.config.ts`.
 
 ## 1. Objetivo e princípio
 
-**[CONFIRMADO]** O autor será a única pessoa a publicar. Inicialmente, criará/editará arquivos locais e os versionará no Git. Nenhum CMS externo ou painel de administração será necessário no MVP. **[FUTURO]** Construir um painel de publicação próprio acessível remotamente.
+**[IMPLEMENTADO]** O autor publica editando arquivos locais Markdown/JSON, validando o projeto e enviando as mudanças ao Git para gerar novo deploy. Não há CMS, painel administrativo, API de escrita ou banco de dados nesta versão.
 
 **[PROPOSTO]** Conteúdo deve ser independente da interface; novos registros são adicionados sem editar o código dos cards e páginas.
 
 ## 2. Qual formato usar?
 
-| Tipo de informação               | Formato sugerido                 | Por quê                             |
-| -------------------------------- | -------------------------------- | ----------------------------------- |
-| Artigos, ensaios e tutoriais     | Markdown (`.md`)                 | Texto longo, seções, links, imagens |
-| Textos de experiência com Linux  | Markdown (`.md`)                 | Conteúdo narrativo                  |
-| Jogos com critérios de avaliação | JSON (`.json`)                   | Dados consistentes e comparáveis    |
-| Filmes e livros como catálogo    | JSON (`.json`) inicialmente      | Campos, listas e filtros            |
-| Resenhas longas de filmes/livros | Markdown relacionado ao registro | Texto editorial                     |
-| Projetos                         | JSON ou Markdown                 | Depende do tamanho da descrição     |
-| Música e Open Source             | JSON ou Markdown                 | A definir pela natureza do conteúdo |
-| Galeria                          | Metadados JSON + URLs de imagens | Organizar nome, origem e descrição  |
+| Tipo de informação      | Formato implementado             | Local no repositório                            |
+| ----------------------- | -------------------------------- | ----------------------------------------------- |
+| Artigos e ensaios       | Markdown (`.md`)                 | `src/content/articles/`                         |
+| Projetos                | Markdown (`.md`)                 | `src/content/projects/`                         |
+| Relato e timeline Linux | Componentes + dados TypeScript   | `src/pages/linux/`, `src/data/linuxTimeline.ts` |
+| Jogos, Filmes, Livros   | JSON (`.json`)                   | `src/content/games/`, `movies/`, `books/`       |
+| Música, Open Source     | JSON (`.json`)                   | `src/content/music/`, `opensource/`             |
+| Galeria                 | Metadados JSON + URLs de imagens | `src/content/gallery/`                          |
 
-**[PROPOSTO]** Não usar MDX por padrão: só quando o artigo realmente precisar de componentes interativos ou visuais personalizados. Formatos definitivos e schemas serão definidos por coleção, quando sua seção for desenvolvida.
+O padrão `glob` das coleções contempla `.md`/`.mdx`, mas o snapshot contém apenas `.md` e o `package.json` não inclui integração MDX. Não tratar `.mdx` como recurso operacional aprovado sem conferir dependências e suporte real.
 
 ## 3. Informações editoriais comuns
 
@@ -33,7 +31,7 @@
 - `publishedAt`: data de publicação, caso exista.
 - `updatedAt`: data de atualização, quando aplicável.
 - `tags`: assuntos para navegação e filtro.
-- `draft`: rascunho não publicado, quando suportado.
+- `isDemo`: indicador de demonstração previsto nos schemas; não confundir com fluxo completo de rascunhos. O schema atual de artigos **não define `draft`**.
 - `cover`: imagem com metadados.
 
 Não obrigar todos os tipos a ter todos esses campos. Campos pessoais não fornecidos não devem ser preenchidos com dados fictícios.
@@ -48,7 +46,7 @@ title: 'Como organizei meu ambiente Linux'
 description: 'Notas sobre organização e ferramentas no desktop.'
 publishedAt: 2026-11-07
 tags: ['linux', 'desktop']
-draft: true
+isDemo: true
 ---
 
 # Como organizei meu ambiente Linux
@@ -60,23 +58,23 @@ Texto de abertura do artigo...
 Conteúdo...
 ```
 
-**Cuidados:** utilizar títulos informativos, links descritivos, texto alternativo relevante e não inventar data de publicação ao migrar registros antigos. Rascunhos não devem aparecer no site público.
+**Cuidados:** o exemplo é fictício e usa `isDemo: true`; **não o publique como artigo real**. `isDemo` não equivale a um sistema seguro de rascunhos privados: conteúdos ainda não aprovados devem ficar fora das coleções utilizadas no build público. Confira os filtros de indexação e a renderização das listas ao preparar demonstrações.
 
 ## 5. Avaliações de jogos
 
-**[CONFIRMADO]** Cada critério recebe uma nota de **0 a 100**, incluindo os extremos. A nota final é a **média aritmética simples dos cinco critérios, sem pesos**.
+**[IMPLEMENTADO]** Cada critério numérico recebe nota de **0 a 100**. O campo `plot` (Enredo) pode ser `null` se não se aplicar; `calculateGameScore` calcula a **média aritmética simples dos critérios não nulos**, sem pesos (cinco notas ou quatro quando Enredo é nulo).
 
 | Jogo               | Mecânica | Enredo | Estética | Retenção | Feeling | Nota |
 | ------------------ | -------: | -----: | -------: | -------: | ------: | ---: |
 | _Exemplo fictício_ |       80 |     90 |       85 |       75 |      95 |   85 |
 
-**[PROPOSTO]** Campos internos em inglês para manter consistência com TypeScript; rótulos apresentados no site sempre em português:
+**[IMPLEMENTADO]** Campos internos em inglês; rótulos apresentados no site em português:
 
 | Rótulo   | Campo técnico | Tipo                               |
 | -------- | ------------- | ---------------------------------- |
 | Jogo     | `title`       | Texto                              |
 | Mecânica | `mechanics`   | Número de 0 a 100                  |
-| Enredo   | `plot`        | Número de 0 a 100                  |
+| Enredo   | `plot`        | Número de 0 a 100, ou `null`       |
 | Estética | `aesthetics`  | Número de 0 a 100                  |
 | Retenção | `retention`   | Número de 0 a 100                  |
 | Feeling  | `feeling`     | Número de 0 a 100                  |
@@ -86,8 +84,16 @@ Exemplo fictício de arquivo JSON (a nota final é calculada pelo site):
 
 ```json
 {
-  "slug": "jogo-exemplo",
   "title": "Jogo de exemplo",
+  "releaseYear": 2020,
+  "genre": "Exemplo",
+  "platform": "PC",
+  "status": "Concluido",
+  "coverImage": {
+    "url": "https://example.org/imagem-ilustrativa.jpg",
+    "alt": "Imagem ilustrativa do jogo",
+    "isPlaceholder": true
+  },
   "scores": {
     "mechanics": 80,
     "plot": 90,
@@ -95,14 +101,11 @@ Exemplo fictício de arquivo JSON (a nota final é calculada pelo site):
     "retention": 75,
     "feeling": 95
   },
-  "cover": {
-    "src": "https://example.org/imagem-com-permissao.jpg",
-    "alt": "Imagem ilustrativa do jogo"
-  }
+  "isDemo": true
 }
 ```
 
-**Cálculo:** `(mechanics + plot + aesthetics + retention + feeling) / 5`. No exemplo: **85**.
+**Cálculo:** `(mechanics + plot + aesthetics + retention + feeling) / 5` quando os cinco forem numéricos; se `plot: null`, excluir esse campo da soma e dividir por quatro. No exemplo completo: **85**. O `id` da coleção vem do nome do arquivo, não de um campo `slug` exigido no JSON.
 
 ## 6. Avaliações de filmes e demais seções
 
@@ -131,10 +134,10 @@ Exemplo fictício de arquivo JSON:
 
 ```json
 {
-  "slug": "filme-exemplo",
   "title": "Filme de exemplo",
   "director": "Direção de exemplo",
   "releaseYear": 2020,
+  "genre": "Exemplo",
   "scores": {
     "direction": 80,
     "screenplay": 90,
@@ -142,28 +145,29 @@ Exemplo fictício de arquivo JSON:
     "acting": 75,
     "pacing": 95,
     "feeling": 85
-  }
+  },
+  "isDemo": true
 }
 ```
 
-**Cálculo:** `(direction + screenplay + audiovisual + acting + pacing + feeling) / 6`. No exemplo: **85**.
+**Cálculo:** `(direction + screenplay + audiovisual + acting + pacing + feeling) / 6`. No exemplo: **85**. O `id` vem do nome do arquivo JSON. Os exemplos usam `isDemo: true` e URLs ilustrativas, portanto **não são conteúdo a publicar como real**.
 
-**[PROPOSTO]** O site deve calcular `finalScore` a partir dos campos de `scores`, sem armazenar manualmente uma segunda nota divergente. Validar a escala e exigir todos os critérios no momento de publicar uma avaliação completa. **[PENDENTE]** Definir se as notas individuais aceitam decimais e como exibir/arredondar a média; a regra matemática continuará sendo a média simples.
+**[IMPLEMENTADO]** O site calcula a média a partir de `scores` em `src/utils/ratings.ts`, sem armazenar uma segunda nota divergente. `formatScore` exibe inteiros sem decimal e valores não inteiros com **uma casa decimal**; os schemas permitem notas numéricas decimais dentro da escala.
 
-**Outras seções [PROPOSTO]:**
+**Outras seções [IMPLEMENTADO; descrição resumida]:**
 
-- **Livros:** título, autor, status de leitura, comentário e capa autorizada; metodologia de avaliação ainda pendente.
-- **Projetos:** nome, descrição verdadeira, tecnologias efetivamente usadas, URL do GitHub e outras URLs válidas.
-- **Linux:** relatos em Markdown; timeline de sistemas/distribuições como dados estruturados se necessário.
-- **Música:** entradas de artistas, álbuns ou faixas, ainda sem modelagem final.
+- **Livros:** título, autor, status de leitura (`lendo`, `lido`, `quero_ler`), favorito, comentário e capa opcional; não há avaliação numérica padronizada.
+- **Projetos:** registros Markdown com título, descrição, categoria, tags, links para repositório/publicação e imagem opcional, segundo o schema.
+- **Linux:** narrativa da página `/linux/` e timeline em `src/data/linuxTimeline.ts`.
+- **Música:** entradas JSON com `type` igual a `artist`, `album` ou `track`, segundo `src/content.config.ts`.
 - **Open Source:** nome da ferramenta, categoria, experiência pessoal e link oficial.
 - **Galeria:** arquivo ou URL, título, descrição, licença e créditos quando aplicáveis.
 
-**[PENDENTE]** Definir modelo e eventual metodologia de avaliação de livros e música; não presumir que usam os critérios de jogos ou filmes.
+**[IMPLEMENTADO]** Livros têm status de leitura e marcação de favoritos; Música distingue artistas, álbuns e faixas. Nenhuma dessas coleções usa a média numérica de jogos ou filmes no código atual.
 
-## 7. Política inicial de imagens externas
+## 7. Política de imagens locais e externas
 
-**[CONFIRMADO]** Usar links públicos inicialmente. **Importante:** um resultado do Google Imagens **não é uma licença** nem hospedagem garantida.
+**[IMPLEMENTADO]** Há fotografias e imagens locais em `public/images/`, além de URLs públicas nos registros; preservar os dois mecanismos. **Importante:** um resultado do Google Imagens **não é uma licença** nem hospedagem garantida.
 
 **[PROPOSTO]** Fluxo seguro:
 
@@ -188,7 +192,7 @@ Exemplo fictício de arquivo JSON:
 
 `example.org` é ilustrativo: não é fonte real para uso no site. **Não publicar** metadados “a confirmar” como se a licença tivesse sido verificada. Para imagens de capas e materiais protegidos, avaliar uso permitido caso a caso; ser público na internet não significa estar livre para reutilização.
 
-**[PENDENTE]** Serviço futuro de armazenamento de mídia e cópias próprias de imagens autorizadas.
+**Limite desta revisão:** não propor mudança de hospedagem ou migração de mídia; conferir origem, permissões e créditos de cada recurso em sua tarefa específica.
 
 ## 8. Escrita e organização
 
@@ -206,7 +210,7 @@ Exemplo fictício de arquivo JSON:
 
 ## 9. Fluxo de publicação local
 
-**[PROPOSTO]**
+**[EM USO]**
 
 1. Criar ou editar Markdown/JSON.
 2. Adicionar imagens por URL autorizada e metadados correspondentes.
@@ -218,25 +222,16 @@ Exemplo fictício de arquivo JSON:
 
 **[CONFIRMADO]** O autor decide quando realizar cada commit. O assistente ou agente não deve publicar/commitar sem autorização.
 
-## 10. Preparação para painel próprio futuro
+## 10. Limite de escopo
 
-**[FUTURO]** A meta é preencher formulários em uma interface própria e publicar conteúdo remotamente. Para facilitar essa mudança, manter:
+Este guia documenta **somente o fluxo de conteúdo atual**. O roadmap mantém eventuais tarefas de evolução como pendentes; não estão sendo especificadas neste documento. Não adicionar credenciais, API administrativa, banco de dados ou mecanismos de publicação alternativos por iniciativa própria.
 
-- Estrutura de dados consistente e validada.
-- Funções de transformação separadas dos componentes.
-- Identificadores de conteúdos estáveis.
-- Estratégia clara de rascunho/publicação.
+## 11. Estado das decisões
 
-**Não implementar agora:** autenticação, APIs de escrita, banco de dados, upload privado, integração de administração com Git ou infraestrutura de backend. Planejar quando o fluxo local estiver consolidado.
+- **Schemas atuais:** implementados em `src/content.config.ts`; não inventar campos ao criar novos registros.
+- **Notas:** calculadas por `ratings.ts`, sem pesos; Enredo de jogos admite `null` e a exibição é formatada por `formatScore`.
+- **Filtros e busca:** implementados nas listagens correspondentes; não assumir que todos os catálogos compartilham os mesmos controles.
+- **Imagens:** verificar individualmente licenças, créditos, URLs e texto alternativo; uma auditoria automatizada de links não prova licença de uso.
+- **Rascunhos:** o campo `draft` não consta no schema atual de artigos; não prometer fluxo privado de rascunho.
 
-## 11. Itens pendentes para a etapa de cada seção
-
-- [PENDENTE] Schemas finais e campos obrigatórios.
-- [CONFIRMADO] Jogos e filmes usam critérios próprios de 0 a 100 e média simples sem pesos.
-- [PENDENTE] Política de notas para livros e outras seções, se houver.
-- [PENDENTE] Casas decimais de entrada e exibição das médias.
-- [PENDENTE] Categorias e filtros de cada catálogo.
-- [PENDENTE] Origem/licenciamento de imagens reais.
-- [PENDENTE] Estratégia de migração para painel próprio.
-
-Este guia descreve a forma inicial de trabalhar com conteúdo; não exige cadastrar todo o acervo antes da publicação do MVP.
+Conferir sempre a coleção e a página real antes de copiar exemplos deste guia.
