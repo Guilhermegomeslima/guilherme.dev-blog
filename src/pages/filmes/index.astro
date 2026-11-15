@@ -1,40 +1,377 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
 import MovieCard from '../../components/content/MovieCard.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
+import { calculateMovieScore, formatScore } from '../../utils/ratings';
+import { withBase } from '../../utils/base';
 
 const allMovies = await getCollection('movies');
 
-// Ordena filmes por ano de lançamento decrescente
-const sortedMovies = allMovies.sort(
-  (a, b) => b.data.releaseYear - a.data.releaseYear,
+// Ordena filmes por ano de lançamento decrescente (ordem padrão original preservada)
+const sortedMovies = [...allMovies].sort(
+  (a, b) =>
+    b.data.releaseYear - a.data.releaseYear ||
+    a.data.title.localeCompare(b.data.title, 'pt-BR'),
 );
 
 const hasDemoContent = allMovies.some((m) => m.data.isDemo);
+
+// Estatísticas reais do arquivo cinematográfico
+const totalMovies = allMovies.length;
+const uniqueDirectors = new Set(allMovies.map((m) => m.data.director)).size;
+const years = allMovies.map((m) => m.data.releaseYear);
+const minYear = years.length > 0 ? Math.min(...years) : 0;
+const maxYear = years.length > 0 ? Math.max(...years) : 0;
+
+const globalAverage =
+  totalMovies > 0
+    ? formatScore(
+        allMovies.reduce(
+          (acc, m) => acc + calculateMovieScore(m.data.scores),
+          0,
+        ) / totalMovies,
+      )
+    : '0';
+
+// Décadas presentes no acervo
+const decadeMap = new Map<number, number>();
+for (const m of allMovies) {
+  const dec = Math.floor(m.data.releaseYear / 10) * 10;
+  decadeMap.set(dec, (decadeMap.get(dec) || 0) + 1);
+}
+const decades = [...decadeMap.entries()].sort((a, b) => b[0] - a[0]);
 ---
 
 <BaseLayout
+  variant="v2"
   title="Filmes & Críticas — guilherme.dev"
   description="Acervo cinematográfico e análises avaliadas em 6 critérios técnicos e autorais: Direção, Roteiro, Audiovisual, Atuação, Ritmo e Feeling."
 >
-  <div class="py-12 md:py-16">
-    <Container>
-      <SectionHeading
-        eyebrow="// ARQUIVO CINEMATOGRÁFICO"
-        title="Filmes & Críticas"
-        description="Acervo e análises críticas avaliadas sob 6 critérios técnicos e autorais, sem pesos."
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera de fundo sutil */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[500px] overflow-hidden"
+    >
+      <img
+        src={withBase('/images/home/filmes.webp')}
+        alt=""
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full object-cover object-center opacity-[0.13] blur-[2px] filter"
       />
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.86) 62%, #070709 100%);"
+      ></div>
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(180deg, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.85) 68%, #070709 100%);"
+      ></div>
+    </div>
 
-      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+    <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 sm:px-8">
+      {/* Abertura Editorial */}
+      <header class="border-b border-[var(--color-v2-border)] pt-12 pb-10 md:pt-16 md:pb-14">
+        <div class="mb-4 flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            class="inline-block h-px w-8 bg-[var(--color-v2-accent)]"
+          ></span>
+          <p class="v2-eyebrow text-[var(--color-v2-accent-warm)]">
+            ARQUIVO CINEMATOGRÁFICO / FILMES & CRÍTICAS
+          </p>
+        </div>
 
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {sortedMovies.map((movie) => (
-          <MovieCard movie={movie} />
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.04] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-6xl">
+              Filmes &amp; Críticas.
+            </h1>
+          </div>
+
+          <div class="lg:col-span-5">
+            <p class="font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text)] sm:text-base">
+              Fichas analíticas avaliadas sob seis dimensões de peso igual —
+              <span class="text-[var(--color-v2-heading)]">Direção</span>,{' '}
+              <span class="text-[var(--color-v2-heading)]">Roteiro</span>,{' '}
+              <span class="text-[var(--color-v2-heading)]">Audiovisual</span>,{' '}
+              <span class="text-[var(--color-v2-heading)]">Atuação</span>,{' '}
+              <span class="text-[var(--color-v2-heading)]">Ritmo</span> e{' '}
+              <span class="text-[var(--color-v2-heading)]">Feeling</span>.
+              Diretor e ano de lançamento compõem o registro histórico e não
+              interferem no cálculo da nota.
+            </p>
+          </div>
+        </div>
+
+        {/* Painel de Síntese do Arquivo */}
+        <div class="mt-8 grid grid-cols-2 gap-3 border-t border-[var(--color-v2-border)] pt-6 sm:grid-cols-4">
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Obras Catalogadas
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {totalMovies} filmes
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Cineastas no Arquivo
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {uniqueDirectors} diretores
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Recorte Temporal
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {minYear} — {maxYear}
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Média Global (6 eixos)
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-accent-warm)]">
+              {globalAverage}{' '}
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
+                / 100
+              </span>
+            </strong>
+          </div>
+        </div>
+      </header>
+
+      {hasDemoContent && <DemoNotice variant="section" class="mt-8" />}
+
+      {/* Barra de Busca, Décadas e Ordenação */}
+      <section
+        aria-label="Filtros e ordenação do arquivo cinematográfico"
+        class="mt-8 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-4 sm:p-6"
+      >
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-12">
+          <div class="md:col-span-5">
+            <label for="movies-search" class="sr-only">
+              Buscar filme por título ou diretor
+            </label>
+            <input
+              id="movies-search"
+              type="search"
+              placeholder="Buscar por título ou diretor..."
+              autocomplete="off"
+              class="v2-focus w-full border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)] px-3.5 py-2 font-[family-name:var(--font-v2-sans)] text-xs text-[var(--color-v2-heading)] placeholder:text-[var(--color-v2-muted)] focus:border-[var(--color-v2-accent-warm)]/60"
+            />
+          </div>
+
+          <div class="md:col-span-3">
+            <label for="movies-decade" class="sr-only">
+              Filtrar por década de lançamento
+            </label>
+            <select
+              id="movies-decade"
+              class="v2-focus w-full border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)] px-3 py-2 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text)] focus:border-[var(--color-v2-accent-warm)]/60"
+            >
+              <option value="all">Todas as décadas ({totalMovies})</option>
+              {decades.map(([dec, count]) => (
+                <option value={String(dec)}>
+                  Anos {dec} ({count})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div class="md:col-span-4">
+            <label for="movies-sort" class="sr-only">
+              Ordenar arquivo cinematográfico
+            </label>
+            <select
+              id="movies-sort"
+              class="v2-focus w-full border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)] px-3 py-2 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text)] focus:border-[var(--color-v2-accent-warm)]/60"
+            >
+              <option value="year-desc">
+                Ordenar: Lançamento (mais recentes)
+              </option>
+              <option value="score-desc">Ordenar: Maior nota geral</option>
+              <option value="score-asc">Ordenar: Menor nota geral</option>
+              <option value="year-asc">
+                Ordenar: Lançamento (mais antigos)
+              </option>
+              <option value="title-asc">Ordenar: Ordem alfabética (A–Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--color-v2-border)] pt-3 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+          <span id="movies-count-status" aria-live="polite">
+            Exibindo{' '}
+            <strong class="text-[var(--color-v2-heading)]">
+              {totalMovies}
+            </strong>{' '}
+            de{' '}
+            <strong class="text-[var(--color-v2-heading)]">
+              {totalMovies}
+            </strong>{' '}
+            fichas cinematográficas
+          </span>
+
+          <div class="flex items-center gap-4">
+            <button
+              id="movies-reset-btn"
+              type="button"
+              hidden
+              class="v2-focus cursor-pointer text-[11px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase underline underline-offset-4 hover:text-[var(--color-v2-heading)]"
+            >
+              Limpar filtros
+            </button>
+            <span class="hidden sm:inline">
+              * Média aritmética simples de 6 eixos sem pesos (0–100)
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Grade de Fichas Cinematográficas */}
+      <div
+        id="movies-grid"
+        class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
+      >
+        {sortedMovies.map((movie, index) => (
+          <MovieCard movie={movie} index={index} />
         ))}
       </div>
-    </Container>
+
+      {/* Estado vazio */}
+      <div
+        id="movies-empty-state"
+        hidden
+        class="mt-10 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-12 text-center"
+      >
+        <p class="font-[family-name:var(--font-v2-display)] text-2xl text-[var(--color-v2-heading)]">
+          Nenhum filme encontrado com os critérios selecionados.
+        </p>
+        <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-muted)]">
+          Tente buscar por outro título, diretor ou década.
+        </p>
+      </div>
+    </div>
   </div>
 </BaseLayout>
+
+<script>
+  function initMoviesCatalog() {
+    const grid = document.getElementById('movies-grid');
+    if (!grid) return;
+
+    const cards = Array.from(
+      grid.querySelectorAll<HTMLElement>('[data-movie-card]'),
+    );
+    const searchInput = document.getElementById(
+      'movies-search',
+    ) as HTMLInputElement | null;
+    const decadeSelect = document.getElementById(
+      'movies-decade',
+    ) as HTMLSelectElement | null;
+    const sortSelect = document.getElementById(
+      'movies-sort',
+    ) as HTMLSelectElement | null;
+    const countStatus = document.getElementById('movies-count-status');
+    const resetBtn = document.getElementById(
+      'movies-reset-btn',
+    ) as HTMLButtonElement | null;
+    const emptyState = document.getElementById('movies-empty-state');
+
+    const total = cards.length;
+
+    function applyFiltersAndSort() {
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      const decade = decadeSelect?.value || 'all';
+      const sortBy = sortSelect?.value || 'year-desc';
+
+      const sorted = [...cards].sort((a, b) => {
+        const yearA = Number(a.dataset.year || 0);
+        const yearB = Number(b.dataset.year || 0);
+        const scoreA = Number(a.dataset.score || 0);
+        const scoreB = Number(b.dataset.score || 0);
+        const titleA = a.dataset.title || '';
+        const titleB = b.dataset.title || '';
+
+        if (sortBy === 'score-desc') {
+          return (
+            scoreB - scoreA ||
+            yearB - yearA ||
+            titleA.localeCompare(titleB, 'pt-BR')
+          );
+        }
+        if (sortBy === 'score-asc') {
+          return (
+            scoreA - scoreB ||
+            yearB - yearA ||
+            titleA.localeCompare(titleB, 'pt-BR')
+          );
+        }
+        if (sortBy === 'year-asc') {
+          return yearA - yearB || titleA.localeCompare(titleB, 'pt-BR');
+        }
+        if (sortBy === 'title-asc') {
+          return titleA.localeCompare(titleB, 'pt-BR');
+        }
+        return yearB - yearA || titleA.localeCompare(titleB, 'pt-BR');
+      });
+
+      let visibleCount = 0;
+
+      for (const card of sorted) {
+        const cardYear = Number(card.dataset.year || 0);
+        const cardDecade = String(Math.floor(cardYear / 10) * 10);
+        const matchesDecade = decade === 'all' || cardDecade === decade;
+        const matchesQuery =
+          !query ||
+          (card.dataset.title || '').includes(query) ||
+          (card.dataset.director || '').includes(query) ||
+          (card.dataset.genre || '').includes(query);
+
+        const isVisible = matchesDecade && matchesQuery;
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount++;
+        grid!.appendChild(card);
+      }
+
+      if (countStatus) {
+        countStatus.innerHTML = `Exibindo <strong class="text-[var(--color-v2-heading)]">${visibleCount}</strong> de <strong class="text-[var(--color-v2-heading)]">${total}</strong> fichas cinematográficas`;
+      }
+
+      const hasActiveFilters =
+        decade !== 'all' || query.length > 0 || sortBy !== 'year-desc';
+
+      if (resetBtn) {
+        resetBtn.hidden = !hasActiveFilters;
+      }
+
+      if (emptyState) {
+        emptyState.hidden = visibleCount > 0;
+      }
+    }
+
+    searchInput?.addEventListener('input', applyFiltersAndSort);
+    decadeSelect?.addEventListener('change', applyFiltersAndSort);
+    sortSelect?.addEventListener('change', applyFiltersAndSort);
+
+    resetBtn?.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      if (decadeSelect) decadeSelect.value = 'all';
+      if (sortSelect) sortSelect.value = 'year-desc';
+      applyFiltersAndSort();
+    });
+  }
+
+  initMoviesCatalog();
+</script>

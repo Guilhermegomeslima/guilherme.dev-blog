@@ -1,134 +1,381 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
 import BookCard from '../../components/content/BookCard.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
+import { withBase } from '../../utils/base';
 
 const allBooks = await getCollection('books');
 
-const currentlyReading = allBooks.filter((b) => b.data.status === 'lendo');
-const readBooks = allBooks.filter((b) => b.data.status === 'lido');
-const wantToRead = allBooks.filter((b) => b.data.status === 'quero_ler');
+const sortAlpha = (
+  a: (typeof allBooks)[number],
+  b: (typeof allBooks)[number],
+) => a.data.title.localeCompare(b.data.title, 'pt-BR');
+
+const currentlyReading = allBooks
+  .filter((b) => b.data.status === 'lendo')
+  .sort(sortAlpha);
+const readBooks = allBooks
+  .filter((b) => b.data.status === 'lido')
+  .sort(sortAlpha);
+const wantToRead = allBooks
+  .filter((b) => b.data.status === 'quero_ler')
+  .sort(sortAlpha);
+const favoriteCount = allBooks.filter((b) => b.data.favorite).length;
 
 const hasDemoContent = allBooks.some((b) => b.data.isDemo);
+
+const shelfFilters = [
+  { value: 'all', label: 'Todo o acervo', count: allBooks.length },
+  { value: 'lendo', label: 'Lendo agora', count: currentlyReading.length },
+  { value: 'lido', label: 'Concluídos', count: readBooks.length },
+  { value: 'quero_ler', label: 'Fila de leitura', count: wantToRead.length },
+  ...(favoriteCount > 0
+    ? [{ value: 'favorite', label: '★ Favoritos', count: favoriteCount }]
+    : []),
+];
 ---
 
 <BaseLayout
+  variant="v2"
   title="Livros & Leituras — guilherme.dev"
   description="Biblioteca pessoal com registros de livros lidos, leituras em andamento, próximas leituras e obras favoritas."
 >
-  <div class="py-12 md:py-16">
-    <Container>
-      <SectionHeading
-        eyebrow="// BIBLIOTECA & LEITURAS"
-        title="Livros & Leituras"
-        description="Fichamentos, leituras de computação, ficção científica, ensaios e obras de referência organizadas por status de leitura."
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera de fundo sutil */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[500px] overflow-hidden"
+    >
+      <img
+        src={withBase('/images/home/livros.webp')}
+        alt=""
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full object-cover object-center opacity-[0.13] blur-[2px] filter"
       />
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 50% 0%, rgba(198, 166, 107, 0.14) 0%, rgba(7, 7, 9, 0.86) 62%, #070709 100%);"
+      ></div>
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(180deg, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.85) 68%, #070709 100%);"
+      ></div>
+    </div>
 
-      {hasDemoContent && <DemoNotice variant="section" class="mb-10" />}
+    <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 sm:px-8">
+      {/* Abertura Editorial */}
+      <header class="border-b border-[var(--color-v2-border)] pt-12 pb-10 md:pt-16 md:pb-14">
+        <div class="mb-4 flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            class="inline-block h-px w-8 bg-[var(--color-v2-accent-warm)]"
+          ></span>
+          <p class="v2-eyebrow text-[var(--color-v2-accent-warm)]">
+            BIBLIOTECA PESSOAL / LIVROS & LEITURAS
+          </p>
+        </div>
 
-      {/* Resumo da Biblioteca */}
-      <div class="mb-12 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
-        <div class="rounded-lg border border-border/70 bg-surface/80 p-3.5">
-          <span class="text-text-muted block text-[11px] uppercase">
-            Total no Acervo
-          </span>
-          <span class="font-display text-xl font-bold text-text mt-0.5 block">
-            {allBooks.length}
-          </span>
-        </div>
-        <div class="rounded-lg border border-accent/40 bg-surface-raised/80 p-3.5">
-          <span class="text-text-muted block text-[11px] uppercase">
-            Lendo Agora
-          </span>
-          <span class="font-display text-xl font-bold text-accent mt-0.5 block">
-            {currentlyReading.length}
-          </span>
-        </div>
-        <div class="rounded-lg border border-border/70 bg-surface/80 p-3.5">
-          <span class="text-text-muted block text-[11px] uppercase">Lidos</span>
-          <span class="font-display text-xl font-bold text-text mt-0.5 block">
-            {readBooks.length}
-          </span>
-        </div>
-        <div class="rounded-lg border border-border/70 bg-surface/80 p-3.5">
-          <span class="text-text-muted block text-[11px] uppercase">
-            Quero Ler
-          </span>
-          <span class="font-display text-xl font-bold text-text-muted mt-0.5 block">
-            {wantToRead.length}
-          </span>
-        </div>
-      </div>
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.04] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-6xl">
+              Livros &amp; Leituras.
+            </h1>
+          </div>
 
-      <div class="space-y-16">
-        {/* Seção: Lendo */}
+          <div class="lg:col-span-5">
+            <p class="font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text)] sm:text-base">
+              Gabinete bibliográfico pessoal com obras de história, filosofia,
+              estratégia, política e literatura, organizadas pelo estado atual
+              de leitura — sem notas numéricas, priorizando contexto e registro
+              editorial.
+            </p>
+          </div>
+        </div>
+
+        {/* Painel de Síntese da Biblioteca */}
+        <div class="mt-8 grid grid-cols-2 gap-3 border-t border-[var(--color-v2-border)] pt-6 sm:grid-cols-4">
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Total no Acervo
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {allBooks.length} volumes
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-accent)]/40 bg-[var(--color-v2-surface)]/75 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[#e47986] uppercase">
+              Lendo Agora
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {currentlyReading.length}{' '}
+              {currentlyReading.length === 1 ? 'obra' : 'obras'}
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Leituras Concluídas
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-accent-warm)]">
+              {readBooks.length} {readBooks.length === 1 ? 'lido' : 'lidos'}
+            </strong>
+          </div>
+
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/65 px-4 py-3">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+              Fila de Leitura
+            </span>
+            <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">
+              {wantToRead.length} na fila
+            </strong>
+          </div>
+        </div>
+      </header>
+
+      {hasDemoContent && <DemoNotice variant="section" class="mt-8" />}
+
+      {/* Barra de Filtro por Estante e Busca */}
+      <section
+        aria-label="Filtros da biblioteca de livros"
+        class="mt-8 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-4 sm:p-6"
+      >
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div
+            class="flex flex-wrap items-center gap-1.5"
+            role="group"
+            aria-label="Filtrar por estante de leitura"
+          >
+            {shelfFilters.map((shelf, idx) => (
+              <button
+                type="button"
+                data-shelf-btn={shelf.value}
+                aria-pressed={idx === 0 ? 'true' : 'false'}
+                class:list={[
+                  'v2-focus cursor-pointer border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] uppercase transition-colors duration-200',
+                  idx === 0
+                    ? 'border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-accent-warm)]/15 text-[var(--color-v2-heading)]'
+                    : 'border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/70 text-[var(--color-v2-muted)] hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-text)]',
+                ]}
+              >
+                <span>{shelf.label}</span>
+                <span class="ml-1 text-[10px] opacity-70">({shelf.count})</span>
+              </button>
+            ))}
+          </div>
+
+          <div class="w-full lg:max-w-xs">
+            <label for="books-search" class="sr-only">
+              Buscar livro por título, autor ou tema
+            </label>
+            <input
+              id="books-search"
+              type="search"
+              placeholder="Buscar por título, autor ou tema..."
+              autocomplete="off"
+              class="v2-focus w-full border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)] px-3.5 py-2 font-[family-name:var(--font-v2-sans)] text-xs text-[var(--color-v2-heading)] placeholder:text-[var(--color-v2-muted)] focus:border-[var(--color-v2-accent-warm)]/60"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Estantes da Biblioteca */}
+      <div class="mt-12 space-y-16">
+        {/* Estante 01: Leituras em Andamento */}
         {currentlyReading.length > 0 && (
-          <section>
-            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
-              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
-                <span class="text-accent font-mono text-sm">//</span> Leituras
-                em Andamento
-              </h2>
-              <span class="font-mono text-xs text-text-muted">
+          <section data-book-section="lendo">
+            <div class="mb-6 flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--color-v2-border)] pb-4">
+              <div class="flex items-baseline gap-3">
+                <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-accent)] uppercase">
+                  ESTANTE 01 //
+                </span>
+                <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)] sm:text-3xl">
+                  Leituras em Andamento
+                </h2>
+              </div>
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
                 {currentlyReading.length}{' '}
-                {currentlyReading.length === 1 ? 'livro' : 'livros'}
+                {currentlyReading.length === 1
+                  ? 'volume ativo'
+                  : 'volumes ativos'}
               </span>
             </div>
 
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-              {currentlyReading.map((book) => (
-                <BookCard book={book} />
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {currentlyReading.map((book, idx) => (
+                <BookCard book={book} index={idx} />
               ))}
             </div>
           </section>
         )}
 
-        {/* Seção: Lidos */}
+        {/* Estante 02: Leituras Concluídas */}
         {readBooks.length > 0 && (
-          <section>
-            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
-              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
-                <span class="text-text font-mono text-sm">//</span> Leituras
-                Concluídas
-              </h2>
-              <span class="font-mono text-xs text-text-muted">
-                {readBooks.length} {readBooks.length === 1 ? 'livro' : 'livros'}
+          <section data-book-section="lido">
+            <div class="mb-6 flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--color-v2-border)] pb-4">
+              <div class="flex items-baseline gap-3">
+                <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
+                  ESTANTE 02 //
+                </span>
+                <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)] sm:text-3xl">
+                  Leituras Concluídas
+                </h2>
+              </div>
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
+                {readBooks.length}{' '}
+                {readBooks.length === 1 ? 'obra lida' : 'obras lidas'}
               </span>
             </div>
 
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-              {readBooks.map((book) => (
-                <BookCard book={book} />
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {readBooks.map((book, idx) => (
+                <BookCard book={book} index={idx + currentlyReading.length} />
               ))}
             </div>
           </section>
         )}
 
-        {/* Seção: Quero Ler */}
+        {/* Estante 03: Fila de Próximas Leituras */}
         {wantToRead.length > 0 && (
-          <section>
-            <div class="mb-6 flex items-center justify-between border-b border-border/60 pb-3">
-              <h2 class="font-display text-xl font-bold text-text flex items-center gap-2">
-                <span class="text-text-muted font-mono text-sm">//</span> Fila
-                de Próximas Leituras
-              </h2>
-              <span class="font-mono text-xs text-text-muted">
+          <section data-book-section="quero_ler">
+            <div class="mb-6 flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--color-v2-border)] pb-4">
+              <div class="flex items-baseline gap-3">
+                <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-muted)] uppercase">
+                  ESTANTE 03 //
+                </span>
+                <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)] sm:text-3xl">
+                  Fila de Próximas Leituras
+                </h2>
+              </div>
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-muted)]">
                 {wantToRead.length}{' '}
-                {wantToRead.length === 1 ? 'livro' : 'livros'}
+                {wantToRead.length === 1
+                  ? 'volume aguardando'
+                  : 'volumes aguardando'}
               </span>
             </div>
 
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-              {wantToRead.map((book) => (
-                <BookCard book={book} />
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {wantToRead.map((book, idx) => (
+                <BookCard
+                  book={book}
+                  index={idx + currentlyReading.length + readBooks.length}
+                />
               ))}
             </div>
           </section>
         )}
       </div>
-    </Container>
+
+      {/* Estado vazio para busca sem resultados */}
+      <div
+        id="books-empty-state"
+        hidden
+        class="mt-10 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-12 text-center"
+      >
+        <p class="font-[family-name:var(--font-v2-display)] text-2xl text-[var(--color-v2-heading)]">
+          Nenhum livro encontrado na biblioteca para essa busca.
+        </p>
+        <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-muted)]">
+          Experimente pesquisar outro autor, tema ou selecionar outra estante.
+        </p>
+      </div>
+
+      {/* Nota Metodológica */}
+      <footer class="mt-16 border-t border-[var(--color-v2-border)] pt-6 text-right">
+        <p class="font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-muted)]">
+          * A biblioteca de livros preserva registros de leitura, destaques e
+          anotações editoriais, sem atribuição de notas numéricas.
+        </p>
+      </footer>
+    </div>
   </div>
 </BaseLayout>
+
+<script>
+  function initBooksLibrary() {
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-book-section]'),
+    );
+    if (sections.length === 0) return;
+
+    const shelfButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-shelf-btn]'),
+    );
+    const searchInput = document.getElementById(
+      'books-search',
+    ) as HTMLInputElement | null;
+    const emptyState = document.getElementById('books-empty-state');
+
+    let activeShelf = 'all';
+
+    function updateShelfButtonStyles() {
+      for (const btn of shelfButtons) {
+        const isSelected = btn.dataset.shelfBtn === activeShelf;
+        btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+        if (isSelected) {
+          btn.className =
+            'v2-focus cursor-pointer border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-accent-warm)]/15 text-[var(--color-v2-heading)]';
+        } else {
+          btn.className =
+            'v2-focus cursor-pointer border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/70 text-[var(--color-v2-muted)] hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-text)]';
+        }
+      }
+    }
+
+    function applyFilter() {
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      let totalVisible = 0;
+
+      for (const section of sections) {
+        const cards = Array.from(
+          section.querySelectorAll<HTMLElement>('[data-book-card]'),
+        );
+        let sectionVisible = 0;
+
+        for (const card of cards) {
+          const matchesShelf =
+            activeShelf === 'all' ||
+            (activeShelf === 'favorite'
+              ? card.dataset.favorite === 'true'
+              : card.dataset.status === activeShelf);
+
+          const matchesQuery =
+            !query ||
+            (card.dataset.title || '').includes(query) ||
+            (card.dataset.author || '').includes(query) ||
+            (card.dataset.genre || '').includes(query);
+
+          const isVisible = matchesShelf && matchesQuery;
+          card.hidden = !isVisible;
+          if (isVisible) {
+            sectionVisible++;
+            totalVisible++;
+          }
+        }
+
+        section.hidden = sectionVisible === 0;
+      }
+
+      if (emptyState) {
+        emptyState.hidden = totalVisible > 0;
+      }
+    }
+
+    for (const btn of shelfButtons) {
+      btn.addEventListener('click', () => {
+        activeShelf = btn.dataset.shelfBtn || 'all';
+        updateShelfButtonStyles();
+        applyFilter();
+      });
+    }
+
+    searchInput?.addEventListener('input', applyFilter);
+  }
+
+  initBooksLibrary();
+</script>

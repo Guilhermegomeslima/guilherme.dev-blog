@@ -1,124 +1,171 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import Card from '../ui/Card.astro';
 import { calculateMovieScore, formatScore } from '../../utils/ratings';
 import { withBase } from '../../utils/base';
 
 interface Props {
   movie: CollectionEntry<'movies'>;
+  index?: number;
 }
 
-const { movie } = Astro.props;
+const { movie, index = 0 } = Astro.props;
 const { data, id } = movie;
 
 const finalScore = calculateMovieScore(data.scores);
 const formattedFinal = formatScore(finalScore);
 const movieHref = withBase(`/filmes/${id}/`);
+const catalogNumber = String(index + 1).padStart(2, '0');
 
 const criteriaAbbr = [
-  { label: 'DIR', score: data.scores.direction, title: 'Direção' },
-  { label: 'ROT', score: data.scores.screenplay, title: 'Roteiro' },
-  { label: 'AV', score: data.scores.audiovisual, title: 'Audiovisual' },
-  { label: 'ATU', score: data.scores.acting, title: 'Atuação' },
-  { label: 'RIT', score: data.scores.pacing, title: 'Ritmo' },
-  { label: 'FEE', score: data.scores.feeling, title: 'Feeling' },
+  { label: 'Direção', short: 'DIR', score: data.scores.direction },
+  { label: 'Roteiro', short: 'ROT', score: data.scores.screenplay },
+  { label: 'Audiovisual', short: 'AV', score: data.scores.audiovisual },
+  { label: 'Atuação', short: 'ATU', score: data.scores.acting },
+  { label: 'Ritmo', short: 'RIT', score: data.scores.pacing },
+  { label: 'Feeling', short: 'FEE', score: data.scores.feeling },
 ];
 ---
 
-<Card
-  as="article"
-  interactive
-  class="flex flex-col justify-between border-border/80 bg-surface/90 p-6 transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 group"
+<article
+  data-movie-card
+  data-title={data.title.toLowerCase()}
+  data-director={data.director.toLowerCase()}
+  data-genre={data.genre.toLowerCase()}
+  data-year={data.releaseYear}
+  data-score={finalScore}
+  data-index={index}
+  class="group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
 >
-  <a href={movieHref} class="flex flex-col h-full justify-between">
-    <div>
-      {/* Topo com etiqueta de arquivo e badge de nota */}
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-border/40 pb-3">
-        <span class="font-mono text-[11px] font-semibold text-accent/90 uppercase tracking-wider">
-          // CINE-LOG [{data.genre.toUpperCase()}]
-        </span>
+  {/* Cantoneiras superiores discretas */}
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-px -left-px h-2.5 w-2.5 border-t border-l border-[var(--color-v2-accent-warm)]/45 transition-colors group-hover:border-[var(--color-v2-accent-warm)]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-px -right-px h-2.5 w-2.5 border-t border-r border-[var(--color-v2-accent-warm)]/45 transition-colors group-hover:border-[var(--color-v2-accent-warm)]"
+  ></span>
 
-        <div class="flex items-center gap-1.5 rounded-md border border-accent/40 bg-surface-raised/90 px-2.5 py-1 backdrop-blur-xs shadow-sm">
-          <span class="font-mono text-[10px] text-text-muted">SCORE:</span>
-          <span class="font-display text-sm font-extrabold text-accent drop-shadow-[0_0_6px_var(--color-accent)]">
-            {formattedFinal}
+  <a
+    href={movieHref}
+    class="v2-focus flex h-full flex-col justify-between p-6 sm:p-7"
+    aria-label={`${data.title} (${data.releaseYear}), dirigido por ${data.director} — Nota ${formattedFinal} de 100`}
+  >
+    <div>
+      {/* Cabeçalho da Ficha de Projeção */}
+      <div class="mb-5 flex items-start justify-between gap-4 border-b border-[var(--color-v2-border)] pb-4">
+        <div>
+          <div class="flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+            <span>CINE // {catalogNumber}</span>
+            <span
+              class="text-[var(--color-v2-border-hover)]"
+              aria-hidden="true"
+            >
+              ·
+            </span>
+            <span class="text-[var(--color-v2-muted)]">{data.genre}</span>
+          </div>
+          <span class="mt-1 block font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text)]">
+            {data.releaseYear}
           </span>
-          <span class="font-mono text-[9px] text-text-muted/60">/ 100</span>
+        </div>
+
+        {/* Selo da Média Final (6 Eixos) */}
+        <div class="flex flex-col items-end border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-bg)]/90 px-3 py-1.5 transition-colors duration-300 group-hover:border-[var(--color-v2-accent-warm)]/55">
+          <span class="font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+            MÉDIA
+          </span>
+          <div class="flex items-baseline gap-1">
+            <span class="font-[family-name:var(--font-v2-display)] text-2xl leading-none font-normal text-[var(--color-v2-heading)] transition-colors group-hover:text-[var(--color-v2-accent-warm)]">
+              {formattedFinal}
+            </span>
+            <span class="font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)]">
+              /100
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Capa opcional futura (se existir) */}
+      {/* Capa opcional (se existir no registro) */}
       {data.coverImage && (
-        <div class="mb-4 aspect-[16/9] w-full overflow-hidden rounded-md border border-border/60 bg-surface-raised">
+        <div class="mb-5 aspect-[16/9] w-full overflow-hidden border border-[var(--color-v2-border)] bg-[#050508]">
           <img
-            src={data.coverImage.url}
+            src={withBase(data.coverImage.url)}
             alt={data.coverImage.alt}
             width="600"
             height="338"
             loading="lazy"
             decoding="async"
-            class="h-full w-full object-cover filter contrast-110 brightness-90 transition duration-500 group-hover:scale-105"
+            class="h-full w-full object-cover brightness-95 contrast-105 transition duration-500 group-hover:scale-[1.03]"
           />
         </div>
       )}
 
-      {/* Título principal */}
-      <h3 class="font-display text-xl font-bold tracking-tight text-text group-hover:text-accent transition-colors">
+      {/* Título e Direção */}
+      <h3 class="font-[family-name:var(--font-v2-display)] text-2xl leading-[1.12] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] sm:text-[1.65rem]">
         {data.title}
       </h3>
 
-      {/* Metadados: Diretor e Ano (não interferem na nota) */}
-      <div class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-text-muted">
-        <span>
-          <strong class="text-text-muted/70">DIR:</strong>{' '}
-          <span class="text-text font-medium">{data.director}</span>
+      <p class="mt-2 flex items-center gap-2 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+        <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-accent-warm)]/80 uppercase">
+          Direção
         </span>
-        <span class="text-border" aria-hidden="true">
-          ·
+        <span aria-hidden="true" class="text-[var(--color-v2-border-hover)]">
+          —
         </span>
-        <span>
-          <strong class="text-text-muted/70">ANO:</strong>{' '}
-          <span class="text-text font-medium">{data.releaseYear}</span>
-        </span>
-      </div>
+        <span class="text-[var(--color-v2-text)]">{data.director}</span>
+      </p>
 
-      {/* Sinopse / Descrição curta (opcional) */}
+      {/* Sinopse curta (se houver) */}
       {data.description && (
-        <p class="font-body mt-3.5 text-sm leading-relaxed text-text-muted/90 line-clamp-3">
+        <p class="mt-3.5 line-clamp-3 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-muted)]">
           {data.description}
         </p>
       )}
 
-      {/* Resumo visual dos 6 critérios */}
-      <div class="mt-5 pt-4 border-t border-border/40">
-        <span class="font-mono text-[10px] uppercase text-text-muted/70 tracking-wider block mb-2">
-          Critérios (0–100):
-        </span>
-        <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 font-mono text-[11px]">
+      {/* Perfil Técnico dos 6 Critérios */}
+      <div class="mt-6 border-t border-[var(--color-v2-border)] pt-4">
+        <div class="mb-2.5 flex items-center justify-between font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+          <span>Perfil Analítico (6 eixos)</span>
+          <span>Escala 0–100</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3">
           {criteriaAbbr.map((crit) => (
-            <div
-              class="flex flex-col items-center rounded border border-border/50 bg-surface-raised/40 py-1 px-1.5 text-center"
-              title={`${crit.title}: ${crit.score}`}
-            >
-              <span class="text-[9px] text-text-muted/80">{crit.label}</span>
-              <span class="font-bold text-text mt-0.5">{crit.score}</span>
+            <div title={`${crit.label}: ${crit.score} / 100`}>
+              <div class="flex items-baseline justify-between font-[family-name:var(--font-v2-mono)] text-[10px]">
+                <span class="text-[var(--color-v2-muted)]">{crit.short}</span>
+                <span class="text-[var(--color-v2-heading)]">{crit.score}</span>
+              </div>
+              <div class="mt-1 h-1 w-full overflow-hidden bg-[var(--color-v2-bg)]">
+                <div
+                  class="h-full"
+                  style={`width: ${crit.score}%; background: linear-gradient(90deg, rgba(139, 30, 45, 0.75) 0%, rgba(198, 166, 107, 0.9) 100%);`}
+                />
+              </div>
             </div>
           ))}
         </div>
       </div>
     </div>
 
-    {/* Rodapé do card */}
-    <div class="mt-6 flex items-center justify-between pt-3 border-t border-border/40 font-mono text-xs">
-      <span class="text-accent group-hover:underline flex items-center gap-1 font-semibold">
-        Acessar ficha técnica <span aria-hidden="true">&rarr;</span>
-      </span>
+    {/* Rodapé da Ficha */}
+    <div class="mt-6 flex items-center justify-between border-t border-[var(--color-v2-border)] pt-3.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors group-hover:text-[var(--color-v2-heading)]">
+      <span>Acessar ficha crítica</span>
 
-      {data.isDemo && (
-        <span class="rounded bg-warm/90 px-2 py-0.5 text-[10px] font-semibold text-bg uppercase">
-          Mock Data
+      <div class="flex items-center gap-2">
+        {data.isDemo && (
+          <span class="border border-[var(--color-v2-accent-warm)]/50 px-1.5 py-0.5 text-[9px] text-[var(--color-v2-accent-warm)]">
+            Mock Data
+          </span>
+        )}
+        <span
+          aria-hidden="true"
+          class="text-[var(--color-v2-accent-warm)] transition-transform duration-200 group-hover:translate-x-1"
+        >
+          &rarr;
         </span>
-      )}
+      </div>
     </div>
   </a>
-</Card>
+</article>

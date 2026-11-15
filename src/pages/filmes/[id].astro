@@ -2,27 +2,36 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
 import RatingPanel from '../../components/content/RatingPanel.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
-import Button from '../../components/ui/Button.astro';
-import Card from '../../components/ui/Card.astro';
 import { withBase } from '../../utils/base';
 import { calculateMovieScore, formatScore } from '../../utils/ratings';
 
 export async function getStaticPaths() {
   const movies = await getCollection('movies');
-  return movies.map((movie) => ({
+  const sorted = [...movies].sort(
+    (a, b) =>
+      b.data.releaseYear - a.data.releaseYear ||
+      a.data.title.localeCompare(b.data.title, 'pt-BR'),
+  );
+
+  return sorted.map((movie, index) => ({
     params: { id: movie.id },
-    props: { movie },
+    props: {
+      movie,
+      prevMovie: index > 0 ? sorted[index - 1] : null,
+      nextMovie: index < sorted.length - 1 ? sorted[index + 1] : null,
+    },
   }));
 }
 
 interface Props {
   movie: CollectionEntry<'movies'>;
+  prevMovie?: CollectionEntry<'movies'> | null;
+  nextMovie?: CollectionEntry<'movies'> | null;
 }
 
-const { movie } = Astro.props;
+const { movie, prevMovie = null, nextMovie = null } = Astro.props;
 const { data, id } = movie;
 
 const finalScore = calculateMovieScore(data.scores);
@@ -30,127 +39,226 @@ const formattedFinal = formatScore(finalScore);
 ---
 
 <BaseLayout
+  variant="v2"
   title={`${data.title} — Crítica de Cinema // guilherme.dev`}
-  description={data.description || `Avaliação e notas cinematográficas de ${data.title} (${data.releaseYear}), dirigido por ${data.director}.`}
+  description={
+    data.description ||
+    `Avaliação e notas cinematográficas de ${data.title} (${data.releaseYear}), dirigido por ${data.director}.`
+  }
   image={data.coverImage?.url}
   noindex={data.isDemo}
 >
-  <div class="py-12 md:py-16">
-    <Container class="max-w-4xl">
-      {/* Botão de retorno */}
-      <div class="mb-8">
-        <Button href={withBase('/filmes/')} variant="ghost" class="px-0">
-          &larr; Voltar para catálogo de filmes
-        </Button>
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera cinematográfica sutil */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[480px] overflow-hidden"
+    >
+      <img
+        src={withBase(data.coverImage?.url || '/images/home/filmes.webp')}
+        alt=""
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full scale-105 object-cover object-center opacity-[0.11] blur-2xl filter"
+      />
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.88) 65%, #070709 100%);"
+      ></div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-[960px] px-5 pt-10 sm:px-8 md:pt-14">
+      {/* Barra superior de retorno e identificação do registro */}
+      <div class="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-[var(--color-v2-border)] pb-4">
+        <a
+          href={withBase('/filmes/')}
+          class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+        >
+          <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+            &larr;
+          </span>
+          <span>Voltar para catálogo de filmes</span>
+        </a>
+
+        <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+          REGISTRO CINEMATOGRÁFICO // #{id}
+        </span>
       </div>
 
-      {/* Header do Arquivo Cinematográfico */}
-      <div class="border-b border-border/80 pb-10">
-        <div class="mb-4 flex flex-wrap items-center gap-2 font-mono text-xs">
-          <span class="text-accent uppercase tracking-wider font-semibold">
-            // REGISTRO CINEMATOGRÁFICO #{id}
+      {/* Cabeçalho Editorial da Obra */}
+      <header class="border-b border-[var(--color-v2-border)] pb-10">
+        <div class="mb-4 flex flex-wrap items-center gap-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] uppercase">
+          <span class="text-[var(--color-v2-accent-warm)]">
+            // {data.genre}
           </span>
-          <span class="text-border" aria-hidden="true">
+          <span class="text-[var(--color-v2-border-hover)]" aria-hidden="true">
             ·
           </span>
-          <span class="text-text-muted">{data.genre}</span>
+          <span class="text-[var(--color-v2-text)]">{data.releaseYear}</span>
+          <span class="text-[var(--color-v2-border-hover)]" aria-hidden="true">
+            ·
+          </span>
+          <span class="text-[var(--color-v2-muted)]">Dir. {data.director}</span>
         </div>
 
-        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-text">
+        <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.05] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-6xl">
           {data.title}
         </h1>
 
-        {/* Ficha técnica em badges */}
-        <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
-          <div class="rounded-lg border border-border/70 bg-surface/80 p-3">
-            <span class="text-text-muted block text-[11px] uppercase">
+        {/* Ficha Técnica em 4 Colunas */}
+        <dl class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-4">
+            <dt class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
               Direção
-            </span>
-            <span class="text-text font-bold text-sm mt-0.5 block">
+            </dt>
+            <dd class="mt-1.5 font-[family-name:var(--font-v2-sans)] text-sm font-medium text-[var(--color-v2-heading)]">
               {data.director}
-            </span>
+            </dd>
           </div>
 
-          <div class="rounded-lg border border-border/70 bg-surface/80 p-3">
-            <span class="text-text-muted block text-[11px] uppercase">
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-4">
+            <dt class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
               Lançamento
-            </span>
-            <span class="text-text font-bold text-sm mt-0.5 block">
+            </dt>
+            <dd class="mt-1.5 font-[family-name:var(--font-v2-mono)] text-sm text-[var(--color-v2-heading)]">
               {data.releaseYear}
-            </span>
+            </dd>
           </div>
 
-          <div class="rounded-lg border border-border/70 bg-surface/80 p-3">
-            <span class="text-text-muted block text-[11px] uppercase">
+          <div class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-4">
+            <dt class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
               Gênero
-            </span>
-            <span class="text-text font-bold text-sm mt-0.5 block">
+            </dt>
+            <dd class="mt-1.5 font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-text)]">
               {data.genre}
-            </span>
+            </dd>
           </div>
 
-          <div class="rounded-lg border border-accent/40 bg-surface-raised/80 p-3">
-            <span class="text-text-muted block text-[11px] uppercase">
+          <div class="border border-[var(--color-v2-accent-warm)]/40 bg-[var(--color-v2-surface)]/95 p-4">
+            <dt class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
               Nota Final (6 eixos)
-            </span>
-            <span class="text-accent font-extrabold text-sm mt-0.5 block">
-              {formattedFinal} / 100
-            </span>
+            </dt>
+            <dd class="mt-1 flex items-baseline gap-1">
+              <span class="font-[family-name:var(--font-v2-display)] text-2xl leading-none font-normal text-[var(--color-v2-heading)]">
+                {formattedFinal}
+              </span>
+              <span class="font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-accent-warm)]">
+                / 100
+              </span>
+            </dd>
           </div>
-        </div>
+        </dl>
 
-        {/* Capa opcional futura (se houver imagem) */}
+        {/* Capa opcional futura (se houver imagem cadastrada) */}
         {data.coverImage && (
-          <div class="mt-8 aspect-[16/9] w-full overflow-hidden rounded-lg border border-border/80 bg-surface-raised shadow-xl">
+          <div class="mt-8 aspect-[16/9] w-full overflow-hidden border border-[var(--color-v2-border-hover)] bg-[#050508] shadow-[0_24px_60px_rgba(0,0,0,0.75)]">
             <img
-              src={data.coverImage.url}
+              src={withBase(data.coverImage.url)}
               alt={data.coverImage.alt}
               width="1200"
               height="675"
               loading="eager"
               decoding="async"
-              class="h-full w-full object-cover filter contrast-110 brightness-95"
+              class="h-full w-full object-cover brightness-95 contrast-105"
             />
           </div>
         )}
-      </div>
+      </header>
 
       {/* Aviso de Dado Mock se aplicável */}
       {data.isDemo && <DemoNotice variant="item" class="my-8" />}
 
       {/* Seções de Texto e Avaliação */}
-      <div class="mt-8 space-y-10">
+      <div class="mt-10 space-y-10">
         {/* Sinopse / Contexto (opcional) */}
         {data.description && (
           <section>
-            <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-2">
-              // SINOPSE & CONTEXTO
+            <span class="mb-2 block font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+              // SINOPSE &amp; CONTEXTO
             </span>
-            <p class="font-body text-base sm:text-lg leading-relaxed text-text-muted">
+            <p class="font-[family-name:var(--font-v2-sans)] text-base leading-relaxed font-light text-[var(--color-v2-text)] sm:text-lg">
               {data.description}
             </p>
           </section>
         )}
 
-        {/* Parecer Crítico */}
+        {/* Parecer Crítico (opcional) */}
         {data.opinion && (
-          <section>
-            <Card class="border-border/80 bg-surface/60 p-6 sm:p-8">
-              <span class="font-mono text-xs font-semibold text-accent uppercase tracking-wider block mb-3">
-                // ANÁLISE CRÍTICA
-              </span>
-              <p class="font-body text-base leading-relaxed text-text italic">
-                "{data.opinion}"
-              </p>
-            </Card>
+          <section class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-6 sm:p-8">
+            <span class="mb-3 block font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+              // ANÁLISE CRÍTICA
+            </span>
+            <p class="font-[family-name:var(--font-v2-display)] text-xl leading-relaxed text-[var(--color-v2-heading)] italic">
+              "{data.opinion}"
+            </p>
           </section>
         )}
 
         {/* Painel com as 6 Notas Técnicas */}
-        <section>
-          <RatingPanel scores={data.scores} type="movie" />
-        </section>
+        <RatingPanel scores={data.scores} type="movie" />
       </div>
-    </Container>
+
+      {/* Navegação entre Filmes e Rodapé da Página */}
+      <nav
+        aria-label="Navegação do arquivo cinematográfico"
+        class="mt-12 border-t border-[var(--color-v2-border)] pt-8"
+      >
+        {(prevMovie || nextMovie) && (
+          <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {prevMovie ? (
+              <a
+                href={withBase(`/filmes/${prevMovie.id}/`)}
+                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 transition-colors hover:border-[var(--color-v2-border-hover)]"
+              >
+                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+                  &larr; Registro anterior
+                </span>
+                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
+                  {prevMovie.data.title} ({prevMovie.data.releaseYear})
+                </span>
+              </a>
+            ) : (
+              <div />
+            )}
+
+            {nextMovie && (
+              <a
+                href={withBase(`/filmes/${nextMovie.id}/`)}
+                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 text-right transition-colors hover:border-[var(--color-v2-border-hover)]"
+              >
+                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+                  Próximo registro &rarr;
+                </span>
+                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
+                  {nextMovie.data.title} ({nextMovie.data.releaseYear})
+                </span>
+              </a>
+            )}
+          </div>
+        )}
+
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <a
+            href={withBase('/filmes/')}
+            class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] px-4 py-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
+          >
+            <span aria-hidden="true">&larr;</span>
+            <span>Voltar para arquivo</span>
+          </a>
+
+          <a
+            href={withBase('/')}
+            class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+          >
+            <span>Início</span>
+            <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+              &rarr;
+            </span>
+          </a>
+        </div>
+      </nav>
+    </div>
   </div>
 </BaseLayout>
