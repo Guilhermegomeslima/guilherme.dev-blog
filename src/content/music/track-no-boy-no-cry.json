@@ -2,7 +2,11 @@
   "title": "No Boy, No Cry",
   "artist": "Stance Punks",
   "type": "track",
-  "listenUrl": "https://www.youtube.com/watch?v=LF-jPb44AnI",
+  "coverImage": {
+    "url": "/images/music/artists/stance-punks.webp",
+    "alt": "Imagem de Stance Punks para a faixa No Boy, No Cry"
+  },
+  "listenUrl": "https://www.youtube.com/watch?v=FH0jaC1bIJ8&list=OLAK5uy_mb0J9pPZNIfSDfKcYmJjR8vxl_th88fOE",
   "favorite": false,
   "isDemo": false
 }
