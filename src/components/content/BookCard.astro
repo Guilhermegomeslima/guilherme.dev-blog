@@ -48,11 +48,11 @@ const bookHref = withBase(`/livros/${id}/`);
   data-genre={data.genre.toLowerCase()}
   data-status={data.status}
   data-favorite={data.favorite ? 'true' : 'false'}
-  class="group relative border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_18px_45px_rgba(0,0,0,0.65)]"
+  class="group relative min-w-0 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_18px_45px_rgba(0,0,0,0.65)]"
 >
   <a
     href={bookHref}
-    class="v2-focus grid h-full grid-cols-[108px_1fr] gap-4 p-4 sm:grid-cols-[128px_1fr] sm:gap-5 sm:p-5"
+    class="v2-focus grid h-full min-w-0 grid-cols-[96px_minmax(0,1fr)] gap-3.5 p-3.5 sm:grid-cols-[128px_minmax(0,1fr)] sm:gap-5 sm:p-5"
     aria-label={`${data.title}, por ${data.author} — ${currentStatus.label}`}
   >
     {/* Capa do Volume (2:3) com vinco de lombada sutil */}
@@ -89,20 +89,20 @@ const bookHref = withBase(`/livros/${id}/`);
     </div>
 
     {/* Ficha Bibliográfica */}
-    <div class="flex flex-col justify-between">
-      <div>
+    <div class="flex min-w-0 flex-col justify-between">
+      <div class="min-w-0">
         {/* Linha de Status e Favorito */}
-        <div class="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+        <div class="mb-2 flex flex-wrap items-center gap-1.5 sm:mb-2.5 sm:gap-2">
           <div
             class:list={[
-              'inline-flex items-center gap-1.5 border px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.14em] uppercase',
+              'inline-flex items-center gap-1.5 border px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.1em] uppercase sm:px-2 sm:tracking-[0.14em]',
               currentStatus.badgeClass,
             ]}
           >
             {currentStatus.dotClass && (
               <span
                 class:list={[
-                  'h-1.5 w-1.5 rounded-full',
+                  'h-1.5 w-1.5 shrink-0 rounded-full',
                   currentStatus.dotClass,
                 ]}
               />
@@ -111,7 +111,7 @@ const bookHref = withBase(`/livros/${id}/`);
           </div>
 
           {data.favorite && (
-            <span class="inline-flex items-center gap-1 border border-[var(--color-v2-accent-warm)]/55 bg-[var(--color-v2-accent-warm)]/12 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase">
+            <span class="inline-flex items-center gap-1 border border-[var(--color-v2-accent-warm)]/55 bg-[var(--color-v2-accent-warm)]/12 px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.1em] text-[var(--color-v2-accent-warm)] uppercase sm:px-2 sm:tracking-[0.14em]">
               <span aria-hidden="true">★</span>
               <span>Favorito</span>
             </span>
@@ -119,40 +119,42 @@ const bookHref = withBase(`/livros/${id}/`);
         </div>
 
         {/* Gênero e Ano */}
-        <div class="mb-1 flex items-center justify-between gap-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-accent-warm)]/85 uppercase">
-          <span class="truncate">{data.genre}</span>
+        <div class="mb-1 flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.1em] text-[var(--color-v2-accent-warm)]/85 uppercase sm:tracking-[0.14em]">
+          <span class="min-w-0 break-words">{data.genre}</span>
           {data.year && (
-            <span class="text-[var(--color-v2-muted)]">{data.year}</span>
+            <span class="shrink-0 text-[var(--color-v2-muted)]">
+              {data.year}
+            </span>
           )}
         </div>
 
         {/* Título e Autor */}
-        <h3 class="font-[family-name:var(--font-v2-display)] text-xl leading-[1.15] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] sm:text-2xl">
+        <h3 class="font-[family-name:var(--font-v2-display)] text-xl leading-[1.15] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] break-words sm:text-2xl">
           {data.title}
         </h3>
 
-        <p class="mt-1 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
+        <p class="mt-1 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)] break-words">
           Por <span class="text-[var(--color-v2-text)]">{data.author}</span>
         </p>
 
         {data.description && (
-          <p class="mt-2.5 line-clamp-2 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-muted)]">
+          <p class="mt-2 line-clamp-2 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-muted)] break-words sm:mt-2.5">
             {data.description}
           </p>
         )}
 
         {data.comment && !data.description && (
-          <p class="mt-2.5 line-clamp-2 font-[family-name:var(--font-v2-display)] text-sm leading-relaxed text-[var(--color-v2-text)] italic">
+          <p class="mt-2 line-clamp-2 font-[family-name:var(--font-v2-display)] text-sm leading-relaxed text-[var(--color-v2-text)] italic break-words sm:mt-2.5">
             "{data.comment}"
           </p>
         )}
       </div>
 
       {/* Rodapé da Ficha */}
-      <div class="mt-4 flex items-center justify-between border-t border-[var(--color-v2-border)] pt-2.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors group-hover:text-[var(--color-v2-heading)]">
-        <span>Ficha de leitura</span>
+      <div class="mt-3.5 flex items-center justify-between gap-2 border-t border-[var(--color-v2-border)] pt-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.12em] text-[var(--color-v2-muted)] uppercase transition-colors group-hover:text-[var(--color-v2-heading)] sm:mt-4 sm:pt-2.5 sm:tracking-[0.16em]">
+        <span class="truncate">Ficha de leitura</span>
 
-        <div class="flex items-center gap-2">
+        <div class="flex shrink-0 items-center gap-1.5 sm:gap-2">
           {data.isDemo && (
             <span class="border border-[var(--color-v2-accent-warm)]/50 px-1.5 py-0.5 text-[9px] text-[var(--color-v2-accent-warm)]">
               Mock
