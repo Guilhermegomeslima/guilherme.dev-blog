@@ -52,9 +52,9 @@ const { class: className } = Astro.props;
 
   <!-- Composição principal: Fotografia 3:4 + Registro 001 (Quem sou) -->
   <div class="mt-14 grid grid-cols-1 gap-12 lg:mt-20 lg:grid-cols-12 lg:items-start lg:gap-14">
-    <!-- Coluna da Fotografia (Proporção 3:4 com moldura inspirada em dossiê japonês) -->
+    <!-- Coluna da Fotografia (Proporção 4:5 com moldura editorial minimalista) -->
     <div class="mx-auto w-full max-w-[22rem] lg:col-span-4 lg:mx-0 lg:max-w-none">
-      <figure class="border-v2-border/90 bg-v2-surface relative border p-3 sm:p-4">
+      <figure class="border-v2-border/80 bg-v2-bg relative border p-1.5 sm:p-2">
         <!-- Cantoneiras geométricas finas em bronze e vermelho envelhecido -->
         <span
           aria-hidden="true"
@@ -73,27 +73,27 @@ const { class: className } = Astro.props;
           class="border-v2-accent pointer-events-none absolute -right-px -bottom-px h-3.5 w-3.5 border-r border-b"
         ></span>
 
-        <!-- Moldura interna e retrato 3:4 -->
-        <div class="border-v2-border/60 bg-v2-bg relative aspect-[3/4] w-full overflow-hidden border">
+        <!-- Retrato 4:5 sem borda interna -->
+        <div class="relative aspect-[4/5] w-full overflow-hidden">
           <img
             src="https://github.com/Guilhermegomeslima.png"
             alt="Foto de perfil de Guilherme Gomes"
             width="480"
-            height="640"
+            height="600"
             loading="eager"
             decoding="async"
             fetchpriority="high"
-            class="h-full w-full object-cover object-center brightness-[0.92] contrast-[1.04] saturate-[0.88] transition-[filter] duration-500 hover:brightness-100 motion-reduce:transition-none"
+            class="h-full w-full object-cover object-[center_20%] brightness-[0.88] contrast-[1.08] saturate-[0.86]"
           />
-          <!-- Vinheta inferior sutil para atmosfera cinematográfica -->
+          <!-- Overlay escuro sutil e vinheta cinematográfica para conter o fundo claro -->
           <div
             aria-hidden="true"
-            class="from-v2-bg/65 pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t to-transparent"
+            class="from-v2-bg/80 via-v2-bg/20 to-v2-bg/35 pointer-events-none absolute inset-0 bg-linear-to-t"
           ></div>
         </div>
 
         <!-- Legenda arquivística do retrato -->
-        <figcaption class="border-v2-border/60 font-v2-mono text-v2-text-muted mt-3.5 flex items-center justify-between border-t pt-3 text-[0.5625rem] tracking-[0.18em] uppercase">
+        <figcaption class="border-v2-border/60 font-v2-mono text-v2-text-muted mt-2 flex items-center justify-between border-t pt-2 text-[0.625rem] tracking-[0.16em] uppercase">
           <span>ID // GUILHERME.DEV</span>
           <span class="flex items-center gap-2">
             <span
