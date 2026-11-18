@@ -1,8 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Container from '../components/ui/Container.astro';
-import Button from '../components/ui/Button.astro';
-import Card from '../components/ui/Card.astro';
 import { withBase } from '../utils/base';
 ---
 
@@ -20,58 +17,64 @@ import { withBase } from '../utils/base';
       <div class="bg-v2-accent/25 h-96 w-96 rounded-full blur-3xl"></div>
     </div>
 
-    <Container>
-      <div class="mx-auto max-w-2xl text-center">
-        <div class="mb-4 inline-flex items-center gap-3">
-          <span
-            aria-hidden="true"
-            class="bg-v2-accent inline-block h-px w-6"
-          ></span>
-          <span class="v2-eyebrow text-v2-accent-warm">
-            ERR_CODE // 0x404: ROUTE_NOT_RESOLVED
-          </span>
-          <span
-            aria-hidden="true"
-            class="bg-v2-accent inline-block h-px w-6"
-          ></span>
-        </div>
-
-        <h1 class="font-v2-display text-v2-heading text-4xl leading-[1.04] font-medium tracking-[-0.02em] sm:text-6xl">
-          404: Setor{' '}
-          <em class="text-v2-accent-warm font-normal italic">não localizado</em>
-        </h1>
-
-        <p class="font-v2-sans text-v2-text-muted mt-5 text-base leading-relaxed font-light sm:text-lg">
-          A coordenada ou link que você tentou acessar não aponta para nenhum
-          módulo ativo do sistema. O conteúdo pode ter sido renomeado,
-          reorganizado ou ainda está em preparação para as próximas fases.
-        </p>
-
-        {/* Bloco arquivístico de diagnóstico */}
-        <Card class="border-v2-border bg-v2-surface/90 font-v2-mono text-v2-text-muted mt-8 text-left text-xs">
-          <div class="border-v2-border/80 text-v2-accent-warm mb-3 border-b pb-2 text-[11px] tracking-[0.16em] uppercase">
-            [ DIAGNÓSTICO DO TERMINAL ]
-          </div>
-          <p class="text-v2-text">
-            &gt; BUSCA_NO_SISTEMA:{' '}
-            <span class="text-v2-accent-warm">NENHUM_RESULTADO</span>
-          </p>
-          <p class="mt-1.5">
-            &gt; STATUS: 404_PAGE_NOT_FOUND // COORDENADA_INVÁLIDA
-          </p>
-          <p class="text-v2-accent-warm mt-1.5">
-            &gt; PROTOCOLO_RECOMENDADO: RETORNAR_AO_HUB_PRINCIPAL
-          </p>
-        </Card>
-
-        {/* Ações de recuperação */}
-        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Button href={withBase('/')}>Voltar para o início</Button>
-          <Button href={withBase('/sobre/')} variant="secondary">
-            Consultar dossiê sobre
-          </Button>
-        </div>
+    <div class="mx-auto w-full max-w-2xl px-6 text-center">
+      <div class="mb-4 inline-flex items-center gap-3">
+        <span
+          aria-hidden="true"
+          class="bg-v2-accent inline-block h-px w-6"
+        ></span>
+        <span class="v2-eyebrow text-v2-accent-warm">
+          ERR_CODE // 0x404: ROUTE_NOT_RESOLVED
+        </span>
+        <span
+          aria-hidden="true"
+          class="bg-v2-accent inline-block h-px w-6"
+        ></span>
       </div>
-    </Container>
+
+      <h1 class="font-v2-display text-v2-heading text-4xl leading-[1.04] font-medium tracking-[-0.02em] sm:text-6xl">
+        404: Setor{' '}
+        <em class="text-v2-accent-warm font-normal italic">não localizado</em>
+      </h1>
+
+      <p class="font-v2-sans text-v2-text-muted mt-5 text-base leading-relaxed font-light sm:text-lg">
+        A coordenada ou link que você tentou acessar não aponta para nenhum
+        módulo ativo do sistema. O conteúdo pode ter sido renomeado,
+        reorganizado ou ainda está em preparação para as próximas fases.
+      </p>
+
+      {/* Bloco arquivístico de diagnóstico */}
+      <div class="border-v2-border bg-v2-surface/90 font-v2-mono text-v2-text-muted mt-8 border p-6 text-left text-xs">
+        <div class="border-v2-border/80 text-v2-accent-warm mb-3 border-b pb-2 text-[11px] tracking-[0.16em] uppercase">
+          [ DIAGNÓSTICO DO TERMINAL ]
+        </div>
+        <p class="text-v2-text">
+          &gt; BUSCA_NO_SISTEMA:{' '}
+          <span class="text-v2-accent-warm">NENHUM_RESULTADO</span>
+        </p>
+        <p class="mt-1.5">
+          &gt; STATUS: 404_PAGE_NOT_FOUND // COORDENADA_INVÁLIDA
+        </p>
+        <p class="text-v2-accent-warm mt-1.5">
+          &gt; PROTOCOLO_RECOMENDADO: RETORNAR_AO_HUB_PRINCIPAL
+        </p>
+      </div>
+
+      {/* Ações de recuperação */}
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a
+          href={withBase('/')}
+          class="v2-focus border-v2-accent bg-v2-accent hover:bg-v2-accent/85 font-v2-mono text-v2-text inline-flex min-h-11 items-center justify-center gap-2 border px-5 py-2.5 text-[11px] font-normal tracking-[0.18em] uppercase transition-colors"
+        >
+          Voltar para o início
+        </a>
+        <a
+          href={withBase('/sobre/')}
+          class="v2-focus border-v2-border bg-v2-surface hover:border-v2-accent-warm hover:text-v2-accent-warm font-v2-mono text-v2-text inline-flex min-h-11 items-center justify-center gap-2 border px-5 py-2.5 text-[11px] font-normal tracking-[0.18em] uppercase transition-colors"
+        >
+          Consultar dossiê sobre
+        </a>
+      </div>
+    </div>
   </div>
 </BaseLayout>

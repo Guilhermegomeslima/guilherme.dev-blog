@@ -6,6 +6,194 @@ import path from 'node:path';
 import { CANONICAL_SITE } from './seo.ts';
 
 const distDir = path.resolve('dist');
+const contentDir = path.resolve('src/content');
+
+/**
+ * Rotas estáticas principais conhecidas que geram páginas individuais e devem figurar no sitemap.
+ */
+export const staticSitemapRoutes = [
+  '/',
+  '/sobre/',
+  '/projetos/',
+  '/linux/',
+  '/jogos/',
+  '/filmes/',
+  '/livros/',
+  '/artigos/',
+  '/musica/',
+  '/opensource/',
+  '/galeria/',
+];
+
+/**
+ * Arquivos HTML gerados que NÃO devem figurar no sitemap canônico (ex.: 404 e redirecionamento de alias).
+ */
+export const nonSitemapHtmlFiles = [
+  '404.html',
+  path.join('open-source', 'index.html'),
+];
+
+/**
+ * Lê uma pasta de content collections e extrai os identificadores (slugs)
+ * dos itens que atendem aos critérios de publicação (não são rascunhos nem demos).
+ */
+export function getPublishableSlugs(
+  dir: string,
+  ext: '.json' | '.md',
+): string[] {
+  if (!fs.existsSync(dir)) return [];
+  const entries = fs.readdirSync(dir);
+  const slugs: string[] = [];
+
+  for (const entry of entries) {
+    if (!entry.endsWith(ext)) continue;
+    const fullPath = path.join(dir, entry);
+    const raw = fs.readFileSync(fullPath, 'utf-8');
+
+    if (ext === '.json') {
+      try {
+        const data = JSON.parse(raw);
+        if (!data.draft && !data.isDemo) {
+          slugs.push(entry.replace(/\.json$/, ''));
+        }
+      } catch {
+        // Ignora erros de parse aqui — cobertos por content-integrity.test.ts
+      }
+    } else if (ext === '.md') {
+      const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      if (match) {
+        const fm = match[1];
+        const isDraft = /draft:\s*true/i.test(fm);
+        const isDemo = /isDemo:\s*true/i.test(fm);
+        if (!isDraft && !isDemo) {
+          slugs.push(entry.replace(/\.md$/, ''));
+        }
+      } else {
+        slugs.push(entry.replace(/\.md$/, ''));
+      }
+    }
+  }
+
+  return slugs.sort();
+}
+
+/**
+ * Extrai a lista de álbuns de galeria distintos e publicáveis.
+ */
+export function getPublishableGalleryAlbums(dir: string): string[] {
+  if (!fs.existsSync(dir)) return [];
+  const entries = fs.readdirSync(dir);
+  const albums = new Set<string>();
+
+  for (const entry of entries) {
+    if (!entry.endsWith('.json')) continue;
+    try {
+      const data = JSON.parse(fs.readFileSync(path.join(dir, entry), 'utf-8'));
+      if (!data.draft && !data.isDemo && data.albumSlug) {
+        albums.add(data.albumSlug);
+      }
+    } catch {}
+  }
+
+  return Array.from(albums).sort();
+}
+
+/**
+ * Calcula de forma independente as rotas canônicas e os arquivos HTML esperados no build.
+ */
+export function computeExpectedBuildRoutes(): {
+  sitemapUrls: Set<string>;
+  expectedHtmlFiles: Set<string>;
+  counts: {
+    articles: number;
+    games: number;
+    movies: number;
+    books: number;
+    galleryAlbums: number;
+    staticRoutes: number;
+  };
+} {
+  const articles = getPublishableSlugs(
+    path.join(contentDir, 'articles'),
+    '.md',
+  );
+  const games = getPublishableSlugs(path.join(contentDir, 'games'), '.json');
+  const movies = getPublishableSlugs(path.join(contentDir, 'movies'), '.json');
+  const books = getPublishableSlugs(path.join(contentDir, 'books'), '.json');
+  const galleryAlbums = getPublishableGalleryAlbums(
+    path.join(contentDir, 'gallery'),
+  );
+
+  const sitemapUrls = new Set<string>();
+  const expectedHtmlFiles = new Set<string>();
+
+  // Rotas estáticas
+  for (const r of staticSitemapRoutes) {
+    sitemapUrls.add(`${CANONICAL_SITE}${r}`);
+    if (r === '/') {
+      expectedHtmlFiles.add('index.html');
+    } else {
+      const clean = r.replace(/^\/|\/$/g, '');
+      expectedHtmlFiles.add(path.join(clean, 'index.html'));
+    }
+  }
+
+  // Coleções dinâmicas
+  for (const id of articles) {
+    sitemapUrls.add(`${CANONICAL_SITE}/artigos/${id}/`);
+    expectedHtmlFiles.add(path.join('artigos', id, 'index.html'));
+  }
+  for (const id of games) {
+    sitemapUrls.add(`${CANONICAL_SITE}/jogos/${id}/`);
+    expectedHtmlFiles.add(path.join('jogos', id, 'index.html'));
+  }
+  for (const id of movies) {
+    sitemapUrls.add(`${CANONICAL_SITE}/filmes/${id}/`);
+    expectedHtmlFiles.add(path.join('filmes', id, 'index.html'));
+  }
+  for (const id of books) {
+    sitemapUrls.add(`${CANONICAL_SITE}/livros/${id}/`);
+    expectedHtmlFiles.add(path.join('livros', id, 'index.html'));
+  }
+  for (const slug of galleryAlbums) {
+    sitemapUrls.add(`${CANONICAL_SITE}/galeria/${slug}/`);
+    expectedHtmlFiles.add(path.join('galeria', slug, 'index.html'));
+  }
+
+  // Arquivos auxiliares que não figuram no sitemap
+  for (const f of nonSitemapHtmlFiles) {
+    expectedHtmlFiles.add(f);
+  }
+
+  return {
+    sitemapUrls,
+    expectedHtmlFiles,
+    counts: {
+      articles: articles.length,
+      games: games.length,
+      movies: movies.length,
+      books: books.length,
+      galleryAlbums: galleryAlbums.length,
+      staticRoutes: staticSitemapRoutes.length,
+    },
+  };
+}
+
+/**
+ * Função utilitária que compara arquivos gerados com os esperados e identifica discrepâncias.
+ */
+export function findRouteDifferences(
+  expected: Set<string>,
+  actual: Set<string>,
+): { missing: string[]; unexpected: string[] } {
+  const missing = Array.from(expected)
+    .filter((x) => !actual.has(x))
+    .sort();
+  const unexpected = Array.from(actual)
+    .filter((x) => !expected.has(x))
+    .sort();
+  return { missing, unexpected };
+}
 
 function getAllHtmlFiles(dir: string): string[] {
   const results: string[] = [];
@@ -24,7 +212,7 @@ function getAllHtmlFiles(dir: string): string[] {
   return results;
 }
 
-describe('Auditoria Pós-Build — Integridade de links, imagens e rotas em dist/', () => {
+describe('Auditoria Pós-Build — Integridade Dinâmica de Rotas, Links e Ativos', () => {
   if (!fs.existsSync(distDir)) {
     it('diretório dist/ não gerado ainda (teste ignorado em ambiente pré-build)', () => {
       assert.ok(true);
@@ -32,23 +220,68 @@ describe('Auditoria Pós-Build — Integridade de links, imagens e rotas em dist
     return;
   }
 
+  const expectedRoutes = computeExpectedBuildRoutes();
   const htmlFiles = getAllHtmlFiles(distDir);
+  const actualHtmlFilesSet = new Set(
+    htmlFiles.map((p) => path.relative(distDir, p)),
+  );
 
-  it('deve ter gerado o total esperado de páginas estáticas (220 páginas)', () => {
-    assert.equal(htmlFiles.length, 220);
+  it('deve gerar todas as páginas estáticas calculadas a partir das coleções reais e rotas ativas', () => {
+    const diff = findRouteDifferences(
+      expectedRoutes.expectedHtmlFiles,
+      actualHtmlFilesSet,
+    );
+
+    assert.equal(
+      diff.missing.length,
+      0,
+      `Páginas publicáveis esperadas ausentes no build: ${diff.missing.join(', ')}`,
+    );
+    assert.equal(
+      diff.unexpected.length,
+      0,
+      `Páginas HTML não mapeadas geradas em dist/: ${diff.unexpected.join(', ')}`,
+    );
+    assert.equal(
+      htmlFiles.length,
+      expectedRoutes.expectedHtmlFiles.size,
+      `Total de páginas (${htmlFiles.length}) diverge do total dinâmico esperado (${expectedRoutes.expectedHtmlFiles.size})`,
+    );
   });
 
-  describe('Sitemap e Robots', () => {
-    it('dist/sitemap.xml deve conter exatamente 218 URLs canônicas sem 404 ou alias', () => {
+  describe('Sitemap e Robots Dinâmicos', () => {
+    it('dist/sitemap.xml deve conter exatamente as URLs canônicas publicáveis calculadas', () => {
       const sitemapPath = path.join(distDir, 'sitemap.xml');
       assert.ok(fs.existsSync(sitemapPath), 'dist/sitemap.xml não encontrado');
 
       const xml = fs.readFileSync(sitemapPath, 'utf-8');
-      const locMatches = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)];
-      assert.equal(locMatches.length, 218);
+      const locMatches = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(
+        (m) => m[1],
+      );
+      const actualLocSet = new Set(locMatches);
 
-      for (const m of locMatches) {
-        const url = m[1];
+      assert.equal(
+        locMatches.length,
+        expectedRoutes.sitemapUrls.size,
+        `Total de URLs no sitemap (${locMatches.length}) diverge das rotas canônicas esperadas (${expectedRoutes.sitemapUrls.size})`,
+      );
+
+      const diff = findRouteDifferences(
+        expectedRoutes.sitemapUrls,
+        actualLocSet,
+      );
+      assert.equal(
+        diff.missing.length,
+        0,
+        `URLs canônicas esperadas ausentes no sitemap.xml: ${diff.missing.join(', ')}`,
+      );
+      assert.equal(
+        diff.unexpected.length,
+        0,
+        `URLs não autorizadas presentes no sitemap.xml: ${diff.unexpected.join(', ')}`,
+      );
+
+      for (const url of locMatches) {
         assert.ok(
           url.startsWith(CANONICAL_SITE),
           `URL do sitemap não utiliza host canônico: ${url}`,
@@ -178,6 +411,26 @@ describe('Auditoria Pós-Build — Integridade de links, imagens e rotas em dist
           `<link rel="canonical" href="${CANONICAL_SITE}/opensource/"`,
         ),
       );
+    });
+  });
+
+  describe('Detecção de Falhas Reais (Anti-Regressão Não-Circular)', () => {
+    it('findRouteDifferences deve identificar rotas faltantes e rotas inesperadas', () => {
+      const expected = new Set(['jogos/index.html', 'sobre/index.html']);
+      const actual = new Set(['jogos/index.html', 'rota-fantasma/index.html']);
+
+      const diff = findRouteDifferences(expected, actual);
+      assert.deepEqual(diff.missing, ['sobre/index.html']);
+      assert.deepEqual(diff.unexpected, ['rota-fantasma/index.html']);
+    });
+
+    it('deve falhar se uma URL obrigatória for removida do sitemap simulado', () => {
+      const mockExpected = new Set(['https://guilherme.dev/jogos/']);
+      const mockActual = new Set<string>();
+
+      const diff = findRouteDifferences(mockExpected, mockActual);
+      assert.equal(diff.missing.length, 1);
+      assert.equal(diff.missing[0], 'https://guilherme.dev/jogos/');
     });
   });
 });
