@@ -5,29 +5,30 @@
   id="gallery-lightbox"
   aria-labelledby="lightbox-title"
   aria-describedby="lightbox-description"
-  class="m-auto w-[95vw] max-w-6xl overflow-hidden border border-[var(--color-v2-border-hover)] bg-[#070709]/98 p-0 text-[var(--color-v2-text)] shadow-[0_32px_90px_rgba(0,0,0,0.9)] backdrop:bg-black/90 backdrop:backdrop-blur-md open:flex open:flex-col"
+  class="relative m-auto w-[95vw] max-w-6xl overflow-hidden border border-[var(--color-v2-border-hover)] bg-[#070709]/98 p-0 text-[var(--color-v2-text)] shadow-[0_32px_90px_rgba(0,0,0,0.9)] backdrop:bg-black/90 backdrop:backdrop-blur-md open:flex open:flex-col"
 >
-  <div class="relative flex max-h-[94vh] flex-col">
-    {/* Cantoneiras em bronze */}
-    <span
-      aria-hidden="true"
-      class="pointer-events-none absolute top-0 left-0 z-30 h-4 w-4 border-t border-l border-[var(--color-v2-accent-warm)]"
-    ></span>
-    <span
-      aria-hidden="true"
-      class="pointer-events-none absolute top-0 right-0 z-30 h-4 w-4 border-t border-r border-[var(--color-v2-accent-warm)]"
-    ></span>
-    <span
-      aria-hidden="true"
-      class="pointer-events-none absolute bottom-0 left-0 z-30 h-4 w-4 border-b border-l border-[var(--color-v2-accent-warm)]"
-    ></span>
-    <span
-      aria-hidden="true"
-      class="pointer-events-none absolute right-0 bottom-0 z-30 h-4 w-4 border-r border-b border-[var(--color-v2-accent-warm)]"
-    ></span>
+  {/* Cantoneiras em bronze fixas na moldura do modal */}
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute top-0 left-0 z-40 h-4 w-4 border-t border-l border-[var(--color-v2-accent-warm)]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute top-0 right-0 z-40 h-4 w-4 border-t border-r border-[var(--color-v2-accent-warm)]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute bottom-0 left-0 z-40 h-4 w-4 border-b border-l border-[var(--color-v2-accent-warm)]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute right-0 bottom-0 z-40 h-4 w-4 border-r border-b border-[var(--color-v2-accent-warm)]"
+  ></span>
 
-    {/* Barra de Topo do Modal */}
-    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-v2-border)] bg-[var(--color-v2-surface)] px-4 py-3 sm:px-6">
+  {/* Contêiner de rolagem com altura máxima responsiva — permite alcançar toda a ficha em telas baixas e paisagem */}
+  <div class="relative flex max-h-[92vh] flex-col overflow-y-auto overscroll-contain">
+    {/* Barra de Topo do Modal (adesiva ao rolar) */}
+    <div class="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/95 px-4 py-3 backdrop-blur-xs sm:px-6">
       <div class="flex flex-wrap items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.16em] uppercase">
         <span class="text-[var(--color-v2-accent-warm)]">
           // VISUALIZADOR DE MÍDIA
@@ -70,7 +71,7 @@
     </div>
 
     {/* Palco de Exibição da Fotografia Ampliada (sem cortes nem distorções) */}
-    <div class="relative flex min-h-[280px] flex-1 items-center justify-center overflow-hidden bg-[#040406] p-3 sm:min-h-[420px] sm:p-8">
+    <div class="relative flex min-h-[180px] flex-1 items-center justify-center bg-[#040406] p-3 sm:min-h-[320px] sm:p-6 md:min-h-[400px] md:p-8">
       {/* Botão Anterior */}
       <button
         type="button"
@@ -86,7 +87,7 @@
         id="lightbox-img"
         src=""
         alt=""
-        class="max-h-[65vh] w-auto max-w-full border border-[var(--color-v2-border)] object-contain shadow-[0_24px_60px_rgba(0,0,0,0.85)]"
+        class="max-h-[48vh] w-auto max-w-full border border-[var(--color-v2-border)] object-contain shadow-[0_24px_60px_rgba(0,0,0,0.85)] sm:max-h-[58vh] lg:max-h-[64vh]"
       />
 
       {/* Botão Próximo */}
@@ -252,16 +253,26 @@
       renderItem(newIndex);
     }
 
+    let lastActiveTrigger: HTMLElement | null = null;
+
+    const returnFocus = () => {
+      if (lastActiveTrigger && typeof lastActiveTrigger.focus === 'function') {
+        lastActiveTrigger.focus({ preventScroll: true });
+      }
+    };
+
     const allTriggers = Array.from(
       document.querySelectorAll<HTMLElement>('[data-gallery-trigger]'),
     );
 
     allTriggers.forEach((btn) => {
       const openFromTrigger = () => {
+        lastActiveTrigger = btn;
         triggers = getActiveTriggers();
         const idx = triggers.indexOf(btn);
         renderItem(idx !== -1 ? idx : 0);
         dialog.showModal();
+        closeBtn?.focus();
       };
 
       btn.onclick = openFromTrigger;
@@ -280,6 +291,8 @@
     closeBtn?.addEventListener('click', () => {
       dialog.close();
     });
+
+    dialog.addEventListener('close', returnFocus);
 
     prevBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
