@@ -64,7 +64,8 @@
 | `--surface`        | `#141210`   | blocos e elementos elevados muito discretos         |
 | `--surface-raised` | `#1B1715`   | superfícies pontuais                                |
 | `--text`           | `#E7DED2`   | títulos e conteúdo de destaque                      |
-| `--text-muted`     | `#A89F95`   | parágrafos auxiliares e legendas                    |
+| `--text-body`      | `#C3BAB0`   | leitura longa, crônicas e parágrafos principais     |
+| `--text-muted`     | `#A89F95`   | parágrafos auxiliares, metadados e legendas         |
 | `--border`         | `#332B26`   | linhas, cartões e separadores                       |
 | `--accent`         | `#79382F`   | acento vermelho de navegação e estados selecionados |
 | `--accent-warm`    | `#A18A70`   | eventual detalhe quente, não obrigatório            |

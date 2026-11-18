@@ -21,10 +21,12 @@
   /* 2. Cores de texto e hierarquia */
   --color-v2-heading: #e7ded2;
   --color-v2-text: #e7ded2;
+  --color-v2-text-body: #c3bab0;
   --color-v2-text-muted: #a89f95;
   --color-v2-muted: #a89f95;
 
   --color-text: var(--color-v2-text);
+  --color-text-body: var(--color-v2-text-body);
   --color-text-muted: var(--color-v2-text-muted);
 
   /* 3. Cores de destaque (vermelho envelhecido e bronze/ocre quente) */
