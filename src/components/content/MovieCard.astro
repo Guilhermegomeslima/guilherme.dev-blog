@@ -34,7 +34,7 @@ const criteriaAbbr = [
   data-year={data.releaseYear}
   data-score={finalScore}
   data-index={index}
-  class="group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
+  class="group relative flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
 >
   {/* Cantoneiras superiores discretas */}
   <span
@@ -48,10 +48,10 @@ const criteriaAbbr = [
 
   <a
     href={movieHref}
-    class="v2-focus flex h-full flex-col justify-between p-6 sm:p-7"
+    class="v2-focus flex h-full min-w-0 flex-col justify-between p-6 sm:p-7"
     aria-label={`${data.title} (${data.releaseYear}), dirigido por ${data.director} — Nota ${formattedFinal} de 100`}
   >
-    <div>
+    <div class="min-w-0">
       {/* Cabeçalho da Ficha de Projeção */}
       <div class="mb-5 flex items-start justify-between gap-4 border-b border-[var(--color-v2-border)] pb-4">
         <div>
@@ -102,12 +102,12 @@ const criteriaAbbr = [
       )}
 
       {/* Título e Direção */}
-      <h3 class="font-[family-name:var(--font-v2-display)] text-2xl leading-[1.12] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] sm:text-[1.65rem]">
+      <h3 class="font-[family-name:var(--font-v2-display)] text-2xl leading-[1.12] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] break-words sm:text-[1.65rem]">
         {data.title}
       </h3>
 
       <p class="mt-2 flex items-center gap-2 font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
-        <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-accent-warm)]/80 uppercase">
+        <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase">
           Direção
         </span>
         <span aria-hidden="true" class="text-[var(--color-v2-border-hover)]">

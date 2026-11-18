@@ -249,7 +249,10 @@ const statusLabel = statusLabels[data.status] || data.status;
                 Média Geral de Avaliação
               </span>
               <span class="mt-1 block font-[family-name:var(--font-v2-sans)] text-xs font-light text-[var(--color-v2-muted)]">
-                Escala uniforme de 0 a 100 · cinco critérios de peso equivalente
+                Escala uniforme de 0 a 100 ·{' '}
+                {data.scores.plot === null
+                  ? 'quatro critérios aplicáveis de peso equivalente'
+                  : 'cinco critérios de peso equivalente'}
               </span>
             </div>
 

@@ -75,6 +75,7 @@ const statusFilters = [
         width="1600"
         height="900"
         loading="eager"
+        fetchpriority="high"
         decoding="async"
         class="h-full w-full object-cover object-center opacity-[0.13] blur-[2px] filter"
       />
@@ -278,7 +279,7 @@ const statusFilters = [
               Limpar filtros
             </button>
             <span class="hidden sm:inline">
-              * Média aritmética simples de 5 eixos (0–100)
+              * Média aritmética simples dos eixos aplicáveis (0–100)
             </span>
           </div>
         </div>
