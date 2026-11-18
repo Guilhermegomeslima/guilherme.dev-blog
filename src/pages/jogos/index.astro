@@ -199,7 +199,7 @@ const statusFilters = [
                 ]}
               >
                 <span>{st.label}</span>
-                <span class="ml-1 text-[10px] opacity-70">({st.count})</span>
+                <span class="ml-1 text-[10px]">({st.count})</span>
               </button>
             ))}
           </div>
@@ -451,6 +451,7 @@ const statusFilters = [
       if (sortSelect) sortSelect.value = 'year-desc';
       updateStatusButtonStyles();
       applyFiltersAndSort();
+      searchInput?.focus({ preventScroll: true });
     });
   }
 

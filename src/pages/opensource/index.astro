@@ -402,6 +402,7 @@ const licenses = [
       if (searchInput) searchInput.value = '';
       updateButtonStyles();
       applyFilter();
+      searchInput?.focus({ preventScroll: true });
     });
   }
 

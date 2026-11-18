@@ -374,6 +374,7 @@ const decades = [...decadeMap.entries()].sort((a, b) => b[0] - a[0]);
       if (decadeSelect) decadeSelect.value = 'all';
       if (sortSelect) sortSelect.value = 'year-desc';
       applyFiltersAndSort();
+      searchInput?.focus({ preventScroll: true });
     });
   }
 

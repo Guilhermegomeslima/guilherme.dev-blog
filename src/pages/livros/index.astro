@@ -163,7 +163,7 @@ const shelfFilters = [
                 ]}
               >
                 <span>{shelf.label}</span>
-                <span class="ml-1 text-[10px] opacity-70">({shelf.count})</span>
+                <span class="ml-1 text-[10px]">({shelf.count})</span>
               </button>
             ))}
           </div>
@@ -214,7 +214,7 @@ const shelfFilters = [
           <section data-book-section="lendo">
             <div class="mb-6 flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--color-v2-border)] pb-4">
               <div class="flex items-baseline gap-3">
-                <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-accent)] uppercase">
+                <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase">
                   ESTANTE 01 //
                 </span>
                 <h2 class="font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)] sm:text-3xl">
@@ -425,6 +425,7 @@ const shelfFilters = [
       if (searchInput) searchInput.value = '';
       updateShelfButtonStyles();
       applyFilter();
+      searchInput?.focus({ preventScroll: true });
     });
   }
 

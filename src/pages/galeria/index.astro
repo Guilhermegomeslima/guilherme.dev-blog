@@ -420,6 +420,7 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
       if (searchInput) searchInput.value = '';
       updateButtonStyles();
       applyFilter();
+      searchInput?.focus({ preventScroll: true });
     });
   }
 

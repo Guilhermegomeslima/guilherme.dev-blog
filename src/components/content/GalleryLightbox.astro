@@ -4,9 +4,15 @@
 <dialog
   id="gallery-lightbox"
   aria-labelledby="lightbox-title"
-  aria-describedby="lightbox-description"
   class="relative m-auto w-[95vw] max-w-6xl overflow-hidden border border-[var(--color-v2-border-hover)] bg-[#070709]/98 p-0 text-[var(--color-v2-text)] shadow-[0_32px_90px_rgba(0,0,0,0.9)] backdrop:bg-black/90 backdrop:backdrop-blur-md open:flex open:flex-col"
 >
+  {/* Anunciador dinâmico acessível para leitores de tela em transições de imagem */}
+  <div
+    id="lightbox-live-announcer"
+    class="sr-only"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
   {/* Cantoneiras em bronze fixas na moldura do modal */}
   <span
     aria-hidden="true"
@@ -166,6 +172,7 @@
     const licenseElem = document.getElementById('lightbox-license');
     const creditRow = document.getElementById('lightbox-credit-row');
     const licenseRow = document.getElementById('lightbox-license-row');
+    const liveAnnouncer = document.getElementById('lightbox-live-announcer');
     const originalLink = document.getElementById(
       'lightbox-original-link',
     ) as HTMLAnchorElement | null;
@@ -209,10 +216,18 @@
       if (descElem) {
         descElem.textContent = desc;
         descElem.style.display = desc ? 'block' : 'none';
+        if (desc) {
+          dialog?.setAttribute('aria-describedby', 'lightbox-description');
+        } else {
+          dialog?.removeAttribute('aria-describedby');
+        }
       }
       if (albumElem) albumElem.textContent = album;
       if (counterElem) {
         counterElem.textContent = `${currentIndex + 1} / ${triggers.length}`;
+      }
+      if (liveAnnouncer) {
+        liveAnnouncer.textContent = `Imagem ${currentIndex + 1} de ${triggers.length}: ${title}`;
       }
       if (dimElem) dimElem.textContent = dim || 'N/A';
 
