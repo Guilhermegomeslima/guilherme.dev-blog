@@ -2,24 +2,28 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentNavigation from '../../components/content/ContentNavigation.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
 import { withBase } from '../../utils/base';
 import { getBlogPostingSchema } from '../../utils/seo';
+import {
+  buildNavigableEntries,
+  compareArticles,
+} from '../../utils/content-navigation';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles');
-  const sorted = [...articles].sort(
-    (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
-  );
 
-  return sorted.map((article, index) => ({
-    params: { id: article.id },
-    props: {
-      article,
-      prevArticle: index > 0 ? sorted[index - 1] : null,
-      nextArticle: index < sorted.length - 1 ? sorted[index + 1] : null,
-    },
-  }));
+  return buildNavigableEntries(articles, compareArticles).map(
+    ({ entry: article, prev: prevArticle, next: nextArticle }) => ({
+      params: { id: article.id },
+      props: {
+        article,
+        prevArticle,
+        nextArticle,
+      },
+    }),
+  );
 }
 
 interface Props {
@@ -286,59 +290,30 @@ const blogPostingSchema = getBlogPostingSchema({
           </div>
         )}
 
-        {(prevArticle || nextArticle) && (
-          <div class="mt-8 grid grid-cols-1 gap-4 border-t border-[var(--color-v2-border)] pt-8 sm:grid-cols-2">
-            {prevArticle ? (
-              <a
-                href={withBase(`/artigos/${prevArticle.id}/`)}
-                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 transition-colors hover:border-[var(--color-v2-border-hover)]"
-              >
-                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
-                  &larr; Ensaio anterior
-                </span>
-                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
-                  {prevArticle.data.title}
-                </span>
-              </a>
-            ) : (
-              <div />
-            )}
-
-            {nextArticle && (
-              <a
-                href={withBase(`/artigos/${nextArticle.id}/`)}
-                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 text-right transition-colors hover:border-[var(--color-v2-border-hover)]"
-              >
-                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
-                  Próximo ensaio &rarr;
-                </span>
-                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
-                  {nextArticle.data.title}
-                </span>
-              </a>
-            )}
-          </div>
-        )}
-
-        <div class="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--color-v2-border)] pt-6">
-          <a
-            href={withBase('/artigos/')}
-            class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] px-4 py-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
-          >
-            <span aria-hidden="true">&larr;</span>
-            <span>Voltar para a listagem</span>
-          </a>
-
-          <a
-            href={withBase('/')}
-            class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
-          >
-            <span>Início</span>
-            <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
-              &rarr;
-            </span>
-          </a>
-        </div>
+        <ContentNavigation
+          ariaLabel="Navegação de artigos e ensaios"
+          prev={
+            prevArticle
+              ? {
+                  href: `/artigos/${prevArticle.id}/`,
+                  label: prevArticle.data.title,
+                }
+              : null
+          }
+          next={
+            nextArticle
+              ? {
+                  href: `/artigos/${nextArticle.id}/`,
+                  label: nextArticle.data.title,
+                }
+              : null
+          }
+          prevLabel="Ensaio anterior"
+          nextLabel="Próximo ensaio"
+          backHref="/artigos/"
+          backLabel="Voltar para a listagem"
+          class="mt-8 border-t border-[var(--color-v2-border)] pt-6"
+        />
       </footer>
     </div>
   </article>

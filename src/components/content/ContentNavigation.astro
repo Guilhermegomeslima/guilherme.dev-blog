@@ -1,0 +1,93 @@
+---
+/**
+ * Navegação editorial contextual (anterior / próximo + retorno ao catálogo e início).
+ * Componente estático reutilizado em Jogos, Filmes, Livros e Artigos (FRT-02).
+ */
+import { withBase } from '../../utils/base';
+
+export interface NavLinkItem {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  ariaLabel: string;
+  prev?: NavLinkItem | null;
+  next?: NavLinkItem | null;
+  prevLabel?: string;
+  nextLabel?: string;
+  backHref: string;
+  backLabel: string;
+  class?: string;
+}
+
+const {
+  ariaLabel,
+  prev = null,
+  next = null,
+  prevLabel = 'Registro anterior',
+  nextLabel = 'Próximo registro',
+  backHref,
+  backLabel,
+  class: className = 'mt-12 border-t border-[var(--color-v2-border)] pt-8',
+} = Astro.props;
+---
+
+<nav aria-label={ariaLabel} class={className}>
+  {(prev || next) && (
+    <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {prev && (
+        <a
+          href={withBase(prev.href)}
+          rel="prev"
+          class="v2-focus group flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 transition-colors hover:border-[var(--color-v2-border-hover)]"
+        >
+          <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+            <span aria-hidden="true">&larr;</span> {prevLabel}
+          </span>
+          <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg break-words text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
+            {prev.label}
+          </span>
+        </a>
+      )}
+
+      {next && (
+        <a
+          href={withBase(next.href)}
+          rel="next"
+          class:list={[
+            'v2-focus group flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 text-right transition-colors hover:border-[var(--color-v2-border-hover)]',
+            !prev && 'sm:col-start-2',
+          ]}
+        >
+          <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
+            {nextLabel} <span aria-hidden="true">&rarr;</span>
+          </span>
+          <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg break-words text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
+            {next.label}
+          </span>
+        </a>
+      )}
+    </div>
+  )}
+
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <a
+      href={withBase(backHref)}
+      class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] px-4 py-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
+    >
+      <span aria-hidden="true">&larr;</span>
+      <span>{backLabel}</span>
+    </a>
+
+    <a
+      href={withBase('/')}
+      class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+    >
+      <span>Início</span>
+      <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+        &rarr;
+      </span>
+    </a>
+  </div>
+</nav>

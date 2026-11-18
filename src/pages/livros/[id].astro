@@ -2,30 +2,27 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentNavigation from '../../components/content/ContentNavigation.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
 import { withBase } from '../../utils/base';
+import {
+  buildNavigableEntries,
+  compareBooks,
+} from '../../utils/content-navigation';
 
 export async function getStaticPaths() {
   const books = await getCollection('books');
-  const statusOrder: Record<string, number> = {
-    lendo: 0,
-    lido: 1,
-    quero_ler: 2,
-  };
-  const sorted = [...books].sort(
-    (a, b) =>
-      (statusOrder[a.data.status] ?? 3) - (statusOrder[b.data.status] ?? 3) ||
-      a.data.title.localeCompare(b.data.title, 'pt-BR'),
-  );
 
-  return sorted.map((book, index) => ({
-    params: { id: book.id },
-    props: {
-      book,
-      prevBook: index > 0 ? sorted[index - 1] : null,
-      nextBook: index < sorted.length - 1 ? sorted[index + 1] : null,
-    },
-  }));
+  return buildNavigableEntries(books, compareBooks).map(
+    ({ entry: book, prev: prevBook, next: nextBook }) => ({
+      params: { id: book.id },
+      props: {
+        book,
+        prevBook,
+        nextBook,
+      },
+    }),
+  );
 }
 
 interface Props {
@@ -296,64 +293,29 @@ const currentStatus = statusLabels[data.status] || {
       </div>
 
       {/* Navegação entre Volumes e Rodapé da Página */}
-      <nav
-        aria-label="Navegação da biblioteca de livros"
-        class="mt-12 border-t border-[var(--color-v2-border)] pt-8"
-      >
-        {(prevBook || nextBook) && (
-          <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {prevBook ? (
-              <a
-                href={withBase(`/livros/${prevBook.id}/`)}
-                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 transition-colors hover:border-[var(--color-v2-border-hover)]"
-              >
-                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
-                  &larr; Volume anterior
-                </span>
-                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
-                  {prevBook.data.title} — {prevBook.data.author}
-                </span>
-              </a>
-            ) : (
-              <div />
-            )}
-
-            {nextBook && (
-              <a
-                href={withBase(`/livros/${nextBook.id}/`)}
-                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 text-right transition-colors hover:border-[var(--color-v2-border-hover)]"
-              >
-                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
-                  Próximo volume &rarr;
-                </span>
-                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
-                  {nextBook.data.title} — {nextBook.data.author}
-                </span>
-              </a>
-            )}
-          </div>
-        )}
-
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <a
-            href={withBase('/livros/')}
-            class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] px-4 py-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
-          >
-            <span aria-hidden="true">&larr;</span>
-            <span>Voltar para biblioteca</span>
-          </a>
-
-          <a
-            href={withBase('/')}
-            class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
-          >
-            <span>Início</span>
-            <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
-              &rarr;
-            </span>
-          </a>
-        </div>
-      </nav>
+      <ContentNavigation
+        ariaLabel="Navegação da biblioteca de livros"
+        prev={
+          prevBook
+            ? {
+                href: `/livros/${prevBook.id}/`,
+                label: `${prevBook.data.title} — ${prevBook.data.author}`,
+              }
+            : null
+        }
+        next={
+          nextBook
+            ? {
+                href: `/livros/${nextBook.id}/`,
+                label: `${nextBook.data.title} — ${nextBook.data.author}`,
+              }
+            : null
+        }
+        prevLabel="Volume anterior"
+        nextLabel="Próximo volume"
+        backHref="/livros/"
+        backLabel="Voltar para biblioteca"
+      />
     </div>
   </div>
 </BaseLayout>

@@ -3,26 +3,28 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RatingPanel from '../../components/content/RatingPanel.astro';
+import ContentNavigation from '../../components/content/ContentNavigation.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
 import { withBase } from '../../utils/base';
 import { calculateGameScore, formatScore } from '../../utils/ratings';
+import {
+  buildNavigableEntries,
+  compareGames,
+} from '../../utils/content-navigation';
 
 export async function getStaticPaths() {
   const games = await getCollection('games');
-  const sorted = [...games].sort(
-    (a, b) =>
-      b.data.releaseYear - a.data.releaseYear ||
-      a.data.title.localeCompare(b.data.title, 'pt-BR'),
-  );
 
-  return sorted.map((game, index) => ({
-    params: { id: game.id },
-    props: {
-      game,
-      prevGame: index > 0 ? sorted[index - 1] : null,
-      nextGame: index < sorted.length - 1 ? sorted[index + 1] : null,
-    },
-  }));
+  return buildNavigableEntries(games, compareGames).map(
+    ({ entry: game, prev: prevGame, next: nextGame }) => ({
+      params: { id: game.id },
+      props: {
+        game,
+        prevGame,
+        nextGame,
+      },
+    }),
+  );
 }
 
 interface Props {
@@ -295,64 +297,29 @@ const statusLabel = statusLabels[data.status] || data.status;
       )}
 
       {/* Navegação entre Obras e Rodapé da Página */}
-      <nav
-        aria-label="Navegação do catálogo de jogos"
-        class="mt-12 border-t border-[var(--color-v2-border)] pt-8"
-      >
-        {(prevGame || nextGame) && (
-          <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {prevGame ? (
-              <a
-                href={withBase(`/jogos/${prevGame.id}/`)}
-                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 transition-colors hover:border-[var(--color-v2-border-hover)]"
-              >
-                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
-                  &larr; Registro anterior
-                </span>
-                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
-                  {prevGame.data.title} ({prevGame.data.releaseYear})
-                </span>
-              </a>
-            ) : (
-              <div />
-            )}
-
-            {nextGame && (
-              <a
-                href={withBase(`/jogos/${nextGame.id}/`)}
-                class="v2-focus group flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/60 p-4 text-right transition-colors hover:border-[var(--color-v2-border-hover)]"
-              >
-                <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] uppercase">
-                  Próximo registro &rarr;
-                </span>
-                <span class="mt-1 font-[family-name:var(--font-v2-display)] text-lg text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
-                  {nextGame.data.title} ({nextGame.data.releaseYear})
-                </span>
-              </a>
-            )}
-          </div>
-        )}
-
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <a
-            href={withBase('/jogos/')}
-            class="v2-focus inline-flex items-center gap-2 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] px-4 py-2.5 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-accent-warm)]"
-          >
-            <span aria-hidden="true">&larr;</span>
-            <span>Voltar para catálogo</span>
-          </a>
-
-          <a
-            href={withBase('/')}
-            class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
-          >
-            <span>Início</span>
-            <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
-              &rarr;
-            </span>
-          </a>
-        </div>
-      </nav>
+      <ContentNavigation
+        ariaLabel="Navegação do catálogo de jogos"
+        prev={
+          prevGame
+            ? {
+                href: `/jogos/${prevGame.id}/`,
+                label: `${prevGame.data.title} (${prevGame.data.releaseYear})`,
+              }
+            : null
+        }
+        next={
+          nextGame
+            ? {
+                href: `/jogos/${nextGame.id}/`,
+                label: `${nextGame.data.title} (${nextGame.data.releaseYear})`,
+              }
+            : null
+        }
+        prevLabel="Registro anterior"
+        nextLabel="Próximo registro"
+        backHref="/jogos/"
+        backLabel="Voltar para catálogo"
+      />
     </div>
   </div>
 </BaseLayout>
