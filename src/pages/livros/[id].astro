@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentNavigation from '../../components/content/ContentNavigation.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
+import ShareButton from '../../components/ui/ShareButton.astro';
 import { withBase } from '../../utils/base';
 import {
   buildNavigableEntries,
@@ -106,9 +107,19 @@ const currentStatus = statusLabels[data.status] || {
           <span>Voltar para a biblioteca de livros</span>
         </a>
 
-        <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
-          REGISTRO BIBLIOGRÁFICO // #{id}
-        </span>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+            REGISTRO BIBLIOGRÁFICO // #{id}
+          </span>
+          <ShareButton
+            title={`${data.title} — Ficha de Leitura // guilherme.dev`}
+            text={
+              data.description ||
+              `Ficha de leitura de ${data.title}, obra de ${data.author}.`
+            }
+            url={`/livros/${id}/`}
+          />
+        </div>
       </div>
 
       {/* Hero com Capa 2:3 e Ficha Bibliográfica */}

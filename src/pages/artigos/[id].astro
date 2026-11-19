@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentNavigation from '../../components/content/ContentNavigation.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
 import ReadingProgress from '../../components/ui/ReadingProgress.astro';
+import ShareButton from '../../components/ui/ShareButton.astro';
 import { withBase } from '../../utils/base';
 import { getBlogPostingSchema } from '../../utils/seo';
 import {
@@ -140,9 +141,16 @@ const blogPostingSchema = getBlogPostingSchema({
           <span>Voltar para todos os artigos</span>
         </a>
 
-        <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
-          ARQUIVO EDITORIAL // LEITURA LONGA
-        </span>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+            ARQUIVO EDITORIAL // LEITURA LONGA
+          </span>
+          <ShareButton
+            title={`${data.title} — guilherme.dev`}
+            text={data.description}
+            url={`/artigos/${article.id}/`}
+          />
+        </div>
       </div>
 
       {/* Cabeçalho do Artigo */}

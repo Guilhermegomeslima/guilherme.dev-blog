@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import RatingPanel from '../../components/content/RatingPanel.astro';
 import ContentNavigation from '../../components/content/ContentNavigation.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
+import ShareButton from '../../components/ui/ShareButton.astro';
 import { withBase } from '../../utils/base';
 import { calculateMovieScore, formatScore } from '../../utils/ratings';
 import {
@@ -84,9 +85,19 @@ const formattedFinal = formatScore(finalScore);
           <span>Voltar para catálogo de filmes</span>
         </a>
 
-        <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
-          REGISTRO CINEMATOGRÁFICO // #{id}
-        </span>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+            REGISTRO CINEMATOGRÁFICO // #{id}
+          </span>
+          <ShareButton
+            title={`${data.title} — Crítica de Cinema // guilherme.dev`}
+            text={
+              data.description ||
+              `Avaliação e notas cinematográficas de ${data.title} (${data.releaseYear}), dirigido por ${data.director}.`
+            }
+            url={`/filmes/${id}/`}
+          />
+        </div>
       </div>
 
       {/* Cabeçalho Editorial da Obra */}

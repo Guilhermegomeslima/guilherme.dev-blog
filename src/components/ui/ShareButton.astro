@@ -1,0 +1,209 @@
+---
+/**
+ * Botão discreto de compartilhamento editorial (FRT-03).
+ * Utiliza Web Share API quando disponível, Clipboard API como alternativa
+ * e campo selecionável manual caso a cópia falhe.
+ * Sempre compartilha a URL canônica de produção (`toCanonicalUrl`).
+ */
+import { toCanonicalUrl } from '../../utils/seo';
+
+interface Props {
+  title: string;
+  text?: string;
+  url?: string;
+  class?: string;
+}
+
+const { title, text = '', url, class: className } = Astro.props;
+const canonicalUrl = toCanonicalUrl(url ?? Astro.url.pathname);
+---
+
+<div
+  data-share-root
+  data-share-title={title}
+  data-share-text={text}
+  data-share-url={canonicalUrl}
+  class:list={['inline-flex max-w-full flex-col items-start gap-2', className]}
+>
+  <div class="flex flex-wrap items-center gap-2.5">
+    <button
+      type="button"
+      hidden
+      data-share-trigger
+      class="v2-focus border-v2-border hover:border-v2-accent-warm/60 bg-v2-surface/70 text-v2-text-muted hover:text-v2-heading inline-flex min-h-9 cursor-pointer items-center gap-2 border px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.14em] uppercase transition-colors motion-reduce:transition-none"
+    >
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        width="14"
+        height="14"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-v2-accent-warm shrink-0"
+      >
+        <circle cx="18" cy="5" r="3"></circle>
+        <circle cx="6" cy="12" r="3"></circle>
+        <circle cx="18" cy="19" r="3"></circle>
+        <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"></path>
+      </svg>
+      <span data-share-label>Compartilhar</span>
+    </button>
+
+    <span
+      role="status"
+      aria-live="polite"
+      data-share-status
+      class="sr-only"
+    ></span>
+  </div>
+
+  <div
+    hidden
+    data-share-manual
+    role="region"
+    aria-label="Copiar link manualmente"
+    class="border-v2-border-hover bg-v2-surface w-full max-w-[22rem] border p-3 shadow-[0_16px_40px_rgba(0,0,0,0.65)]"
+  >
+    <div class="mb-2 flex items-center justify-between gap-2">
+      <span class="text-v2-text-muted font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] uppercase">
+        Copie o link abaixo
+      </span>
+      <button
+        type="button"
+        data-share-close
+        aria-label="Fechar cópia manual"
+        class="v2-focus text-v2-text-muted hover:text-v2-heading inline-flex min-h-7 min-w-7 cursor-pointer items-center justify-center border border-transparent px-1.5 font-[family-name:var(--font-v2-mono)] text-xs"
+      >
+        &times;
+      </button>
+    </div>
+    <input
+      type="url"
+      readonly
+      value={canonicalUrl}
+      aria-label="URL canônica para cópia manual"
+      data-share-input
+      class="v2-focus border-v2-border bg-v2-bg text-v2-text w-full min-w-0 border px-2.5 py-1.5 font-[family-name:var(--font-v2-mono)] text-xs select-all"
+    />
+  </div>
+</div>
+
+<script>
+  import { shareContent } from '../../utils/share';
+
+  for (const root of document.querySelectorAll<HTMLElement>(
+    '[data-share-root]',
+  )) {
+    const trigger = root.querySelector<HTMLButtonElement>(
+      '[data-share-trigger]',
+    );
+    const label = root.querySelector<HTMLElement>('[data-share-label]');
+    const status = root.querySelector<HTMLElement>('[data-share-status]');
+    const manualBox = root.querySelector<HTMLElement>('[data-share-manual]');
+    const manualInput =
+      root.querySelector<HTMLInputElement>('[data-share-input]');
+    const closeBtn =
+      root.querySelector<HTMLButtonElement>('[data-share-close]');
+
+    if (
+      !trigger ||
+      !label ||
+      !status ||
+      !manualBox ||
+      !manualInput ||
+      !closeBtn
+    ) {
+      continue;
+    }
+
+    const title = root.dataset.shareTitle || document.title;
+    const text = root.dataset.shareText || '';
+    const url = root.dataset.shareUrl || window.location.pathname;
+
+    let isSharing = false;
+    let feedbackTimer = 0;
+
+    // Aprimoramento progressivo: exibe o botão apenas quando JS está disponível
+    trigger.hidden = false;
+
+    const resetFeedback = () => {
+      window.clearTimeout(feedbackTimer);
+      label.textContent = 'Compartilhar';
+      status.textContent = '';
+    };
+
+    const showFeedback = (message: string) => {
+      window.clearTimeout(feedbackTimer);
+      label.textContent = message;
+      status.textContent = message;
+      feedbackTimer = window.setTimeout(resetFeedback, 2600);
+    };
+
+    const closeManual = (restoreFocus = false) => {
+      if (manualBox.hidden) return;
+      manualBox.hidden = true;
+      if (restoreFocus) {
+        trigger.focus();
+      }
+    };
+
+    const openManual = () => {
+      manualBox.hidden = false;
+      status.textContent =
+        'Cópia automática indisponível. Copie o link manualmente.';
+      manualInput.focus();
+      manualInput.select();
+    };
+
+    trigger.addEventListener('click', async () => {
+      if (isSharing) return;
+      isSharing = true;
+      trigger.setAttribute('aria-busy', 'true');
+      closeManual(false);
+
+      try {
+        const nativeShare =
+          typeof navigator.share === 'function'
+            ? (data: ShareData) => navigator.share(data)
+            : undefined;
+
+        const copyText =
+          typeof navigator.clipboard?.writeText === 'function'
+            ? (value: string) => navigator.clipboard.writeText(value)
+            : undefined;
+
+        const outcome = await shareContent(
+          { title, text, url },
+          { nativeShare, copyText },
+        );
+
+        if (outcome === 'shared') {
+          showFeedback('Compartilhado');
+        } else if (outcome === 'copied') {
+          showFeedback('Link copiado');
+        } else if (outcome === 'manual') {
+          openManual();
+        }
+      } finally {
+        isSharing = false;
+        trigger.removeAttribute('aria-busy');
+      }
+    });
+
+    closeBtn.addEventListener('click', () => closeManual(true));
+
+    manualBox.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.stopPropagation();
+        closeManual(true);
+      }
+    });
+
+    manualInput.addEventListener('click', () => {
+      manualInput.select();
+    });
+  }
+</script>

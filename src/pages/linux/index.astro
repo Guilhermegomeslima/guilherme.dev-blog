@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinuxTimeline from '../../components/linux/LinuxTimeline.astro';
 import ReadingProgress from '../../components/ui/ReadingProgress.astro';
+import ShareButton from '../../components/ui/ShareButton.astro';
 import { withBase } from '../../utils/base';
 
 const chapterIndex = [
@@ -77,6 +78,14 @@ const chapterIndex = [
           Como um notebook com pouca memória RAM me levou a descobrir um sistema
           operacional que acabou mudando minha relação com a tecnologia.
         </p>
+
+        <div class="mt-6">
+          <ShareButton
+            title="Minha trajetória com Linux: do Windows 11 ao Fedora — guilherme.dev"
+            text="Como um notebook com pouca memória RAM me levou a descobrir um sistema operacional que acabou mudando minha relação com a tecnologia."
+            url="/linux/"
+          />
+        </div>
       </div>
 
       <!-- Sumário de capítulos e cronologia -->

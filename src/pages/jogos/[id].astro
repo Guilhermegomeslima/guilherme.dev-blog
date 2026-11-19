@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import RatingPanel from '../../components/content/RatingPanel.astro';
 import ContentNavigation from '../../components/content/ContentNavigation.astro';
 import DemoNotice from '../../components/ui/DemoNotice.astro';
+import ShareButton from '../../components/ui/ShareButton.astro';
 import { withBase } from '../../utils/base';
 import { calculateGameScore, formatScore } from '../../utils/ratings';
 import {
@@ -96,9 +97,19 @@ const statusLabel = statusLabels[data.status] || data.status;
           <span>Voltar para catálogo de jogos</span>
         </a>
 
-        <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
-          REGISTRO LÚDICO // {id}
-        </span>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-muted)] uppercase">
+            REGISTRO LÚDICO // {id}
+          </span>
+          <ShareButton
+            title={`${data.title} — Avaliação de Jogos // guilherme.dev`}
+            text={
+              data.description ||
+              `Avaliação e notas técnicas de ${data.title} (${data.releaseYear}), para ${data.platform}.`
+            }
+            url={`/jogos/${id}/`}
+          />
+        </div>
       </div>
 
       {/* Hero do Dossiê: Capa 3:4 + Ficha Técnica + Nota Geral */}
