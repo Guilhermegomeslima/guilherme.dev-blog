@@ -195,17 +195,17 @@ Atualize o status somente com evidências de implementação; `Concluído` exige
 
 > **Objetivo:** adicionar recursos editoriais estáticos (`FRT-01` a `FRT-03`) e um modo claro editorial opcional (`THEME-01` a `THEME-04`), preservando integralmente o Design System 2.0, o tema escuro como padrão absoluto (sem `prefers-color-scheme`), a arquitetura SSG e todos os conteúdos reais.
 
-| ID        | Item                                                                                                                               | Dependências      | Prioridade | Data alvo | Commit/PR              | Status     |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ---------- | --------- | ---------------------- | ---------- |
-| FRT-02    | Navegação editorial contextual entre registros publicáveis (`ContentNavigation.astro`)                                             | VIS-07            | P1         | —         | 6e0b2e2                | Concluído  |
-| FRT-01    | Indicador discreto de progresso de leitura em Linux e Artigos (`ReadingProgress.astro`)                                            | VIS-07            | P1         | —         | 5c830f3                | Concluído  |
-| FRT-03    | Botão discreto de compartilhamento canônico com Web Share API, Clipboard e fallback manual (`ShareButton.astro`)                   | VIS-07            | P1         | —         | 49c3d7c                | Concluído  |
-| THEME-01  | Auditoria completa de estilos e planejamento técnico do modo claro editorial (paleta papel/tinta/bronze e ilhas cinematográficas)  | VIS-07            | P1         | —         | — (planejamento)       | Concluído  |
-| THEME-02  | Infraestrutura de tema (`theme.ts`), script anti-FOUC em `BaseLayout.astro`, `ThemeToggle.astro` e slot no header (`flag: false`)  | THEME-01          | P1         | —         | 5c06573                | Concluído  |
-| THEME-03a | Paleta clara `html[data-theme="light"]`, tokens `--color-v2-media-*`, utilitários reativos de sombra/atmosfera e UI compartilhada  | THEME-02          | P1         | —         | 067388d                | Concluído  |
-| THEME-03b | Adaptação visual de Home, Sobre, Linux e Projetos para o modo claro com preservação das ilhas fotográficas                         | THEME-03a         | P1         | —         | d39dbfd                | Concluído  |
-| THEME-03c | Adaptação visual de Jogos, Filmes, Livros, Música, Open Source, Artigos, Galeria, `RatingPanel` e `GalleryLightbox`                | THEME-03b         | P1         | —         | e939fd9                | Concluído  |
-| THEME-04  | Ativação de `LIGHT_THEME_ENABLED = true`, ajustes de responsividade/contraste, testes automatizados e documentação final           | THEME-03c         | P1         | —         | —                      | Em revisão |
+| ID        | Item                                                                                                                              | Dependências | Prioridade | Data alvo | Commit/PR        | Status     |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------- | --------- | ---------------- | ---------- |
+| FRT-02    | Navegação editorial contextual entre registros publicáveis (`ContentNavigation.astro`)                                            | VIS-07       | P1         | —         | 6e0b2e2          | Concluído  |
+| FRT-01    | Indicador discreto de progresso de leitura em Linux e Artigos (`ReadingProgress.astro`)                                           | VIS-07       | P1         | —         | 5c830f3          | Concluído  |
+| FRT-03    | Botão discreto de compartilhamento canônico com Web Share API, Clipboard e fallback manual (`ShareButton.astro`)                  | VIS-07       | P1         | —         | 49c3d7c          | Concluído  |
+| THEME-01  | Auditoria completa de estilos e planejamento técnico do modo claro editorial (paleta papel/tinta/bronze e ilhas cinematográficas) | VIS-07       | P1         | —         | — (planejamento) | Concluído  |
+| THEME-02  | Infraestrutura de tema (`theme.ts`), script anti-FOUC em `BaseLayout.astro`, `ThemeToggle.astro` e slot no header (`flag: false`) | THEME-01     | P1         | —         | 5c06573          | Concluído  |
+| THEME-03a | Paleta clara `html[data-theme="light"]`, tokens `--color-v2-media-*`, utilitários reativos de sombra/atmosfera e UI compartilhada | THEME-02     | P1         | —         | 067388d          | Concluído  |
+| THEME-03b | Adaptação visual de Home, Sobre, Linux e Projetos para o modo claro com preservação das ilhas fotográficas                        | THEME-03a    | P1         | —         | d39dbfd          | Concluído  |
+| THEME-03c | Adaptação visual de Jogos, Filmes, Livros, Música, Open Source, Artigos, Galeria, `RatingPanel` e `GalleryLightbox`               | THEME-03b    | P1         | —         | e939fd9          | Concluído  |
+| THEME-04  | Ativação de `LIGHT_THEME_ENABLED = true`, ajustes de responsividade/contraste, testes automatizados e documentação final          | THEME-03c    | P1         | —         | —                | Em revisão |
 
 **Situação em 18/11/2026 (THEME-04):** alternador ativado (`LIGHT_THEME_ENABLED = true`), ajustes de contraste WCAG AA em metadados e responsividade do header aplicados, testes unitários/build/integridade (Vercel e GitHub Pages) aprovados e documentação atualizada. Mantida como **Em revisão** até conferência visual interativa em navegador real pelo autor e autorização de commit.
 
