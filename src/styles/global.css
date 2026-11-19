@@ -272,3 +272,39 @@
     min-height: 100vh;
   }
 }
+
+/* Integração fotográfica sobre papel washi no modo claro (fora de @layer base para
+   sobrepor utilitários @layer utilities apenas quando data-theme="light" estiver ativo) */
+.v2-portrait-vignette {
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--color-v2-media-bg) 80%, transparent),
+    color-mix(in oklab, var(--color-v2-media-bg) 20%, transparent),
+    color-mix(in oklab, var(--color-v2-media-bg) 35%, transparent)
+  );
+}
+
+html[data-theme='light'] .v2-hero-photo {
+  opacity: 0.55;
+  filter: grayscale(0.88) contrast(1.08) brightness(1.06);
+  mix-blend-mode: multiply;
+}
+
+html[data-theme='light'] .v2-hero-mobile-veil {
+  background-color: color-mix(in oklab, var(--color-v2-bg) 78%, transparent);
+}
+
+html[data-theme='light'] .v2-section-hero-photo {
+  opacity: 0.24;
+  filter: grayscale(0.85) contrast(1.06) brightness(1.06);
+  mix-blend-mode: multiply;
+}
+
+html[data-theme='light'] .v2-portrait-vignette {
+  background: linear-gradient(
+    to top,
+    rgba(20, 18, 16, 0.34),
+    rgba(20, 18, 16, 0.06),
+    rgba(20, 18, 16, 0.14)
+  );
+}

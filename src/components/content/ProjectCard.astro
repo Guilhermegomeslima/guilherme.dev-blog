@@ -81,10 +81,10 @@ const bodyParagraphs = (project.body ?? '')
 
       {/* Rodapé técnico da moldura */}
       <div class="border-v2-border/40 mt-3.5 flex items-center justify-between border-t pt-2.5">
-        <span class="font-v2-mono text-v2-text-muted/60 text-[0.5rem] tracking-[0.18em] uppercase">
+        <span class="font-v2-mono text-v2-text-muted text-[0.5rem] tracking-[0.18em] uppercase">
           Proporção original preservada
         </span>
-        <span class="font-v2-mono text-v2-text-muted/60 text-[0.5rem] tracking-[0.18em] uppercase">
+        <span class="font-v2-mono text-v2-text-muted text-[0.5rem] tracking-[0.18em] uppercase">
           REG. PRJ-{num}
         </span>
       </div>
@@ -151,7 +151,7 @@ const bodyParagraphs = (project.body ?? '')
       {/* Tecnologias / tags */}
       {data.tags.length > 0 && (
         <div class="mt-6">
-          <span class="font-v2-mono text-v2-text-muted/70 block text-[0.5rem] tracking-[0.2em] uppercase">
+          <span class="font-v2-mono text-v2-text-muted block text-[0.5rem] tracking-[0.2em] uppercase">
             Tecnologias &amp; Domínio
           </span>
           <ul class="mt-2.5 flex flex-wrap gap-2">
@@ -172,7 +172,7 @@ const bodyParagraphs = (project.body ?? '')
           href={data.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="v2-focus group/btn border-v2-accent bg-v2-accent/25 hover:bg-v2-accent font-v2-sans text-v2-text inline-flex min-h-11 flex-1 items-center justify-between gap-4 border px-4 py-2.5 text-[0.625rem] tracking-[0.18em] uppercase transition-colors duration-300 sm:flex-initial motion-reduce:transition-none"
+          class="v2-focus group/btn border-v2-accent bg-v2-accent/25 hover:bg-v2-accent font-v2-sans text-v2-text hover:text-v2-on-accent inline-flex min-h-11 flex-1 items-center justify-between gap-4 border px-4 py-2.5 text-[0.625rem] tracking-[0.18em] uppercase transition-colors duration-300 sm:flex-initial motion-reduce:transition-none"
         >
           <span>Acessar demonstração</span>
           <span
@@ -202,7 +202,7 @@ const bodyParagraphs = (project.body ?? '')
       )}
 
       {!data.repoUrl && !data.liveUrl && (
-        <span class="font-v2-mono text-v2-text-muted/60 text-[0.625rem] tracking-[0.14em] uppercase">
+        <span class="font-v2-mono text-v2-text-muted text-[0.625rem] tracking-[0.14em] uppercase">
           [ Registro sem links externos ]
         </span>
       )}
