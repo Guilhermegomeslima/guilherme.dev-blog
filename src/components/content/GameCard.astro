@@ -22,36 +22,36 @@ const statusConfig: Record<
   Platinado: {
     label: 'Platinado',
     badgeClass:
-      'border-[var(--color-v2-accent-warm)]/55 bg-[#070709]/92 text-[var(--color-v2-accent-warm)]',
-    dotClass: 'bg-[var(--color-v2-accent-warm)]',
+      'border-[var(--color-v2-media-warm)]/55 bg-[var(--color-v2-media-bg)]/92 text-[var(--color-v2-media-warm)]',
+    dotClass: 'bg-[var(--color-v2-media-warm)]',
   },
   Concluido: {
     label: 'Concluído',
     badgeClass:
-      'border-[var(--color-v2-border-hover)] bg-[#070709]/90 text-[var(--color-v2-text)]',
+      'border-[var(--color-v2-media-border-hover)] bg-[var(--color-v2-media-bg)]/90 text-[var(--color-v2-media-text)]',
   },
   Jogando: {
     label: 'Jogando',
     badgeClass:
-      'border-[var(--color-v2-accent)]/70 bg-[#070709]/92 text-[#e47986]',
+      'border-[var(--color-v2-accent)]/70 bg-[var(--color-v2-media-bg)]/92 text-[var(--color-v2-media-status)]',
     dotClass: 'bg-[var(--color-v2-accent)] animate-pulse',
   },
   Parado: {
     label: 'Parado',
     badgeClass:
-      'border-[var(--color-v2-border)] bg-[#070709]/88 text-[var(--color-v2-muted)]',
+      'border-[var(--color-v2-media-border)] bg-[var(--color-v2-media-bg)]/88 text-[var(--color-v2-media-muted)]',
   },
   Descontinuado: {
     label: 'Descontinuado',
     badgeClass:
-      'border-[var(--color-v2-border)] bg-[#070709]/88 text-[var(--color-v2-muted)]/75',
+      'border-[var(--color-v2-media-border)] bg-[var(--color-v2-media-bg)]/88 text-[var(--color-v2-media-muted)]',
   },
 };
 
 const currentStatus = statusConfig[data.status] || {
   label: data.status,
   badgeClass:
-    'border-[var(--color-v2-border)] bg-[#070709]/88 text-[var(--color-v2-muted)]',
+    'border-[var(--color-v2-media-border)] bg-[var(--color-v2-media-bg)]/88 text-[var(--color-v2-media-muted)]',
 };
 
 const miniAxes = [
@@ -73,7 +73,7 @@ const miniAxes = [
   data-year={data.releaseYear}
   data-score={finalScore}
   data-index={index}
-  class="group relative flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
+  class="group relative flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-v2-border-hover)] hover:v2-shadow-card"
 >
   <a
     href={gameHref}
@@ -81,7 +81,7 @@ const miniAxes = [
     aria-label={`${data.title} (${data.releaseYear}) — Nota ${formattedFinal} de 100`}
   >
     {/* Moldura da Capa 3:4 */}
-    <div class="relative aspect-[3/4] w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508]">
+    <div class="relative aspect-[3/4] w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[var(--color-v2-media-surface)]">
       {!data.coverImage.isPlaceholder && data.coverImage.url ? (
         <img
           src={withBase(data.coverImage.url)}
@@ -93,17 +93,17 @@ const miniAxes = [
           class="h-full w-full object-cover brightness-[0.94] contrast-[1.04] transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
         />
       ) : (
-        <div class="flex h-full w-full flex-col items-center justify-center bg-[#070709] p-4 text-center select-none sm:p-6">
-          <span class="mb-1 font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.16em] text-[var(--color-v2-accent-warm)] uppercase sm:mb-2 sm:text-[10px] sm:tracking-[0.2em]">
+        <div class="flex h-full w-full flex-col items-center justify-center bg-[var(--color-v2-media-bg)] p-4 text-center select-none sm:p-6">
+          <span class="mb-1 font-[family-name:var(--font-v2-mono)] text-[9px] tracking-[0.16em] text-[var(--color-v2-media-warm)] uppercase sm:mb-2 sm:text-[10px] sm:tracking-[0.2em]">
             // MÍDIA CATALOGADA
           </span>
-          <h4 class="font-[family-name:var(--font-v2-display)] text-base font-normal text-[var(--color-v2-heading)] transition-colors group-hover:text-[var(--color-v2-accent-warm)] sm:text-xl">
+          <h4 class="font-[family-name:var(--font-v2-display)] text-base font-normal text-[var(--color-v2-media-text)] transition-colors group-hover:text-[var(--color-v2-media-warm)] sm:text-xl">
             {data.title}
           </h4>
-          <p class="mt-1 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)] sm:mt-2 sm:text-[11px]">
+          <p class="mt-1 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-media-muted)] sm:mt-2 sm:text-[11px]">
             {data.developer || data.genre}
           </p>
-          <span class="mt-2 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)] px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[9px] text-[var(--color-v2-muted)] sm:mt-4 sm:px-2.5 sm:text-[10px]">
+          <span class="mt-2 border border-[var(--color-v2-media-border)] bg-[var(--color-v2-media-surface)] px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[9px] text-[var(--color-v2-media-muted)] sm:mt-4 sm:px-2.5 sm:text-[10px]">
             Capa Provisória
           </span>
         </div>
@@ -112,7 +112,7 @@ const miniAxes = [
       {/* Vinheta sutil inferior para leitura dos metadados sobre a capa */}
       <div
         aria-hidden="true"
-        class="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#070709]/95 via-[#070709]/40 to-transparent sm:h-24"
+        class="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[var(--color-v2-media-bg)]/95 via-[var(--color-v2-media-bg)]/40 to-transparent sm:h-24"
       ></div>
 
       {/* Topo da capa: Status no acervo e Medalhão da Nota com reorganização responsiva sem sobreposição */}
@@ -138,11 +138,11 @@ const miniAxes = [
         </div>
 
         {/* Medalhão da Nota Final */}
-        <div class="ml-auto flex items-baseline gap-1 border border-[var(--color-v2-border-hover)] bg-[#070709]/92 px-1.5 py-0.5 backdrop-blur-xs transition-colors duration-300 group-hover:border-[var(--color-v2-accent-warm)]/60 sm:ml-0 sm:px-2.5 sm:py-1">
-          <span class="hidden font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.1em] text-[var(--color-v2-muted)] uppercase sm:inline sm:text-[9px] sm:tracking-[0.14em]">
+        <div class="ml-auto flex items-baseline gap-1 border border-[var(--color-v2-media-border-hover)] bg-[var(--color-v2-media-bg)]/92 px-1.5 py-0.5 backdrop-blur-xs transition-colors duration-300 group-hover:border-[var(--color-v2-media-warm)]/60 sm:ml-0 sm:px-2.5 sm:py-1">
+          <span class="hidden font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.1em] text-[var(--color-v2-media-muted)] uppercase sm:inline sm:text-[9px] sm:tracking-[0.14em]">
             MÉDIA
           </span>
-          <span class="font-[family-name:var(--font-v2-display)] text-base leading-none font-normal text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)] sm:text-lg">
+          <span class="font-[family-name:var(--font-v2-display)] text-base leading-none font-normal text-[var(--color-v2-media-text)] group-hover:text-[var(--color-v2-media-warm)] sm:text-lg">
             {formattedFinal}
           </span>
         </div>
@@ -150,14 +150,16 @@ const miniAxes = [
 
       {/* Base da capa: Plataforma e Ano (visíveis a partir de sm:) */}
       <div class="hidden sm:flex absolute inset-x-3 bottom-2.5 items-center justify-between font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.12em]">
-        <span class="border border-white/10 bg-[#070709]/85 px-2 py-0.5 text-[var(--color-v2-text)] backdrop-blur-xs">
+        <span class="border border-white/10 bg-[var(--color-v2-media-bg)]/85 px-2 py-0.5 text-[var(--color-v2-media-text)] backdrop-blur-xs">
           {data.platform}
         </span>
-        <span class="text-[var(--color-v2-text)]/90">{data.releaseYear}</span>
+        <span class="text-[var(--color-v2-media-text)]/90">
+          {data.releaseYear}
+        </span>
       </div>
 
       {data.isDemo && (
-        <div class="absolute right-2 bottom-2 border border-[var(--color-v2-accent-warm)]/50 bg-[#070709]/90 px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[8px] text-[var(--color-v2-accent-warm)] uppercase sm:right-3 sm:bottom-10 sm:px-2 sm:text-[10px]">
+        <div class="absolute right-2 bottom-2 border border-[var(--color-v2-media-warm)]/50 bg-[var(--color-v2-media-bg)]/90 px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[8px] text-[var(--color-v2-media-warm)] uppercase sm:right-3 sm:bottom-10 sm:px-2 sm:text-[10px]">
           Mock Data
         </div>
       )}
@@ -195,7 +197,7 @@ const miniAxes = [
           aria-label="Notas nos 5 critérios: Mecânica, Enredo, Estética, Retenção e Feeling"
         >
           {miniAxes.map((axis) => (
-            <div class="border border-white/[0.04] bg-[var(--color-v2-bg)]/70 py-1">
+            <div class="border border-[var(--color-v2-border)]/40 bg-[var(--color-v2-bg)]/70 py-1">
               <span class="block text-[8px] tracking-[0.12em] text-[var(--color-v2-muted)]">
                 {axis.key}
               </span>

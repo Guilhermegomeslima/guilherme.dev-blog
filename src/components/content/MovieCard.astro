@@ -34,7 +34,7 @@ const criteriaAbbr = [
   data-year={data.releaseYear}
   data-score={finalScore}
   data-index={index}
-  class="group relative flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
+  class="group relative flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:v2-shadow-card"
 >
   {/* Cantoneiras superiores discretas */}
   <span
@@ -88,7 +88,7 @@ const criteriaAbbr = [
 
       {/* Capa opcional (se existir no registro) */}
       {data.coverImage && (
-        <div class="mb-5 aspect-[16/9] w-full overflow-hidden border border-[var(--color-v2-border)] bg-[#050508]">
+        <div class="mb-5 aspect-[16/9] w-full overflow-hidden border border-[var(--color-v2-border)] bg-[var(--color-v2-media-surface)]">
           <img
             src={withBase(data.coverImage.url)}
             alt={data.coverImage.alt}
@@ -139,8 +139,8 @@ const criteriaAbbr = [
               </div>
               <div class="mt-1 h-1 w-full overflow-hidden bg-[var(--color-v2-bg)]">
                 <div
-                  class="h-full"
-                  style={`width: ${crit.score}%; background: linear-gradient(90deg, rgba(139, 30, 45, 0.75) 0%, rgba(198, 166, 107, 0.9) 100%);`}
+                  class="v2-rating-bar h-full"
+                  style={`width: ${crit.score}%;`}
                 />
               </div>
             </div>

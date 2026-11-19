@@ -56,14 +56,8 @@ const shelfFilters = [
         decoding="async"
         class="h-full w-full object-cover object-center opacity-[0.13] blur-[2px] filter"
       />
-      <div
-        class="absolute inset-0"
-        style="background: radial-gradient(ellipse at 50% 0%, rgba(198, 166, 107, 0.14) 0%, rgba(7, 7, 9, 0.86) 62%, #070709 100%);"
-      ></div>
-      <div
-        class="absolute inset-0"
-        style="background: linear-gradient(180deg, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.85) 68%, #070709 100%);"
-      ></div>
+      <div class="v2-atmosphere-warm absolute inset-0"></div>
+      <div class="v2-atmosphere-fade absolute inset-0"></div>
     </div>
 
     <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 sm:px-8">
@@ -108,7 +102,7 @@ const shelfFilters = [
           </div>
 
           <div class="border border-[var(--color-v2-accent)]/40 bg-[var(--color-v2-surface)]/75 px-4 py-3">
-            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[#e47986] uppercase">
+            <span class="block font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-status-active)] uppercase">
               Lendo Agora
             </span>
             <strong class="mt-1 block font-[family-name:var(--font-v2-display)] text-2xl font-normal text-[var(--color-v2-heading)]">

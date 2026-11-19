@@ -24,14 +24,15 @@ const num = String(index + 1).padStart(2, '0');
 
 const albumBadgeStyles: Record<string, string> = {
   wallpapers:
-    'border-[var(--color-v2-accent-warm)]/45 bg-[#070709]/90 text-[var(--color-v2-accent-warm)]',
-  desktop: 'border-[var(--color-v2-accent)]/60 bg-[#070709]/90 text-[#e47986]',
-  ia: 'border-[var(--color-v2-border-hover)] bg-[#070709]/90 text-[var(--color-v2-heading)]',
+    'border-[var(--color-v2-media-warm)]/45 bg-[var(--color-v2-media-bg)]/90 text-[var(--color-v2-media-warm)]',
+  desktop:
+    'border-[var(--color-v2-accent)]/60 bg-[var(--color-v2-media-bg)]/90 text-[var(--color-v2-media-status)]',
+  ia: 'border-[var(--color-v2-media-border-hover)] bg-[var(--color-v2-media-bg)]/90 text-[var(--color-v2-media-text)]',
 };
 
 const currentAlbumBadge =
   albumBadgeStyles[data.albumSlug] ||
-  'border-[var(--color-v2-border)] bg-[#070709]/90 text-[var(--color-v2-text)]';
+  'border-[var(--color-v2-media-border)] bg-[var(--color-v2-media-bg)]/90 text-[var(--color-v2-media-text)]';
 ---
 
 <article
@@ -39,7 +40,7 @@ const currentAlbumBadge =
   data-album-slug={data.albumSlug}
   data-title={data.title.toLowerCase()}
   class:list={[
-    'group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_22px_55px_rgba(0,0,0,0.7)]',
+    'group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:border-[var(--color-v2-border-hover)] hover:v2-shadow-card',
     featuredSpan ? 'md:col-span-2' : '',
   ]}
 >
@@ -57,13 +58,13 @@ const currentAlbumBadge =
     {/* Moldura Fotográfica */}
     <div
       class:list={[
-        'relative w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508]',
+        'relative w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[var(--color-v2-media-surface)]',
         featuredSpan ? 'aspect-[16/9]' : 'aspect-[16/10]',
       ]}
     >
       {isPortrait ? (
         /* Para obras verticais, preserva a imagem inteira centralizada sobre fundo escuro atmosférico */
-        <div class="relative flex h-full w-full items-center justify-center overflow-hidden bg-[#050508]">
+        <div class="relative flex h-full w-full items-center justify-center overflow-hidden bg-[var(--color-v2-media-surface)]">
           <img
             src={withBase(data.imageUrl)}
             alt=""
@@ -99,7 +100,7 @@ const currentAlbumBadge =
       {/* Vinheta sutil inferior */}
       <div
         aria-hidden="true"
-        class="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#070709]/90 via-[#070709]/30 to-transparent"
+        class="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[var(--color-v2-media-bg)]/90 via-[var(--color-v2-media-bg)]/30 to-transparent"
       ></div>
 
       {/* Topo esquerdo: Álbum e Numeração */}
@@ -114,19 +115,19 @@ const currentAlbumBadge =
         </span>
 
         {dimText && (
-          <span class="border border-white/10 bg-[#070709]/85 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)] backdrop-blur-xs">
+          <span class="border border-white/10 bg-[var(--color-v2-media-bg)]/85 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-media-muted)] backdrop-blur-xs">
             {dimText}
           </span>
         )}
       </div>
 
       {/* Topo direito: Índice */}
-      <div class="absolute top-3 right-3 z-20 border border-white/10 bg-[#070709]/85 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-muted)] backdrop-blur-xs">
+      <div class="absolute top-3 right-3 z-20 border border-white/10 bg-[var(--color-v2-media-bg)]/85 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-media-muted)] backdrop-blur-xs">
         #{num}
       </div>
 
       {data.isDemo && (
-        <div class="absolute right-3 bottom-3 z-20 border border-[var(--color-v2-accent-warm)]/50 bg-[#070709]/90 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-accent-warm)] uppercase">
+        <div class="absolute right-3 bottom-3 z-20 border border-[var(--color-v2-media-warm)]/50 bg-[var(--color-v2-media-bg)]/90 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-media-warm)] uppercase">
           Mock Data
         </div>
       )}
@@ -148,7 +149,7 @@ const currentAlbumBadge =
         <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-[var(--color-v2-border)] pt-3 font-[family-name:var(--font-v2-mono)] text-[10px] text-[var(--color-v2-muted)]">
           {data.credit && (
             <span>
-              <strong class="font-normal tracking-[0.12em] text-[var(--color-v2-accent-warm)]/85 uppercase">
+              <strong class="font-normal tracking-[0.12em] text-[var(--color-v2-accent-warm)] uppercase">
                 Créditos:
               </strong>{' '}
               {data.credit}

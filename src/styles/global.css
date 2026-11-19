@@ -170,6 +170,11 @@
   background: var(--v2-atmo-fade);
 }
 
+/* Utilitário reutilizável para barras de avaliação reativas ao tema (THEME-03c) */
+@utility v2-rating-bar {
+  background: var(--v2-rating-bar);
+}
+
 /* Movimento reduzido respeitado globalmente e em .v2-scope */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -209,6 +214,11 @@
       rgba(7, 7, 9, 0.4) 0%,
       rgba(7, 7, 9, 0.85) 68%,
       #070709 100%
+    );
+    --v2-rating-bar: linear-gradient(
+      90deg,
+      rgba(139, 30, 45, 0.85) 0%,
+      rgba(198, 166, 107, 0.95) 100%
     );
   }
 
@@ -256,6 +266,11 @@
       rgba(237, 232, 223, 0.48) 0%,
       rgba(237, 232, 223, 0.88) 68%,
       #ede8df 100%
+    );
+    --v2-rating-bar: linear-gradient(
+      90deg,
+      var(--color-v2-accent) 0%,
+      var(--color-v2-accent-warm) 100%
     );
   }
 

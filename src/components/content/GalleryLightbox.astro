@@ -4,7 +4,7 @@
 <dialog
   id="gallery-lightbox"
   aria-labelledby="lightbox-title"
-  class="relative m-auto w-[95vw] max-w-6xl overflow-hidden border border-[var(--color-v2-border-hover)] bg-[#070709]/98 p-0 text-[var(--color-v2-text)] shadow-[0_32px_90px_rgba(0,0,0,0.9)] backdrop:bg-black/90 backdrop:backdrop-blur-md open:flex open:flex-col"
+  class="v2-shadow-elevated relative m-auto w-[95vw] max-w-6xl overflow-hidden border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-bg)] p-0 text-[var(--color-v2-text)] backdrop:bg-[var(--color-v2-media-bg)]/90 backdrop:backdrop-blur-md open:flex open:flex-col"
 >
   {/* Anunciador dinâmico acessível para leitores de tela em transições de imagem */}
   <div
@@ -77,13 +77,13 @@
     </div>
 
     {/* Palco de Exibição da Fotografia Ampliada (sem cortes nem distorções) */}
-    <div class="relative flex min-h-[180px] flex-1 items-center justify-center bg-[#040406] p-3 sm:min-h-[320px] sm:p-6 md:min-h-[400px] md:p-8">
+    <div class="relative flex min-h-[180px] flex-1 items-center justify-center bg-[var(--color-v2-media-stage)] p-3 sm:min-h-[320px] sm:p-6 md:min-h-[400px] md:p-8">
       {/* Botão Anterior */}
       <button
         type="button"
         id="lightbox-prev-btn"
         aria-label="Imagem anterior"
-        class="v2-focus absolute left-2 z-20 flex h-10 w-10 cursor-pointer items-center justify-center border border-[var(--color-v2-border-hover)] bg-[#070709]/90 font-[family-name:var(--font-v2-mono)] text-base text-[var(--color-v2-heading)] backdrop-blur-xs transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-accent-warm)] sm:left-5 sm:h-11 sm:w-11"
+        class="v2-focus absolute left-2 z-20 flex h-10 w-10 cursor-pointer items-center justify-center border border-[var(--color-v2-media-border-hover)] bg-[var(--color-v2-media-bg)]/90 font-[family-name:var(--font-v2-mono)] text-base text-[var(--color-v2-media-text)] backdrop-blur-xs transition-colors hover:border-[var(--color-v2-media-warm)] hover:text-[var(--color-v2-media-warm)] focus-visible:outline-[var(--color-v2-media-warm)] sm:left-5 sm:h-11 sm:w-11"
       >
         <span aria-hidden="true">&larr;</span>
       </button>
@@ -93,7 +93,7 @@
         id="lightbox-img"
         src=""
         alt=""
-        class="max-h-[48vh] w-auto max-w-full border border-[var(--color-v2-border)] object-contain shadow-[0_24px_60px_rgba(0,0,0,0.85)] sm:max-h-[58vh] lg:max-h-[64vh]"
+        class="max-h-[48vh] w-auto max-w-full border border-[var(--color-v2-media-border)] object-contain shadow-[0_24px_60px_rgba(0,0,0,0.85)] sm:max-h-[58vh] lg:max-h-[64vh]"
       />
 
       {/* Botão Próximo */}
@@ -101,7 +101,7 @@
         type="button"
         id="lightbox-next-btn"
         aria-label="Próxima imagem"
-        class="v2-focus absolute right-2 z-20 flex h-10 w-10 cursor-pointer items-center justify-center border border-[var(--color-v2-border-hover)] bg-[#070709]/90 font-[family-name:var(--font-v2-mono)] text-base text-[var(--color-v2-heading)] backdrop-blur-xs transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-accent-warm)] sm:right-5 sm:h-11 sm:w-11"
+        class="v2-focus absolute right-2 z-20 flex h-10 w-10 cursor-pointer items-center justify-center border border-[var(--color-v2-media-border-hover)] bg-[var(--color-v2-media-bg)]/90 font-[family-name:var(--font-v2-mono)] text-base text-[var(--color-v2-media-text)] backdrop-blur-xs transition-colors hover:border-[var(--color-v2-media-warm)] hover:text-[var(--color-v2-media-warm)] focus-visible:outline-[var(--color-v2-media-warm)] sm:right-5 sm:h-11 sm:w-11"
       >
         <span aria-hidden="true">&rarr;</span>
       </button>

@@ -89,14 +89,8 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
         decoding="async"
         class="h-full w-full object-cover object-center opacity-[0.14] blur-[2px] filter"
       />
-      <div
-        class="absolute inset-0"
-        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.86) 62%, #070709 100%);"
-      ></div>
-      <div
-        class="absolute inset-0"
-        style="background: linear-gradient(180deg, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.85) 68%, #070709 100%);"
-      ></div>
+      <div class="v2-atmosphere-crimson absolute inset-0"></div>
+      <div class="v2-atmosphere-fade absolute inset-0"></div>
     </div>
 
     <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 sm:px-8">
@@ -186,7 +180,7 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
             <a
               href={withBase(`/galeria/${album.slug}/`)}
               class:list={[
-                'v2-focus group relative flex min-h-[260px] flex-col justify-between overflow-hidden border border-[var(--color-v2-border)] bg-[#050508] p-6 transition-all duration-500 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.8)] sm:min-h-[300px] sm:p-8',
+                'v2-focus group relative flex min-h-[260px] flex-col justify-between overflow-hidden border border-[var(--color-v2-media-border)] bg-[var(--color-v2-media-surface)] p-6 transition-all duration-500 hover:border-[var(--color-v2-media-border-hover)] hover:v2-shadow-elevated sm:min-h-[300px] sm:p-8',
                 album.spanClass,
               ]}
             >
@@ -210,25 +204,25 @@ const hasDemoContent = allImages.some((img) => img.data.isDemo);
 
               {/* Topo do Portal */}
               <div class="relative z-10 flex items-center justify-between gap-2">
-                <span class="border border-[var(--color-v2-accent-warm)]/50 bg-[#070709]/85 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase backdrop-blur-xs">
+                <span class="border border-[var(--color-v2-media-warm)]/50 bg-[var(--color-v2-media-bg)]/85 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-media-warm)] uppercase backdrop-blur-xs">
                   {album.code}
                 </span>
 
-                <span class="border border-white/10 bg-[#070709]/85 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-heading)] uppercase backdrop-blur-xs">
+                <span class="border border-white/10 bg-[var(--color-v2-media-bg)]/85 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-media-text)] uppercase backdrop-blur-xs">
                   {album.count} {album.count === 1 ? 'registro' : 'registros'}
                 </span>
               </div>
 
               {/* Base do Portal */}
               <div class="relative z-10 mt-12 max-w-2xl">
-                <h2 class="font-[family-name:var(--font-v2-display)] text-3xl leading-[1.08] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] transition-colors group-hover:text-[var(--color-v2-accent-warm)] sm:text-4xl">
+                <h2 class="font-[family-name:var(--font-v2-display)] text-3xl leading-[1.08] font-normal tracking-[-0.01em] text-[var(--color-v2-media-text)] transition-colors group-hover:text-[var(--color-v2-media-warm)] sm:text-4xl">
                   {album.name}
                 </h2>
-                <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-text)] sm:text-sm">
+                <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed font-light text-[var(--color-v2-media-text)] sm:text-sm">
                   {album.subtitle}
                 </p>
 
-                <div class="mt-5 inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+                <div class="mt-5 inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-media-warm)] uppercase">
                   <span>Explorar álbum dedicado</span>
                   <span
                     aria-hidden="true"

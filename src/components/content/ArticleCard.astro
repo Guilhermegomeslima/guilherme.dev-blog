@@ -20,7 +20,7 @@ const articleHref = withBase(`/artigos/${id}/`);
 ---
 
 {featured ? (
-  <article class="group relative border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)]/85 transition-all duration-300 hover:border-[var(--color-v2-accent-warm)]/60 hover:shadow-[0_24px_60px_rgba(0,0,0,0.75)]">
+  <article class="group relative border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)]/85 transition-all duration-300 hover:border-[var(--color-v2-accent-warm)]/60 hover:v2-shadow-elevated">
     {/* Cantoneiras em bronze */}
     <span
       aria-hidden="true"
@@ -42,7 +42,7 @@ const articleHref = withBase(`/artigos/${id}/`);
     <a href={articleHref} class="v2-focus block">
       <div class="grid grid-cols-1 lg:grid-cols-12">
         {data.image && (
-          <div class="relative aspect-video overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508] lg:col-span-6 lg:aspect-auto lg:border-r lg:border-b-0">
+          <div class="relative aspect-video overflow-hidden border-b border-[var(--color-v2-border)] bg-[var(--color-v2-media-surface)] lg:col-span-6 lg:aspect-auto lg:border-r lg:border-b-0">
             <img
               src={withBase(data.image.url)}
               alt={data.image.alt}
@@ -53,7 +53,7 @@ const articleHref = withBase(`/artigos/${id}/`);
               class="h-full w-full object-cover brightness-95 contrast-105 transition-transform duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
             />
             <div
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#070709]/40"
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-v2-media-bg)]/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[var(--color-v2-media-bg)]/40"
               aria-hidden="true"
             />
           </div>
@@ -67,7 +67,7 @@ const articleHref = withBase(`/artigos/${id}/`);
         >
           <div>
             <div class="mb-5 flex flex-wrap items-center gap-3">
-              <span class="inline-flex items-center gap-1.5 border border-[var(--color-v2-accent-warm)]/55 bg-[var(--color-v2-accent)]/15 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+              <span class="inline-flex items-center gap-1.5 border border-[var(--color-v2-accent-warm)]/55 bg-[var(--color-v2-accent)]/10 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
                 <span
                   aria-hidden="true"
                   class="h-1.5 w-1.5 bg-[var(--color-v2-accent)]"
@@ -136,11 +136,11 @@ const articleHref = withBase(`/artigos/${id}/`);
     </a>
   </article>
 ) : (
-  <article class="group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]">
+  <article class="group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:v2-shadow-card">
     <a href={articleHref} class="v2-focus flex h-full flex-col justify-between">
       <div>
         {data.image && (
-          <div class="relative aspect-video w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508]">
+          <div class="relative aspect-video w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[var(--color-v2-media-surface)]">
             <img
               src={withBase(data.image.url)}
               alt={data.image.alt}

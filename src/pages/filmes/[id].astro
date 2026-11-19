@@ -66,10 +66,7 @@ const formattedFinal = formatScore(finalScore);
         decoding="async"
         class="h-full w-full scale-105 object-cover object-center opacity-[0.11] blur-2xl filter"
       />
-      <div
-        class="absolute inset-0"
-        style="background: radial-gradient(ellipse at 50% 0%, rgba(139, 30, 45, 0.16) 0%, rgba(7, 7, 9, 0.88) 65%, #070709 100%);"
-      ></div>
+      <div class="v2-atmosphere-crimson absolute inset-0"></div>
     </div>
 
     <div class="relative mx-auto w-full max-w-[960px] px-5 pt-10 sm:px-8 md:pt-14">
@@ -166,7 +163,7 @@ const formattedFinal = formatScore(finalScore);
 
         {/* Capa opcional futura (se houver imagem cadastrada) */}
         {data.coverImage && (
-          <div class="mt-8 aspect-[16/9] w-full overflow-hidden border border-[var(--color-v2-border-hover)] bg-[#050508] shadow-[0_24px_60px_rgba(0,0,0,0.75)]">
+          <div class="mt-8 aspect-[16/9] w-full overflow-hidden border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-media-surface)] v2-shadow-elevated">
             <img
               src={withBase(data.coverImage.url)}
               alt={data.coverImage.alt}

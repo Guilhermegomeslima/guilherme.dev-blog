@@ -21,11 +21,11 @@ const num = String(index + 1).padStart(2, '0');
     data-type="artist"
     data-title={data.title.toLowerCase()}
     data-artist={(data.artist || data.title).toLowerCase()}
-    class="group relative flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
+    class="group relative flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:v2-shadow-card"
   >
     <div>
       {/* Fotografia do Artista / Banda (1:1 com enquadramento editorial) */}
-      <div class="relative aspect-square w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508]">
+      <div class="relative aspect-square w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[var(--color-v2-media-surface)]">
         {data.coverImage ? (
           <img
             src={withBase(data.coverImage.url)}
@@ -37,14 +37,14 @@ const num = String(index + 1).padStart(2, '0');
             class="h-full w-full object-cover brightness-[0.92] contrast-[1.05] transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
           />
         ) : (
-          <div class="flex h-full w-full flex-col justify-between bg-[#070709] p-3 select-none sm:p-6">
-            <span class="font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.2em] text-[var(--color-v2-accent-warm)] uppercase sm:text-[10px]">
+          <div class="flex h-full w-full flex-col justify-between bg-[var(--color-v2-media-bg)] p-3 select-none sm:p-6">
+            <span class="font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.2em] text-[var(--color-v2-media-warm)] uppercase sm:text-[10px]">
               // ARTISTA
             </span>
-            <p class="font-[family-name:var(--font-v2-display)] text-base text-[var(--color-v2-heading)] sm:text-2xl">
+            <p class="font-[family-name:var(--font-v2-display)] text-base text-[var(--color-v2-media-text)] sm:text-2xl">
               {data.title}
             </p>
-            <span class="font-[family-name:var(--font-v2-mono)] text-[8px] text-[var(--color-v2-muted)] sm:text-[10px]">
+            <span class="font-[family-name:var(--font-v2-mono)] text-[8px] text-[var(--color-v2-media-muted)] sm:text-[10px]">
               Arquivo Sonoro
             </span>
           </div>
@@ -53,16 +53,16 @@ const num = String(index + 1).padStart(2, '0');
         {/* Vinheta atmosférica inferior */}
         <div
           aria-hidden="true"
-          class="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#070709] via-[#070709]/45 to-transparent sm:h-28"
+          class="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[var(--color-v2-media-bg)] via-[var(--color-v2-media-bg)]/45 to-transparent sm:h-28"
         />
 
         {/* Identificador discreto no topo */}
-        <div class="absolute top-2 left-2 flex items-center gap-1.5 border border-white/10 bg-[#070709]/85 px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.16em] text-[var(--color-v2-accent-warm)] uppercase backdrop-blur-xs sm:top-3 sm:left-3 sm:gap-2 sm:px-2.5 sm:py-1 sm:text-[10px] sm:tracking-[0.18em]">
+        <div class="absolute top-2 left-2 flex items-center gap-1.5 border border-white/10 bg-[var(--color-v2-media-bg)]/85 px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.16em] text-[var(--color-v2-media-warm)] uppercase backdrop-blur-xs sm:top-3 sm:left-3 sm:gap-2 sm:px-2.5 sm:py-1 sm:text-[10px] sm:tracking-[0.18em]">
           <span>ART // {num}</span>
         </div>
 
         {data.isDemo && (
-          <div class="absolute top-2 right-2 border border-[var(--color-v2-accent-warm)]/50 bg-[#070709]/90 px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[8px] text-[var(--color-v2-accent-warm)] uppercase sm:top-3 sm:right-3 sm:text-[10px]">
+          <div class="absolute top-2 right-2 border border-[var(--color-v2-media-warm)]/50 bg-[var(--color-v2-media-bg)]/90 px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[8px] text-[var(--color-v2-media-warm)] uppercase sm:top-3 sm:right-3 sm:text-[10px]">
             Mock Data
           </div>
         )}
@@ -70,11 +70,11 @@ const num = String(index + 1).padStart(2, '0');
         {/* Nome em destaque sobre a base da fotografia */}
         <div class="absolute inset-x-2.5 bottom-2 sm:inset-x-4 sm:bottom-3">
           {data.genre && (
-            <span class="mb-0.5 block truncate font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase sm:mb-1 sm:text-[10px] sm:tracking-[0.16em]">
+            <span class="mb-0.5 block truncate font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.14em] text-[var(--color-v2-media-warm)] uppercase sm:mb-1 sm:text-[10px] sm:tracking-[0.16em]">
               {data.genre}
             </span>
           )}
-          <h3 class="line-clamp-2 font-[family-name:var(--font-v2-display)] text-base leading-[1.15] font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] break-words transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)] sm:text-[1.65rem] sm:leading-[1.1]">
+          <h3 class="line-clamp-2 font-[family-name:var(--font-v2-display)] text-base leading-[1.15] font-normal tracking-[-0.01em] text-[var(--color-v2-media-text)] break-words transition-colors duration-200 group-hover:text-[var(--color-v2-media-warm)] sm:text-[1.65rem] sm:leading-[1.1]">
             {data.title}
           </h3>
         </div>
@@ -151,7 +151,7 @@ const num = String(index + 1).padStart(2, '0');
     data-type="album"
     data-title={data.title.toLowerCase()}
     data-artist={(data.artist || '').toLowerCase()}
-    class="group relative flex h-full min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]"
+    class="group relative flex h-full min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:border-[var(--color-v2-border-hover)] hover:v2-shadow-card"
   >
     {/* Cantoneiras discretas em bronze */}
     <span
@@ -165,7 +165,7 @@ const num = String(index + 1).padStart(2, '0');
 
     <div class="flex h-full flex-col justify-between sm:grid sm:grid-cols-[168px_1fr]">
       {/* Capa 1:1 emoldurada como encarte físico */}
-      <div class="relative aspect-square w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[#050508] sm:border-r sm:border-b-0">
+      <div class="relative aspect-square w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[var(--color-v2-media-surface)] sm:border-r sm:border-b-0">
         {data.coverImage ? (
           <img
             src={withBase(data.coverImage.url)}
@@ -177,11 +177,11 @@ const num = String(index + 1).padStart(2, '0');
             class="h-full w-full object-cover brightness-95 contrast-105 transition-transform duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
           />
         ) : (
-          <div class="flex h-full w-full flex-col justify-between bg-[#070709] p-3 select-none sm:p-5">
-            <span class="font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase sm:text-[9px]">
+          <div class="flex h-full w-full flex-col justify-between bg-[var(--color-v2-media-bg)] p-3 select-none sm:p-5">
+            <span class="font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.18em] text-[var(--color-v2-media-warm)] uppercase sm:text-[9px]">
               // ÁLBUM
             </span>
-            <p class="font-[family-name:var(--font-v2-display)] text-base text-[var(--color-v2-heading)] sm:text-lg">
+            <p class="font-[family-name:var(--font-v2-display)] text-base text-[var(--color-v2-media-text)] sm:text-lg">
               {data.title}
             </p>
           </div>
@@ -266,7 +266,7 @@ const num = String(index + 1).padStart(2, '0');
     data-type="track"
     data-title={data.title.toLowerCase()}
     data-artist={(data.artist || '').toLowerCase()}
-    class="group relative flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-2.5 transition-all duration-300 hover:border-[var(--color-v2-border-hover)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)] sm:flex-row sm:items-center sm:gap-4 sm:border-x-0 sm:border-t-0 sm:border-b sm:bg-[var(--color-v2-surface)]/45 sm:p-0 sm:px-6 sm:py-5 sm:first:border-t hover:sm:bg-[var(--color-v2-surface)]/90"
+    class="group relative flex min-w-0 flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-2.5 transition-all duration-300 hover:border-[var(--color-v2-border-hover)] hover:v2-shadow-card sm:flex-row sm:items-center sm:gap-4 sm:border-x-0 sm:border-t-0 sm:border-b sm:bg-[var(--color-v2-surface)]/45 sm:p-0 sm:px-6 sm:py-5 sm:first:border-t hover:sm:bg-[var(--color-v2-surface)]/90"
   >
     <div class="flex flex-col sm:min-w-0 sm:flex-row sm:items-center sm:gap-4 md:gap-5">
       {/* Numeração da Faixa (desktop) */}
@@ -275,7 +275,7 @@ const num = String(index + 1).padStart(2, '0');
       </span>
 
       {/* Capa 1:1 (cheia no mobile, miniatura 56x56 no desktop) */}
-      <div class="relative aspect-square w-full overflow-hidden border border-[var(--color-v2-border)] bg-[#050508] sm:h-14 sm:w-14 sm:shrink-0 sm:aspect-auto sm:border-[var(--color-v2-border-hover)]">
+      <div class="relative aspect-square w-full overflow-hidden border border-[var(--color-v2-border)] bg-[var(--color-v2-media-surface)] sm:h-14 sm:w-14 sm:shrink-0 sm:aspect-auto sm:border-[var(--color-v2-border-hover)]">
         {data.coverImage ? (
           <img
             src={withBase(data.coverImage.url)}
@@ -289,14 +289,14 @@ const num = String(index + 1).padStart(2, '0');
         ) : (
           <div
             aria-hidden="true"
-            class="flex h-full w-full items-center justify-center bg-[#070709] font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-accent-warm)]"
+            class="flex h-full w-full items-center justify-center bg-[var(--color-v2-media-bg)] font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-media-warm)]"
           >
             FAIXA
           </div>
         )}
 
         {/* Badge do número da faixa no mobile */}
-        <div class="absolute top-1.5 left-1.5 flex items-center border border-white/10 bg-[#070709]/85 px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.16em] text-[var(--color-v2-accent-warm)] uppercase backdrop-blur-xs sm:hidden">
+        <div class="absolute top-1.5 left-1.5 flex items-center border border-white/10 bg-[var(--color-v2-media-bg)]/85 px-1.5 py-0.5 font-[family-name:var(--font-v2-mono)] text-[8px] tracking-[0.16em] text-[var(--color-v2-media-warm)] uppercase backdrop-blur-xs sm:hidden">
           <span>#{num}</span>
         </div>
       </div>
