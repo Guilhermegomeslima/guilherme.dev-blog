@@ -146,6 +146,12 @@
     color-scheme: dark;
   }
 
+  /* Ícones do alternador de tema (Lua no escuro, Sol no claro) */
+  html[data-theme='light'] [data-theme-icon='moon'],
+  html:not([data-theme='light']) [data-theme-icon='sun'] {
+    display: none;
+  }
+
   body {
     background-color: var(--color-v2-bg);
     color: var(--color-v2-text);

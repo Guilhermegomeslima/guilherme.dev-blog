@@ -5,6 +5,8 @@
  */
 import { navigation } from '../../data/navigation';
 import { withBase } from '../../utils/base';
+import { LIGHT_THEME_ENABLED } from '../../utils/theme';
+import ThemeToggle from '../ui/ThemeToggle.astro';
 
 // Ordem aprovada no protótipo; os links vêm da fonte única `navigation`.
 const v2Order = [
@@ -47,35 +49,45 @@ const items = [
       </span>
     </a>
 
-    <!-- O botão só aparece abaixo de lg e só depois que o script remove "hidden".
+    <!-- Controles à direita: alternador de tema (extremo direito no desktop e
+         fora do menu expansível no mobile) + botão de menu mobile abaixo de lg.
          Sem JavaScript, a navegação permanece visível. -->
-    <button
-      type="button"
-      hidden
-      data-menu-toggle
-      aria-expanded="false"
-      aria-controls="site-nav"
-      aria-label="Abrir menu"
-      class="v2-focus border-v2-border text-v2-text hover:border-v2-text/60 inline-flex min-h-11 min-w-11 items-center justify-center border lg:hidden"
+    <div
+      class:list={[
+        'flex items-center gap-2 lg:order-3',
+        !LIGHT_THEME_ENABLED && 'lg:hidden',
+      ]}
     >
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        width="22"
-        height="22"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
+      <ThemeToggle />
+
+      <button
+        type="button"
+        hidden
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="site-nav"
+        aria-label="Abrir menu"
+        class="v2-focus border-v2-border text-v2-text hover:border-v2-text/60 inline-flex min-h-11 min-w-11 items-center justify-center border lg:hidden"
       >
-        <path d="M4 7h16M4 12h16M4 17h16"></path>
-      </svg>
-    </button>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          width="22"
+          height="22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        >
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
 
     <nav
       id="site-nav"
       aria-label="Principal"
-      class="basis-full pb-3 max-lg:data-[collapsed=true]:hidden lg:basis-auto lg:pb-0"
+      class="basis-full pb-3 max-lg:data-[collapsed=true]:hidden lg:order-2 lg:ml-auto lg:basis-auto lg:pb-0"
     >
       <ul class="flex flex-col lg:flex-row lg:items-center lg:gap-x-4 xl:gap-x-6">
         {items.map((item) => {

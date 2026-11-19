@@ -4,6 +4,11 @@ import HeaderV2 from '../components/layout/HeaderV2.astro';
 import FooterV2 from '../components/layout/FooterV2.astro';
 import { withBase } from '../utils/base';
 import { toCanonicalUrl, toAbsoluteImageUrl, safeJsonLd } from '../utils/seo';
+import {
+  LIGHT_THEME_ENABLED,
+  THEME_META_COLORS,
+  THEME_STORAGE_KEY,
+} from '../utils/theme';
 
 interface Props {
   title: string;
@@ -38,13 +43,40 @@ const preloadFonts = [
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#080808" />
+    <meta name="theme-color" content={THEME_META_COLORS.dark} />
+    <script
+      is:inline
+      define:vars={{
+        lightThemeEnabled: LIGHT_THEME_ENABLED,
+        themeStorageKey: THEME_STORAGE_KEY,
+        darkMetaColor: THEME_META_COLORS.dark,
+        lightMetaColor: THEME_META_COLORS.light,
+      }}
+    >
+      (() => {
+        if (!lightThemeEnabled) return;
+        try {
+          const saved = window.localStorage.getItem(themeStorageKey);
+          const theme = saved === 'light' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = theme;
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) {
+            meta.setAttribute(
+              'content',
+              theme === 'light' ? lightMetaColor : darkMetaColor,
+            );
+          }
+        } catch {
+          // Mantém o tema escuro padrão caso localStorage esteja indisponível
+        }
+      })();
+    </script>
     {preloadFonts.map((font) => (
       <link
         rel="preload"
