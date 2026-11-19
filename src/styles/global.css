@@ -29,12 +29,25 @@
   --color-text-body: var(--color-v2-text-body);
   --color-text-muted: var(--color-v2-text-muted);
 
-  /* 3. Cores de destaque (vermelho envelhecido e bronze/ocre quente) */
+  /* 3. Cores de destaque (vermelho envelhecido, bronze/ocre e status ativo) */
   --color-v2-accent: #79382f;
   --color-v2-accent-warm: #a18a70;
+  --color-v2-on-accent: #e7ded2;
+  --color-v2-status-active: #e47986;
 
   --color-accent: var(--color-v2-accent);
   --color-warm: var(--color-v2-accent-warm);
+
+  /* 3b. Tokens de ilhas fotográficas (permanecem escuros sobre mídia nos dois temas) */
+  --color-v2-media-bg: #070709;
+  --color-v2-media-surface: #050508;
+  --color-v2-media-stage: #040406;
+  --color-v2-media-text: #e7ded2;
+  --color-v2-media-muted: #c3bab0;
+  --color-v2-media-warm: #a18a70;
+  --color-v2-media-status: #e47986;
+  --color-v2-media-border: #332b26;
+  --color-v2-media-border-hover: #4a3f37;
 
   /* 4. Bordas e divisórias */
   --color-v2-border: #332b26;
@@ -60,6 +73,7 @@
   --shadow-v2-card: 0 20px 50px rgba(0, 0, 0, 0.65);
   --shadow-v2-elevated: 0 24px 60px rgba(0, 0, 0, 0.75);
   --shadow-v2-glow: 0 0 32px rgba(121, 56, 47, 0.14);
+  --shadow-v2-progress: 0 0 8px rgba(161, 138, 112, 0.45);
 
   /* 8. Transições e estados interativos */
   --ease-v2-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -126,6 +140,36 @@
   background-color: var(--color-v2-surface);
 }
 
+/* Utilitários reutilizáveis para sombras reativas ao tema (THEME-03a) */
+@utility v2-shadow-card {
+  box-shadow: var(--shadow-v2-card);
+}
+
+@utility v2-shadow-elevated {
+  box-shadow: var(--shadow-v2-elevated);
+}
+
+@utility v2-shadow-glow {
+  box-shadow: var(--shadow-v2-glow);
+}
+
+@utility v2-shadow-progress {
+  box-shadow: var(--shadow-v2-progress);
+}
+
+/* Utilitários reutilizáveis para atmosferas editoriais no topo das páginas (THEME-03a) */
+@utility v2-atmosphere-crimson {
+  background: var(--v2-atmo-crimson);
+}
+
+@utility v2-atmosphere-warm {
+  background: var(--v2-atmo-warm);
+}
+
+@utility v2-atmosphere-fade {
+  background: var(--v2-atmo-fade);
+}
+
 /* Movimento reduzido respeitado globalmente e em .v2-scope */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -144,6 +188,75 @@
 @layer base {
   html {
     color-scheme: dark;
+    --shadow-v2-card: 0 20px 50px rgba(0, 0, 0, 0.65);
+    --shadow-v2-elevated: 0 24px 60px rgba(0, 0, 0, 0.75);
+    --shadow-v2-glow: 0 0 32px rgba(121, 56, 47, 0.14);
+    --shadow-v2-progress: 0 0 8px rgba(161, 138, 112, 0.45);
+    --v2-atmo-crimson: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(139, 30, 45, 0.16) 0%,
+      rgba(7, 7, 9, 0.86) 62%,
+      #070709 100%
+    );
+    --v2-atmo-warm: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(198, 166, 107, 0.14) 0%,
+      rgba(7, 7, 9, 0.86) 62%,
+      #070709 100%
+    );
+    --v2-atmo-fade: linear-gradient(
+      180deg,
+      rgba(7, 7, 9, 0.4) 0%,
+      rgba(7, 7, 9, 0.85) 68%,
+      #070709 100%
+    );
+  }
+
+  /* Paleta clara editorial (papel washi, tinta e bronze envelhecido — THEME-03a) */
+  html[data-theme='light'] {
+    color-scheme: light;
+
+    --color-v2-bg: #ede8df;
+    --color-v2-surface: #f5f1e9;
+    --color-v2-surface-raised: #e3dcd0;
+
+    --color-v2-heading: #282420;
+    --color-v2-text: #282420;
+    --color-v2-text-body: #4b453f;
+    --color-v2-text-muted: #5e564e;
+    --color-v2-muted: #5e564e;
+
+    --color-v2-accent: #79382f;
+    --color-v2-accent-warm: #73583a;
+    --color-v2-on-accent: #f5f1e9;
+    --color-v2-status-active: #9b2c38;
+
+    --color-v2-border: #c8beb0;
+    --color-v2-border-hover: #a69b8c;
+
+    --shadow-v2-card: 0 14px 36px rgba(40, 36, 32, 0.1);
+    --shadow-v2-elevated: 0 20px 48px rgba(40, 36, 32, 0.14);
+    --shadow-v2-glow: 0 0 24px rgba(121, 56, 47, 0.12);
+    --shadow-v2-progress: 0 0 6px rgba(115, 88, 58, 0.3);
+
+    --v2-atmo-crimson: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(121, 56, 47, 0.1) 0%,
+      rgba(237, 232, 223, 0.84) 62%,
+      #ede8df 100%
+    );
+    --v2-atmo-warm: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(115, 88, 58, 0.11) 0%,
+      rgba(237, 232, 223, 0.84) 62%,
+      #ede8df 100%
+    );
+    --v2-atmo-fade: linear-gradient(
+      180deg,
+      rgba(237, 232, 223, 0.48) 0%,
+      rgba(237, 232, 223, 0.88) 68%,
+      #ede8df 100%
+    );
   }
 
   /* Ícones do alternador de tema (Lua no escuro, Sol no claro) */
