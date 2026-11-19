@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinuxTimeline from '../../components/linux/LinuxTimeline.astro';
+import ReadingProgress from '../../components/ui/ReadingProgress.astro';
 import { withBase } from '../../utils/base';
 
 const chapterIndex = [
@@ -20,6 +21,7 @@ const chapterIndex = [
   title="Linux & Sistemas Operacionais — guilherme.dev"
   description="Minha trajetória com Linux: do Windows 11 ao Fedora. Como um notebook com pouca memória RAM me levou a descobrir um sistema operacional que acabou mudando minha relação com a tecnologia."
 >
+  <ReadingProgress />
   <div class="mx-auto w-full max-w-v2 px-6 pb-20 xl:px-0">
     <!-- Cabeçalho editorial da crônica -->
     <header
@@ -115,7 +117,7 @@ const chapterIndex = [
     </header>
 
     <!-- Corpo da Crônica Editorial (Capítulos 01 a 07) -->
-    <div class="divide-v2-border/70 divide-y">
+    <div data-reading-content class="divide-v2-border/70 divide-y">
       <!-- Capítulo 01 -->
       <section
         id="cap-1"
@@ -769,7 +771,7 @@ const chapterIndex = [
       <section
         id="cronologia"
         aria-labelledby="timeline-title"
-        class="scroll-mt-8 pt-20 pb-12 lg:pt-28"
+        class="scroll-mt-8 pt-20 lg:pt-28"
       >
         <div class="grid gap-6 lg:grid-cols-[16.5rem_minmax(0,1fr)_20rem] lg:items-end lg:gap-0">
           <p class="font-v2-mono text-v2-text-muted flex items-center gap-4 text-[0.5625rem] tracking-[0.2em] uppercase lg:self-start lg:pt-2">
@@ -799,46 +801,46 @@ const chapterIndex = [
           Os períodos exatos ainda não foram definidos. O Fedora passou a fazer
           parte da minha trajetória pouco antes do lançamento do Fedora 44.
         </p>
-
-        <!-- Conexões editoriais com registros relacionados do blog -->
-        <div class="border-v2-border/80 bg-v2-surface/40 mt-14 grid grid-cols-1 divide-y divide-v2-border/60 border sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-          <a
-            href={withBase('/artigos/por-que-escolhi-fedora/')}
-            class="v2-focus group hover:bg-v2-surface flex flex-col justify-between p-6 transition-colors motion-reduce:transition-none"
-          >
-            <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
-              Artigo relacionado
-            </span>
-            <p class="font-v2-display text-v2-text group-hover:text-v2-accent-warm mt-2 text-xl leading-snug font-medium transition-colors">
-              Por que escolhi Fedora (e por que continuo nele) →
-            </p>
-          </a>
-
-          <a
-            href={withBase('/opensource/')}
-            class="v2-focus group hover:bg-v2-surface flex flex-col justify-between p-6 transition-colors motion-reduce:transition-none"
-          >
-            <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
-              Ferramentas &amp; Liberdade
-            </span>
-            <p class="font-v2-display text-v2-text group-hover:text-v2-accent-warm mt-2 text-xl leading-snug font-medium transition-colors">
-              Catálogo de softwares Open Source que utilizo →
-            </p>
-          </a>
-
-          <a
-            href={withBase('/galeria/desktop/')}
-            class="v2-focus group hover:bg-v2-surface flex flex-col justify-between p-6 transition-colors motion-reduce:transition-none"
-          >
-            <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
-              Registros Visuais
-            </span>
-            <p class="font-v2-display text-v2-text group-hover:text-v2-accent-warm mt-2 text-xl leading-snug font-medium transition-colors">
-              Álbum Desktop Linux na Galeria →
-            </p>
-          </a>
-        </div>
       </section>
+    </div>
+
+    <!-- Conexões editoriais com registros relacionados do blog -->
+    <div class="border-v2-border/80 bg-v2-surface/40 mt-14 mb-12 grid grid-cols-1 divide-y divide-v2-border/60 border sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+      <a
+        href={withBase('/artigos/por-que-escolhi-fedora/')}
+        class="v2-focus group hover:bg-v2-surface flex flex-col justify-between p-6 transition-colors motion-reduce:transition-none"
+      >
+        <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+          Artigo relacionado
+        </span>
+        <p class="font-v2-display text-v2-text group-hover:text-v2-accent-warm mt-2 text-xl leading-snug font-medium transition-colors">
+          Por que escolhi Fedora (e por que continuo nele) →
+        </p>
+      </a>
+
+      <a
+        href={withBase('/opensource/')}
+        class="v2-focus group hover:bg-v2-surface flex flex-col justify-between p-6 transition-colors motion-reduce:transition-none"
+      >
+        <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+          Ferramentas &amp; Liberdade
+        </span>
+        <p class="font-v2-display text-v2-text group-hover:text-v2-accent-warm mt-2 text-xl leading-snug font-medium transition-colors">
+          Catálogo de softwares Open Source que utilizo →
+        </p>
+      </a>
+
+      <a
+        href={withBase('/galeria/desktop/')}
+        class="v2-focus group hover:bg-v2-surface flex flex-col justify-between p-6 transition-colors motion-reduce:transition-none"
+      >
+        <span class="font-v2-mono text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+          Registros Visuais
+        </span>
+        <p class="font-v2-display text-v2-text group-hover:text-v2-accent-warm mt-2 text-xl leading-snug font-medium transition-colors">
+          Álbum Desktop Linux na Galeria →
+        </p>
+      </a>
     </div>
   </div>
 </BaseLayout>

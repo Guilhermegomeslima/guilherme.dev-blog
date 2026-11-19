@@ -1,0 +1,90 @@
+---
+/**
+ * Indicador horizontal discreto de progresso de leitura (FRT-01).
+ * Fixado no topo da viewport (3px, pointer-events-none, z-40), calcula o avanço
+ * exclusivamente sobre o elemento indicado por `targetSelector` (padrão: [data-reading-content]).
+ *
+ * Nota técnica (Tailwind CSS v4): não utilizar a classe utilitária `scale-x-0` junto de
+ * `style.transform = scaleX(...)`, pois no Tailwind v4 `scale-x-0` define a propriedade CSS
+ * independente `scale: 0% 1`, que multiplica `transform: scaleX(...)` por zero e mantém a
+ * largura renderizada em 0px. A escala inicial é definida diretamente via `style="transform: scaleX(0)"`.
+ */
+interface Props {
+  targetSelector?: string;
+  label?: string;
+}
+
+const {
+  targetSelector = '[data-reading-content]',
+  label = 'Progresso de leitura',
+} = Astro.props;
+---
+
+<div
+  data-reading-progress
+  data-target={targetSelector}
+  data-active="false"
+  role="progressbar"
+  aria-label={label}
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="0"
+  style="opacity: 0;"
+  class="bg-v2-border/35 pointer-events-none fixed inset-x-0 top-0 z-40 h-[3px] transition-opacity duration-200 motion-reduce:transition-none"
+>
+  <div
+    data-reading-progress-bar
+    style="transform: scaleX(0);"
+    class="bg-v2-accent-warm h-full w-full origin-left shadow-[0_0_8px_rgba(161,138,112,0.45)]"
+  ></div>
+</div>
+
+<script>
+  import { calculateReadingProgress } from '../../utils/reading-progress';
+
+  const root = document.querySelector<HTMLElement>('[data-reading-progress]');
+  const bar = root?.querySelector<HTMLElement>('[data-reading-progress-bar]');
+  const selector = root?.dataset.target || '[data-reading-content]';
+  const target = document.querySelector<HTMLElement>(selector);
+
+  if (root && bar && target) {
+    let rafId = 0;
+    let lastPercent = -1;
+    let lastActive = false;
+
+    const update = () => {
+      rafId = 0;
+      const rect = target.getBoundingClientRect();
+      const { ratio, percent, active } = calculateReadingProgress({
+        contentTop: rect.top,
+        contentHeight: rect.height,
+        viewportHeight: window.innerHeight,
+      });
+
+      bar.style.transform = `scaleX(${ratio})`;
+
+      if (active !== lastActive) {
+        root.style.opacity = active ? '1' : '0';
+        root.dataset.active = String(active);
+        lastActive = active;
+      }
+
+      if (percent !== lastPercent) {
+        root.setAttribute('aria-valuenow', String(percent));
+        lastPercent = percent;
+      }
+    };
+
+    const scheduleUpdate = () => {
+      if (rafId !== 0) return;
+      rafId = window.requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate, { passive: true });
+    window.addEventListener('hashchange', scheduleUpdate, { passive: true });
+    window.addEventListener('load', scheduleUpdate, { once: true });
+
+    update();
+  }
+</script>
