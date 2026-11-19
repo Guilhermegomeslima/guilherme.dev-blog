@@ -6,6 +6,7 @@ import {
   THEME_META_COLORS,
   THEME_STORAGE_KEY,
   getNextTheme,
+  getThemeAnnouncement,
   getThemeMetaColor,
   getThemeToggleLabel,
   readStoredTheme,
@@ -28,9 +29,9 @@ function createMemoryStorage(
   };
 }
 
-describe('theme — Resolução de preferência e padrão escuro absoluto (THEME-02)', () => {
-  it('deve manter LIGHT_THEME_ENABLED desativado enquanto o tema claro não estiver finalizado', () => {
-    assert.equal(LIGHT_THEME_ENABLED, false);
+describe('theme — Resolução de preferência e padrão escuro absoluto (THEME-02 / THEME-04)', () => {
+  it('deve manter LIGHT_THEME_ENABLED ativado após a conclusão visual em THEME-04', () => {
+    assert.equal(LIGHT_THEME_ENABLED, true);
   });
 
   it('deve iniciar sempre no tema escuro sem preferência salva ou com valores inválidos', () => {
@@ -38,6 +39,7 @@ describe('theme — Resolução de preferência e padrão escuro absoluto (THEME
     assert.equal(resolveStoredTheme(undefined, true), 'dark');
     assert.equal(resolveStoredTheme('', true), 'dark');
     assert.equal(resolveStoredTheme('system', true), 'dark');
+    assert.equal(resolveStoredTheme('auto', true), 'dark');
     assert.equal(resolveStoredTheme('dark', true), 'dark');
   });
 
@@ -51,22 +53,26 @@ describe('theme — Resolução de preferência e padrão escuro absoluto (THEME
     assert.equal(getNextTheme('light'), 'dark');
   });
 
-  it('deve fornecer rótulos acessíveis e theme-color coerentes com cada estado', () => {
+  it('deve fornecer rótulos acessíveis, anúncios e theme-color coerentes com cada estado', () => {
     assert.equal(getThemeToggleLabel('dark'), 'Ativar tema claro');
     assert.equal(getThemeToggleLabel('light'), 'Ativar tema escuro');
+    assert.equal(getThemeAnnouncement('dark'), 'Tema escuro ativado');
+    assert.equal(getThemeAnnouncement('light'), 'Tema claro ativado');
     assert.equal(getThemeMetaColor('dark'), THEME_META_COLORS.dark);
     assert.equal(getThemeMetaColor('light'), THEME_META_COLORS.light);
   });
 });
 
 describe('theme — Persistência segura em localStorage e fallback sem armazenamento', () => {
-  it('deve gravar e recuperar a preferência quando localStorage estiver disponível', () => {
+  it('deve gravar e recuperar a preferência usando o estado padrão habilitado', () => {
     const storage = createMemoryStorage();
 
-    assert.equal(readStoredTheme(storage, true), 'dark');
+    assert.equal(readStoredTheme(storage), 'dark');
     assert.equal(writeStoredTheme(storage, 'light'), true);
     assert.equal(storage.getItem(THEME_STORAGE_KEY), 'light');
-    assert.equal(readStoredTheme(storage, true), 'light');
+    assert.equal(readStoredTheme(storage), 'light');
+    assert.equal(writeStoredTheme(storage, 'dark'), true);
+    assert.equal(readStoredTheme(storage), 'dark');
     assert.equal(readStoredTheme(storage, false), 'dark');
   });
 
@@ -80,8 +86,8 @@ describe('theme — Persistência segura em localStorage e fallback sem armazena
       },
     };
 
-    assert.equal(readStoredTheme(throwingStorage, true), 'dark');
-    assert.equal(readStoredTheme(null, true), 'dark');
+    assert.equal(readStoredTheme(throwingStorage), 'dark');
+    assert.equal(readStoredTheme(null), 'dark');
     assert.equal(writeStoredTheme(throwingStorage, 'light'), false);
     assert.equal(writeStoredTheme(null, 'light'), false);
   });

@@ -1,12 +1,12 @@
 /**
  * Infraestrutura centralizada de tema (escuro padrão + modo claro opcional).
- * THEME-02 — Fase THEME.
+ * THEME-02 a THEME-04 — Fase THEME.
  *
  * Regras:
  * - O tema escuro é o padrão absoluto na primeira visita (sem usar prefers-color-scheme).
  * - A preferência manual é persistida em localStorage sob `THEME_STORAGE_KEY`.
- * - Enquanto `LIGHT_THEME_ENABLED` for `false` (THEME-02), o alternador permanece
- *   indisponível ao visitante e o site preserva integralmente o tema escuro.
+ * - `LIGHT_THEME_ENABLED = true` (THEME-04) expõe o alternador no header e ativa
+ *   a restauração anti-FOUC da preferência salva pelo visitante.
  */
 
 export type ThemeMode = 'dark' | 'light';
@@ -15,9 +15,9 @@ export const THEME_STORAGE_KEY = 'guilherme-dev-theme';
 
 /**
  * Chave central de liberação do modo claro ao visitante.
- * Mantida como `false` em THEME-02 e ativada para `true` após a conclusão visual em THEME-03.
+ * Ativada em THEME-04 após conclusão da adaptação visual em THEME-03a, THEME-03b e THEME-03c.
  */
-export const LIGHT_THEME_ENABLED = false;
+export const LIGHT_THEME_ENABLED = true;
 
 export const THEME_META_COLORS: Record<ThemeMode, string> = {
   dark: '#080808',
@@ -55,6 +55,13 @@ export function getNextTheme(current: ThemeMode): ThemeMode {
  */
 export function getThemeToggleLabel(current: ThemeMode): string {
   return current === 'light' ? 'Ativar tema escuro' : 'Ativar tema claro';
+}
+
+/**
+ * Retorna o anúncio acessível para leitores de tela após alternância manual.
+ */
+export function getThemeAnnouncement(active: ThemeMode): string {
+  return active === 'light' ? 'Tema claro ativado' : 'Tema escuro ativado';
 }
 
 /**

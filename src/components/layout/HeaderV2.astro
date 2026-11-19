@@ -36,10 +36,10 @@ const items = [
   class="border-v2-border/70 relative z-30 border-b bg-v2-bg"
   data-site-header
 >
-  <div class="mx-auto flex w-full max-w-[120rem] flex-wrap items-center justify-between gap-x-6 px-6 lg:flex-nowrap lg:px-[4.5rem]">
+  <div class="mx-auto flex w-full max-w-[120rem] flex-wrap items-center justify-between gap-x-4 px-4 sm:px-6 lg:flex-nowrap lg:px-8 xl:gap-x-6 xl:px-[4.5rem]">
     <a
       href={withBase('/')}
-      class="v2-focus group inline-flex min-h-11 items-center gap-2.5 py-3 lg:min-h-[4.7rem]"
+      class="v2-focus group inline-flex min-h-11 shrink-0 items-center gap-2.5 py-3 lg:min-h-[4.7rem]"
     >
       <span aria-hidden="true" class="text-v2-accent text-[0.6875rem]">
         ✦
@@ -54,7 +54,7 @@ const items = [
          Sem JavaScript, a navegação permanece visível. -->
     <div
       class:list={[
-        'flex items-center gap-2 lg:order-3',
+        'flex shrink-0 items-center gap-2 lg:order-3',
         !LIGHT_THEME_ENABLED && 'lg:hidden',
       ]}
     >
@@ -67,7 +67,7 @@ const items = [
         aria-expanded="false"
         aria-controls="site-nav"
         aria-label="Abrir menu"
-        class="v2-focus border-v2-border text-v2-text hover:border-v2-text/60 inline-flex min-h-11 min-w-11 items-center justify-center border lg:hidden"
+        class="v2-focus border-v2-border text-v2-text hover:border-v2-text/60 inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center border lg:hidden"
       >
         <svg
           aria-hidden="true"
@@ -89,7 +89,7 @@ const items = [
       aria-label="Principal"
       class="basis-full pb-3 max-lg:data-[collapsed=true]:hidden lg:order-2 lg:ml-auto lg:basis-auto lg:pb-0"
     >
-      <ul class="flex flex-col lg:flex-row lg:items-center lg:gap-x-4 xl:gap-x-6">
+      <ul class="flex flex-col lg:flex-row lg:items-center lg:gap-x-3 xl:gap-x-5 2xl:gap-x-6">
         {items.map((item) => {
           const targetHref = withBase(item.href);
           const isCurrent = normalize(currentPath) === normalize(targetHref);
@@ -99,7 +99,7 @@ const items = [
                 href={targetHref}
                 aria-current={isCurrent ? 'page' : undefined}
                 class:list={[
-                  'v2-focus relative inline-flex min-h-11 items-center font-v2-sans text-[0.8125rem] tracking-[0.025em] transition-colors motion-reduce:transition-none lg:min-h-[4.7rem]',
+                  'v2-focus relative inline-flex min-h-11 items-center whitespace-nowrap font-v2-sans text-[0.8125rem] tracking-[0.025em] transition-colors motion-reduce:transition-none lg:min-h-[4.7rem]',
                   isCurrent
                     ? 'text-v2-text after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-v2-accent max-lg:underline max-lg:decoration-v2-accent max-lg:underline-offset-8'
                     : 'text-v2-text-muted hover:text-v2-text',

@@ -1,7 +1,7 @@
 # Design System 2.0 — guilherme.dev
 
-> **Estado:** identidade visual **implementada em todas as páginas**; VIS-01 a VIS-07 concluídas no roadmap.  
-> **Data da especificação original:** 14/11/2026 · **Revisão documental:** 15/11/2026.  
+> **Estado:** identidade visual **implementada em todas as páginas**; VIS-01 a VIS-07 concluídas e modo claro opcional implementado na fase THEME (`THEME-01` a `THEME-04`).  
+> **Data da especificação original:** 14/11/2026 · **Revisão documental:** 18/11/2026.  
 > **Escopo:** registro da identidade aprovada e das diretrizes de manutenção, preservando dados, URLs e funcionalidades.  
 > **Regra de prioridade:** a implementação aprovada e as referências da Home prevalecem sobre exemplos ilustrativos antigos. Mudanças futuras exigem aprovação.
 
@@ -71,6 +71,48 @@
 | `--accent-warm`    | `#A18A70`   | eventual detalhe quente, não obrigatório            |
 
 **[IMPLEMENTADO]** Os tokens de cores V2 estão definidos em `src/styles/global.css` e aplicados globalmente. Os valores acima são a especificação de partida; não alterá-los apenas para reproduzir valores hipotéticos do protótipo.
+
+### 2.1.1 Modo claro editorial opcional (Fase THEME)
+
+**[IMPLEMENTADO]** O site mantém o **tema escuro como padrão absoluto** na primeira visita, sem utilizar `prefers-color-scheme` para alternância automática. O visitante pode optar manualmente por um **modo claro editorial** inspirado em papel japonês (_washi_), tinta e bronze envelhecido, controlado por `html[data-theme="light"]` em `src/styles/global.css` e `src/utils/theme.ts`.
+
+| Token semântico               | Escuro (padrão) | Claro (`data-theme="light"`) | Uso principal                                                     |
+| ----------------------------- | --------------- | ---------------------------- | ----------------------------------------------------------------- |
+| `--color-v2-bg`               | `#080808`       | `#EDE8DF`                    | fundo principal (evita branco puro)                               |
+| `--color-v2-surface`          | `#141210`       | `#F5F1E9`                    | cartões, painéis, cabeçalho e ficha técnica                       |
+| `--color-v2-surface-raised`   | `#1B1715`       | `#E3DCD0`                    | superfícies destacadas e avisos (`DemoNotice`)                    |
+| `--color-v2-heading` / `text` | `#E7DED2`       | `#282420`                    | títulos, números e texto de destaque (11,3–13,7:1 no claro)       |
+| `--color-v2-text-body`        | `#C3BAB0`       | `#4B453F`                    | leitura longa em Sobre, Linux e Artigos (6,9–8,4:1 no claro)      |
+| `--color-v2-text-muted`       | `#A89F95`       | `#5E564E`                    | metadados, legendas e navegação secundária (5,3–6,4:1 no claro)   |
+| `--color-v2-accent`           | `#79382F`       | `#79382F`                    | vermelho envelhecido de destaque (6,4–7,7:1 sobre superfícies)    |
+| `--color-v2-accent-warm`      | `#A18A70`       | `#73583A`                    | bronze escurecido para conformidade WCAG AA (4,8–5,85:1 no claro) |
+| `--color-v2-on-accent`        | `#E7DED2`       | `#F5F1E9`                    | texto/ícones sobre botões preenchidos com `--color-v2-accent`     |
+| `--color-v2-status-active`    | `#E47986`       | `#9B2C38`                    | indicadores de status ativo (`Lendo agora`, `Uso atualmente`)     |
+| `--color-v2-border`           | `#332B26`       | `#C8BEB0`                    | linhas divisórias, bordas de cartões e formulários                |
+| `--color-v2-border-hover`     | `#4A3F37`       | `#A69B8C`                    | realce de borda em hover e molduras                               |
+
+**Utilitários reativos ao tema (`src/styles/global.css`):**
+
+- `v2-atmosphere-crimson`, `v2-atmosphere-warm`, `v2-atmosphere-fade` — gradientes atmosféricos de abertura das páginas de catálogo e detalhe.
+- `v2-shadow-card`, `v2-shadow-elevated`, `v2-shadow-glow`, `v2-shadow-progress` — sombras e brilhos calibrados por tema (mais leves sobre papel no modo claro).
+- `v2-rating-bar` — barras de avaliação de Jogos e Filmes (`RatingPanel` e `MovieCard`) com contraste ≥ 5,4:1 no modo claro.
+- Integração fotográfica no modo claro (`.v2-hero-photo`, `.v2-hero-mobile-veil`, `.v2-section-hero-photo`, `.v2-portrait-vignette`): regras não-camada em `global.css` aplicam `mix-blend-mode: multiply` e suavizam vinhetas sobre o fundo `#EDE8DF`.
+
+**Ilhas cinematográficas permanentemente escuras (`--color-v2-media-*`):**
+
+Para preservar a identidade cinematográfica e legibilidade sobre mídia nos dois temas, os tokens `--color-v2-media-bg` (`#070709`), `--color-v2-media-surface` (`#050508`), `--color-v2-media-stage` (`#040406`), `--color-v2-media-text` (`#E7DED2`), `--color-v2-media-muted` (`#C3BAB0`), `--color-v2-media-warm` (`#A18A70`), `--color-v2-media-status` (`#E47986`), `--color-v2-media-border` (`#332B26`) e `--color-v2-media-border-hover` (`#4A3F37`) permanecem escuros em ambos os temas. São aplicados em:
+
+- Os 9 cards fotográficos da Home (`CategoryPosterCard`);
+- Os 3 portais de coleção em `/galeria/`;
+- Capas fotográficas, selos sobrepostos e vinhetas de `GameCard`, `BookCard`, `MusicCard`, `ArticleCard` e `GalleryCard`, bem como fallbacks de capas provisórias;
+- O palco central de exibição e setas sobrepostas do `GalleryLightbox` (enquanto cabeçalho sticky e ficha técnica inferior acompanham o tema ativo);
+- Blocos de código `<pre><code>` e molduras de capa/legenda em páginas individuais de Artigos.
+
+**Alternador, persistência e inicialização anti-FOUC:**
+
+- **Controle:** `src/components/ui/ThemeToggle.astro` no extremo direito do `HeaderV2.astro` no desktop e ao lado do botão de menu (fora da navegação expansível) no mobile; alvo mínimo `44 × 44 px` (`min-h-11 min-w-11`), foco `v2-focus`, ícone de lua (tema escuro ativo) e sol (tema claro ativo), rótulos acessíveis `"Ativar tema claro"` / `"Ativar tema escuro"` e anúncio em região `aria-live="polite"`.
+- **Persistência:** chave `guilherme-dev-theme` em `localStorage` (`src/utils/theme.ts`), sincronizada entre abas via evento `storage` e com degradação segura para tema escuro quando `localStorage` estiver bloqueado ou JavaScript desativado.
+- **Anti-FOUC:** `<html data-theme="dark">` no HTML estático com script síncrono `is:inline` no `<head>` de `BaseLayout.astro` que aplica a preferência salva e atualiza `<meta name="theme-color">` antes da primeira pintura.
 
 ### 2.2 Fotografia e sobreposições
 
