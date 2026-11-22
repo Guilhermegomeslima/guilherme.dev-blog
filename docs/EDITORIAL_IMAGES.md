@@ -71,39 +71,39 @@ Legenda de status: `pendente` | `recebida` | `validada` | `integrada`
 
 > **Nota:** Se o autor desejar, alguns destinos já existentes (`jogos`, `filmes`, `musica`, `livros`, `open-source`, `galeria`) possuem fotos temáticas em `public/images/home/*-card.webp`, mas nenhuma será reaproveitada no Header 2.0 sem aprovação explícita.
 
-### 3.2 Resenhas — _Shinobido: uma joia esquecida do PS2_ (27 assets preparados)
+### 3.2 Resenhas — _Shinobido: uma joia esquecida do PS2_ (27 assets preparados; 14 integrados em `draft`)
 
-Pasta definitiva: `public/images/reviews/shinobido/`. Todos os 27 arquivos recebidos em `public/aqui/` foram inventariados, convertidos/preservados em WebP sem alteração de proporção (redução total de **11,91 MB → 2,11 MB**, `-82,3%`) e validados. **As sugestões de uso abaixo não definem posição final no artigo sem aprovação explícita do autor.**
+Pasta definitiva: `public/images/reviews/shinobido/`. Todos os 27 arquivos recebidos em `public/aqui/` foram inventariados, convertidos/preservados em WebP sem alteração de proporção (redução total de **11,91 MB → 2,11 MB**, `-82,3%`) e validados. Na **EXP-03B**, **14 arquivos** aprovados pelo autor foram integrados ao rascunho `src/content/reviews/shinobido-uma-joia-esquecida.md` (1 capa + 9 imagens isoladas + 2 no par Uzumushi/Kabuto + 2 protegidas dentro dos blocos de spoiler); os outros 13 permanecem validados como reserva de acervo.
 
-|    # | Arquivo original (`public/aqui/`)            | Arquivo definitivo (`public/images/reviews/shinobido/`) | Ação            | Resolução       | Antes → Depois   | Sugestão temática (não vinculante)           | Status     |
-| ---: | -------------------------------------------- | ------------------------------------------------------- | --------------- | --------------- | ---------------- | -------------------------------------------- | ---------- |
-| R-01 | `Captura de tela de 2026-11-22 00-14-53.png` | `tela-titulo-shinobido.webp`                            | PNG → WebP      | `1920×1080`     | 1,74 MB → 190 KB | Capa / Abertura / Atmosfera                  | `validada` |
-| R-02 | `maxresdefault.jpg`                          | `arte-promocional-goh-ps2.webp`                         | JPG → WebP      | `1280×720`      | 131 KB → 109 KB  | Capa / Abertura                              | `validada` |
-| R-03 | `images.jpg`                                 | `disco-ps2-shinobido.webp`                              | JPG → WebP      | `447×447`       | 30 KB → 37 KB    | Introdução / Memória do PS2                  | `validada` |
-| R-04 | `e1f265729e518d3b72c34f9321b3bfab.jpg`       | `goh-telhado-santuario-furtividade.webp`                | JPG → WebP      | `1920×1080`     | 121 KB → 119 KB  | Furtividade / Verticalidade / Atmosfera      | `validada` |
-| R-05 | `4_1agmKRQ.webp`                             | `furtividade-gancho-noite.webp`                         | WebP preservado | `582×415` (4:3) | 47 KB → 47 KB    | Furtividade / Gancho / Verticalidade         | `validada` |
-| R-06 | `scstgv.webp`                                | `assassinato-furtivo-goh.webp`                          | WebP preservado | `3827×2160`     | 113 KB → 113 KB  | Furtividade / Assassinatos furtivos          | `validada` |
-| R-07 | `3_bCD2MBP.webp`                             | `combate-direto-guardas.webp`                           | WebP preservado | `582×414` (4:3) | 41 KB → 41 KB    | Furtividade vs. Combate direto               | `validada` |
-| R-08 | `Captura de tela de 2026-11-22 00-15-21.png` | `missao-pergaminho-ichijo.webp`                         | PNG → WebP      | `1920×1080`     | 1,62 MB → 173 KB | Facções / Missões (Lorde Ichijo)             | `validada` |
-| R-09 | `Captura de tela de 2026-11-22 00-15-30.png` | `lista-missoes-faccoes.webp`                            | PNG → WebP      | `1920×1080`     | 2,00 MB → 181 KB | Facções / Seleção de missões                 | `validada` |
-| R-10 | `Captura de tela de 2026-11-22 00-15-38.png` | `status-faccoes-utakata.webp`                           | PNG → WebP      | `1920×1080`     | 1,64 MB → 163 KB | Facções / Evolução de exércitos              | `validada` |
-| R-11 | `Captura de tela de 2026-11-22 00-15-42.png` | `confianca-lorde-ichijo.webp`                           | PNG → WebP      | `1920×1080`     | 1,55 MB → 160 KB | Facções / Confiança de Ichijo                | `validada` |
-| R-12 | `Captura de tela de 2026-11-22 00-15-52.png` | `esconderijo-goh-menu.webp`                             | PNG → WebP      | `1920×1080`     | 2,24 MB → 175 KB | Atmosfera / Hub do esconderijo               | `validada` |
-| R-13 | `Fudo_castle.webp`                           | `cenario-castelo-fudo.webp`                             | WebP preservado | `533×400` (4:3) | 65 KB → 65 KB    | Atmosfera / Cenários                         | `validada` |
-| R-14 | `Goh_holding_soul_fragment_1.webp`           | `goh-fragmento-memoria.webp`                            | WebP preservado | `757×495`       | 51 KB → 51 KB    | Narrativa / Memórias / Possível spoiler      | `validada` |
-| R-15 | `Goh.webp`                                   | `personagem-goh.webp`                                   | WebP preservado | `895×1400`      | 78 KB → 78 KB    | Personagens (Goh)                            | `validada` |
-| R-16 | `Shinobido_2_ichijo.webp`                    | `personagem-lorde-ichijo.webp`                          | WebP preservado | `442×960`       | 48 KB → 48 KB    | Facções / Personagens (Lorde Ichijo)         | `validada` |
-| R-17 | `Akame_samurai.webp`                         | `personagem-lorde-akame.webp`                           | WebP preservado | `203×375`       | 18 KB → 18 KB    | Facções / Personagens (Lorde Akame)          | `validada` |
-| R-18 | `sadame_1785.webp`                           | `personagem-lorde-sadame.webp`                          | WebP preservado | `400×400`       | 12 KB → 12 KB    | Facções / Personagens (Lorde Sadame)         | `validada` |
-| R-19 | `Zaji.webp`                                  | `personagem-zaji.webp`                                  | WebP preservado | `657×951`       | 90 KB → 90 KB    | Personagens (Zaji)                           | `validada` |
-| R-20 | `Kinu3.webp`                                 | `personagem-kinu.webp`                                  | WebP preservado | `300×500`       | 31 KB → 31 KB    | Personagens (Kinu)                           | `validada` |
-| R-21 | `Uzumushi_2.webp`                            | `personagem-uzumushi.webp`                              | WebP preservado | `376×514`       | 29 KB → 29 KB    | Personagens (Uzumushi)                       | `validada` |
-| R-22 | `Hebitonbo.webp`                             | `personagem-hebitonbo.webp`                             | WebP preservado | `247×400`       | 23 KB → 23 KB    | Personagens / Possível spoiler (Hebitonbo)   | `validada` |
-| R-23 | `Kabuto.webp`                                | `personagem-kabuto.webp`                                | WebP preservado | `1228×1120`     | 92 KB → 92 KB    | Personagens (Kabuto)                         | `validada` |
-| R-24 | `Kagetora.webp`                              | `personagem-kagetora.webp`                              | WebP preservado | `373×400`       | 32 KB → 32 KB    | Personagens (Kagetora)                       | `validada` |
-| R-25 | `Shinobido_gamuran.webp`                     | `personagem-gamuran.webp`                               | WebP preservado | `298×400`       | 60 KB → 60 KB    | Personagens (Gamuran)                        | `validada` |
-| R-26 | `Taraba_2.webp`                              | `personagem-taraba.webp`                                | WebP preservado | `250×250`       | 13 KB → 13 KB    | Personagens (Taraba)                         | `validada` |
-| R-27 | `Neko.webp`                                  | `personagem-onji-gato.webp`                             | WebP preservado | `267×400`       | 14 KB → 14 KB    | **Spoiler (personagens — Onji era um gato)** | `validada` |
+|    # | Arquivo original (`public/aqui/`)            | Arquivo definitivo (`public/images/reviews/shinobido/`) | Ação            | Resolução       | Antes → Depois   | Posição / Uso                             | Status      |
+| ---: | -------------------------------------------- | ------------------------------------------------------- | --------------- | --------------- | ---------------- | ----------------------------------------- | ----------- |
+| R-01 | `Captura de tela de 2026-11-22 00-14-53.png` | `tela-titulo-shinobido.webp`                            | PNG → WebP      | `1920×1080`     | 1,74 MB → 190 KB | Capa / Hero e card                        | `integrada` |
+| R-02 | `maxresdefault.jpg`                          | `arte-promocional-goh-ps2.webp`                         | JPG → WebP      | `1280×720`      | 131 KB → 109 KB  | Reserva de acervo                         | `validada`  |
+| R-03 | `images.jpg`                                 | `disco-ps2-shinobido.webp`                              | JPG → WebP      | `447×447`       | 30 KB → 37 KB    | Introdução (1º parágrafo)                 | `integrada` |
+| R-04 | `e1f265729e518d3b72c34f9321b3bfab.jpg`       | `goh-telhado-santuario-furtividade.webp`                | JPG → WebP      | `1920×1080`     | 121 KB → 119 KB  | Reserva de acervo                         | `validada`  |
+| R-05 | `4_1agmKRQ.webp`                             | `furtividade-gancho-noite.webp`                         | WebP preservado | `582×415` (4:3) | 47 KB → 47 KB    | Furtividade — gancho e verticalidade      | `integrada` |
+| R-06 | `scstgv.webp`                                | `assassinato-furtivo-goh.webp`                          | WebP preservado | `3827×2160`     | 113 KB → 113 KB  | Furtividade — execuções                   | `integrada` |
+| R-07 | `3_bCD2MBP.webp`                             | `combate-direto-guardas.webp`                           | WebP preservado | `582×414` (4:3) | 41 KB → 41 KB    | Furtividade vs. combate direto            | `integrada` |
+| R-08 | `Captura de tela de 2026-11-22 00-15-21.png` | `missao-pergaminho-ichijo.webp`                         | PNG → WebP      | `1920×1080`     | 1,62 MB → 173 KB | Reserva de acervo                         | `validada`  |
+| R-09 | `Captura de tela de 2026-11-22 00-15-30.png` | `lista-missoes-faccoes.webp`                            | PNG → WebP      | `1920×1080`     | 2,00 MB → 181 KB | Facções — quadro de missões               | `integrada` |
+| R-10 | `Captura de tela de 2026-11-22 00-15-38.png` | `status-faccoes-utakata.webp`                           | PNG → WebP      | `1920×1080`     | 1,64 MB → 163 KB | Facções — evolução dos exércitos          | `integrada` |
+| R-11 | `Captura de tela de 2026-11-22 00-15-42.png` | `confianca-lorde-ichijo.webp`                           | PNG → WebP      | `1920×1080`     | 1,55 MB → 160 KB | Facções — confiança de Lorde Ichijo       | `integrada` |
+| R-12 | `Captura de tela de 2026-11-22 00-15-52.png` | `esconderijo-goh-menu.webp`                             | PNG → WebP      | `1920×1080`     | 2,24 MB → 175 KB | Conclusão — esconderijo de Goh            | `integrada` |
+| R-13 | `Fudo_castle.webp`                           | `cenario-castelo-fudo.webp`                             | WebP preservado | `533×400` (4:3) | 65 KB → 65 KB    | Atmosfera — cenário noturno (sem legenda) | `integrada` |
+| R-14 | `Goh_holding_soul_fragment_1.webp`           | `goh-fragmento-memoria.webp`                            | WebP preservado | `757×495`       | 51 KB → 51 KB    | **Spoiler 1** (passado de Goh)            | `integrada` |
+| R-15 | `Goh.webp`                                   | `personagem-goh.webp`                                   | WebP preservado | `895×1400`      | 78 KB → 78 KB    | Reserva de acervo                         | `validada`  |
+| R-16 | `Shinobido_2_ichijo.webp`                    | `personagem-lorde-ichijo.webp`                          | WebP preservado | `442×960`       | 48 KB → 48 KB    | Reserva de acervo                         | `validada`  |
+| R-17 | `Akame_samurai.webp`                         | `personagem-lorde-akame.webp`                           | WebP preservado | `203×375`       | 18 KB → 18 KB    | Reserva de acervo                         | `validada`  |
+| R-18 | `sadame_1785.webp`                           | `personagem-lorde-sadame.webp`                          | WebP preservado | `400×400`       | 12 KB → 12 KB    | Reserva de acervo                         | `validada`  |
+| R-19 | `Zaji.webp`                                  | `personagem-zaji.webp`                                  | WebP preservado | `657×951`       | 90 KB → 90 KB    | Reserva de acervo                         | `validada`  |
+| R-20 | `Kinu3.webp`                                 | `personagem-kinu.webp`                                  | WebP preservado | `300×500`       | 31 KB → 31 KB    | Reserva de acervo                         | `validada`  |
+| R-21 | `Uzumushi_2.webp`                            | `personagem-uzumushi.webp`                              | WebP preservado | `376×514`       | 29 KB → 29 KB    | Personagens — par 2 colunas (1/2)         | `integrada` |
+| R-22 | `Hebitonbo.webp`                             | `personagem-hebitonbo.webp`                             | WebP preservado | `247×400`       | 23 KB → 23 KB    | Reserva de acervo                         | `validada`  |
+| R-23 | `Kabuto.webp`                                | `personagem-kabuto.webp`                                | WebP preservado | `1228×1120`     | 92 KB → 92 KB    | Personagens — par 2 colunas (2/2)         | `integrada` |
+| R-24 | `Kagetora.webp`                              | `personagem-kagetora.webp`                              | WebP preservado | `373×400`       | 32 KB → 32 KB    | Reserva de acervo                         | `validada`  |
+| R-25 | `Shinobido_gamuran.webp`                     | `personagem-gamuran.webp`                               | WebP preservado | `298×400`       | 60 KB → 60 KB    | Reserva de acervo                         | `validada`  |
+| R-26 | `Taraba_2.webp`                              | `personagem-taraba.webp`                                | WebP preservado | `250×250`       | 13 KB → 13 KB    | Reserva de acervo                         | `validada`  |
+| R-27 | `Neko.webp`                                  | `personagem-onji-gato.webp`                             | WebP preservado | `267×400`       | 14 KB → 14 KB    | **Spoiler 2** (Onji era um gato)          | `integrada` |
 
 ### 3.3 Diário Linux — _Como personalizo meu GNOME_ (10 marcações explícitas no Markdown)
 
@@ -135,6 +135,6 @@ Todas as posições abaixo correspondem exatamente às marcações presentes no 
 ## 4. Resumo quantitativo de pendências
 
 - **Header 2.0:** 8 imagens temáticas (`pendente`).
-- **Resenhas (Shinobido):** 27 imagens preparadas e validadas em `public/images/reviews/shinobido/` (`validada`; posicionamento no artigo aguarda aprovação na EXP-03).
+- **Resenhas (Shinobido):** 27 imagens preparadas em `public/images/reviews/shinobido/`, sendo **14 integradas** no rascunho (`draft: true`) e 13 mantidas como reserva (`validada`).
 - **Diário Linux (Personalização GNOME):** 11 arquivos para as 10 marcações (capa + capturas 01–08 + par antes/depois da captura 09) (`pendente`).
 - **Recomendações:** 2 fotografias reais (`pendente`).

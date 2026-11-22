@@ -173,6 +173,8 @@ export function enhanceEditorialHtml(
         if (!rawSrc) return fullImg;
 
         const resolvedSrc = withBase(rawSrc, base);
+        const alt = readAttr(attrs, 'alt') ?? '';
+        const title = readAttr(attrs, 'title');
         const insideSpoiler = isInsideRanges(offset, updatedSpoilerRanges);
         let updatedAttrs = attrs.replace(
           /\bsrc="[^"]*"/i,
@@ -191,6 +193,21 @@ export function enhanceEditorialHtml(
         }
         if (insideSpoiler && !/\bdata-spoiler-media=/i.test(updatedAttrs)) {
           updatedAttrs += ' data-spoiler-media="true"';
+        }
+        if (enableLightbox && !/\bdata-no-lightbox\b/i.test(updatedAttrs)) {
+          updatedAttrs += ` data-editorial-lightbox-trigger="true" data-lightbox-src="${escapeHtmlAttr(resolvedSrc)}" data-lightbox-alt="${escapeHtmlAttr(alt)}"`;
+          if (title && !/\bdata-lightbox-caption=/i.test(updatedAttrs)) {
+            updatedAttrs += ` data-lightbox-caption="${escapeHtmlAttr(title)}"`;
+          }
+          if (!/\btabindex=/i.test(updatedAttrs)) {
+            updatedAttrs += ' tabindex="0" role="button"';
+          }
+          if (!/\baria-label=/i.test(updatedAttrs)) {
+            const label = alt
+              ? `Ampliar imagem: ${alt}`
+              : 'Ampliar imagem editorial';
+            updatedAttrs += ` aria-label="${escapeHtmlAttr(label)}"`;
+          }
         }
 
         return `<img${updatedAttrs}>`;

@@ -223,14 +223,13 @@ describe('Schemas e diretórios das novas Content Collections (EXP-02A)', () => 
     );
   });
 
-  it('os diretórios das novas coleções devem existir sem conteúdo fictício nesta etapa', () => {
-    const expectedDirs = [
-      path.resolve('src/content/reviews'),
+  it('os diretórios das novas coleções devem existir e manter rascunhos sob controle seguro', () => {
+    const emptyDirs = [
       path.resolve('src/content/linux-diary'),
       path.resolve('src/content/recommendations'),
     ];
 
-    for (const dir of expectedDirs) {
+    for (const dir of emptyDirs) {
       assert.ok(fs.existsSync(dir), `Diretório ausente: ${dir}`);
       const contentFiles = fs
         .readdirSync(dir)
@@ -238,8 +237,23 @@ describe('Schemas e diretórios das novas Content Collections (EXP-02A)', () => 
       assert.equal(
         contentFiles.length,
         0,
-        `Conteúdo inesperado encontrado em ${dir} durante EXP-02A: ${contentFiles.join(', ')}`,
+        `Conteúdo inesperado encontrado em ${dir}: ${contentFiles.join(', ')}`,
       );
+    }
+
+    const reviewsDir = path.resolve('src/content/reviews');
+    assert.ok(fs.existsSync(reviewsDir), `Diretório ausente: ${reviewsDir}`);
+    if (!EXPANSION_PUBLIC_FLAGS.reviews) {
+      const reviewFiles = fs
+        .readdirSync(reviewsDir)
+        .filter((f) => /\.(md|mdx)$/i.test(f));
+      for (const file of reviewFiles) {
+        const raw = fs.readFileSync(path.join(reviewsDir, file), 'utf-8');
+        assert.ok(
+          /draft:\s*true/i.test(raw),
+          `Resenha ${file} deve permanecer com draft: true enquanto a seção não for publicada`,
+        );
+      }
     }
   });
 });

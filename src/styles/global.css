@@ -451,6 +451,68 @@ html[data-theme='light'] .v2-portrait-vignette {
   color: var(--color-v2-media-muted);
 }
 
+.v2-editorial-figure--compact {
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+.v2-editorial-pair {
+  margin-block: 2rem;
+  border: 1px solid var(--color-v2-border);
+  background-color: var(--color-v2-media-surface);
+  padding: 0.75rem;
+  box-shadow: var(--shadow-v2-card);
+}
+
+.v2-editorial-pair-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 40rem) {
+  .v2-editorial-pair-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.v2-editorial-pair-slot {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--color-v2-media-border);
+  background-color: var(--color-v2-media-bg);
+  padding: 0.75rem;
+}
+
+.v2-editorial-pair-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 14rem;
+  background-color: var(--color-v2-surface-raised);
+  padding: 0.75rem;
+}
+
+.v2-editorial-pair-stage img {
+  display: block;
+  max-height: 17rem;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.v2-editorial-pair-name {
+  margin-top: 0.625rem;
+  text-align: center;
+  font-family: var(--font-v2-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-v2-media-text);
+}
+
 /* ============================================================================
  * Infraestrutura técnica do Diário Linux (EXP-02C): TOC, avisos e código
  * ============================================================================ */

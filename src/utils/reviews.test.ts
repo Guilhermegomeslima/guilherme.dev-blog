@@ -4,6 +4,11 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
+  enhanceEditorialHtml,
+  hasSpoilerLeak,
+  stripSpoilerBlocks,
+} from './editorial-media.ts';
+import {
   compareReviews,
   countReviewsByMediaType,
   estimateReadingMinutes,
@@ -95,5 +100,98 @@ describe('reviews — Ordenação, contagens e vínculos com acervos (EXP-03A)',
     );
     assert.ok(routeSrc.includes("shouldGenerateSectionRoute('reviews')"));
     assert.ok(routeSrc.includes("shouldIncludeEntry('reviews'"));
+  });
+});
+
+describe('Resenha Shinobido — Integridade editorial, imagens e proteção de spoilers (EXP-03B)', () => {
+  const reviewPath = path.resolve(
+    'src/content/reviews/shinobido-uma-joia-esquecida.md',
+  );
+  const raw = fs.readFileSync(reviewPath, 'utf-8');
+  const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  const frontmatter = fmMatch?.[1] ?? '';
+  const body = fmMatch?.[2] ?? '';
+
+  it('deve permanecer em draft: true, sem data inventada e com vínculo válido para Jogos', () => {
+    assert.ok(/draft:\s*true/.test(frontmatter));
+    assert.ok(/isDemo:\s*false/.test(frontmatter));
+    assert.ok(/hasSpoilers:\s*true/.test(frontmatter));
+    assert.equal(
+      /publishedAt:/i.test(frontmatter),
+      false,
+      'publishedAt não deve ser inventado enquanto draft: true',
+    );
+    assert.ok(frontmatter.includes("id: 'shinobido-the-way-of-the-ninja'"));
+    assert.ok(
+      fs.existsSync(
+        path.resolve('src/content/games/shinobido-the-way-of-the-ninja.json'),
+      ),
+    );
+  });
+
+  it('deve referenciar exatamente 14 imagens WebP existentes em public/images/reviews/shinobido/', () => {
+    const imgMatches = [
+      ...raw.matchAll(/\/images\/reviews\/shinobido\/([a-z0-9-]+\.webp)/g),
+    ].map((m) => m[0]);
+    const uniqueImgs = Array.from(new Set(imgMatches));
+
+    assert.equal(
+      uniqueImgs.length,
+      14,
+      `Esperadas 14 imagens integradas, encontradas ${uniqueImgs.length}`,
+    );
+
+    for (const imgUrl of uniqueImgs) {
+      const diskPath = path.resolve('public', imgUrl.replace(/^\//, ''));
+      assert.ok(
+        fs.existsSync(diskPath),
+        `Imagem referenciada ausente no disco: ${imgUrl}`,
+      );
+    }
+  });
+
+  it('deve conter 2 blocos de spoiler, manter as 2 imagens sensíveis exclusivamente dentro deles e não vazar spoilers no resumo', () => {
+    const spoilerBlocks = body.match(
+      /<details\b[^>]*\bdata-spoiler\b[^>]*>[\s\S]*?<\/details>/gi,
+    );
+    assert.equal(spoilerBlocks?.length, 2);
+
+    const strippedBody = stripSpoilerBlocks(body);
+    assert.equal(
+      strippedBody.includes('goh-fragmento-memoria.webp'),
+      false,
+      'goh-fragmento-memoria.webp não pode aparecer fora do bloco de spoiler',
+    );
+    assert.equal(
+      strippedBody.includes('personagem-onji-gato.webp'),
+      false,
+      'personagem-onji-gato.webp não pode aparecer fora do bloco de spoiler',
+    );
+    assert.ok(spoilerBlocks?.[0].includes('goh-fragmento-memoria.webp'));
+    assert.ok(spoilerBlocks?.[1].includes('personagem-onji-gato.webp'));
+
+    const descMatch = frontmatter.match(/description:\s*'([^']+)'/);
+    const description = descMatch?.[1] ?? '';
+    assert.ok(description.length > 20);
+    assert.equal(hasSpoilerLeak(description, body), false);
+
+    // Valida compatibilidade com GitHub Pages e marcação de spoiler no HTML processado
+    const processedGh = enhanceEditorialHtml(body, {
+      base: '/guilherme.dev-blog/',
+    });
+    assert.ok(
+      processedGh.includes(
+        'src="/guilherme.dev-blog/images/reviews/shinobido/assassinato-furtivo-goh.webp"',
+      ),
+    );
+    assert.ok(
+      processedGh.includes(
+        'src="/guilherme.dev-blog/images/reviews/shinobido/personagem-onji-gato.webp"',
+      ),
+    );
+    assert.equal(
+      (processedGh.match(/data-spoiler-media="true"/g) ?? []).length,
+      2,
+    );
   });
 });
