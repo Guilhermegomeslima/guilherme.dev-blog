@@ -1,0 +1,39 @@
+---
+/**
+ * Bloco acessível e reutilizável para ocultar trechos com spoilers (EXP-02B).
+ *
+ * Utiliza HTML semântico `<details>` e `<summary>` — funciona 100% sem JavaScript,
+ * suporta teclado (`Enter`/`Space`) e leitores de tela nativamente, e acompanha
+ * os temas escuro e claro do Design System 2.0.
+ */
+interface Props {
+  /** Descrição discreta do assunto ocultado (ex.: "Trecho oculto sobre o passado do protagonista"). */
+  label?: string;
+  /** Rótulo curto de aviso (padrão: "Spoiler"). */
+  badge?: string;
+  /** Classes adicionais no container `<details>`. */
+  class?: string;
+}
+
+const {
+  label = 'Conteúdo oculto com spoiler',
+  badge = 'Spoiler',
+  class: className = '',
+} = Astro.props;
+---
+
+<details class:list={['v2-spoiler', className]} data-spoiler>
+  <summary class="v2-spoiler-summary v2-focus">
+    <span class="v2-spoiler-heading">
+      <span class="v2-spoiler-badge">{badge}</span>
+      <span class="v2-spoiler-label">{label}</span>
+    </span>
+    <span class="v2-spoiler-action" aria-hidden="true">
+      <span class="v2-spoiler-action-open">Revelar</span>
+      <span class="v2-spoiler-action-close">Ocultar</span>
+    </span>
+  </summary>
+  <div class="v2-spoiler-body">
+    <slot />
+  </div>
+</details>

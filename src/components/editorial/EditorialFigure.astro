@@ -1,0 +1,78 @@
+---
+/**
+ * Figura editorial reutilizável para imagens incorporadas ao conteúdo (EXP-02B).
+ *
+ * Preserva a proporção natural da imagem (incluindo capturas 4:3 sem corte ou
+ * distorção), aplica `withBase()` para Vercel e GitHub Pages, suporta legenda
+ * opcional e integração com `EditorialLightbox.astro`.
+ */
+import { withBase } from '../../utils/base';
+
+interface Props {
+  /** Caminho relativo em `public/` ou URL absoluta permitida. */
+  src: string;
+  /** Texto alternativo descritivo obrigatório para imagens informativas. */
+  alt: string;
+  /** Legenda opcional exibida abaixo da imagem e no lightbox. */
+  caption?: string;
+  /** Dimensões reais conhecidas para prevenir layout shift (CLS). */
+  width?: number;
+  height?: number;
+  /** Carregamento imediato para imagens acima da dobra (padrão: false -> lazy). */
+  eager?: boolean;
+  /** Permite ampliar no `EditorialLightbox` (padrão: true). */
+  lightbox?: boolean;
+  /** Grupo opcional de galeria para habilitar setas anterior/próximo no lightbox. */
+  lightboxGroup?: string;
+  /** Marca a imagem como protegida por spoiler (nunca abrir fora de spoiler aberto). */
+  spoilerProtected?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  caption,
+  width,
+  height,
+  eager = false,
+  lightbox = true,
+  lightboxGroup,
+  spoilerProtected = false,
+  class: className = '',
+} = Astro.props;
+
+const resolvedSrc = withBase(src);
+---
+
+<figure
+  class:list={['v2-editorial-figure', className]}
+  data-spoiler-figure={spoilerProtected ? 'true' : undefined}
+>
+  <img
+    src={resolvedSrc}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+    data-editorial-lightbox-trigger={lightbox ? 'true' : undefined}
+    data-lightbox-src={lightbox ? resolvedSrc : undefined}
+    data-lightbox-alt={lightbox ? alt : undefined}
+    data-lightbox-caption={lightbox && caption ? caption : undefined}
+    data-lightbox-group={lightbox && lightboxGroup ? lightboxGroup : undefined}
+    data-spoiler-media={spoilerProtected ? 'true' : undefined}
+    tabindex={lightbox ? 0 : undefined}
+    role={lightbox ? 'button' : undefined}
+    aria-label={
+      lightbox
+        ? alt
+          ? `Ampliar imagem: ${alt}`
+          : 'Ampliar imagem editorial'
+        : undefined
+    }
+  />
+  {caption && (
+    <figcaption class="v2-editorial-figcaption">{caption}</figcaption>
+  )}
+</figure>

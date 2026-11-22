@@ -1,0 +1,351 @@
+---
+/**
+ * Lightbox acessível para imagens editoriais de Resenhas e Diário Linux (EXP-02B).
+ *
+ * Reutiliza a linguagem visual e semântica `<dialog>` do `GalleryLightbox.astro`
+ * sem modificar nem criar risco de regressão na Galeria existente.
+ *
+ * Garantias:
+ * - Preserva proporção original (`object-contain`, inclusive capturas 4:3).
+ * - Abre imagens independentes sem exigir navegação sequencial obrigatória.
+ * - Habilita navegação anterior/próximo somente para grupos explícitos (`data-lightbox-group`).
+ * - Bloqueia abertura ou listagem de imagens dentro de blocos `<details data-spoiler>` fechados.
+ * - Fecha por botão, `Escape` e clique fora da moldura, devolvendo o foco ao acionador.
+ */
+---
+
+<dialog
+  id="editorial-lightbox"
+  aria-labelledby="editorial-lightbox-title"
+  class="v2-shadow-elevated relative m-auto w-[95vw] max-w-6xl overflow-hidden border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-bg)] p-0 text-[var(--color-v2-text)] backdrop:bg-[var(--color-v2-media-bg)]/90 backdrop:backdrop-blur-md open:flex open:flex-col"
+>
+  <div
+    id="editorial-lightbox-announcer"
+    class="sr-only"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  {/* Cantoneiras em bronze */}
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute top-0 left-0 z-40 h-4 w-4 border-t border-l border-[var(--color-v2-accent-warm)]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute top-0 right-0 z-40 h-4 w-4 border-t border-r border-[var(--color-v2-accent-warm)]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute bottom-0 left-0 z-40 h-4 w-4 border-b border-l border-[var(--color-v2-accent-warm)]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute right-0 bottom-0 z-40 h-4 w-4 border-r border-b border-[var(--color-v2-accent-warm)]"
+  ></span>
+
+  <div class="relative flex max-h-[92vh] flex-col overflow-y-auto overscroll-contain">
+    {/* Barra superior do visualizador */}
+    <div class="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/95 px-4 py-3 backdrop-blur-xs sm:px-6">
+      <div class="flex flex-wrap items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.16em] uppercase">
+        <span class="text-[var(--color-v2-accent-warm)]">
+          // VISUALIZADOR EDITORIAL
+        </span>
+        <span
+          id="editorial-lightbox-counter-sep"
+          class="hidden text-[var(--color-v2-border-hover)]"
+          aria-hidden="true"
+        >
+          ·
+        </span>
+        <span
+          id="editorial-lightbox-counter"
+          class="hidden text-[var(--color-v2-text-muted)]"
+        ></span>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <a
+          id="editorial-lightbox-original"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="v2-focus inline-flex min-h-9 items-center gap-1.5 border border-[var(--color-v2-accent-warm)]/45 bg-[var(--color-v2-bg)] px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-accent-warm)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-heading)]"
+        >
+          <span>Abrir original</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+
+        <button
+          type="button"
+          id="editorial-lightbox-close"
+          aria-label="Fechar visualização ampliada"
+          class="v2-focus inline-flex min-h-9 min-w-9 cursor-pointer items-center justify-center border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-bg)] px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-text-muted)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)]/60 hover:text-[var(--color-v2-heading)]"
+        >
+          <span>Fechar [ESC]</span>
+        </button>
+      </div>
+    </div>
+
+    {/* Palco escuro permanente preservando a proporção natural da captura (4:3, 16:9, etc.) */}
+    <div class="relative flex min-h-[200px] flex-1 items-center justify-center bg-[var(--color-v2-media-stage)] p-3 sm:min-h-[340px] sm:p-6 md:min-h-[420px] md:p-8">
+      <button
+        type="button"
+        id="editorial-lightbox-prev"
+        hidden
+        aria-label="Imagem anterior da galeria"
+        class="v2-focus absolute left-2 z-20 flex h-11 w-11 cursor-pointer items-center justify-center border border-[var(--color-v2-media-border-hover)] bg-[var(--color-v2-media-bg)]/90 font-[family-name:var(--font-v2-mono)] text-base text-[var(--color-v2-media-text)] backdrop-blur-xs transition-colors hover:border-[var(--color-v2-media-warm)] hover:text-[var(--color-v2-media-warm)] focus-visible:outline-[var(--color-v2-media-warm)] sm:left-5"
+      >
+        <span aria-hidden="true">&larr;</span>
+      </button>
+
+      <img
+        id="editorial-lightbox-img"
+        src=""
+        alt=""
+        class="max-h-[68vh] w-auto max-w-full border border-[var(--color-v2-media-border)] object-contain shadow-[0_24px_60px_rgba(0,0,0,0.85)]"
+      />
+
+      <button
+        type="button"
+        id="editorial-lightbox-next"
+        hidden
+        aria-label="Próxima imagem da galeria"
+        class="v2-focus absolute right-2 z-20 flex h-11 w-11 cursor-pointer items-center justify-center border border-[var(--color-v2-media-border-hover)] bg-[var(--color-v2-media-bg)]/90 font-[family-name:var(--font-v2-mono)] text-base text-[var(--color-v2-media-text)] backdrop-blur-xs transition-colors hover:border-[var(--color-v2-media-warm)] hover:text-[var(--color-v2-media-warm)] focus-visible:outline-[var(--color-v2-media-warm)] sm:right-5"
+      >
+        <span aria-hidden="true">&rarr;</span>
+      </button>
+    </div>
+
+    {/* Rodapé com título/legenda acessíveis */}
+    <div class="border-t border-[var(--color-v2-border)] bg-[var(--color-v2-surface)] px-4 py-4 sm:px-6">
+      <h2
+        id="editorial-lightbox-title"
+        class="font-[family-name:var(--font-v2-display)] text-xl font-normal tracking-[-0.01em] text-[var(--color-v2-heading)] sm:text-2xl"
+      >
+        Visualização ampliada
+      </h2>
+      <p
+        id="editorial-lightbox-caption"
+        class="mt-1 hidden font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed text-[var(--color-v2-text-muted)] sm:text-sm"
+      ></p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function setupEditorialLightbox() {
+    const dialog = document.getElementById(
+      'editorial-lightbox',
+    ) as HTMLDialogElement | null;
+    const closeBtn = document.getElementById('editorial-lightbox-close');
+    const prevBtn = document.getElementById(
+      'editorial-lightbox-prev',
+    ) as HTMLButtonElement | null;
+    const nextBtn = document.getElementById(
+      'editorial-lightbox-next',
+    ) as HTMLButtonElement | null;
+    const imgElem = document.getElementById(
+      'editorial-lightbox-img',
+    ) as HTMLImageElement | null;
+    const titleElem = document.getElementById('editorial-lightbox-title');
+    const captionElem = document.getElementById('editorial-lightbox-caption');
+    const counterElem = document.getElementById('editorial-lightbox-counter');
+    const counterSep = document.getElementById(
+      'editorial-lightbox-counter-sep',
+    );
+    const originalLink = document.getElementById(
+      'editorial-lightbox-original',
+    ) as HTMLAnchorElement | null;
+    const announcer = document.getElementById('editorial-lightbox-announcer');
+
+    if (!dialog || dialog.dataset.bound === 'true') return;
+    dialog.dataset.bound = 'true';
+
+    let lastActiveTrigger: HTMLElement | null = null;
+    let groupTriggers: HTMLElement[] = [];
+    let currentIndex = 0;
+
+    function isProtectedByClosedSpoiler(element: HTMLElement): boolean {
+      const closedSpoiler = element.closest(
+        'details[data-spoiler]:not([open])',
+      );
+      return Boolean(closedSpoiler);
+    }
+
+    function resolveTriggerData(trigger: HTMLElement) {
+      const img =
+        trigger.tagName === 'IMG'
+          ? (trigger as HTMLImageElement)
+          : trigger.querySelector<HTMLImageElement>('img');
+      const src =
+        trigger.getAttribute('data-lightbox-src') ||
+        img?.currentSrc ||
+        img?.getAttribute('src') ||
+        '';
+      const alt =
+        trigger.getAttribute('data-lightbox-alt') ||
+        img?.getAttribute('alt') ||
+        '';
+      const caption =
+        trigger.getAttribute('data-lightbox-caption') ||
+        trigger
+          .closest('figure')
+          ?.querySelector('figcaption')
+          ?.textContent?.trim() ||
+        '';
+      const group = trigger.getAttribute('data-lightbox-group') || '';
+      return { src, alt, caption, group };
+    }
+
+    function updateGroupControls() {
+      const hasNav = groupTriggers.length > 1;
+      if (prevBtn) prevBtn.hidden = !hasNav;
+      if (nextBtn) nextBtn.hidden = !hasNav;
+      if (counterElem && counterSep) {
+        counterElem.classList.toggle('hidden', !hasNav);
+        counterSep.classList.toggle('hidden', !hasNav);
+        if (hasNav) {
+          counterElem.textContent = `${currentIndex + 1} / ${groupTriggers.length}`;
+        }
+      }
+    }
+
+    function renderTrigger(trigger: HTMLElement) {
+      if (isProtectedByClosedSpoiler(trigger)) return false;
+      const { src, alt, caption } = resolveTriggerData(trigger);
+      if (!src) return false;
+
+      if (imgElem) {
+        imgElem.src = src;
+        imgElem.alt = alt || caption || 'Imagem ampliada';
+      }
+
+      const displayTitle = alt || caption || 'Visualização ampliada';
+      if (titleElem) {
+        titleElem.textContent = displayTitle;
+      }
+
+      if (captionElem) {
+        const showCaption = Boolean(caption && caption !== displayTitle);
+        captionElem.textContent = showCaption ? caption : '';
+        captionElem.classList.toggle('hidden', !showCaption);
+        if (showCaption) {
+          dialog?.setAttribute(
+            'aria-describedby',
+            'editorial-lightbox-caption',
+          );
+        } else {
+          dialog?.removeAttribute('aria-describedby');
+        }
+      }
+
+      if (originalLink) {
+        originalLink.href = src;
+      }
+
+      if (announcer) {
+        const prefix =
+          groupTriggers.length > 1
+            ? `Imagem ${currentIndex + 1} de ${groupTriggers.length}: `
+            : 'Imagem ampliada: ';
+        announcer.textContent = `${prefix}${displayTitle}`;
+      }
+
+      updateGroupControls();
+      return true;
+    }
+
+    function openFromTrigger(trigger: HTMLElement) {
+      if (isProtectedByClosedSpoiler(trigger)) return;
+
+      lastActiveTrigger = trigger;
+      const { group } = resolveTriggerData(trigger);
+
+      if (group) {
+        groupTriggers = Array.from(
+          document.querySelectorAll<HTMLElement>(
+            `[data-editorial-lightbox-trigger][data-lightbox-group="${CSS.escape(group)}"]`,
+          ),
+        ).filter((el) => !isProtectedByClosedSpoiler(el));
+        currentIndex = Math.max(0, groupTriggers.indexOf(trigger));
+      } else {
+        groupTriggers = [trigger];
+        currentIndex = 0;
+      }
+
+      if (!renderTrigger(trigger)) return;
+
+      dialog?.showModal();
+      closeBtn?.focus();
+    }
+
+    function stepGroup(delta: number) {
+      if (groupTriggers.length <= 1) return;
+      currentIndex =
+        (currentIndex + delta + groupTriggers.length) % groupTriggers.length;
+      renderTrigger(groupTriggers[currentIndex]);
+    }
+
+    document.addEventListener('click', (event) => {
+      const target = (event.target as HTMLElement | null)?.closest<HTMLElement>(
+        '[data-editorial-lightbox-trigger]',
+      );
+      if (!target) return;
+      event.preventDefault();
+      openFromTrigger(target);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      const active = document.activeElement as HTMLElement | null;
+      if (!active || !active.hasAttribute('data-editorial-lightbox-trigger')) {
+        return;
+      }
+      event.preventDefault();
+      openFromTrigger(active);
+    });
+
+    closeBtn?.addEventListener('click', () => dialog.close());
+    prevBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stepGroup(-1);
+    });
+    nextBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stepGroup(1);
+    });
+
+    dialog.addEventListener('keydown', (event) => {
+      if (groupTriggers.length <= 1) return;
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        stepGroup(-1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        stepGroup(1);
+      }
+    });
+
+    dialog.addEventListener('click', (event) => {
+      const rect = dialog.getBoundingClientRect();
+      const inside =
+        rect.top <= event.clientY &&
+        event.clientY <= rect.top + rect.height &&
+        rect.left <= event.clientX &&
+        event.clientX <= rect.left + rect.width;
+      if (!inside) {
+        dialog.close();
+      }
+    });
+
+    dialog.addEventListener('close', () => {
+      if (lastActiveTrigger && typeof lastActiveTrigger.focus === 'function') {
+        lastActiveTrigger.focus({ preventScroll: true });
+      }
+    });
+  }
+
+  setupEditorialLightbox();
+  document.addEventListener('astro:page-load', setupEditorialLightbox);
+</script>
