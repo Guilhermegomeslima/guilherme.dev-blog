@@ -1,0 +1,54 @@
+---
+/**
+ * Roteador estático condicional da seção Recomendações (/recomendacoes/) — EXP-05A.
+ *
+ * Controlado por `editorial-flags.ts`:
+ * - Em builds públicos enquanto `EXPANSION_PUBLIC_FLAGS.recommendations === false`,
+ *   `getStaticPaths()` retorna `[]`, garantindo ZERO HTML em `dist/recomendacoes/`.
+ * - Na prévia local (`PREVIEW_EXPANSION=true` fora de CI/Vercel/GH Pages),
+ *   gera `/recomendacoes/` com `noindex, nofollow` para revisão visual.
+ */
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import RecommendationsCatalog from '../../components/recommendations/RecommendationsCatalog.astro';
+import {
+  isExpansionPreviewEnabled,
+  shouldGenerateSectionRoute,
+  shouldIncludeEntry,
+} from '../../utils/editorial-flags';
+import { compareRecommendations } from '../../utils/recommendations';
+
+export async function getStaticPaths() {
+  if (!shouldGenerateSectionRoute('recommendations')) {
+    return [];
+  }
+
+  const isPreview = isExpansionPreviewEnabled();
+  const allEntries = await getCollection('recommendations');
+  const visibleEntries = allEntries
+    .filter((entry) => shouldIncludeEntry('recommendations', entry.data))
+    .sort(compareRecommendations);
+
+  return [
+    {
+      params: { slug: undefined },
+      props: {
+        recommendations: visibleEntries,
+        isPreview,
+      },
+    },
+  ];
+}
+
+interface Props {
+  recommendations: CollectionEntry<'recommendations'>[];
+  isPreview: boolean;
+}
+
+const { recommendations, isPreview } = Astro.props;
+---
+
+<RecommendationsCatalog
+  recommendations={recommendations}
+  isPreview={isPreview}
+/>
