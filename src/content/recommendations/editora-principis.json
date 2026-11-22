@@ -1,0 +1,32 @@
+{
+  "name": "Editora Principis",
+  "kind": "editora",
+  "category": "livros_editoras",
+  "subcategory": "Editoras",
+  "status": "ja_utilizei",
+  "currentlyUsing": false,
+  "highlights": [
+    "Preços acessíveis",
+    "Qualidade física das edições",
+    "Coleções e boxes"
+  ],
+  "commentParagraphs": [
+    "A Principis é uma das editoras que gosto de recomendar pelo preço acessível e pela qualidade das edições. Tenho vários livros publicados por ela e considero a construção dos livros em brochura muito boa, com papel e impressão agradáveis para leitura.",
+    "Gosto especialmente dos boxes, como o de George Orwell, com 1984, A Revolução dos Bichos e Dentro da Baleia e Outros Ensaios, além de uma coleção com A Arte da Guerra, O Livro dos Cinco Anéis e O Príncipe. Também tenho livros de filosofia e xadrez da editora. Pela variedade de títulos, qualidade física e preços, considero uma ótima opção para ampliar a biblioteca pessoal."
+  ],
+  "pros": [],
+  "cons": [],
+  "image": {
+    "url": "/images/recommendations/editora-principis.webp",
+    "alt": "Logotipo oficial da Editora Principis em branco sobre fundo verde-escuro"
+  },
+  "externalLinks": [
+    {
+      "url": "https://www.cirandacultural.com.br/principis",
+      "label": "Ver catálogo oficial"
+    }
+  ],
+  "order": 2,
+  "draft": true,
+  "isDemo": false
+}

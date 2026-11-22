@@ -24,7 +24,7 @@ public/images/
 │   └── shinobido/                       # 27 assets preparados (capa, furtividade, facções, personagens, spoilers)
 ├── linux-diary/
 │   └── gnome-personalizacao/            # 12 capturas preparadas (8 integradas em draft + reservas e pendências)
-└── recomendacoes/                       # Fotos reais dos itens recomendados
+└── recommendations/                     # 2 imagens integradas em draft (KZ EDX Pro e Editora Principis)
     ├── kz-edx-pro.webp
     └── editora-principis.webp
 ```
@@ -134,12 +134,14 @@ Pasta definitiva: `public/images/linux-diary/gnome-personalizacao/`. Todos os 12
 | `[CAPTURA 07]`         | Captura do **Hide Top Bar** demonstrando a barra superior **oculta** (com aplicativo em tela cheia/maximizado)                                   | `pendente` |
 | `[CAPTURA 09 — Antes]` | Captura do **GNOME padrão** confirmada quanto à procedência/licença (ou nova captura própria) para parear com `desktop-personalizado-limpo.webp` | `pendente` |
 
-### 3.4 Recomendações (2 imagens)
+### 3.4 Recomendações (2 imagens integradas em `draft`)
 
-|    # | Seção         | Card              | Posição prevista         | Tipo                                             | Arquivo sugerido                                     | Proporção recomendada | Legenda / Alt previsto                                   | Status     |
-| ---: | ------------- | ----------------- | ------------------------ | ------------------------------------------------ | ---------------------------------------------------- | --------------------- | -------------------------------------------------------- | ---------- |
-| C-01 | Recomendações | KZ EDX Pro        | Imagem principal do card | Foto real do produto (modelo exato KZ EDX Pro)   | `public/images/recomendacoes/kz-edx-pro.webp`        | 16:10 ou 4:3          | Fotografia do fone intra-auricular KZ EDX Pro            | `pendente` |
-| C-02 | Recomendações | Editora Principis | Imagem principal do card | Foto própria dos livros/boxes físicos da editora | `public/images/recomendacoes/editora-principis.webp` | 16:10 ou 4:3          | Livros e boxes físicos publicados pela Editora Principis | `pendente` |
+Pasta definitiva: `public/images/recommendations/`. As 2 imagens enviadas pelo autor na **EXP-05B** foram convertidas para WebP preservando resolução (`1024×1024`), proporção original (1:1) e legibilidade (redução total de **203 KB → 87 KB**, `-57,4%`), e integradas aos rascunhos `kz-edx-pro.json` e `editora-principis.json`.
+
+|    # | Seção         | Card              | Posição prevista         | Ação       | Resolução   | Antes → Depois | Arquivo definitivo (`public/images/recommendations/`) | Observação                                                               | Status      |
+| ---: | ------------- | ----------------- | ------------------------ | ---------- | ----------- | -------------- | ----------------------------------------------------- | ------------------------------------------------------------------------ | ----------- |
+| C-01 | Recomendações | KZ EDX Pro        | Imagem principal do card | JPG → WebP | `1024×1024` | 127 KB → 77 KB | `kz-edx-pro.webp`                                     | Produto exato (KZ EDX Pro ciano translúcido com cabo e microfone)        | `integrada` |
+| C-02 | Recomendações | Editora Principis | Imagem principal do card | PNG → WebP | `1024×1024` | 77 KB → 9 KB   | `editora-principis.webp`                              | Identidade oficial da editora (pode ser trocada por foto própria depois) | `integrada` |
 
 ---
 
@@ -147,5 +149,5 @@ Pasta definitiva: `public/images/linux-diary/gnome-personalizacao/`. Todos os 12
 
 - **Header 2.0:** 8 imagens temáticas (`pendente`).
 - **Resenhas (Shinobido):** 27 imagens preparadas em `public/images/reviews/shinobido/`, sendo **14 integradas** no rascunho (`draft: true`) e 13 mantidas como reserva (`validada`).
-- **Diário Linux (Personalização GNOME):** 12 assets preparados em `public/images/linux-diary/gnome-personalizacao/`, sendo **8 integrados** no rascunho (`draft: true`) e 4 em reserva/aguardando definição; pendências sinalizadas para Blur my Shell (`[CAPTURA 04]`), Hide Top Bar oculta (`[CAPTURA 07]`) e GNOME padrão (`[CAPTURA 09 — Antes]`).
-- **Recomendações:** 2 fotografias reais (`pendente`).
+- **Diário Linux (Personalização GNOME):** 12 assets preparados em `public/images/linux-diary/gnome-personalizacao/`, sendo **8 integradas** no rascunho (`draft: true`) e 4 em reserva/aguardando definição; pendências sinalizadas para Blur my Shell (`[CAPTURA 04]`), Hide Top Bar oculta (`[CAPTURA 07]`) e GNOME padrão (`[CAPTURA 09 — Antes]`).
+- **Recomendações:** 2 imagens preparadas e **integradas** em `public/images/recommendations/` nos rascunhos (`draft: true`).

@@ -224,45 +224,50 @@ describe('Schemas e diretórios das novas Content Collections (EXP-02A)', () => 
   });
 
   it('os diretórios das novas coleções devem existir e manter rascunhos sob controle seguro', () => {
-    const emptyDirs = [path.resolve('src/content/recommendations')];
-
-    for (const dir of emptyDirs) {
-      assert.ok(fs.existsSync(dir), `Diretório ausente: ${dir}`);
-      const contentFiles = fs
-        .readdirSync(dir)
-        .filter((f) => /\.(md|mdx|json)$/i.test(f));
-      assert.equal(
-        contentFiles.length,
-        0,
-        `Conteúdo inesperado encontrado em ${dir}: ${contentFiles.join(', ')}`,
-      );
-    }
-
     const guardedDraftDirs: Array<{
       dir: string;
       published: boolean;
       label: string;
+      extPattern: RegExp;
+      draftPattern: RegExp;
     }> = [
       {
         dir: path.resolve('src/content/reviews'),
         published: EXPANSION_PUBLIC_FLAGS.reviews,
         label: 'Resenha',
+        extPattern: /\.(md|mdx)$/i,
+        draftPattern: /draft:\s*true/i,
       },
       {
         dir: path.resolve('src/content/linux-diary'),
         published: EXPANSION_PUBLIC_FLAGS.linuxDiary,
         label: 'Artigo do Diário Linux',
+        extPattern: /\.(md|mdx)$/i,
+        draftPattern: /draft:\s*true/i,
+      },
+      {
+        dir: path.resolve('src/content/recommendations'),
+        published: EXPANSION_PUBLIC_FLAGS.recommendations,
+        label: 'Recomendação',
+        extPattern: /\.json$/i,
+        draftPattern: /"draft":\s*true/i,
       },
     ];
 
-    for (const { dir, published, label } of guardedDraftDirs) {
+    for (const {
+      dir,
+      published,
+      label,
+      extPattern,
+      draftPattern,
+    } of guardedDraftDirs) {
       assert.ok(fs.existsSync(dir), `Diretório ausente: ${dir}`);
       if (!published) {
-        const files = fs.readdirSync(dir).filter((f) => /\.(md|mdx)$/i.test(f));
+        const files = fs.readdirSync(dir).filter((f) => extPattern.test(f));
         for (const file of files) {
           const raw = fs.readFileSync(path.join(dir, file), 'utf-8');
           assert.ok(
-            /draft:\s*true/i.test(raw),
+            draftPattern.test(raw),
             `${label} ${file} deve permanecer com draft: true enquanto a seção não for publicada`,
           );
         }

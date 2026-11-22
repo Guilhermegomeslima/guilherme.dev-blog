@@ -155,15 +155,50 @@ describe('recommendations — Proteção de publicação segura e integridade (E
     assert.ok(routeSrc.includes("shouldIncludeEntry('recommendations'"));
   });
 
-  it('src/content/recommendations deve permanecer sem entradas fictícias na EXP-05A', () => {
+  it('src/content/recommendations deve conter exatamente as 2 entradas reais em draft com imagens válidas (EXP-05B)', () => {
     const dir = path.resolve('src/content/recommendations');
     const jsonFiles = fs
       .readdirSync(dir)
-      .filter((f) => f.toLowerCase().endsWith('.json'));
-    assert.equal(
-      jsonFiles.length,
-      0,
-      `Nenhuma entrada deve ser adicionada na EXP-05A: ${jsonFiles.join(', ')}`,
+      .filter((f) => f.toLowerCase().endsWith('.json'))
+      .sort();
+    assert.deepEqual(jsonFiles, ['editora-principis.json', 'kz-edx-pro.json']);
+
+    const kz = JSON.parse(
+      fs.readFileSync(path.join(dir, 'kz-edx-pro.json'), 'utf-8'),
+    );
+    const principis = JSON.parse(
+      fs.readFileSync(path.join(dir, 'editora-principis.json'), 'utf-8'),
+    );
+
+    for (const item of [kz, principis]) {
+      assert.equal(item.draft, true);
+      assert.equal(item.isDemo, false);
+      assert.equal(item.status, 'ja_utilizei');
+      assert.equal(item.addedAt, undefined, 'addedAt não deve ser inventada');
+      assert.equal(item.commentParagraphs.length, 2);
+      assert.ok(item.image?.url, 'Imagem deve estar definida');
+      const diskPath = path.resolve(
+        'public',
+        String(item.image.url).replace(/^\//, ''),
+      );
+      assert.ok(
+        fs.existsSync(diskPath),
+        `Imagem ausente em public/: ${diskPath}`,
+      );
+    }
+
+    assert.equal(kz.category, 'audio_perifericos');
+    assert.equal(kz.currentlyUsing, true);
+    assert.ok(
+      kz.commentParagraphs[0].includes('Uso o KZ EDX Pro há mais de um ano'),
+    );
+
+    assert.equal(principis.category, 'livros_editoras');
+    assert.equal(principis.currentlyUsing, false);
+    assert.ok(
+      principis.commentParagraphs[0].includes(
+        'A Principis é uma das editoras que gosto de recomendar',
+      ),
     );
   });
 });

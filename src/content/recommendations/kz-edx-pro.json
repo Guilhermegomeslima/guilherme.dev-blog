@@ -1,0 +1,32 @@
+{
+  "name": "KZ EDX Pro",
+  "kind": "produto",
+  "category": "audio_perifericos",
+  "subcategory": "Fones de ouvido",
+  "status": "ja_utilizei",
+  "currentlyUsing": true,
+  "highlights": ["Qualidade sonora", "Custo-benefício", "Durabilidade"],
+  "commentParagraphs": [
+    "Uso o KZ EDX Pro há mais de um ano, principalmente para ouvir músicas e fazer chamadas. O que mais gosto nele é a qualidade sonora: o som é detalhado e permite escutar muito bem os vocais das músicas.",
+    "Também considero seu custo-benefício excelente. Mesmo depois de tanto tempo de uso, o fone continua funcionando perfeitamente, sem apresentar problemas relevantes. Pela qualidade e durabilidade que encontrei nele, é um produto que recomendo."
+  ],
+  "pros": [],
+  "cons": [],
+  "image": {
+    "url": "/images/recommendations/kz-edx-pro.webp",
+    "alt": "Fone de ouvido intra-auricular KZ EDX Pro na cor ciano translúcido com cabo destacável e microfone"
+  },
+  "externalLinks": [
+    {
+      "url": "https://kz-audio.com/kz-edx-pro.html",
+      "label": "Site oficial"
+    },
+    {
+      "url": "https://meli.la/2DNzdSv",
+      "label": "Ver loja"
+    }
+  ],
+  "order": 1,
+  "draft": true,
+  "isDemo": false
+}
