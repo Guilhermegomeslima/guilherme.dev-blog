@@ -3,7 +3,10 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { buildTableOfContents } from './editorial-docs.ts';
+import {
+  buildTableOfContents,
+  enhanceTechnicalHtml,
+} from './editorial-docs.ts';
 import {
   compareLinuxDiary,
   countLinuxDiaryByCategory,
@@ -184,5 +187,73 @@ describe('linux-diary — Sincronização de âncoras do sumário e publicação
     );
     assert.ok(routeSrc.includes("shouldGenerateSectionRoute('linuxDiary')"));
     assert.ok(routeSrc.includes("shouldIncludeEntry('linuxDiary'"));
+  });
+});
+
+describe('linux-diary — Integridade do tutorial Como personalizo meu GNOME (EXP-04B.2)', () => {
+  const tutorialPath = path.resolve(
+    'src/content/linux-diary/como-personalizo-meu-gnome.md',
+  );
+
+  it('deve manter draft: true, isDemo: false e sem publishedAt inventado', () => {
+    assert.ok(fs.existsSync(tutorialPath), 'Tutorial GNOME ausente');
+    const raw = fs.readFileSync(tutorialPath, 'utf-8');
+    const frontmatter = raw.split('---')[1] ?? '';
+
+    assert.match(frontmatter, /\bdraft:\s*true\b/);
+    assert.match(frontmatter, /\bisDemo:\s*false\b/);
+    assert.doesNotMatch(
+      frontmatter,
+      /\bpublishedAt:/,
+      'publishedAt não deve ser inventado antes de definição do autor',
+    );
+  });
+
+  it('todas as imagens referenciadas devem existir em public/ e não expor capturas bloqueadas', () => {
+    const raw = fs.readFileSync(tutorialPath, 'utf-8');
+    const imageRefs = [
+      ...raw.matchAll(
+        /\/images\/linux-diary\/gnome-personalizacao\/[a-z0-9-]+\.webp/gi,
+      ),
+    ].map((m) => m[0]);
+
+    const uniqueRefs = [...new Set(imageRefs)];
+    assert.equal(
+      uniqueRefs.length,
+      8,
+      `Esperadas 8 imagens únicas integradas, encontradas ${uniqueRefs.length}: ${uniqueRefs.join(', ')}`,
+    );
+
+    for (const ref of uniqueRefs) {
+      const diskPath = path.resolve('public', ref.replace(/^\//, ''));
+      assert.ok(fs.existsSync(diskPath), `Imagem ausente em public/: ${ref}`);
+    }
+
+    // Imagens que NÃO podem aparecer no tutorial
+    assert.ok(!raw.includes('sistema-sobre-fedora-gnome.webp'));
+    assert.ok(!raw.includes('gnome-padrao-overview.webp'));
+    assert.ok(!raw.includes('gnome-padrao-desktop.webp'));
+
+    // Nenhum marcador editorial visível fora de comentários HTML
+    const withoutComments = raw.replace(/<!--[\s\S]*?-->/g, '');
+    assert.doesNotMatch(withoutComments, /\[CAPTURA\s+\d+/i);
+    assert.doesNotMatch(withoutComments, /\[IMAGEM DE CAPA/i);
+  });
+
+  it('enhanceTechnicalHtml deve adaptar base URL e avisos técnicos para GitHub Pages', () => {
+    const sample =
+      '<blockquote><p>[!WARNING]\n<strong>Importante:</strong> aviso teste.</p></blockquote>' +
+      '<p><img src="/images/linux-diary/gnome-personalizacao/desktop-personalizado-limpo.webp" alt="Desktop" width="1024" height="576" /></p>';
+    const enhanced = enhanceTechnicalHtml(sample, {
+      base: '/guilherme.dev-blog/',
+    });
+
+    assert.ok(enhanced.includes('class="v2-notice v2-notice--warning"'));
+    assert.ok(
+      enhanced.includes(
+        'src="/guilherme.dev-blog/images/linux-diary/gnome-personalizacao/desktop-personalizado-limpo.webp"',
+      ),
+    );
+    assert.ok(enhanced.includes('data-editorial-lightbox-trigger="true"'));
   });
 });

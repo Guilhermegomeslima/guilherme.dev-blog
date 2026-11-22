@@ -224,10 +224,7 @@ describe('Schemas e diretórios das novas Content Collections (EXP-02A)', () => 
   });
 
   it('os diretórios das novas coleções devem existir e manter rascunhos sob controle seguro', () => {
-    const emptyDirs = [
-      path.resolve('src/content/linux-diary'),
-      path.resolve('src/content/recommendations'),
-    ];
+    const emptyDirs = [path.resolve('src/content/recommendations')];
 
     for (const dir of emptyDirs) {
       assert.ok(fs.existsSync(dir), `Diretório ausente: ${dir}`);
@@ -241,18 +238,34 @@ describe('Schemas e diretórios das novas Content Collections (EXP-02A)', () => 
       );
     }
 
-    const reviewsDir = path.resolve('src/content/reviews');
-    assert.ok(fs.existsSync(reviewsDir), `Diretório ausente: ${reviewsDir}`);
-    if (!EXPANSION_PUBLIC_FLAGS.reviews) {
-      const reviewFiles = fs
-        .readdirSync(reviewsDir)
-        .filter((f) => /\.(md|mdx)$/i.test(f));
-      for (const file of reviewFiles) {
-        const raw = fs.readFileSync(path.join(reviewsDir, file), 'utf-8');
-        assert.ok(
-          /draft:\s*true/i.test(raw),
-          `Resenha ${file} deve permanecer com draft: true enquanto a seção não for publicada`,
-        );
+    const guardedDraftDirs: Array<{
+      dir: string;
+      published: boolean;
+      label: string;
+    }> = [
+      {
+        dir: path.resolve('src/content/reviews'),
+        published: EXPANSION_PUBLIC_FLAGS.reviews,
+        label: 'Resenha',
+      },
+      {
+        dir: path.resolve('src/content/linux-diary'),
+        published: EXPANSION_PUBLIC_FLAGS.linuxDiary,
+        label: 'Artigo do Diário Linux',
+      },
+    ];
+
+    for (const { dir, published, label } of guardedDraftDirs) {
+      assert.ok(fs.existsSync(dir), `Diretório ausente: ${dir}`);
+      if (!published) {
+        const files = fs.readdirSync(dir).filter((f) => /\.(md|mdx)$/i.test(f));
+        for (const file of files) {
+          const raw = fs.readFileSync(path.join(dir, file), 'utf-8');
+          assert.ok(
+            /draft:\s*true/i.test(raw),
+            `${label} ${file} deve permanecer com draft: true enquanto a seção não for publicada`,
+          );
+        }
       }
     }
   });
