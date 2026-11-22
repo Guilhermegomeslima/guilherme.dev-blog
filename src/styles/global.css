@@ -450,3 +450,240 @@ html[data-theme='light'] .v2-portrait-vignette {
   line-height: 1.5;
   color: var(--color-v2-media-muted);
 }
+
+/* ============================================================================
+ * Infraestrutura técnica do Diário Linux (EXP-02C): TOC, avisos e código
+ * ============================================================================ */
+.v2-doc-prose h2,
+.v2-doc-prose h3 {
+  scroll-margin-top: 6rem;
+}
+
+.v2-toc-mobile {
+  margin-block: 1.5rem;
+  border: 1px solid var(--color-v2-border);
+  background-color: var(--color-v2-surface);
+}
+
+.v2-toc-mobile-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  list-style: none;
+  padding: 0.875rem 1.125rem;
+}
+
+.v2-toc-mobile-summary::-webkit-details-marker {
+  display: none;
+}
+
+.v2-toc-mobile:not([open]) .v2-toc-close-label,
+.v2-toc-mobile[open] .v2-toc-open-label {
+  display: none;
+}
+
+.v2-toc-mobile-nav {
+  border-top: 1px solid var(--color-v2-border);
+  padding: 0.75rem 1.125rem 1rem;
+}
+
+.v2-toc-sidebar-inner {
+  position: sticky;
+  top: 6rem;
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  border-left: 1px solid var(--color-v2-border);
+  padding-left: 1rem;
+}
+
+.v2-toc-title {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-v2-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-v2-accent-warm);
+}
+
+.v2-toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.v2-toc-item--sub {
+  padding-left: 0.875rem;
+}
+
+.v2-toc-link {
+  display: block;
+  padding-block: 0.2rem;
+  font-family: var(--font-v2-sans);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--color-v2-text-muted);
+  text-decoration: none;
+  transition: color var(--duration-v2-fast) var(--ease-v2-out);
+}
+
+.v2-toc-link:hover,
+.v2-toc-link[aria-current='location'] {
+  color: var(--color-v2-heading);
+}
+
+.v2-toc-link[aria-current='location'] {
+  font-weight: 500;
+  border-left: 2px solid var(--color-v2-accent);
+  padding-left: 0.5rem;
+  margin-left: -0.625rem;
+}
+
+/* Blocos de código copiáveis (ilha escura permanente para legibilidade de sintaxe) */
+.v2-code-block {
+  margin-block: 1.75rem;
+  border: 1px solid var(--color-v2-media-border-hover);
+  background-color: var(--color-v2-media-surface);
+  color: var(--color-v2-media-text);
+  box-shadow: var(--shadow-v2-card);
+}
+
+.v2-code-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--color-v2-media-border);
+  background-color: var(--color-v2-media-bg);
+  padding: 0.5rem 0.875rem;
+}
+
+.v2-code-lang {
+  font-family: var(--font-v2-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-v2-media-warm);
+}
+
+.v2-code-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.875rem;
+  cursor: pointer;
+  border: 1px solid var(--color-v2-media-border-hover);
+  background-color: var(--color-v2-media-surface);
+  padding: 0.25rem 0.625rem;
+  font-family: var(--font-v2-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-v2-media-text);
+  transition:
+    border-color var(--duration-v2-fast) var(--ease-v2-out),
+    color var(--duration-v2-fast) var(--ease-v2-out);
+}
+
+.v2-code-copy-btn:hover,
+.v2-code-copy-btn[data-copied='true'] {
+  border-color: var(--color-v2-media-warm);
+  color: var(--color-v2-media-warm);
+}
+
+.v2-code-block pre {
+  margin: 0;
+  overflow-x: auto;
+  padding: 1.125rem 1.25rem;
+  background-color: transparent;
+  font-family: var(--font-v2-mono);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--color-v2-media-text);
+}
+
+.v2-code-block pre code {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* Avisos técnicos (ícone + rótulo textual explícito, compatível com os dois temas) */
+.v2-notice {
+  margin-block: 1.75rem;
+  border: 1px solid var(--color-v2-border);
+  border-left-width: 3px;
+  background-color: var(--color-v2-surface);
+  padding: 1rem 1.25rem;
+}
+
+.v2-notice--info {
+  border-left-color: var(--color-v2-text-muted);
+}
+
+.v2-notice--tip {
+  border-left-color: var(--color-v2-accent-warm);
+}
+
+.v2-notice--warning {
+  border-left-color: var(--color-v2-accent-warm);
+  background-color: var(--color-v2-surface-raised);
+}
+
+.v2-notice--risk {
+  border-left-color: var(--color-v2-accent);
+  background-color: var(--color-v2-surface-raised);
+}
+
+.v2-notice-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.v2-notice-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-v2-accent-warm);
+}
+
+.v2-notice--risk .v2-notice-icon {
+  color: var(--color-v2-status-active);
+}
+
+.v2-notice-title {
+  font-family: var(--font-v2-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-v2-heading);
+}
+
+.v2-notice--risk .v2-notice-title {
+  color: var(--color-v2-status-active);
+}
+
+.v2-notice-body {
+  font-family: var(--font-v2-sans);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-v2-text-body);
+}
+
+.v2-notice-body > :first-child {
+  margin-top: 0;
+}
+
+.v2-notice-body > :last-child {
+  margin-bottom: 0;
+}

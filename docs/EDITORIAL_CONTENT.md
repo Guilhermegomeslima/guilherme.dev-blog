@@ -184,7 +184,12 @@ const linuxDiary = defineCollection({
   - Desktop (`xl+`): coluna lateral sticky à direita ou esquerda, sem poluir a leitura.
   - Mobile/tablet: elemento nativo `<details>` recolhível no topo do documento (funciona sem JS).
 - **Blocos de código com botão de copiar:** aprimoramento progressivo via script leve sobre `<pre><code>` (botão aparece apenas quando JS está ativo, com feedback acessível `aria-live="polite"`).
-- **Avisos técnicos e de risco:** padrão visual discreto para notas (`Nota`), atenções (`Atenção`) e riscos (`Aviso de risco`) utilizando **texto e ícone explícito (nunca apenas cor)**, coerente com os dois temas. Comandos com impacto de sistema só são publicados após revisão técnica de efeitos, privilégios e reversão.
+- **Avisos técnicos e de risco:** padrão visual discreto para notas (`Informação`), dicas (`Dica`), atenções (`Atenção`) e riscos (`Aviso de risco`) utilizando **texto e ícone explícito (nunca apenas cor)**, coerente com os dois temas. Comandos com impacto de sistema só são publicados após revisão técnica de efeitos, privilégios e reversão.
+- **Uso nos arquivos Markdown do Diário Linux (sem exigir MDX):**
+  - **Sumário automático:** gerado a partir de `##` (H2) e `###` (H3) com `TableOfContents.astro` + `buildTableOfContents()`.
+  - **Avisos técnicos:** escrever blockquotes com marcador `> [!INFO]`, `> [!TIP]`, `> [!WARNING]` ou `> [!CAUTION]` (convertidos automaticamente por `enhanceTechnicalHtml()` em `<aside class="v2-notice ...">`, ou usar `<TechnicalNotice>` em templates `.astro`).
+  - **Blocos copiáveis:** blocos cercados comuns (` ```bash `) recebem barra de linguagem e botão de copiar progressivo via `enhanceTechnicalHtml()` + `CodeBlockEnhancer.astro`.
+  - **Imagens inline:** `![alt](/images/diario-linux/... "Legenda opcional")`, processadas com `withBase()`, lazy loading, preservação de proporção e abertura em `EditorialLightbox.astro`.
 - **Data de última revisão:** exibida de forma distinta da data de publicação quando `updatedAt` (revisão técnica) estiver preenchida.
 - **Artigos relacionados:** prioriza `relatedSlugs` (seleção manual) e completa automaticamente por correspondência de tags/categoria entre registros publicáveis, evitando duplicatas.
 - **Busca local exclusiva:** reutiliza `normalizeSearchText` e `matchesSearchTerms` de `src/utils/search.ts` sobre título, resumo, tags (e termos-chave/corpo indexável, se viável), combinada com os filtros das 6 categorias na página `/diario-linux/` (sem criar busca global no blog).

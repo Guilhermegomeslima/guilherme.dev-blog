@@ -1,0 +1,109 @@
+---
+/**
+ * Aprimoramento progressivo de cópia para blocos de código `.v2-code-block` (EXP-02C).
+ *
+ * - Sem JavaScript: os blocos `<pre><code>` continuam legíveis com rolagem horizontal.
+ * - Com JavaScript: revela os botões `[data-code-copy]`, copia o texto exato do `<code>`
+ *   (preservando quebras de linha e caracteres especiais), oferece fallback sem Clipboard API
+ *   e anuncia o resultado em uma região `aria-live="polite"`.
+ * - Nunca executa comandos; apenas exibe e copia texto.
+ */
+---
+
+<div
+  id="editorial-code-copy-announcer"
+  class="sr-only"
+  aria-live="polite"
+  aria-atomic="true"
+></div>
+
+<script>
+  async function copyCodeText(text: string): Promise<boolean> {
+    if (
+      typeof navigator !== 'undefined' &&
+      navigator.clipboard &&
+      typeof navigator.clipboard.writeText === 'function'
+    ) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        // Segue para fallback abaixo
+      }
+    }
+
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      const copied = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      return copied;
+    } catch {
+      return false;
+    }
+  }
+
+  function setupCodeCopyButtons() {
+    const announcer = document.getElementById('editorial-code-copy-announcer');
+    const buttons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-code-copy]'),
+    );
+
+    for (const button of buttons) {
+      if (button.dataset.bound === 'true') continue;
+      button.dataset.bound = 'true';
+      button.hidden = false;
+
+      let resetTimer: number | undefined;
+
+      button.addEventListener('click', async () => {
+        const block = button.closest<HTMLElement>('[data-code-block]');
+        const codeElem = block?.querySelector('code');
+        const rawText = codeElem?.textContent ?? '';
+        if (!rawText) return;
+
+        const ok = await copyCodeText(rawText);
+
+        if (resetTimer) window.clearTimeout(resetTimer);
+
+        if (ok) {
+          button.textContent = 'Copiado';
+          button.dataset.copied = 'true';
+          if (announcer) {
+            announcer.textContent =
+              'Código copiado para a área de transferência.';
+          }
+        } else {
+          // Fallback manual: seleciona o bloco de código para cópia via Ctrl+C
+          if (codeElem && window.getSelection) {
+            const range = document.createRange();
+            range.selectNodeContents(codeElem);
+            const selection = window.getSelection();
+            selection?.removeAllRanges();
+            selection?.addRange(range);
+          }
+          button.textContent = 'Use Ctrl+C';
+          if (announcer) {
+            announcer.textContent =
+              'Não foi possível copiar automaticamente. O código foi selecionado para cópia manual.';
+          }
+        }
+
+        resetTimer = window.setTimeout(() => {
+          button.textContent = 'Copiar';
+          delete button.dataset.copied;
+        }, 2200);
+      });
+    }
+  }
+
+  setupCodeCopyButtons();
+  document.addEventListener('astro:page-load', setupCodeCopyButtons);
+</script>

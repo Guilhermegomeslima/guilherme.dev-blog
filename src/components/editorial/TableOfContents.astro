@@ -1,0 +1,182 @@
+---
+/**
+ * Sumário de navegação (Table of Contents) para artigos técnicos (EXP-02C).
+ *
+ * - Gerado a partir dos títulos H2 e H3 do conteúdo Markdown com âncoras estáveis.
+ * - `variant="sidebar"` para coluna lateral sticky no desktop.
+ * - `variant="mobile"` para bloco `<details>` recolhível no celular (funciona sem JS).
+ * - `variant="both"` renderiza ambos com visibilidade responsiva.
+ * - Destaque leve da seção ativa via IntersectionObserver opcional (sem dependências).
+ */
+import {
+  buildTableOfContents,
+  type RawHeading,
+} from '../../utils/editorial-docs';
+
+interface Props {
+  headings: ReadonlyArray<RawHeading>;
+  title?: string;
+  variant?: 'sidebar' | 'mobile' | 'both';
+  class?: string;
+}
+
+const {
+  headings,
+  title = 'Neste artigo',
+  variant = 'both',
+  class: className = '',
+} = Astro.props;
+
+const items = buildTableOfContents(headings);
+const showSidebar = variant === 'sidebar' || variant === 'both';
+const showMobile = variant === 'mobile' || variant === 'both';
+---
+
+{items.length > 0 && (
+  <>
+    {showMobile && (
+      <details
+        class:list={[
+          'v2-toc-mobile',
+          variant === 'both' && 'xl:hidden',
+          className,
+        ]}
+        data-toc-mobile
+      >
+        <summary class="v2-toc-mobile-summary v2-focus">
+          <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-heading)] uppercase">
+            // {title} ({items.length})
+          </span>
+          <span
+            aria-hidden="true"
+            class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase"
+          >
+            <span class="v2-toc-open-label">Abrir</span>
+            <span class="v2-toc-close-label">Fechar</span>
+          </span>
+        </summary>
+        <nav aria-label="Sumário do artigo" class="v2-toc-mobile-nav">
+          <ol class="v2-toc-list">
+            {items.map((item) => (
+              <li
+                class:list={[
+                  'v2-toc-item',
+                  item.depth === 3 && 'v2-toc-item--sub',
+                ]}
+              >
+                <a
+                  href={`#${item.slug}`}
+                  class="v2-toc-link v2-focus"
+                  data-toc-link={item.slug}
+                >
+                  {item.text}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </details>
+    )}
+
+    {showSidebar && (
+      <aside
+        class:list={[
+          'v2-toc-sidebar',
+          variant === 'both' && 'hidden xl:block',
+          className,
+        ]}
+        aria-label="Sumário lateral do artigo"
+        data-toc-sidebar
+      >
+        <div class="v2-toc-sidebar-inner">
+          <p class="v2-toc-title">// {title}</p>
+          <nav aria-label="Sumário do artigo">
+            <ol class="v2-toc-list">
+              {items.map((item) => (
+                <li
+                  class:list={[
+                    'v2-toc-item',
+                    item.depth === 3 && 'v2-toc-item--sub',
+                  ]}
+                >
+                  <a
+                    href={`#${item.slug}`}
+                    class="v2-toc-link v2-focus"
+                    data-toc-link={item.slug}
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </div>
+      </aside>
+    )}
+  </>
+)}
+
+<script>
+  function setupTableOfContents() {
+    // Fecha automaticamente o sumário recolhível no mobile ao navegar para uma âncora
+    document
+      .querySelectorAll<HTMLDetailsElement>('[data-toc-mobile]')
+      .forEach((details) => {
+        if (details.dataset.bound === 'true') return;
+        details.dataset.bound = 'true';
+        details.addEventListener('click', (event) => {
+          if ((event.target as HTMLElement | null)?.closest('a[href^="#"]')) {
+            details.open = false;
+          }
+        });
+      });
+
+    // Destaque discreto da seção ativa no sumário lateral via IntersectionObserver nativo
+    const sidebar = document.querySelector<HTMLElement>('[data-toc-sidebar]');
+    if (!sidebar || sidebar.dataset.observerBound === 'true') return;
+    if (typeof IntersectionObserver === 'undefined') return;
+    sidebar.dataset.observerBound = 'true';
+
+    const links = Array.from(
+      sidebar.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'),
+    );
+    const targets = links
+      .map((link) => {
+        const slug = link.dataset.tocLink;
+        return slug ? document.getElementById(slug) : null;
+      })
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (targets.length === 0) return;
+
+    const setActive = (slug: string) => {
+      for (const link of links) {
+        if (link.dataset.tocLink === slug) {
+          link.setAttribute('aria-current', 'location');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]?.target.id) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-96px 0px -65% 0px',
+        threshold: 0,
+      },
+    );
+
+    targets.forEach((target) => observer.observe(target));
+  }
+
+  setupTableOfContents();
+  document.addEventListener('astro:page-load', setupTableOfContents);
+</script>

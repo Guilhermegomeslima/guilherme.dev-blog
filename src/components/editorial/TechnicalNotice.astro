@@ -1,0 +1,34 @@
+---
+/**
+ * Aviso técnico reutilizável (Informação, Dica, Atenção, Aviso de risco) — EXP-02C.
+ *
+ * Sempre combina ícone explícito + rótulo textual (nunca depende apenas de cor),
+ * com contraste WCAG AA nos temas escuro e claro editorial.
+ */
+import { NOTICE_META, type NoticeVariant } from '../../utils/editorial-docs';
+
+interface Props {
+  variant?: NoticeVariant;
+  /** Título opcional sobrescrevendo o rótulo padrão da variante. */
+  title?: string;
+  class?: string;
+}
+
+const { variant = 'info', title, class: className = '' } = Astro.props;
+const meta = NOTICE_META[variant];
+const headingText = title || meta.label;
+---
+
+<aside
+  class:list={['v2-notice', `v2-notice--${meta.variant}`, className]}
+  role="note"
+  aria-label={headingText}
+>
+  <div class="v2-notice-header">
+    <span class="v2-notice-icon" set:html={meta.iconSvg} />
+    <span class="v2-notice-title">{headingText}</span>
+  </div>
+  <div class="v2-notice-body">
+    <slot />
+  </div>
+</aside>
