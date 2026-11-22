@@ -283,11 +283,20 @@ E, para mim, o resultado fica muito mais bonito que a aparência padrão.
 
 ### Antes e depois
 
-<!-- Slot editorial pendente (CAPTURA 09 — Antes): inserir aqui a captura confirmada do GNOME padrão para parear lado a lado com o resultado final, assim que o autor confirmar procedência/licença ou enviar uma nova captura limpa. -->
-
-<img src="/images/linux-diary/gnome-personalizacao/desktop-personalizado-limpo.webp" alt="Desktop Fedora com GNOME personalizado após os ajustes de extensões, tema escuro e dock inferior" title="Resultado final do GNOME personalizado com tema escuro e dock inferior." width="1024" height="576" />
-
-Para facilitar a comparação, o ideal é manter a mesma resolução e, se possível, o mesmo papel de parede nas duas imagens.
+<div class="v2-editorial-pair">
+  <figure class="v2-editorial-pair-item">
+    <div class="v2-editorial-pair-stage">
+      <img src="/images/linux-diary/gnome-personalizacao/gnome-padrao-antes.webp" alt="Área de trabalho do GNOME em sua aparência padrão com barra superior fixa e sem dock visível" title="Antes: GNOME padrão." data-lightbox-group="gnome-antes-depois" width="763" height="402" />
+    </div>
+    <figcaption class="v2-editorial-pair-caption">Antes: GNOME padrão, com a barra superior sempre visível e sem dock fixa.</figcaption>
+  </figure>
+  <figure class="v2-editorial-pair-item">
+    <div class="v2-editorial-pair-stage">
+      <img src="/images/linux-diary/gnome-personalizacao/desktop-personalizado-limpo.webp" alt="Desktop Fedora com GNOME personalizado após os ajustes de extensões, tema escuro e dock inferior" title="Depois: GNOME personalizado." data-lightbox-group="gnome-antes-depois" width="1024" height="576" />
+    </div>
+    <figcaption class="v2-editorial-pair-caption">Depois: meu GNOME personalizado com tema escuro, dock inferior e barra superior ajustada.</figcaption>
+  </figure>
+</div>
 
 ## 7. Atualizações e manutenção
 

@@ -268,8 +268,8 @@ describe('linux-diary — Integridade do tutorial Como personalizo meu GNOME (EX
     const uniqueRefs = [...new Set(imageRefs)];
     assert.equal(
       uniqueRefs.length,
-      8,
-      `Esperadas 8 imagens únicas integradas, encontradas ${uniqueRefs.length}: ${uniqueRefs.join(', ')}`,
+      9,
+      `Esperadas 9 imagens únicas integradas, encontradas ${uniqueRefs.length}: ${uniqueRefs.join(', ')}`,
     );
 
     for (const ref of uniqueRefs) {
