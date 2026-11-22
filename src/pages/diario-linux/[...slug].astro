@@ -44,6 +44,7 @@ export async function getStaticPaths() {
         }
       | {
           mode: 'environment';
+          availableDiarySlugs: string[];
           isPreview: boolean;
         }
       | {
@@ -67,6 +68,7 @@ export async function getStaticPaths() {
       params: { slug: 'meu-ambiente' },
       props: {
         mode: 'environment',
+        availableDiarySlugs: visibleEntries.map((entry) => entry.id),
         isPreview,
       },
     },
@@ -98,6 +100,7 @@ type Props =
     }
   | {
       mode: 'environment';
+      availableDiarySlugs: string[];
       isPreview: boolean;
     }
   | {
@@ -115,7 +118,10 @@ const props = Astro.props;
 {props.mode === 'index' ? (
   <LinuxDiaryCatalog entries={props.entries} isPreview={props.isPreview} />
 ) : props.mode === 'environment' ? (
-  <LinuxEnvironmentPage isPreview={props.isPreview} />
+  <LinuxEnvironmentPage
+    isPreview={props.isPreview}
+    availableDiarySlugs={props.availableDiarySlugs}
+  />
 ) : (
   <LinuxDiaryDetail
     entry={props.entry}

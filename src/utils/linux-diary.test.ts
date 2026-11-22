@@ -171,13 +171,60 @@ describe('linux-diary — Sincronização de âncoras do sumário e publicação
     );
   });
 
-  it('Meu ambiente deve permanecer sem dados presumidos até confirmação editorial', () => {
-    assert.equal(linuxEnvironmentSpec.confirmed, false);
-    const totalItems = linuxEnvironmentSpec.sections.reduce(
-      (sum, section) => sum + section.items.length,
-      0,
+  it('Meu ambiente deve conter apenas dados aprovados, sem informações privadas ou ferramentas não solicitadas', () => {
+    assert.equal(linuxEnvironmentSpec.confirmed, true);
+    assert.equal(linuxEnvironmentSpec.lastVerifiedAt, 'Novembro de 2026');
+    assert.equal(linuxEnvironmentSpec.sections.length, 5);
+
+    assert.ok(
+      linuxEnvironmentSpec.coverImage,
+      'Cover image deve estar definida',
     );
-    assert.equal(totalItems, 0);
+    const coverDiskPath = path.resolve(
+      'public',
+      linuxEnvironmentSpec.coverImage.url.replace(/^\//, ''),
+    );
+    assert.ok(fs.existsSync(coverDiskPath), 'Cover image ausente em public/');
+
+    const serialized = JSON.stringify(linuxEnvironmentSpec);
+    for (const forbidden of [
+      'Ggl-fedora',
+      'guigl',
+      '/home/',
+      'X1502ZA.315',
+      'MZVL81T0HDLB',
+      'sistema-sobre-fedora-gnome.webp',
+      'Python',
+      'GCC',
+      'Podman',
+    ]) {
+      assert.ok(
+        !serialized.includes(forbidden),
+        `Informação proibida ou não aprovada encontrada em linuxEnvironmentSpec: ${forbidden}`,
+      );
+    }
+
+    for (const expected of [
+      'ASUS Vivobook 15 X1502ZA',
+      'Intel Core i3-1220P',
+      'Intel UHD Graphics',
+      '20 GiB',
+      'SSD Samsung NVMe de 1 TB',
+      'Fedora Workstation 45',
+      'GNOME Shell 51.1',
+      'Wayland',
+      '8 GiB',
+      'lzo-rle',
+      '70%',
+      'Visual Studio Code',
+      'Antigravity',
+      'Terminal Ptyxis',
+    ]) {
+      assert.ok(
+        serialized.includes(expected),
+        `Informação aprovada ausente em linuxEnvironmentSpec: ${expected}`,
+      );
+    }
   });
 
   it('a rota src/pages/diario-linux/[...slug].astro deve estar protegida por shouldGenerateSectionRoute', () => {
