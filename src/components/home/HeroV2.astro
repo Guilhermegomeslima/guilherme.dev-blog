@@ -82,17 +82,32 @@ import { withBase } from '../../utils/base';
       aquilo que merece ser registrado.
     </p>
 
-    <a
-      href="#acervo"
-      class="v2-focus group border-v2-accent hover:border-v2-text font-v2-sans text-v2-text mt-12 inline-flex items-center gap-5 border-b pb-3 text-[0.625rem] tracking-[0.2em] uppercase transition-colors motion-reduce:transition-none"
-    >
-      Explorar o acervo
-      <span
-        aria-hidden="true"
-        class="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+    <div class="mt-12 flex flex-col items-start gap-4">
+      <a
+        href="#acervo"
+        class="v2-focus group border-v2-accent hover:border-v2-text font-v2-sans text-v2-text inline-flex items-center gap-5 border-b pb-3 text-[0.625rem] tracking-[0.2em] uppercase transition-colors motion-reduce:transition-none"
       >
-        →
-      </span>
-    </a>
+        Explorar o acervo
+        <span
+          aria-hidden="true"
+          class="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+        >
+          →
+        </span>
+      </a>
+
+      <a
+        href={withBase('/sobre/')}
+        class="v2-focus group font-v2-sans text-v2-text-muted hover:text-v2-text inline-flex min-h-8 items-center gap-3 text-[0.5625rem] tracking-[0.22em] uppercase transition-colors motion-reduce:transition-none"
+      >
+        Conheça o autor
+        <span
+          aria-hidden="true"
+          class="text-v2-accent-warm/80 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-v2-accent-warm motion-reduce:transition-none"
+        >
+          →
+        </span>
+      </a>
+    </div>
   </div>
 </section>
