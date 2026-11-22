@@ -187,6 +187,126 @@ const gallery = defineCollection({
   }),
 });
 
+const reviews = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/reviews' }),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string().optional(),
+    description: z.string(),
+    mediaType: z.enum(['jogo', 'filme', 'livro']),
+    workTitle: z.string(),
+    publishedAt: z.coerce.date().optional(),
+    updatedAt: z.coerce.date().optional(),
+    tags: z.array(z.string()).default([]),
+    coverImage: z
+      .object({
+        url: z.string(),
+        alt: z.string(),
+        caption: z.string().optional(),
+      })
+      .optional(),
+    rating: z.number().min(0).max(100).optional(),
+    relatedWork: z
+      .object({
+        collection: z.enum(['games', 'movies', 'books']),
+        id: z.string(),
+      })
+      .optional(),
+    relatedLinks: z
+      .array(
+        z.object({
+          label: z.string(),
+          href: z.string(),
+        }),
+      )
+      .default([]),
+    hasSpoilers: z.boolean().default(false),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(true),
+    isDemo: z.boolean().default(false),
+  }),
+});
+
+const linuxDiary = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/linux-diary' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.enum([
+      'tutoriais',
+      'configuracoes',
+      'relatos',
+      'solucoes',
+      'programas',
+      'comandos',
+    ]),
+    level: z
+      .enum([
+        'iniciante',
+        'intermediario',
+        'iniciante_intermediario',
+        'avancado',
+      ])
+      .optional(),
+    environment: z
+      .object({
+        distro: z.string(),
+        desktop: z.string().optional(),
+        testedVersions: z.array(z.string()).default([]),
+      })
+      .optional(),
+    publishedAt: z.coerce.date().optional(),
+    updatedAt: z.coerce.date().optional(),
+    tags: z.array(z.string()).default([]),
+    coverImage: z
+      .object({
+        url: z.string(),
+        alt: z.string(),
+        caption: z.string().optional(),
+      })
+      .optional(),
+    relatedSlugs: z.array(z.string()).default([]),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(true),
+    isDemo: z.boolean().default(false),
+  }),
+});
+
+const recommendations = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/recommendations' }),
+  schema: z.object({
+    name: z.string(),
+    kind: z.enum(['produto', 'edicao', 'colecao', 'editora']).optional(),
+    category: z.enum(['audio_perifericos', 'livros_editoras']),
+    subcategory: z.string().optional(),
+    status: z.enum(['ja_utilizei', 'pesquisado', 'lista_interesse']),
+    currentlyUsing: z.boolean().default(false),
+    highlights: z.array(z.string()).default([]),
+    commentParagraphs: z.array(z.string()).min(1),
+    pros: z.array(z.string()).default([]),
+    cons: z.array(z.string()).default([]),
+    image: z
+      .object({
+        url: z.string(),
+        alt: z.string(),
+      })
+      .optional(),
+    externalLinks: z
+      .array(
+        z.object({
+          url: z.url(),
+          label: z.string(),
+        }),
+      )
+      .default([]),
+    addedAt: z.coerce.date().optional(),
+    updatedAt: z.coerce.date().optional(),
+    order: z.number().int().optional(),
+    draft: z.boolean().default(true),
+    isDemo: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   articles,
   projects,
@@ -196,4 +316,7 @@ export const collections = {
   opensource,
   books,
   gallery,
+  reviews,
+  linuxDiary,
+  recommendations,
 };

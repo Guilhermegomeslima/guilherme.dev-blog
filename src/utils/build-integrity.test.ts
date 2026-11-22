@@ -4,6 +4,10 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { CANONICAL_SITE } from './seo.ts';
+import {
+  getUnpublishedExpansionPrefixes,
+  isExpansionPreviewEnabled,
+} from './editorial-flags.ts';
 
 const distDir = path.resolve('dist');
 const contentDir = path.resolve('src/content');
@@ -411,6 +415,43 @@ describe('Auditoria Pós-Build — Integridade Dinâmica de Rotas, Links e Ativo
           `<link rel="canonical" href="${CANONICAL_SITE}/opensource/"`,
         ),
       );
+    });
+  });
+
+  describe('Proteção de Publicação da Expansão Editorial (EXP-02A)', () => {
+    it('seções não aprovadas da expansão não devem gerar arquivos em dist/ nem constar no sitemap público', () => {
+      if (isExpansionPreviewEnabled()) return;
+
+      const unpublishedPrefixes = getUnpublishedExpansionPrefixes();
+      const sitemapPath = path.join(distDir, 'sitemap.xml');
+      const sitemapXml = fs.existsSync(sitemapPath)
+        ? fs.readFileSync(sitemapPath, 'utf-8')
+        : '';
+
+      for (const prefix of unpublishedPrefixes) {
+        const sectionDir = path.join(distDir, prefix);
+        assert.equal(
+          fs.existsSync(sectionDir),
+          false,
+          `Diretório não aprovado encontrado no build público: dist/${prefix}/`,
+        );
+
+        const leakedHtml = htmlFiles.filter((file) => {
+          const rel = path.relative(distDir, file).split(path.sep)[0];
+          return rel === prefix;
+        });
+        assert.equal(
+          leakedHtml.length,
+          0,
+          `Páginas não aprovadas vazaram em dist/${prefix}/: ${leakedHtml.join(', ')}`,
+        );
+
+        assert.equal(
+          sitemapXml.includes(`${CANONICAL_SITE}/${prefix}/`),
+          false,
+          `Rota não aprovada /${prefix}/ vazou no sitemap.xml`,
+        );
+      }
     });
   });
 

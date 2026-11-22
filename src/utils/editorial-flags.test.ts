@@ -1,0 +1,245 @@
+/// <reference path="../types/node-test.d.ts" />
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {
+  EXPANSION_PUBLIC_FLAGS,
+  EXPANSION_SECTIONS,
+  getPublishedExpansionStaticRoutes,
+  getUnpublishedExpansionPrefixes,
+  isCiOrHostedProduction,
+  isExpansionPreviewEnabled,
+  isSectionEnabled,
+  isSectionPubliclyPublished,
+  shouldGenerateSectionRoute,
+  shouldIncludeEntry,
+  shouldIncludeInSitemap,
+  type ExpansionSection,
+} from './editorial-flags.ts';
+
+const ALL_SECTIONS: ExpansionSection[] = [
+  'reviews',
+  'linuxDiary',
+  'recommendations',
+];
+
+describe('editorial-flags — Controle de publicação segura (EXP-02A)', () => {
+  it('todas as três novas seções devem iniciar desativadas para publicação pública', () => {
+    for (const section of ALL_SECTIONS) {
+      assert.equal(EXPANSION_PUBLIC_FLAGS[section], false);
+      assert.equal(isSectionPubliclyPublished(section), false);
+    }
+    assert.deepEqual(getPublishedExpansionStaticRoutes(), []);
+    assert.deepEqual(getUnpublishedExpansionPrefixes().sort(), [
+      'diario-linux',
+      'recomendacoes',
+      'resenhas',
+    ]);
+  });
+
+  it('deve bloquear a geração de rotas e entradas em ambiente padrão sem preview', () => {
+    const cleanEnv = {};
+    for (const section of ALL_SECTIONS) {
+      assert.equal(isSectionEnabled(section, cleanEnv), false);
+      assert.equal(shouldGenerateSectionRoute(section, cleanEnv), false);
+      assert.equal(
+        shouldIncludeEntry(section, { draft: false, isDemo: false }, cleanEnv),
+        false,
+      );
+      assert.equal(
+        shouldIncludeEntry(section, { draft: true, isDemo: false }, cleanEnv),
+        false,
+      );
+      assert.equal(shouldIncludeInSitemap(section), false);
+    }
+  });
+
+  it('deve permitir prévia local exclusivamente fora de Vercel, GitHub Actions e CI', () => {
+    const localPreviewEnv = { PREVIEW_EXPANSION: 'true' };
+    assert.equal(isCiOrHostedProduction(localPreviewEnv), false);
+    assert.equal(isExpansionPreviewEnabled(localPreviewEnv), true);
+
+    for (const section of ALL_SECTIONS) {
+      assert.equal(isSectionEnabled(section, localPreviewEnv), true);
+      assert.equal(shouldGenerateSectionRoute(section, localPreviewEnv), true);
+      assert.equal(
+        shouldIncludeEntry(
+          section,
+          { draft: true, isDemo: false },
+          localPreviewEnv,
+        ),
+        true,
+      );
+      assert.equal(
+        shouldIncludeEntry(
+          section,
+          { draft: false, isDemo: true },
+          localPreviewEnv,
+        ),
+        false,
+      );
+      // Preview local NUNCA libera entrada no sitemap canônico
+      assert.equal(shouldIncludeInSitemap(section), false);
+    }
+  });
+
+  it('deve bloquear PREVIEW_EXPANSION=true quando executado na Vercel, GitHub Actions ou CI', () => {
+    const hostedEnvs = [
+      { PREVIEW_EXPANSION: 'true', VERCEL: '1' },
+      { PREVIEW_EXPANSION: 'true', VERCEL: 'true' },
+      { PREVIEW_EXPANSION: 'true', GITHUB_ACTIONS: 'true' },
+      { PREVIEW_EXPANSION: 'true', CI: 'true' },
+    ];
+
+    for (const env of hostedEnvs) {
+      assert.equal(isCiOrHostedProduction(env), true);
+      assert.equal(isExpansionPreviewEnabled(env), false);
+      for (const section of ALL_SECTIONS) {
+        assert.equal(shouldGenerateSectionRoute(section, env), false);
+        assert.equal(
+          shouldIncludeEntry(section, { draft: false, isDemo: false }, env),
+          false,
+        );
+      }
+    }
+  });
+
+  it('quando uma seção for aprovada (flag=true), deve bloquear draft e isDemo em produção e liberar no sitemap apenas itens publicáveis', () => {
+    const publishedFlags = {
+      reviews: true,
+      linuxDiary: false,
+      recommendations: false,
+    } as const;
+    const prodEnv = { VERCEL: '1' };
+
+    assert.equal(
+      shouldGenerateSectionRoute('reviews', prodEnv, publishedFlags),
+      true,
+    );
+    assert.equal(
+      shouldGenerateSectionRoute('linuxDiary', prodEnv, publishedFlags),
+      false,
+    );
+
+    // Publicado real passa
+    assert.equal(
+      shouldIncludeEntry(
+        'reviews',
+        { draft: false, isDemo: false },
+        prodEnv,
+        publishedFlags,
+      ),
+      true,
+    );
+    // Rascunho é bloqueado em produção mesmo com a seção ativa
+    assert.equal(
+      shouldIncludeEntry(
+        'reviews',
+        { draft: true, isDemo: false },
+        prodEnv,
+        publishedFlags,
+      ),
+      false,
+    );
+    // Demo é bloqueado
+    assert.equal(
+      shouldIncludeEntry(
+        'reviews',
+        { draft: false, isDemo: true },
+        prodEnv,
+        publishedFlags,
+      ),
+      false,
+    );
+
+    // Sitemap aceita apenas itens publicáveis da seção aprovada
+    assert.equal(
+      shouldIncludeInSitemap(
+        'reviews',
+        { draft: false, isDemo: false },
+        publishedFlags,
+      ),
+      true,
+    );
+    assert.equal(
+      shouldIncludeInSitemap(
+        'reviews',
+        { draft: true, isDemo: false },
+        publishedFlags,
+      ),
+      false,
+    );
+    assert.equal(
+      shouldIncludeInSitemap(
+        'linuxDiary',
+        { draft: false, isDemo: false },
+        publishedFlags,
+      ),
+      false,
+    );
+
+    assert.deepEqual(getPublishedExpansionStaticRoutes(publishedFlags), [
+      '/resenhas/',
+    ]);
+    assert.deepEqual(getUnpublishedExpansionPrefixes(publishedFlags).sort(), [
+      'diario-linux',
+      'recomendacoes',
+    ]);
+  });
+
+  it('rotas e prefixos das três seções devem corresponder à especificação sem colidir com rotas existentes', () => {
+    assert.equal(EXPANSION_SECTIONS.reviews.indexRoute, '/resenhas/');
+    assert.equal(EXPANSION_SECTIONS.linuxDiary.indexRoute, '/diario-linux/');
+    assert.equal(
+      EXPANSION_SECTIONS.recommendations.indexRoute,
+      '/recomendacoes/',
+    );
+    assert.deepEqual(EXPANSION_SECTIONS.linuxDiary.extraRoutes, [
+      '/diario-linux/meu-ambiente/',
+    ]);
+  });
+});
+
+describe('Schemas e diretórios das novas Content Collections (EXP-02A)', () => {
+  it('src/content.config.ts deve registrar reviews, linuxDiary e recommendations com draft default true', () => {
+    const configPath = path.resolve('src/content.config.ts');
+    const raw = fs.readFileSync(configPath, 'utf-8');
+
+    assert.ok(raw.includes('const reviews = defineCollection('));
+    assert.ok(raw.includes('const linuxDiary = defineCollection('));
+    assert.ok(raw.includes('const recommendations = defineCollection('));
+    assert.ok(raw.includes("base: './src/content/reviews'"));
+    assert.ok(raw.includes("base: './src/content/linux-diary'"));
+    assert.ok(raw.includes("base: './src/content/recommendations'"));
+
+    const draftDefaultMatches = raw.match(
+      /draft:\s*z\.boolean\(\)\.default\(true\)/g,
+    );
+    assert.equal(
+      draftDefaultMatches?.length,
+      3,
+      'As três novas coleções devem definir draft: z.boolean().default(true)',
+    );
+  });
+
+  it('os diretórios das novas coleções devem existir sem conteúdo fictício nesta etapa', () => {
+    const expectedDirs = [
+      path.resolve('src/content/reviews'),
+      path.resolve('src/content/linux-diary'),
+      path.resolve('src/content/recommendations'),
+    ];
+
+    for (const dir of expectedDirs) {
+      assert.ok(fs.existsSync(dir), `Diretório ausente: ${dir}`);
+      const contentFiles = fs
+        .readdirSync(dir)
+        .filter((f) => /\.(md|mdx|json)$/i.test(f));
+      assert.equal(
+        contentFiles.length,
+        0,
+        `Conteúdo inesperado encontrado em ${dir} durante EXP-02A: ${contentFiles.join(', ')}`,
+      );
+    }
+  });
+});
