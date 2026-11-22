@@ -1,6 +1,8 @@
 /// <reference path="../types/node-test.d.ts" />
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import {
   getVisibleNavDropdownGroups,
   getVisiblePrimaryNavLinks,
@@ -153,5 +155,37 @@ describe('navigation — Detecção de rota ativa na Vercel e no GitHub Pages (E
       ),
       true,
     );
+  });
+});
+
+describe('navigation — Imagens e alinhamento estrutural dos dropdowns (EXP-06B)', () => {
+  it('todos os 8 destinos dos dropdowns devem possuir imagem existente em public/', () => {
+    const allItems = NAV_DROPDOWN_GROUPS.flatMap((g) => g.items);
+    assert.equal(allItems.length, 8);
+
+    for (const item of allItems) {
+      assert.ok(item.image?.src, `Imagem ausente para ${item.label}`);
+      const diskPath = path.resolve(
+        'public',
+        item.image.src.replace(/^\//, ''),
+      );
+      assert.ok(
+        fs.existsSync(diskPath),
+        `Arquivo de imagem ausente em public/: ${item.image.src}`,
+      );
+    }
+  });
+
+  it('HeaderDropdown.astro deve ancorar todos os painéis pela mesma borda direita e largura consistente', () => {
+    const dropdownSrc = fs.readFileSync(
+      path.resolve('src/components/layout/HeaderDropdown.astro'),
+      'utf-8',
+    );
+    assert.ok(
+      !dropdownSrc.includes('<li class="relative" data-header-dropdown'),
+      'O <li> do dropdown não deve ser relative para que os 3 painéis compartilhem a borda direita do header',
+    );
+    assert.ok(dropdownSrc.includes('xl:right-[4.5rem]'));
+    assert.ok(dropdownSrc.includes('w-[480px]'));
   });
 });

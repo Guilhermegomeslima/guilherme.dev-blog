@@ -29,7 +29,7 @@ const dropdownGroups = getVisibleNavDropdownGroups();
   class="border-v2-border/70 relative z-30 border-b bg-v2-bg"
   data-site-header
 >
-  <div class="mx-auto flex w-full max-w-[120rem] flex-wrap items-center justify-between gap-x-4 px-4 sm:px-6 xl:flex-nowrap xl:gap-x-6 xl:px-[4.5rem]">
+  <div class="relative mx-auto flex w-full max-w-[120rem] flex-wrap items-center justify-between gap-x-4 px-4 sm:px-6 xl:flex-nowrap xl:gap-x-6 xl:px-[4.5rem]">
     {/* Marca */}
     <a
       href={withBase('/')}
@@ -105,11 +105,7 @@ const dropdownGroups = getVisibleNavDropdownGroups();
         )}
 
         {dropdownGroups.map((group) => (
-          <HeaderDropdown
-            group={group}
-            currentPath={currentPath}
-            alignRight={group.id !== 'cultura'}
-          />
+          <HeaderDropdown group={group} currentPath={currentPath} />
         ))}
       </ul>
     </nav>

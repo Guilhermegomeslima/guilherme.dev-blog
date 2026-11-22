@@ -11,15 +11,9 @@ Todas as imagens locais definitivas da expansão seguem o padrão já adotado em
 
 ```text
 public/images/
-├── header/                              # Miniaturas dos 8 cards dos dropdowns do Header 2.0
-│   ├── jogos.webp
-│   ├── filmes.webp
-│   ├── musica.webp
-│   ├── livros.webp
+├── header/                              # 2 assets novos (Diário Linux e Recomendações); demais 6 reutilizados de public/images/home/
 │   ├── diario-linux.webp
-│   ├── open-source.webp
-│   ├── recomendacoes.webp
-│   └── galeria.webp
+│   └── recomendacoes.webp
 ├── reviews/
 │   └── shinobido/                       # 27 assets preparados (capa, furtividade, facções, personagens, spoilers)
 ├── linux-diary/
@@ -56,20 +50,20 @@ public/images/
 
 Legenda de status: `pendente` | `recebida` | `validada` | `integrada`
 
-### 3.1 Header 2.0 — Mini-cards dos dropdowns (8 imagens)
+### 3.1 Header 2.0 — Mini-cards dos dropdowns (8 imagens integradas na EXP-06B)
 
-|    # | Seção      | Componente / Destino      | Posição prevista | Direção temática aprovada (`HEADER_2_0.md` §5)                                          | Arquivo sugerido                          | Proporção recomendada | Legenda prevista | Status     |
-| ---: | ---------- | ------------------------- | ---------------- | --------------------------------------------------------------------------------------- | ----------------------------------------- | --------------------- | ---------------- | ---------- |
-| H-01 | Header 2.0 | Cultura → Jogos           | Card 1 (2×2)     | Atmosfera de jogos sombria, aventura ou estética japonesa feudal coerente com o blog    | `public/images/header/jogos.webp`         | 16:10 ou 16:9         | — (decorativa)   | `pendente` |
-| H-02 | Header 2.0 | Cultura → Filmes          | Card 2 (2×2)     | Cinema, iluminação dramática, projetores, salas escuras ou composições cinematográficas | `public/images/header/filmes.webp`        | 16:10 ou 16:9         | — (decorativa)   | `pendente` |
-| H-03 | Header 2.0 | Cultura → Música          | Card 3 (2×2)     | Instrumentos, discos, fones ou estúdios com iluminação controlada                       | `public/images/header/musica.webp`        | 16:10 ou 16:9         | — (decorativa)   | `pendente` |
-| H-04 | Header 2.0 | Cultura → Livros          | Card 4 (2×2)     | Bibliotecas, livros, madeira, papel, estantes e ambientes contemplativos                | `public/images/header/livros.webp`        | 16:10 ou 16:9         | — (decorativa)   | `pendente` |
-| H-05 | Header 2.0 | Tecnologia → Diário Linux | Card 1 (2×1)     | Terminal, desktop Linux, ambiente de desenvolvimento ou documentação/configuração       | `public/images/header/diario-linux.webp`  | 16:10 ou 16:9         | — (decorativa)   | `pendente` |
-| H-06 | Header 2.0 | Tecnologia → Open Source  | Card 2 (2×1)     | Código, ferramentas de desenvolvimento, software livre ou elementos tecnológicos        | `public/images/header/open-source.webp`   | 16:10 ou 16:9         | — (decorativa)   | `pendente` |
-| H-07 | Header 2.0 | Acervo → Recomendações    | Card 1 (2×1)     | Produtos, equipamentos ou objetos sobre superfícies escuras                             | `public/images/header/recomendacoes.webp` | 16:10 ou 16:9         | — (decorativa)   | `pendente` |
-| H-08 | Header 2.0 | Acervo → Galeria          | Card 2 (2×1)     | Composições fotográficas ou artísticas, wallpapers e atmosferas da galeria              | `public/images/header/galeria.webp`       | 16:10 ou 16:9         | — (decorativa)   | `pendente` |
+Conforme auditoria da **EXP-06B**, 6 destinos reutilizam diretamente assets horizontais já existentes em `public/images/home/` (sem duplicação de arquivo, via `withBase()`) e os 2 destinos inéditos (`Diário Linux` e `Recomendações`) receberam assets próprios convertidos para WebP em `public/images/header/`.
 
-> **Nota:** Se o autor desejar, alguns destinos já existentes (`jogos`, `filmes`, `musica`, `livros`, `open-source`, `galeria`) possuem fotos temáticas em `public/images/home/*-card.webp`, mas nenhuma será reaproveitada no Header 2.0 sem aprovação explícita.
+|    # | Seção      | Componente / Destino      | Posição prevista | Origem / Asset definitivo                  | Resolução   | Observação                                            | Status      |
+| ---: | ---------- | ------------------------- | ---------------- | ------------------------------------------ | ----------- | ----------------------------------------------------- | ----------- |
+| H-01 | Header 2.0 | Cultura → Jogos           | Card 1 (2×2)     | `public/images/home/jogos-card.webp`       | `1400×875`  | Mesma imagem do card Jogos na Home (sem duplicação)   | `integrada` |
+| H-02 | Header 2.0 | Cultura → Filmes          | Card 2 (2×2)     | `public/images/home/filmes-card.webp`      | `1200×1600` | Mesma imagem do card Filmes na Home (sem duplicação)  | `integrada` |
+| H-03 | Header 2.0 | Cultura → Música          | Card 3 (2×2)     | `public/images/home/musica-card.webp`      | `910×604`   | Mesma imagem do card Música na Home (sem duplicação)  | `integrada` |
+| H-04 | Header 2.0 | Cultura → Livros          | Card 4 (2×2)     | `public/images/home/livros-card.webp`      | `768×1365`  | Mesma imagem do card Livros na Home (sem duplicação)  | `integrada` |
+| H-05 | Header 2.0 | Tecnologia → Diário Linux | Card 1 (2×1)     | `public/images/header/diario-linux.webp`   | `1024×576`  | Novo asset enviado na EXP-06B (27 KB → 14 KB WebP)    | `integrada` |
+| H-06 | Header 2.0 | Tecnologia → Open Source  | Card 2 (2×1)     | `public/images/home/open-source-card.webp` | `1170×1439` | Mesma imagem do card Open Source na Home (sem cópia)  | `integrada` |
+| H-07 | Header 2.0 | Acervo → Recomendações    | Card 1 (2×1)     | `public/images/header/recomendacoes.webp`  | `1024×682`  | Novo asset enviado na EXP-06B (149 KB → 80 KB WebP)   | `integrada` |
+| H-08 | Header 2.0 | Acervo → Galeria          | Card 2 (2×1)     | `public/images/home/galeria-card.webp`     | `1200×672`  | Mesma imagem do card Galeria na Home (sem duplicação) | `integrada` |
 
 ### 3.2 Resenhas — _Shinobido: uma joia esquecida do PS2_ (27 assets preparados; 14 integrados em `draft`)
 
@@ -147,7 +141,7 @@ Pasta definitiva: `public/images/recommendations/`. As 2 imagens enviadas pelo a
 
 ## 4. Resumo quantitativo de pendências
 
-- **Header 2.0:** 8 imagens temáticas (`pendente`).
+- **Header 2.0:** 8 imagens **integradas** (6 reutilizadas de `public/images/home/` + 2 novas em `public/images/header/`).
 - **Resenhas (Shinobido):** 27 imagens preparadas em `public/images/reviews/shinobido/`, sendo **14 integradas** no rascunho (`draft: true`) e 13 mantidas como reserva (`validada`).
 - **Diário Linux (Personalização GNOME):** 12 assets preparados em `public/images/linux-diary/gnome-personalizacao/`, sendo **8 integradas** no rascunho (`draft: true`) e 4 em reserva/aguardando definição; pendências sinalizadas para Blur my Shell (`[CAPTURA 04]`), Hide Top Bar oculta (`[CAPTURA 07]`) e GNOME padrão (`[CAPTURA 09 — Antes]`).
 - **Recomendações:** 2 imagens preparadas e **integradas** em `public/images/recommendations/` nos rascunhos (`draft: true`).

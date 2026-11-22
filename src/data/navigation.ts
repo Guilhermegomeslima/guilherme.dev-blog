@@ -75,6 +75,12 @@ export const NAV_DROPDOWN_GROUPS: readonly NavDropdownGroup[] = [
         href: '/jogos/',
         description: 'Biblioteca e avaliações',
         available: true,
+        image: {
+          src: '/images/home/jogos-card.webp',
+          width: 1400,
+          height: 875,
+          position: 'object-[50%_40%]',
+        },
       },
       {
         id: 'filmes',
@@ -82,6 +88,12 @@ export const NAV_DROPDOWN_GROUPS: readonly NavDropdownGroup[] = [
         href: '/filmes/',
         description: 'Cinema e avaliações',
         available: true,
+        image: {
+          src: '/images/home/filmes-card.webp',
+          width: 1200,
+          height: 1600,
+          position: 'object-[35%_50%]',
+        },
       },
       {
         id: 'musica',
@@ -89,6 +101,12 @@ export const NAV_DROPDOWN_GROUPS: readonly NavDropdownGroup[] = [
         href: '/musica/',
         description: 'Artistas e álbuns',
         available: true,
+        image: {
+          src: '/images/home/musica-card.webp',
+          width: 910,
+          height: 604,
+          position: 'object-[50%_78%]',
+        },
       },
       {
         id: 'livros',
@@ -96,6 +114,12 @@ export const NAV_DROPDOWN_GROUPS: readonly NavDropdownGroup[] = [
         href: '/livros/',
         description: 'Leituras e biblioteca',
         available: true,
+        image: {
+          src: '/images/home/livros-card.webp',
+          width: 768,
+          height: 1365,
+          position: 'object-center',
+        },
       },
     ],
   },
@@ -112,6 +136,12 @@ export const NAV_DROPDOWN_GROUPS: readonly NavDropdownGroup[] = [
         description: 'Tutoriais e configurações',
         available: false,
         expansionSection: 'linuxDiary',
+        image: {
+          src: '/images/header/diario-linux.webp',
+          width: 1024,
+          height: 576,
+          position: 'object-[70%_70%]',
+        },
       },
       {
         id: 'opensource',
@@ -119,6 +149,12 @@ export const NAV_DROPDOWN_GROUPS: readonly NavDropdownGroup[] = [
         href: '/opensource/',
         description: 'Programas e ferramentas',
         available: true,
+        image: {
+          src: '/images/home/open-source-card.webp',
+          width: 1170,
+          height: 1439,
+          position: 'object-center',
+        },
       },
     ],
   },
@@ -135,6 +171,12 @@ export const NAV_DROPDOWN_GROUPS: readonly NavDropdownGroup[] = [
         description: 'Produtos e coleções',
         available: false,
         expansionSection: 'recommendations',
+        image: {
+          src: '/images/header/recomendacoes.webp',
+          width: 1024,
+          height: 682,
+          position: 'object-[60%_45%]',
+        },
       },
       {
         id: 'galeria',
@@ -142,6 +184,12 @@ export const NAV_DROPDOWN_GROUPS: readonly NavDropdownGroup[] = [
         href: '/galeria/',
         description: 'Imagens e wallpapers',
         available: true,
+        image: {
+          src: '/images/home/galeria-card.webp',
+          width: 1200,
+          height: 672,
+          position: 'object-[50%_55%]',
+        },
       },
     ],
   },

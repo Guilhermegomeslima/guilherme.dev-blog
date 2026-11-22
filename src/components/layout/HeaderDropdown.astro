@@ -1,11 +1,14 @@
 ---
 /**
- * Dropdown cinematográfico do Header 2.0 (docs/HEADER_2_0.md §2–§3 — EXP-06A).
+ * Dropdown cinematográfico do Header 2.0 (docs/HEADER_2_0.md §2–§3 — EXP-06A/06B).
  *
  * - Padrão WAI-ARIA Disclosure Navigation (`<button aria-expanded aria-controls>`).
  * - Abertura exclusivamente por clique/teclado (nunca hover).
- * - Mini-cards em 2 colunas como ilhas escuras (`--color-v2-media-*`), com espaço
- *   reservado para imagens temáticas definitivas na EXP-06B.
+ * - Alinhamento estrutural unificado: todos os três painéis ancoram na mesma
+ *   borda direita do container interno do header (`right-4 sm:right-6 xl:right-[4.5rem]`)
+ *   com largura consistente no desktop (`w-[480px]`).
+ * - Mini-cards em 2 colunas como ilhas escuras (`--color-v2-media-*`) com imagens
+ *   temáticas e overlay escuro garantindo contraste nos temas claro e escuro.
  */
 import type { NavDropdownGroup } from '../../data/navigation';
 import { isDropdownGroupActive, isNavRouteActive } from '../../data/navigation';
@@ -14,17 +17,16 @@ import { withBase } from '../../utils/base';
 interface Props {
   group: NavDropdownGroup;
   currentPath: string;
-  alignRight?: boolean;
 }
 
-const { group, currentPath, alignRight = false } = Astro.props;
+const { group, currentPath } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const isGroupActive = isDropdownGroupActive(currentPath, group, base);
 const panelId = `header-dropdown-${group.id}`;
 const isSingleItem = group.items.length === 1;
 ---
 
-<li class="relative" data-header-dropdown={group.id}>
+<li data-header-dropdown={group.id}>
   <button
     type="button"
     data-dropdown-trigger
@@ -58,15 +60,9 @@ const isSingleItem = group.items.length === 1;
   <div
     id={panelId}
     data-dropdown-panel
-    data-dropdown-align={alignRight ? 'right' : 'left'}
+    data-dropdown-align="right"
     hidden
-    class:list={[
-      'v2-shadow-elevated absolute top-full z-40 border border-v2-border bg-v2-surface p-3 opacity-0 transition-opacity duration-150 motion-reduce:transition-none',
-      alignRight ? 'right-0' : 'left-0',
-      isSingleItem
-        ? 'w-[260px] max-w-[calc(100vw-2rem)]'
-        : 'w-[480px] max-w-[calc(100vw-2rem)]',
-    ]}
+    class="v2-shadow-elevated absolute top-full right-4 z-40 w-[480px] max-w-[calc(100vw-2rem)] border border-v2-border bg-v2-surface p-3 opacity-0 transition-opacity duration-150 motion-reduce:transition-none sm:right-6 xl:right-[4.5rem]"
   >
     <ul
       class:list={['grid gap-3', isSingleItem ? 'grid-cols-1' : 'grid-cols-2']}
@@ -82,13 +78,12 @@ const isSingleItem = group.items.length === 1;
               data-dropdown-link
               aria-current={isCurrent ? 'page' : undefined}
               class:list={[
-                'v2-focus group/card relative flex min-h-[100px] flex-col justify-end overflow-hidden border bg-v2-media-surface p-4 transition-colors duration-150 motion-reduce:transition-none',
+                'v2-focus group/card relative flex min-h-[104px] flex-col justify-end overflow-hidden border bg-v2-media-surface p-4 transition-colors duration-200 motion-reduce:transition-none',
                 isCurrent
-                  ? 'border-v2-accent-warm/70 border-l-2 border-l-v2-accent'
-                  : 'border-v2-media-border hover:border-v2-accent-warm/60',
+                  ? 'border-v2-accent-warm/80 border-l-2 border-l-v2-accent'
+                  : 'border-v2-media-border hover:border-v2-accent-warm/75 focus-visible:border-v2-accent-warm/80',
               ]}
             >
-              {/* Espaço reservado para imagem temática local (preenchido na EXP-06B) */}
               {item.image ? (
                 <>
                   <img
@@ -99,13 +94,13 @@ const isSingleItem = group.items.length === 1;
                     loading="lazy"
                     decoding="async"
                     class:list={[
-                      'pointer-events-none absolute inset-0 h-full w-full object-cover opacity-35 saturate-50 transition-opacity duration-200 group-hover/card:opacity-50 motion-reduce:transition-none',
+                      'pointer-events-none absolute inset-0 h-full w-full object-cover opacity-50 brightness-[0.82] saturate-[0.7] transition-all duration-200 group-hover/card:opacity-70 group-hover/card:brightness-95 group-hover/card:saturate-90 group-focus-visible/card:opacity-70 motion-reduce:transition-none',
                       item.image.position || 'object-center',
                     ]}
                   />
                   <div
                     aria-hidden="true"
-                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-v2-media-bg/92 via-v2-media-bg/50 to-v2-media-bg/20"
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-v2-media-bg/95 via-v2-media-bg/60 to-v2-media-bg/25 transition-opacity duration-200 group-hover/card:opacity-90 motion-reduce:transition-none"
                   />
                 </>
               ) : (
@@ -115,10 +110,10 @@ const isSingleItem = group.items.length === 1;
                 />
               )}
 
-              <span class="relative z-10 font-v2-display text-lg leading-tight font-normal text-v2-media-text transition-colors group-hover/card:text-v2-accent-warm">
+              <span class="relative z-10 font-v2-display text-lg leading-tight font-normal text-v2-media-text drop-shadow-[0_1px_2px_rgba(0,0,0,0.75)] transition-colors group-hover/card:text-v2-accent-warm">
                 {item.label}
               </span>
-              <span class="relative z-10 mt-1 font-v2-sans text-xs leading-snug font-light text-v2-media-muted">
+              <span class="relative z-10 mt-1 font-v2-sans text-xs leading-snug font-light text-v2-media-muted drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]">
                 {item.description}
               </span>
             </a>
