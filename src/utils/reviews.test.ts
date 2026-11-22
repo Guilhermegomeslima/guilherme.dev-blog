@@ -112,14 +112,15 @@ describe('Resenha Shinobido — Integridade editorial, imagens e proteção de s
   const frontmatter = fmMatch?.[1] ?? '';
   const body = fmMatch?.[2] ?? '';
 
-  it('deve permanecer em draft: true, sem data inventada e com vínculo válido para Jogos', () => {
-    assert.ok(/draft:\s*true/.test(frontmatter));
+  it('deve estar liberada (draft: false), com data editorial 2026-11-22 e vínculo válido para Jogos', () => {
+    assert.ok(/draft:\s*false/.test(frontmatter));
     assert.ok(/isDemo:\s*false/.test(frontmatter));
     assert.ok(/hasSpoilers:\s*true/.test(frontmatter));
+    assert.ok(/publishedAt:\s*2026-11-22/.test(frontmatter));
     assert.equal(
-      /publishedAt:/i.test(frontmatter),
+      /updatedAt:/i.test(frontmatter),
       false,
-      'publishedAt não deve ser inventado enquanto draft: true',
+      'updatedAt não deve ser inventada na estreia',
     );
     assert.ok(frontmatter.includes("id: 'shinobido-the-way-of-the-ninja'"));
     assert.ok(

@@ -16,7 +16,8 @@ relatedWork:
   id: 'shinobido-the-way-of-the-ninja'
 hasSpoilers: true
 featured: true
-draft: true
+publishedAt: 2026-11-22T12:00:00
+draft: false
 isDemo: false
 ---
 

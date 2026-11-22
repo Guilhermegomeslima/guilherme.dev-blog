@@ -155,7 +155,7 @@ describe('recommendations — Proteção de publicação segura e integridade (E
     assert.ok(routeSrc.includes("shouldIncludeEntry('recommendations'"));
   });
 
-  it('src/content/recommendations deve conter exatamente as 2 entradas reais em draft com imagens válidas (EXP-05B)', () => {
+  it('src/content/recommendations deve conter exatamente as 2 entradas reais liberadas com addedAt 2026-11-22 e imagens válidas (EXP-07C)', () => {
     const dir = path.resolve('src/content/recommendations');
     const jsonFiles = fs
       .readdirSync(dir)
@@ -171,10 +171,18 @@ describe('recommendations — Proteção de publicação segura e integridade (E
     );
 
     for (const item of [kz, principis]) {
-      assert.equal(item.draft, true);
+      assert.equal(item.draft, false);
       assert.equal(item.isDemo, false);
       assert.equal(item.status, 'ja_utilizei');
-      assert.equal(item.addedAt, undefined, 'addedAt não deve ser inventada');
+      assert.ok(
+        String(item.addedAt ?? '').startsWith('2026-11-22'),
+        'addedAt deve registrar a data editorial 2026-11-22',
+      );
+      assert.equal(
+        item.updatedAt,
+        undefined,
+        'updatedAt não deve ser inventada',
+      );
       assert.equal(item.commentParagraphs.length, 2);
       assert.ok(item.image?.url, 'Imagem deve estar definida');
       const diskPath = path.resolve(

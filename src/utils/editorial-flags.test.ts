@@ -100,36 +100,69 @@ describe('editorial-flags — Controle de publicação segura (EXP-02A / EXP-07B
     }
   });
 
-  it('deve bloquear a geração de rotas e entradas em ambiente padrão sem preview', () => {
+  it('deve bloquear a geração de rotas e entradas quando as flags estiverem desativadas e sem preview', () => {
     const cleanEnv = {};
+    const allDisabled = {
+      reviews: false,
+      linuxDiary: false,
+      recommendations: false,
+    } as const;
     for (const section of ALL_SECTIONS) {
-      assert.equal(isSectionEnabled(section, cleanEnv), false);
-      assert.equal(shouldGenerateSectionRoute(section, cleanEnv), false);
+      assert.equal(isSectionEnabled(section, cleanEnv, allDisabled), false);
       assert.equal(
-        shouldIncludeEntry(section, { draft: false, isDemo: false }, cleanEnv),
+        shouldGenerateSectionRoute(section, cleanEnv, allDisabled),
         false,
       );
       assert.equal(
-        shouldIncludeEntry(section, { draft: true, isDemo: false }, cleanEnv),
+        shouldIncludeEntry(
+          section,
+          { draft: false, isDemo: false },
+          cleanEnv,
+          allDisabled,
+        ),
         false,
       );
-      assert.equal(shouldIncludeInSitemap(section), false);
+      assert.equal(
+        shouldIncludeEntry(
+          section,
+          { draft: true, isDemo: false },
+          cleanEnv,
+          allDisabled,
+        ),
+        false,
+      );
+      assert.equal(
+        shouldIncludeInSitemap(section, undefined, allDisabled),
+        false,
+      );
     }
   });
 
   it('deve permitir prévia local exclusivamente fora de Vercel, GitHub Actions e CI', () => {
     const localPreviewEnv = { PREVIEW_EXPANSION: 'true' };
+    const allDisabled = {
+      reviews: false,
+      linuxDiary: false,
+      recommendations: false,
+    } as const;
     assert.equal(isCiOrHostedProduction(localPreviewEnv), false);
     assert.equal(isExpansionPreviewEnabled(localPreviewEnv), true);
 
     for (const section of ALL_SECTIONS) {
-      assert.equal(isSectionEnabled(section, localPreviewEnv), true);
-      assert.equal(shouldGenerateSectionRoute(section, localPreviewEnv), true);
+      assert.equal(
+        isSectionEnabled(section, localPreviewEnv, allDisabled),
+        true,
+      );
+      assert.equal(
+        shouldGenerateSectionRoute(section, localPreviewEnv, allDisabled),
+        true,
+      );
       assert.equal(
         shouldIncludeEntry(
           section,
           { draft: true, isDemo: false },
           localPreviewEnv,
+          allDisabled,
         ),
         true,
       );
@@ -138,11 +171,15 @@ describe('editorial-flags — Controle de publicação segura (EXP-02A / EXP-07B
           section,
           { draft: false, isDemo: true },
           localPreviewEnv,
+          allDisabled,
         ),
         false,
       );
-      // Preview local NUNCA libera entrada no sitemap canônico
-      assert.equal(shouldIncludeInSitemap(section), false);
+      // Preview local NUNCA libera entrada no sitemap canônico quando a flag está false
+      assert.equal(
+        shouldIncludeInSitemap(section, undefined, allDisabled),
+        false,
+      );
     }
   });
 
@@ -153,14 +190,27 @@ describe('editorial-flags — Controle de publicação segura (EXP-02A / EXP-07B
       { PREVIEW_EXPANSION: 'true', GITHUB_ACTIONS: 'true' },
       { PREVIEW_EXPANSION: 'true', CI: 'true' },
     ];
+    const allDisabled = {
+      reviews: false,
+      linuxDiary: false,
+      recommendations: false,
+    } as const;
 
     for (const env of hostedEnvs) {
       assert.equal(isCiOrHostedProduction(env), true);
       assert.equal(isExpansionPreviewEnabled(env), false);
       for (const section of ALL_SECTIONS) {
-        assert.equal(shouldGenerateSectionRoute(section, env), false);
         assert.equal(
-          shouldIncludeEntry(section, { draft: false, isDemo: false }, env),
+          shouldGenerateSectionRoute(section, env, allDisabled),
+          false,
+        );
+        assert.equal(
+          shouldIncludeEntry(
+            section,
+            { draft: false, isDemo: false },
+            env,
+            allDisabled,
+          ),
           false,
         );
       }

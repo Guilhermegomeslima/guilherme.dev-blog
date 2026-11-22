@@ -23,9 +23,9 @@ export type EnvRecord = Record<string, string | boolean | undefined>;
 export const EXPANSION_PUBLIC_FLAGS: Readonly<
   Record<ExpansionSection, boolean>
 > = Object.freeze({
-  reviews: false,
-  linuxDiary: false,
-  recommendations: false,
+  reviews: true,
+  linuxDiary: true,
+  recommendations: true,
 });
 
 export interface ExpansionSectionMeta {

@@ -242,17 +242,18 @@ describe('linux-diary — Integridade do tutorial Como personalizo meu GNOME (EX
     'src/content/linux-diary/como-personalizo-meu-gnome.md',
   );
 
-  it('deve manter draft: true, isDemo: false e sem publishedAt inventado', () => {
+  it('deve estar liberado (draft: false, isDemo: false) com publishedAt 2026-11-22 e sem updatedAt inventada', () => {
     assert.ok(fs.existsSync(tutorialPath), 'Tutorial GNOME ausente');
     const raw = fs.readFileSync(tutorialPath, 'utf-8');
     const frontmatter = raw.split('---')[1] ?? '';
 
-    assert.match(frontmatter, /\bdraft:\s*true\b/);
+    assert.match(frontmatter, /\bdraft:\s*false\b/);
     assert.match(frontmatter, /\bisDemo:\s*false\b/);
+    assert.match(frontmatter, /\bpublishedAt:\s*2026-11-22/);
     assert.doesNotMatch(
       frontmatter,
-      /\bpublishedAt:/,
-      'publishedAt não deve ser inventado antes de definição do autor',
+      /\bupdatedAt:/,
+      'updatedAt não deve ser inventada na estreia',
     );
   });
 

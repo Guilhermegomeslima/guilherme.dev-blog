@@ -17,7 +17,8 @@ coverImage:
   alt: 'Desktop Fedora com GNOME personalizado em tema escuro, exibindo a dock inferior e a barra superior discreta'
   caption: 'Meu desktop GNOME personalizado com tema escuro e dock inferior.'
 featured: true
-draft: true
+publishedAt: 2026-11-22T12:00:00
+draft: false
 isDemo: false
 ---
 

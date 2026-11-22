@@ -26,7 +26,8 @@
       "label": "Ver catálogo oficial"
     }
   ],
+  "addedAt": "2026-11-22T12:00:00",
   "order": 2,
-  "draft": true,
+  "draft": false,
   "isDemo": false
 }

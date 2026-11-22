@@ -40,10 +40,15 @@ describe('navigation — Estrutura e filtragem segura do Header 2.0 (EXP-06A)', 
     );
   });
 
-  it('em builds públicos (flags=false), deve ocultar Resenhas, Diário Linux e Recomendações', () => {
+  it('quando flags estiverem desativadas, deve ocultar Resenhas, Diário Linux e Recomendações', () => {
     const publicEnv = {};
-    const primary = getVisiblePrimaryNavLinks(publicEnv);
-    const groups = getVisibleNavDropdownGroups(publicEnv);
+    const allDisabled = {
+      reviews: false,
+      linuxDiary: false,
+      recommendations: false,
+    } as const;
+    const primary = getVisiblePrimaryNavLinks(publicEnv, allDisabled);
+    const groups = getVisibleNavDropdownGroups(publicEnv, allDisabled);
 
     assert.deepEqual(
       primary.map((i) => i.label),
@@ -63,10 +68,10 @@ describe('navigation — Estrutura e filtragem segura do Header 2.0 (EXP-06A)', 
     );
   });
 
-  it('na prévia local (PREVIEW_EXPANSION=true fora de CI), deve exibir a navegação completa', () => {
-    const previewEnv = { PREVIEW_EXPANSION: 'true' };
-    const primary = getVisiblePrimaryNavLinks(previewEnv);
-    const groups = getVisibleNavDropdownGroups(previewEnv);
+  it('com as três flags liberadas (EXP-07C), deve exibir a navegação completa mesmo sem PREVIEW_EXPANSION', () => {
+    const prodEnv = { VERCEL: '1' };
+    const primary = getVisiblePrimaryNavLinks(prodEnv);
+    const groups = getVisibleNavDropdownGroups(prodEnv);
 
     assert.deepEqual(
       primary.map((i) => i.label),
@@ -82,15 +87,44 @@ describe('navigation — Estrutura e filtragem segura do Header 2.0 (EXP-06A)', 
     );
   });
 
-  it('em CI/Vercel/GitHub Actions, nunca deve expor rotas não publicadas mesmo com PREVIEW_EXPANSION=true', () => {
+  it('na prévia local (PREVIEW_EXPANSION=true fora de CI), deve exibir a navegação completa mesmo com flags false', () => {
+    const previewEnv = { PREVIEW_EXPANSION: 'true' };
+    const allDisabled = {
+      reviews: false,
+      linuxDiary: false,
+      recommendations: false,
+    } as const;
+    const primary = getVisiblePrimaryNavLinks(previewEnv, allDisabled);
+    const groups = getVisibleNavDropdownGroups(previewEnv, allDisabled);
+
+    assert.deepEqual(
+      primary.map((i) => i.label),
+      ['Home', 'Sobre', 'Projetos', 'Linux', 'Artigos', 'Resenhas'],
+    );
+    assert.deepEqual(
+      groups.find((g) => g.id === 'tecnologia')?.items.map((i) => i.label),
+      ['Diário Linux', 'Open Source'],
+    );
+    assert.deepEqual(
+      groups.find((g) => g.id === 'acervo')?.items.map((i) => i.label),
+      ['Recomendações', 'Galeria'],
+    );
+  });
+
+  it('em CI/Vercel/GitHub Actions, nunca deve expor rotas com flag=false mesmo com PREVIEW_EXPANSION=true', () => {
+    const allDisabled = {
+      reviews: false,
+      linuxDiary: false,
+      recommendations: false,
+    } as const;
     for (const hostedEnv of [
       { PREVIEW_EXPANSION: 'true', VERCEL: '1' },
       { PREVIEW_EXPANSION: 'true', GITHUB_ACTIONS: 'true' },
     ]) {
-      const primary = getVisiblePrimaryNavLinks(hostedEnv);
+      const primary = getVisiblePrimaryNavLinks(hostedEnv, allDisabled);
       assert.ok(!primary.some((i) => i.href === '/resenhas/'));
 
-      const groups = getVisibleNavDropdownGroups(hostedEnv);
+      const groups = getVisibleNavDropdownGroups(hostedEnv, allDisabled);
       const allDropdownHrefs = groups.flatMap((g) =>
         g.items.map((i) => i.href),
       );

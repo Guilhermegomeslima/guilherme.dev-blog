@@ -531,17 +531,36 @@ describe('Auditoria Pós-Build — Integridade Dinâmica de Rotas, Links e Ativo
         ),
       );
 
-      // Enquanto Shinobido e GNOME estiverem com draft: true, continuam fora do sitemap
+      // Com flags ativadas e entradas liberadas (draft: false), elas entram no sitemap
       assert.equal(
         simulated.sitemapUrls.has(
           `${CANONICAL_SITE}/resenhas/shinobido-uma-joia-esquecida/`,
         ),
-        false,
+        true,
       );
       assert.equal(
         simulated.sitemapUrls.has(
           `${CANONICAL_SITE}/diario-linux/como-personalizo-meu-gnome/`,
         ),
+        true,
+      );
+
+      // Com flags desativadas, nenhuma rota da expansão entra no sitemap
+      const disabled = computeExpectedBuildRoutes({
+        reviews: false,
+        linuxDiary: false,
+        recommendations: false,
+      });
+      assert.equal(
+        disabled.sitemapUrls.has(`${CANONICAL_SITE}/resenhas/`),
+        false,
+      );
+      assert.equal(
+        disabled.sitemapUrls.has(`${CANONICAL_SITE}/diario-linux/`),
+        false,
+      );
+      assert.equal(
+        disabled.sitemapUrls.has(`${CANONICAL_SITE}/recomendacoes/`),
         false,
       );
     });
