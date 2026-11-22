@@ -1,6 +1,6 @@
 # Roadmap de desenvolvimento do blog
 
-> **Status:** MVP, conteúdo, identidade visual V2, recursos editoriais (FRT-01 a FRT-03) e modo claro opcional (THEME-01 a THEME-03c concluídos; THEME-04 em revisão) · EVO-01 a EVO-03 pendentes · **Revisão documental:** 2026-11-18.
+> **Status:** MVP, conteúdo, identidade visual V2, recursos editoriais (FRT-01 a FRT-03) e modo claro opcional (THEME-01 a THEME-04) concluídos · Expansão Editorial e Header 2.0 (EXP-00 e EXP-01 em revisão; EXP-02 a EXP-07 pendentes) · EVO-01 a EVO-03 pendentes · **Revisão documental:** 2026-11-21.
 > Este roadmap registra **execução real conforme os commits já anotados**. Datas-alvo antigas permanecem por rastreabilidade; não representam necessariamente datas de conclusão.
 > Fonte de requisitos: `REQUIREMENTS.md`. Guias: `ARCHITECTURE.md`, `DESIGN_SYSTEM_V2.md` (referência visual vigente), `DESIGN_SYSTEM.md` (histórico), `CONTENT_GUIDE.md`, `GIT_WORKFLOW.md`.
 
@@ -177,37 +177,41 @@ Atualize o status somente com evidências de implementação; `Concluído` exige
 
 > **Objetivo:** adicionar recursos editoriais estáticos (`FRT-01` a `FRT-03`) e um modo claro editorial opcional (`THEME-01` a `THEME-04`), preservando integralmente o Design System 2.0, o tema escuro como padrão absoluto (sem `prefers-color-scheme`), a arquitetura SSG e todos os conteúdos reais.
 
-| ID        | Item                                                                                                                              | Dependências | Prioridade | Data alvo | Commit/PR        | Status     |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------- | --------- | ---------------- | ---------- |
-| FRT-02    | Navegação editorial contextual entre registros publicáveis (`ContentNavigation.astro`)                                            | VIS-07       | P1         | —         | 6e0b2e2          | Concluído  |
-| FRT-01    | Indicador discreto de progresso de leitura em Linux e Artigos (`ReadingProgress.astro`)                                           | VIS-07       | P1         | —         | 5c830f3          | Concluído  |
-| FRT-03    | Botão discreto de compartilhamento canônico com Web Share API, Clipboard e fallback manual (`ShareButton.astro`)                  | VIS-07       | P1         | —         | 49c3d7c          | Concluído  |
-| THEME-01  | Auditoria completa de estilos e planejamento técnico do modo claro editorial (paleta papel/tinta/bronze e ilhas cinematográficas) | VIS-07       | P1         | —         | — (planejamento) | Concluído  |
-| THEME-02  | Infraestrutura de tema (`theme.ts`), script anti-FOUC em `BaseLayout.astro`, `ThemeToggle.astro` e slot no header (`flag: false`) | THEME-01     | P1         | —         | 5c06573          | Concluído  |
-| THEME-03a | Paleta clara `html[data-theme="light"]`, tokens `--color-v2-media-*`, utilitários reativos de sombra/atmosfera e UI compartilhada | THEME-02     | P1         | —         | 067388d          | Concluído  |
-| THEME-03b | Adaptação visual de Home, Sobre, Linux e Projetos para o modo claro com preservação das ilhas fotográficas                        | THEME-03a    | P1         | —         | d39dbfd          | Concluído  |
-| THEME-03c | Adaptação visual de Jogos, Filmes, Livros, Música, Open Source, Artigos, Galeria, `RatingPanel` e `GalleryLightbox`               | THEME-03b    | P1         | —         | e939fd9          | Concluído  |
-| THEME-04  | Ativação de `LIGHT_THEME_ENABLED = true`, ajustes de responsividade/contraste, testes automatizados e documentação final          | THEME-03c    | P1         | —         | —                | Em revisão |
+| ID        | Item                                                                                                                              | Dependências | Prioridade | Data alvo | Commit/PR        | Status    |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------- | --------- | ---------------- | --------- |
+| FRT-02    | Navegação editorial contextual entre registros publicáveis (`ContentNavigation.astro`)                                            | VIS-07       | P1         | —         | 6e0b2e2          | Concluído |
+| FRT-01    | Indicador discreto de progresso de leitura em Linux e Artigos (`ReadingProgress.astro`)                                           | VIS-07       | P1         | —         | 5c830f3          | Concluído |
+| FRT-03    | Botão discreto de compartilhamento canônico com Web Share API, Clipboard e fallback manual (`ShareButton.astro`)                  | VIS-07       | P1         | —         | 49c3d7c          | Concluído |
+| THEME-01  | Auditoria completa de estilos e planejamento técnico do modo claro editorial (paleta papel/tinta/bronze e ilhas cinematográficas) | VIS-07       | P1         | —         | — (planejamento) | Concluído |
+| THEME-02  | Infraestrutura de tema (`theme.ts`), script anti-FOUC em `BaseLayout.astro`, `ThemeToggle.astro` e slot no header (`flag: false`) | THEME-01     | P1         | —         | 5c06573          | Concluído |
+| THEME-03a | Paleta clara `html[data-theme="light"]`, tokens `--color-v2-media-*`, utilitários reativos de sombra/atmosfera e UI compartilhada | THEME-02     | P1         | —         | 067388d          | Concluído |
+| THEME-03b | Adaptação visual de Home, Sobre, Linux e Projetos para o modo claro com preservação das ilhas fotográficas                        | THEME-03a    | P1         | —         | d39dbfd          | Concluído |
+| THEME-03c | Adaptação visual de Jogos, Filmes, Livros, Música, Open Source, Artigos, Galeria, `RatingPanel` e `GalleryLightbox`               | THEME-03b    | P1         | —         | e939fd9          | Concluído |
+| THEME-04  | Ativação de `LIGHT_THEME_ENABLED = true`, ajustes de responsividade/contraste, testes automatizados e documentação final          | THEME-03c    | P1         | —         | 6295dec          | Concluído |
 
-**Situação em 18/11/2026 (THEME-04):** alternador ativado (`LIGHT_THEME_ENABLED = true`), ajustes de contraste WCAG AA em metadados e responsividade do header aplicados, testes unitários/build/integridade (Vercel e GitHub Pages) aprovados e documentação atualizada. Mantida como **Em revisão** até conferência visual interativa em navegador real pelo autor e autorização de commit.
+### Fase 7 — Expansão Editorial e Header 2.0 (P1)
 
-### Fase 6 — Experiência editorial e modo claro opcional (P1)
+> **Objetivo:** implementar de forma incremental e verificável as quatro novas frentes — **Resenhas**, **Diário Linux**, **Recomendações** e **Header 2.0** — preservando integralmente a Home, a página `/linux/` autobiográfica, os acervos existentes, os temas claro/escuro e a arquitetura Astro SSG.
+> **Documentação técnica:** `docs/EXPANSAO_EDITORIAL.md`, `docs/HEADER_2_0.md`, `docs/EDITORIAL_CONTENT.md` e `docs/EDITORIAL_IMAGES.md`.
 
-> **Objetivo:** adicionar recursos editoriais estáticos (`FRT-01` a `FRT-03`) e um modo claro editorial opcional (`THEME-01` a `THEME-04`), preservando integralmente o Design System 2.0, o tema escuro como padrão absoluto (sem `prefers-color-scheme`), a arquitetura SSG e todos os conteúdos reais.
+| ID     | Item                                                                                                                                  | Dependências           | Prioridade | Data alvo | Commit/PR | Status     |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ---------- | --------- | --------- | ---------- |
+| EXP-00 | Auditoria do repositório, conferência dos documentos de referência, levantamento de reutilizáveis e mapeamento de riscos              | THEME-04               | P1         | —         | —         | Em revisão |
+| EXP-01 | Arquitetura e documentação técnica (`EXPANSAO_EDITORIAL.md`, `HEADER_2_0.md`, `EDITORIAL_CONTENT.md`, `EDITORIAL_IMAGES.md`)          | EXP-00                 | P1         | —         | —         | Em revisão |
+| EXP-02 | Infraestrutura compartilhada: flags de publicação segura, `SpoilerBlock`, `EditorialLightbox`, `TableOfContents`, utilitários/testes  | EXP-01                 | P1         | —         | —         | Pendente   |
+| EXP-03 | Seção Resenhas (`/resenhas/`, `/resenhas/[id]/`), coleção `reviews`, filtros por mídia e primeira resenha (_Shinobido_)               | EXP-02                 | P1         | —         | —         | Pendente   |
+| EXP-04 | Seção Diário Linux (`/diario-linux/`, `[id]`, estrutura de `meu-ambiente`), filtros + busca local e tutorial de GNOME                 | EXP-02                 | P1         | —         | —         | Pendente   |
+| EXP-05 | Seção Recomendações (`/recomendacoes/`), coleção `recommendations`, filtros combinados e os 2 cards aprovados (KZ EDX Pro, Principis) | EXP-02                 | P1         | —         | —         | Pendente   |
+| EXP-06 | Header 2.0: 6 links diretos, 3 dropdowns cinematográficos (Cultura, Tecnologia, Acervo), menu mobile em lista e acessibilidade        | EXP-03, EXP-04, EXP-05 | P1         | —         | —         | Pendente   |
+| EXP-07 | Integração final, integração dos assets definitivos aprovados, QA (Vercel + GitHub Pages), revisão de temas e checklist de publicação | EXP-06                 | P1         | —         | —         | Pendente   |
 
-| ID        | Item                                                                                                                              | Dependências | Prioridade | Data alvo | Commit/PR        | Status     |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------- | --------- | ---------------- | ---------- |
-| FRT-02    | Navegação editorial contextual entre registros publicáveis (`ContentNavigation.astro`)                                            | VIS-07       | P1         | —         | 6e0b2e2          | Concluído  |
-| FRT-01    | Indicador discreto de progresso de leitura em Linux e Artigos (`ReadingProgress.astro`)                                           | VIS-07       | P1         | —         | 5c830f3          | Concluído  |
-| FRT-03    | Botão discreto de compartilhamento canônico com Web Share API, Clipboard e fallback manual (`ShareButton.astro`)                  | VIS-07       | P1         | —         | 49c3d7c          | Concluído  |
-| THEME-01  | Auditoria completa de estilos e planejamento técnico do modo claro editorial (paleta papel/tinta/bronze e ilhas cinematográficas) | VIS-07       | P1         | —         | — (planejamento) | Concluído  |
-| THEME-02  | Infraestrutura de tema (`theme.ts`), script anti-FOUC em `BaseLayout.astro`, `ThemeToggle.astro` e slot no header (`flag: false`) | THEME-01     | P1         | —         | 5c06573          | Concluído  |
-| THEME-03a | Paleta clara `html[data-theme="light"]`, tokens `--color-v2-media-*`, utilitários reativos de sombra/atmosfera e UI compartilhada | THEME-02     | P1         | —         | 067388d          | Concluído  |
-| THEME-03b | Adaptação visual de Home, Sobre, Linux e Projetos para o modo claro com preservação das ilhas fotográficas                        | THEME-03a    | P1         | —         | d39dbfd          | Concluído  |
-| THEME-03c | Adaptação visual de Jogos, Filmes, Livros, Música, Open Source, Artigos, Galeria, `RatingPanel` e `GalleryLightbox`               | THEME-03b    | P1         | —         | e939fd9          | Concluído  |
-| THEME-04  | Ativação de `LIGHT_THEME_ENABLED = true`, ajustes de responsividade/contraste, testes automatizados e documentação final          | THEME-03c    | P1         | —         | —                | Em revisão |
+**Critérios de aceitação da Fase 7:**
 
-**Situação em 18/11/2026 (THEME-04):** alternador ativado (`LIGHT_THEME_ENABLED = true`), ajustes de contraste WCAG AA em metadados e responsividade do header aplicados, testes unitários/build/integridade (Vercel e GitHub Pages) aprovados e documentação atualizada. Mantida como **Em revisão** até conferência visual interativa em navegador real pelo autor e autorização de commit.
+- **EXP-00 / EXP-01:** auditoria real do código e dos cinco documentos de referência concluída; conflitos históricos resolvidos e pendências de imagens documentadas; nenhum componente, estilo ou texto editorial alterado.
+- **EXP-02:** `SpoilerBlock` acessível e funcional sem JS; zero vazamento de spoilers em resumos/SEO/lightbox; gate de publicação garantindo que páginas não aprovadas não gerem HTML em `dist/` no build público (Vercel e GitHub Pages); testes unitários passando.
+- **EXP-03 / EXP-04 / EXP-05:** conteúdo editorial aprovado reproduzido literalmente; compatibilidade com temas claro/escuro e `withBase()`; nenhum placeholder visível publicado em produção; `Meu ambiente` sem dados inventados; itens em `Pesquisado`/`Lista de interesse` sem falso endosso de uso.
+- **EXP-06:** consolida as etapas H03–H07 do `HEADER_2_0.md` — Header 2.0 validado em `320`, `375`, `393`, `768`, `1024`, breakpoint real e `1440 px`; clique abre/fecha dropdown (nunca hover); apenas 1 dropdown aberto por vez; alinhamento abaixo do botão acionador sem ultrapassar viewport; `Escape` e clique fora fecham; menu mobile rolável em lista; estado ativo distinto de foco.
+- **EXP-07:** `npm run verify` e `GITHUB_ACTIONS=true npm run build` + `build-integrity.test.ts` passam com 0 erros; Home e rotas existentes sem regressões; todas as imagens reais aprovadas e integradas (sem dados sensíveis em capturas).
 
 ## 3. Política de execução
 
