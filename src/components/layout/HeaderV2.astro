@@ -1,45 +1,39 @@
 ---
 /**
- * Header global do Design System 2.0 (docs/DESIGN_SYSTEM_V2.md §3).
- * Consolidado em VIS-06h como cabeçalho único do site.
+ * Header 2.0 global do Design System 2.0 (docs/HEADER_2_0.md — EXP-06A).
+ *
+ * - Desktop (`xl+` / 1280px): 6 links diretos (Home, Sobre, Projetos, Linux, Artigos,
+ *   Resenhas quando disponível) + 3 dropdowns cinematográficos (Cultura, Tecnologia,
+ *   Acervo) + alternador de tema à direita.
+ * - Mobile e larguras intermediárias (`< xl`): barra compacta com logo, ThemeToggle
+ *   sempre acessível e menu recolhível organizado nas 4 seções oficiais.
+ * - Sem JavaScript, a navegação principal permanece visível e acessível.
  */
-import { navigation } from '../../data/navigation';
+import {
+  getVisibleNavDropdownGroups,
+  getVisiblePrimaryNavLinks,
+  isNavRouteActive,
+} from '../../data/navigation';
 import { withBase } from '../../utils/base';
-import { LIGHT_THEME_ENABLED } from '../../utils/theme';
 import ThemeToggle from '../ui/ThemeToggle.astro';
-
-// Ordem aprovada no protótipo; os links vêm da fonte única `navigation`.
-const v2Order = [
-  '/',
-  '/sobre/',
-  '/projetos/',
-  '/linux/',
-  '/jogos/',
-  '/filmes/',
-  '/musica/',
-  '/livros/',
-  '/artigos/',
-  '/opensource/',
-  '/galeria/',
-];
+import HeaderDropdown from './HeaderDropdown.astro';
 
 const currentPath = Astro.url.pathname;
-const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
-const available = navigation.filter((item) => item.available);
-const items = [
-  ...v2Order.flatMap((href) => available.filter((i) => i.href === href)),
-  ...available.filter((i) => !v2Order.includes(i.href)),
-];
+const base = import.meta.env.BASE_URL;
+
+const primaryLinks = getVisiblePrimaryNavLinks();
+const dropdownGroups = getVisibleNavDropdownGroups();
 ---
 
 <header
   class="border-v2-border/70 relative z-30 border-b bg-v2-bg"
   data-site-header
 >
-  <div class="mx-auto flex w-full max-w-[120rem] flex-wrap items-center justify-between gap-x-4 px-4 sm:px-6 lg:flex-nowrap lg:px-8 xl:gap-x-6 xl:px-[4.5rem]">
+  <div class="mx-auto flex w-full max-w-[120rem] flex-wrap items-center justify-between gap-x-4 px-4 sm:px-6 xl:flex-nowrap xl:gap-x-6 xl:px-[4.5rem]">
+    {/* Marca */}
     <a
       href={withBase('/')}
-      class="v2-focus group inline-flex min-h-11 shrink-0 items-center gap-2.5 py-3 lg:min-h-[4.7rem]"
+      class="v2-focus group inline-flex min-h-11 shrink-0 items-center gap-2.5 py-3 xl:min-h-[4.7rem]"
     >
       <span aria-hidden="true" class="text-v2-accent text-[0.6875rem]">
         ✦
@@ -49,15 +43,9 @@ const items = [
       </span>
     </a>
 
-    <!-- Controles à direita: alternador de tema (extremo direito no desktop e
-         fora do menu expansível no mobile) + botão de menu mobile abaixo de lg.
-         Sem JavaScript, a navegação permanece visível. -->
-    <div
-      class:list={[
-        'flex shrink-0 items-center gap-2 lg:order-3',
-        !LIGHT_THEME_ENABLED && 'lg:hidden',
-      ]}
-    >
+    {/* Controles à direita: alternador de tema (extremo direito no desktop e
+        sempre acessível no mobile) + botão hambúrguer abaixo de xl. */}
+    <div class="flex shrink-0 items-center gap-2 xl:order-3">
       <ThemeToggle />
 
       <button
@@ -65,9 +53,9 @@ const items = [
         hidden
         data-menu-toggle
         aria-expanded="false"
-        aria-controls="site-nav"
+        aria-controls="site-nav-mobile"
         aria-label="Abrir menu"
-        class="v2-focus border-v2-border text-v2-text hover:border-v2-text/60 inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center border lg:hidden"
+        class="v2-focus border-v2-border text-v2-text hover:border-v2-text/60 inline-flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center border xl:hidden"
       >
         <svg
           aria-hidden="true"
@@ -84,24 +72,25 @@ const items = [
       </button>
     </div>
 
+    {/* Navegação Desktop (xl+): 6 links diretos + 3 dropdowns cinematográficos */}
     <nav
-      id="site-nav"
       aria-label="Principal"
-      class="basis-full pb-3 max-lg:data-[collapsed=true]:hidden lg:order-2 lg:ml-auto lg:basis-auto lg:pb-0"
+      class="hidden xl:order-2 xl:ml-auto xl:block"
+      data-desktop-nav
     >
-      <ul class="flex flex-col lg:flex-row lg:items-center lg:gap-x-3 xl:gap-x-5 2xl:gap-x-6">
-        {items.map((item) => {
+      <ul class="flex items-center gap-x-5 2xl:gap-x-6">
+        {primaryLinks.map((item) => {
           const targetHref = withBase(item.href);
-          const isCurrent = normalize(currentPath) === normalize(targetHref);
+          const isCurrent = isNavRouteActive(currentPath, item.href, base);
           return (
             <li>
               <a
                 href={targetHref}
                 aria-current={isCurrent ? 'page' : undefined}
                 class:list={[
-                  'v2-focus relative inline-flex min-h-11 items-center whitespace-nowrap font-v2-sans text-[0.8125rem] tracking-[0.025em] transition-colors motion-reduce:transition-none lg:min-h-[4.7rem]',
+                  'v2-focus relative inline-flex min-h-[4.7rem] items-center whitespace-nowrap font-v2-sans text-[0.8125rem] tracking-[0.025em] transition-colors motion-reduce:transition-none',
                   isCurrent
-                    ? 'text-v2-text after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-v2-accent max-lg:underline max-lg:decoration-v2-accent max-lg:underline-offset-8'
+                    ? 'text-v2-text after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-v2-accent'
                     : 'text-v2-text-muted hover:text-v2-text',
                 ]}
               >
@@ -110,47 +99,312 @@ const items = [
             </li>
           );
         })}
+
+        {dropdownGroups.length > 0 && (
+          <li aria-hidden="true" class="h-4 w-px bg-v2-border/80 select-none" />
+        )}
+
+        {dropdownGroups.map((group) => (
+          <HeaderDropdown
+            group={group}
+            currentPath={currentPath}
+            alignRight={group.id !== 'cultura'}
+          />
+        ))}
       </ul>
+    </nav>
+
+    {/* Navegação Mobile e larguras intermediárias (< xl): lista organizada em 4 seções */}
+    <nav
+      id="site-nav-mobile"
+      aria-label="Menu de navegação"
+      class="max-h-[calc(100vh-4.5rem)] basis-full overflow-y-auto border-t border-v2-border/60 py-4 data-[collapsed=true]:hidden xl:hidden"
+      data-mobile-nav
+    >
+      <div class="space-y-5">
+        <section aria-labelledby="mobile-nav-principal">
+          <p
+            id="mobile-nav-principal"
+            class="mb-2 font-v2-mono text-[10px] tracking-[0.18em] text-v2-accent-warm uppercase"
+          >
+            Navegação principal
+          </p>
+          <ul class="grid grid-cols-1 gap-0.5 sm:grid-cols-2">
+            {primaryLinks.map((item) => {
+              const targetHref = withBase(item.href);
+              const isCurrent = isNavRouteActive(currentPath, item.href, base);
+              return (
+                <li>
+                  <a
+                    href={targetHref}
+                    aria-current={isCurrent ? 'page' : undefined}
+                    class:list={[
+                      'v2-focus flex min-h-11 items-center font-v2-sans text-sm transition-colors motion-reduce:transition-none',
+                      isCurrent
+                        ? 'font-medium text-v2-text underline decoration-v2-accent underline-offset-8'
+                        : 'text-v2-text-muted hover:text-v2-text',
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+
+        {dropdownGroups.map((group) => (
+          <section
+            aria-labelledby={`mobile-nav-${group.id}`}
+            class="border-t border-v2-border/60 pt-4"
+          >
+            <p
+              id={`mobile-nav-${group.id}`}
+              class="mb-2 font-v2-mono text-[10px] tracking-[0.18em] text-v2-accent-warm uppercase"
+            >
+              {group.label}
+            </p>
+            <ul class="grid grid-cols-1 gap-1 sm:grid-cols-2">
+              {group.items.map((item) => {
+                const targetHref = withBase(item.href);
+                const isCurrent = isNavRouteActive(
+                  currentPath,
+                  item.href,
+                  base,
+                );
+                return (
+                  <li>
+                    <a
+                      href={targetHref}
+                      aria-current={isCurrent ? 'page' : undefined}
+                      class:list={[
+                        'v2-focus flex min-h-11 flex-col justify-center py-1.5 transition-colors motion-reduce:transition-none',
+                        isCurrent
+                          ? 'text-v2-text'
+                          : 'text-v2-text-muted hover:text-v2-text',
+                      ]}
+                    >
+                      <span
+                        class:list={[
+                          'font-v2-sans text-sm',
+                          isCurrent &&
+                            'font-medium underline decoration-v2-accent underline-offset-4',
+                        ]}
+                      >
+                        {item.label}
+                      </span>
+                      <span class="font-v2-sans text-xs font-light text-v2-text-muted">
+                        {item.description}
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
+      </div>
     </nav>
   </div>
 </header>
 
 <script>
-  const header = document.querySelector<HTMLElement>('[data-site-header]');
-  const toggle = header?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-  const nav = header?.querySelector<HTMLElement>('#site-nav');
+  function setupHeaderV2() {
+    const header = document.querySelector<HTMLElement>('[data-site-header]');
+    if (!header || header.dataset.headerBound === 'true') return;
+    header.dataset.headerBound = 'true';
 
-  if (header && toggle && nav) {
-    const setOpen = (open: boolean) => {
-      nav.dataset.collapsed = String(!open);
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    // 1. Menu mobile recolhível (< xl)
+    const mobileToggle =
+      header.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const mobileNav = header.querySelector<HTMLElement>('[data-mobile-nav]');
+
+    const setMobileOpen = (open: boolean) => {
+      if (!mobileToggle || !mobileNav) return;
+      mobileNav.dataset.collapsed = String(!open);
+      mobileToggle.setAttribute('aria-expanded', String(open));
+      mobileToggle.setAttribute(
+        'aria-label',
+        open ? 'Fechar menu' : 'Abrir menu',
+      );
     };
 
-    // Com JavaScript disponível, o menu começa recolhido abaixo de lg.
-    toggle.hidden = false;
-    setOpen(false);
+    if (mobileToggle && mobileNav) {
+      mobileToggle.hidden = false;
+      setMobileOpen(false);
 
-    toggle.addEventListener('click', () => {
-      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
-    });
+      mobileToggle.addEventListener('click', () => {
+        setMobileOpen(mobileToggle.getAttribute('aria-expanded') !== 'true');
+      });
 
-    nav.addEventListener('click', (event) => {
-      if ((event.target as HTMLElement).closest('a')) setOpen(false);
-    });
+      mobileNav.addEventListener('click', (event) => {
+        if ((event.target as HTMLElement).closest('a')) setMobileOpen(false);
+      });
+    }
 
+    // 2. Dropdowns cinematográficos no desktop (clique + teclado + viewport clamping)
+    const dropdownRoots = Array.from(
+      header.querySelectorAll<HTMLElement>('[data-header-dropdown]'),
+    );
+
+    const clampPanelToViewport = (panel: HTMLElement) => {
+      panel.style.transform = '';
+      const rect = panel.getBoundingClientRect();
+      const margin = 16;
+      let shiftX = 0;
+
+      if (rect.right > window.innerWidth - margin) {
+        shiftX = window.innerWidth - margin - rect.right;
+      } else if (rect.left < margin) {
+        shiftX = margin - rect.left;
+      }
+
+      if (shiftX !== 0) {
+        panel.style.transform = `translateX(${Math.round(shiftX)}px)`;
+      }
+    };
+
+    const closeDropdown = (root: HTMLElement, returnFocus = false) => {
+      const trigger = root.querySelector<HTMLButtonElement>(
+        '[data-dropdown-trigger]',
+      );
+      const panel = root.querySelector<HTMLElement>('[data-dropdown-panel]');
+      const chevron = root.querySelector<SVGElement>('[data-dropdown-chevron]');
+      if (!trigger || !panel) return;
+
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('opacity-100');
+      panel.classList.add('opacity-0');
+      panel.hidden = true;
+      panel.style.transform = '';
+      chevron?.classList.remove('rotate-180');
+      if (returnFocus) trigger.focus();
+    };
+
+    const closeAllDropdowns = (except?: HTMLElement) => {
+      for (const root of dropdownRoots) {
+        if (root !== except) closeDropdown(root, false);
+      }
+    };
+
+    const openDropdown = (root: HTMLElement) => {
+      const trigger = root.querySelector<HTMLButtonElement>(
+        '[data-dropdown-trigger]',
+      );
+      const panel = root.querySelector<HTMLElement>('[data-dropdown-panel]');
+      const chevron = root.querySelector<SVGElement>('[data-dropdown-chevron]');
+      if (!trigger || !panel) return;
+
+      closeAllDropdowns(root);
+      trigger.setAttribute('aria-expanded', 'true');
+      panel.hidden = false;
+      clampPanelToViewport(panel);
+      requestAnimationFrame(() => {
+        panel.classList.remove('opacity-0');
+        panel.classList.add('opacity-100');
+      });
+      chevron?.classList.add('rotate-180');
+    };
+
+    for (const root of dropdownRoots) {
+      const trigger = root.querySelector<HTMLButtonElement>(
+        '[data-dropdown-trigger]',
+      );
+      const panel = root.querySelector<HTMLElement>('[data-dropdown-panel]');
+      if (!trigger || !panel) continue;
+
+      trigger.addEventListener('click', () => {
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+        if (isOpen) {
+          closeDropdown(root, false);
+        } else {
+          openDropdown(root);
+        }
+      });
+
+      trigger.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          if (trigger.getAttribute('aria-expanded') !== 'true') {
+            openDropdown(root);
+          }
+          const firstLink = panel.querySelector<HTMLAnchorElement>(
+            '[data-dropdown-link]',
+          );
+          firstLink?.focus();
+        }
+      });
+
+      panel.addEventListener('keydown', (event) => {
+        const links = Array.from(
+          panel.querySelectorAll<HTMLAnchorElement>('[data-dropdown-link]'),
+        );
+        if (links.length === 0) return;
+
+        const currentIndex = links.indexOf(
+          document.activeElement as HTMLAnchorElement,
+        );
+
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          links[(currentIndex + 1) % links.length]?.focus();
+        } else if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          links[(currentIndex - 1 + links.length) % links.length]?.focus();
+        } else if (event.key === 'Home') {
+          event.preventDefault();
+          links[0]?.focus();
+        } else if (event.key === 'End') {
+          event.preventDefault();
+          links[links.length - 1]?.focus();
+        }
+      });
+
+      panel.addEventListener('click', (event) => {
+        if ((event.target as HTMLElement).closest('a')) {
+          closeDropdown(root, false);
+        }
+      });
+    }
+
+    // Fechamento global por clique externo e Escape
     document.addEventListener('click', (event) => {
-      if (!header.contains(event.target as Node)) setOpen(false);
+      if (!header.contains(event.target as Node)) {
+        closeAllDropdowns();
+        setMobileOpen(false);
+      }
     });
 
     document.addEventListener('keydown', (event) => {
-      if (
-        event.key === 'Escape' &&
-        toggle.getAttribute('aria-expanded') === 'true'
-      ) {
-        setOpen(false);
-        toggle.focus();
+      if (event.key !== 'Escape') return;
+
+      const openRoot = dropdownRoots.find(
+        (root) =>
+          root
+            .querySelector<HTMLButtonElement>('[data-dropdown-trigger]')
+            ?.getAttribute('aria-expanded') === 'true',
+      );
+      if (openRoot) {
+        closeDropdown(openRoot, true);
+        return;
+      }
+
+      if (mobileToggle?.getAttribute('aria-expanded') === 'true') {
+        setMobileOpen(false);
+        mobileToggle.focus();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      for (const root of dropdownRoots) {
+        const panel = root.querySelector<HTMLElement>('[data-dropdown-panel]');
+        if (panel && !panel.hidden) {
+          clampPanelToViewport(panel);
+        }
       }
     });
   }
+
+  setupHeaderV2();
+  document.addEventListener('astro:page-load', setupHeaderV2);
 </script>

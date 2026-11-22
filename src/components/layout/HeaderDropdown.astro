@@ -1,0 +1,130 @@
+---
+/**
+ * Dropdown cinematográfico do Header 2.0 (docs/HEADER_2_0.md §2–§3 — EXP-06A).
+ *
+ * - Padrão WAI-ARIA Disclosure Navigation (`<button aria-expanded aria-controls>`).
+ * - Abertura exclusivamente por clique/teclado (nunca hover).
+ * - Mini-cards em 2 colunas como ilhas escuras (`--color-v2-media-*`), com espaço
+ *   reservado para imagens temáticas definitivas na EXP-06B.
+ */
+import type { NavDropdownGroup } from '../../data/navigation';
+import { isDropdownGroupActive, isNavRouteActive } from '../../data/navigation';
+import { withBase } from '../../utils/base';
+
+interface Props {
+  group: NavDropdownGroup;
+  currentPath: string;
+  alignRight?: boolean;
+}
+
+const { group, currentPath, alignRight = false } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const isGroupActive = isDropdownGroupActive(currentPath, group, base);
+const panelId = `header-dropdown-${group.id}`;
+const isSingleItem = group.items.length === 1;
+---
+
+<li class="relative" data-header-dropdown={group.id}>
+  <button
+    type="button"
+    data-dropdown-trigger
+    aria-expanded="false"
+    aria-controls={panelId}
+    class:list={[
+      'v2-focus relative inline-flex min-h-[4.7rem] cursor-pointer items-center gap-1.5 whitespace-nowrap font-v2-sans text-[0.8125rem] tracking-[0.025em] transition-colors motion-reduce:transition-none',
+      isGroupActive
+        ? 'text-v2-text after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-v2-accent'
+        : 'text-v2-text-muted hover:text-v2-text',
+    ]}
+  >
+    <span>{group.label}</span>
+    <svg
+      aria-hidden="true"
+      data-dropdown-chevron
+      viewBox="0 0 16 16"
+      width="12"
+      height="12"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="opacity-75 transition-transform duration-150 motion-reduce:transition-none"
+    >
+      <path d="M4 6l4 4 4-4"></path>
+    </svg>
+  </button>
+
+  <div
+    id={panelId}
+    data-dropdown-panel
+    data-dropdown-align={alignRight ? 'right' : 'left'}
+    hidden
+    class:list={[
+      'v2-shadow-elevated absolute top-full z-40 border border-v2-border bg-v2-surface p-3 opacity-0 transition-opacity duration-150 motion-reduce:transition-none',
+      alignRight ? 'right-0' : 'left-0',
+      isSingleItem
+        ? 'w-[260px] max-w-[calc(100vw-2rem)]'
+        : 'w-[480px] max-w-[calc(100vw-2rem)]',
+    ]}
+  >
+    <ul
+      class:list={['grid gap-3', isSingleItem ? 'grid-cols-1' : 'grid-cols-2']}
+    >
+      {group.items.map((item) => {
+        const targetHref = withBase(item.href);
+        const isCurrent = isNavRouteActive(currentPath, item.href, base);
+
+        return (
+          <li>
+            <a
+              href={targetHref}
+              data-dropdown-link
+              aria-current={isCurrent ? 'page' : undefined}
+              class:list={[
+                'v2-focus group/card relative flex min-h-[100px] flex-col justify-end overflow-hidden border bg-v2-media-surface p-4 transition-colors duration-150 motion-reduce:transition-none',
+                isCurrent
+                  ? 'border-v2-accent-warm/70 border-l-2 border-l-v2-accent'
+                  : 'border-v2-media-border hover:border-v2-accent-warm/60',
+              ]}
+            >
+              {/* Espaço reservado para imagem temática local (preenchido na EXP-06B) */}
+              {item.image ? (
+                <>
+                  <img
+                    src={withBase(item.image.src)}
+                    alt=""
+                    width={item.image.width}
+                    height={item.image.height}
+                    loading="lazy"
+                    decoding="async"
+                    class:list={[
+                      'pointer-events-none absolute inset-0 h-full w-full object-cover opacity-35 saturate-50 transition-opacity duration-200 group-hover/card:opacity-50 motion-reduce:transition-none',
+                      item.image.position || 'object-center',
+                    ]}
+                  />
+                  <div
+                    aria-hidden="true"
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-v2-media-bg/92 via-v2-media-bg/50 to-v2-media-bg/20"
+                  />
+                </>
+              ) : (
+                <div
+                  aria-hidden="true"
+                  class="pointer-events-none absolute inset-0 bg-gradient-to-br from-v2-media-bg/40 via-transparent to-v2-media-bg/85"
+                />
+              )}
+
+              <span class="relative z-10 font-v2-display text-lg leading-tight font-normal text-v2-media-text transition-colors group-hover/card:text-v2-accent-warm">
+                {item.label}
+              </span>
+              <span class="relative z-10 mt-1 font-v2-sans text-xs leading-snug font-light text-v2-media-muted">
+                {item.description}
+              </span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</li>
