@@ -1,0 +1,127 @@
+---
+/**
+ * Roteador estático condicional do Diário Linux (/diario-linux/, /diario-linux/meu-ambiente/ e /diario-linux/[slug]/) — EXP-04A.
+ *
+ * Controlado por `editorial-flags.ts`:
+ * - Em builds públicos enquanto `EXPANSION_PUBLIC_FLAGS.linuxDiary === false`,
+ *   `getStaticPaths()` retorna `[]`, garantindo ZERO HTML em `dist/diario-linux/`.
+ * - Na prévia local (`PREVIEW_EXPANSION=true` fora de CI/Vercel/GH Pages),
+ *   gera a listagem, a estrutura de `meu-ambiente` e os artigos elegíveis.
+ */
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import LinuxDiaryCatalog from '../../components/linux-diary/LinuxDiaryCatalog.astro';
+import LinuxDiaryDetail from '../../components/linux-diary/LinuxDiaryDetail.astro';
+import LinuxEnvironmentPage from '../../components/linux-diary/LinuxEnvironmentPage.astro';
+import {
+  isExpansionPreviewEnabled,
+  shouldGenerateSectionRoute,
+  shouldIncludeEntry,
+} from '../../utils/editorial-flags';
+import {
+  compareLinuxDiary,
+  selectRelatedDiaryEntries,
+} from '../../utils/linux-diary';
+
+export async function getStaticPaths() {
+  if (!shouldGenerateSectionRoute('linuxDiary')) {
+    return [];
+  }
+
+  const isPreview = isExpansionPreviewEnabled();
+  const allEntries = await getCollection('linuxDiary');
+  const visibleEntries = allEntries
+    .filter((entry) => shouldIncludeEntry('linuxDiary', entry.data))
+    .sort(compareLinuxDiary);
+
+  const paths: Array<{
+    params: { slug: string | undefined };
+    props:
+      | {
+          mode: 'index';
+          entries: CollectionEntry<'linuxDiary'>[];
+          isPreview: boolean;
+        }
+      | {
+          mode: 'environment';
+          isPreview: boolean;
+        }
+      | {
+          mode: 'detail';
+          entry: CollectionEntry<'linuxDiary'>;
+          prevEntry: CollectionEntry<'linuxDiary'> | null;
+          nextEntry: CollectionEntry<'linuxDiary'> | null;
+          relatedEntries: CollectionEntry<'linuxDiary'>[];
+          isPreview: boolean;
+        };
+  }> = [
+    {
+      params: { slug: undefined },
+      props: {
+        mode: 'index',
+        entries: visibleEntries,
+        isPreview,
+      },
+    },
+    {
+      params: { slug: 'meu-ambiente' },
+      props: {
+        mode: 'environment',
+        isPreview,
+      },
+    },
+  ];
+
+  visibleEntries.forEach((entry, index) => {
+    paths.push({
+      params: { slug: entry.id },
+      props: {
+        mode: 'detail',
+        entry,
+        prevEntry: index > 0 ? visibleEntries[index - 1] : null,
+        nextEntry:
+          index < visibleEntries.length - 1 ? visibleEntries[index + 1] : null,
+        relatedEntries: selectRelatedDiaryEntries(entry, visibleEntries, 3),
+        isPreview,
+      },
+    });
+  });
+
+  return paths;
+}
+
+type Props =
+  | {
+      mode: 'index';
+      entries: CollectionEntry<'linuxDiary'>[];
+      isPreview: boolean;
+    }
+  | {
+      mode: 'environment';
+      isPreview: boolean;
+    }
+  | {
+      mode: 'detail';
+      entry: CollectionEntry<'linuxDiary'>;
+      prevEntry: CollectionEntry<'linuxDiary'> | null;
+      nextEntry: CollectionEntry<'linuxDiary'> | null;
+      relatedEntries: CollectionEntry<'linuxDiary'>[];
+      isPreview: boolean;
+    };
+
+const props = Astro.props;
+---
+
+{props.mode === 'index' ? (
+  <LinuxDiaryCatalog entries={props.entries} isPreview={props.isPreview} />
+) : props.mode === 'environment' ? (
+  <LinuxEnvironmentPage isPreview={props.isPreview} />
+) : (
+  <LinuxDiaryDetail
+    entry={props.entry}
+    prevEntry={props.prevEntry}
+    nextEntry={props.nextEntry}
+    relatedEntries={props.relatedEntries}
+    isPreview={props.isPreview}
+  />
+)}

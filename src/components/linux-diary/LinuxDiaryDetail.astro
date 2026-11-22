@@ -1,0 +1,346 @@
+---
+/**
+ * Template individual de documentação técnica do Diário Linux (/diario-linux/[slug]/) — EXP-04A.
+ *
+ * Reutiliza integralmente:
+ * - `TableOfContents`, `CodeBlockEnhancer`, `EditorialLightbox` (EXP-02B/02C)
+ * - `ReadingProgress`, `ShareButton`, `ContentNavigation`
+ * - `enhanceTechnicalHtml`, `buildTableOfContents`, `syncHeadingIdsWithToc`
+ */
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentNavigation from '../content/ContentNavigation.astro';
+import CodeBlockEnhancer from '../editorial/CodeBlockEnhancer.astro';
+import EditorialLightbox from '../editorial/EditorialLightbox.astro';
+import TableOfContents from '../editorial/TableOfContents.astro';
+import ReadingProgress from '../ui/ReadingProgress.astro';
+import ShareButton from '../ui/ShareButton.astro';
+import { withBase } from '../../utils/base';
+import {
+  buildTableOfContents,
+  enhanceTechnicalHtml,
+} from '../../utils/editorial-docs';
+import {
+  LINUX_DIARY_CATEGORIES,
+  LINUX_DIARY_LEVEL_LABELS,
+  syncHeadingIdsWithToc,
+} from '../../utils/linux-diary';
+import { estimateReadingMinutes } from '../../utils/reviews';
+
+interface Props {
+  entry: CollectionEntry<'linuxDiary'>;
+  prevEntry?: CollectionEntry<'linuxDiary'> | null;
+  nextEntry?: CollectionEntry<'linuxDiary'> | null;
+  relatedEntries?: CollectionEntry<'linuxDiary'>[];
+  isPreview?: boolean;
+}
+
+const {
+  entry,
+  prevEntry = null,
+  nextEntry = null,
+  relatedEntries = [],
+  isPreview = false,
+} = Astro.props;
+const { data } = entry;
+const { Content, headings } = await render(entry);
+
+const categoryMeta = LINUX_DIARY_CATEGORIES[data.category];
+const levelLabel = data.level ? LINUX_DIARY_LEVEL_LABELS[data.level] : null;
+const readingMinutes = estimateReadingMinutes(entry.body);
+const tocItems = buildTableOfContents(headings);
+
+const formatLongDate = (date: Date) =>
+  new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+
+const publishedFormatted = data.publishedAt
+  ? formatLongDate(data.publishedAt)
+  : null;
+const updatedFormatted = data.updatedAt ? formatLongDate(data.updatedAt) : null;
+
+const rawHtml = entry.rendered?.html ?? '';
+const processedHtml = rawHtml
+  ? syncHeadingIdsWithToc(
+      enhanceTechnicalHtml(rawHtml, {
+        base: import.meta.env.BASE_URL,
+        enableLightbox: true,
+        wrapFigures: true,
+        enableNotices: true,
+        enableCodeCopy: true,
+      }),
+      tocItems,
+    )
+  : '';
+---
+
+<BaseLayout
+  variant="v2"
+  title={`${data.title} — Diário Linux — guilherme.dev`}
+  description={data.description}
+  image={data.coverImage?.url}
+  type="article"
+  noindex={isPreview || data.draft || data.isDemo}
+>
+  <ReadingProgress />
+  <article class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera sutil no topo */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[440px] overflow-hidden"
+    >
+      <img
+        src={withBase(data.coverImage?.url || '/images/home/linux.webp')}
+        alt=""
+        width="1200"
+        height="630"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full scale-105 object-cover object-center opacity-[0.09] blur-3xl filter"
+      />
+      <div class="v2-atmosphere-warm absolute inset-0"></div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 pt-10 sm:px-8 md:pt-14">
+      {/* Barra superior de retorno e compartilhamento */}
+      <div class="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[var(--color-v2-border)] pb-4">
+        <a
+          href={withBase('/diario-linux/')}
+          class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-text-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+        >
+          <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+            &larr;
+          </span>
+          <span>Voltar para o Diário Linux</span>
+        </a>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-text-muted)] uppercase">
+            DIÁRIO LINUX // {categoryMeta.label}
+          </span>
+          <ShareButton
+            title={`${data.title} — guilherme.dev`}
+            text={data.description}
+            url={`/diario-linux/${entry.id}/`}
+          />
+        </div>
+      </div>
+
+      {/* Grade de documentação: coluna principal + sumário lateral no desktop */}
+      <div class="grid grid-cols-1 gap-10 xl:grid-cols-12 xl:items-start">
+        <div class="min-w-0 xl:col-span-9">
+          {/* Cabeçalho técnico */}
+          <header class="border-b border-[var(--color-v2-border)] pb-8">
+            <div class="mb-4 flex flex-wrap items-center gap-3 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] uppercase">
+              <span class="border border-[var(--color-v2-accent-warm)]/50 bg-[var(--color-v2-accent)]/10 px-2.5 py-0.5 text-[11px] text-[var(--color-v2-accent-warm)]">
+                {categoryMeta.label}
+              </span>
+
+              {levelLabel && (
+                <span class="text-[var(--color-v2-text-muted)]">
+                  {levelLabel}
+                </span>
+              )}
+
+              <span
+                class="text-[var(--color-v2-border-hover)]"
+                aria-hidden="true"
+              >
+                ·
+              </span>
+
+              <span class="text-[var(--color-v2-text-muted)]">
+                ~{readingMinutes} min de leitura
+              </span>
+            </div>
+
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.06] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-[3.2rem]">
+              {data.title}
+            </h1>
+
+            <p class="mt-5 font-[family-name:var(--font-v2-sans)] text-base leading-relaxed font-light text-[var(--color-v2-text-body)] sm:text-lg">
+              {data.description}
+            </p>
+
+            {/* Painel de metadados técnicos: datas e ambiente testado */}
+            <dl class="mt-6 grid grid-cols-1 gap-4 border-t border-[var(--color-v2-border)] pt-5 font-[family-name:var(--font-v2-mono)] text-xs sm:grid-cols-2 lg:grid-cols-3">
+              {publishedFormatted && data.publishedAt && (
+                <div>
+                  <dt class="text-[10px] tracking-[0.16em] text-[var(--color-v2-text-muted)] uppercase">
+                    Publicado em
+                  </dt>
+                  <dd class="mt-1 text-[var(--color-v2-heading)]">
+                    <time datetime={data.publishedAt.toISOString()}>
+                      {publishedFormatted}
+                    </time>
+                  </dd>
+                </div>
+              )}
+
+              {updatedFormatted && data.updatedAt && (
+                <div>
+                  <dt class="text-[10px] tracking-[0.16em] text-[var(--color-v2-accent-warm)] uppercase">
+                    Última revisão técnica
+                  </dt>
+                  <dd class="mt-1 text-[var(--color-v2-heading)]">
+                    <time datetime={data.updatedAt.toISOString()}>
+                      {updatedFormatted}
+                    </time>
+                  </dd>
+                </div>
+              )}
+
+              {data.environment && (
+                <div>
+                  <dt class="text-[10px] tracking-[0.16em] text-[var(--color-v2-text-muted)] uppercase">
+                    Ambiente testado
+                  </dt>
+                  <dd class="mt-1 text-[var(--color-v2-heading)]">
+                    {data.environment.distro}
+                    {data.environment.desktop
+                      ? ` · ${data.environment.desktop}`
+                      : ''}
+                    {data.environment.testedVersions.length > 0 && (
+                      <span class="block text-[11px] text-[var(--color-v2-text-muted)]">
+                        {data.environment.testedVersions.join(' · ')}
+                      </span>
+                    )}
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </header>
+
+          {/* Sumário recolhível no mobile/tablet */}
+          <TableOfContents
+            headings={headings}
+            variant="mobile"
+            class="xl:hidden"
+          />
+
+          {/* Imagem de capa opcional */}
+          {data.coverImage && (
+            <figure class="v2-shadow-elevated relative my-8 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-media-surface)] p-2">
+              <div class="overflow-hidden border border-[var(--color-v2-media-border)] bg-[var(--color-v2-media-bg)]">
+                <img
+                  src={withBase(data.coverImage.url)}
+                  alt={data.coverImage.alt}
+                  loading="eager"
+                  decoding="async"
+                  data-editorial-lightbox-trigger="true"
+                  data-lightbox-src={withBase(data.coverImage.url)}
+                  data-lightbox-alt={data.coverImage.alt}
+                  data-lightbox-caption={
+                    data.coverImage.caption || data.coverImage.alt
+                  }
+                  tabindex="0"
+                  role="button"
+                  aria-label={`Ampliar imagem de capa: ${data.coverImage.alt}`}
+                  class="mx-auto block h-auto max-h-[600px] w-auto max-w-full cursor-zoom-in object-contain"
+                />
+              </div>
+              {(data.coverImage.caption || data.coverImage.alt) && (
+                <figcaption class="px-3 pt-3 pb-1 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-media-muted)]">
+                  // {data.coverImage.caption || data.coverImage.alt}
+                </figcaption>
+              )}
+            </figure>
+          )}
+
+          {/* Corpo técnico Markdown */}
+          <div
+            data-editorial-prose
+            data-reading-content
+            class="v2-doc-prose mt-8 max-w-[780px] space-y-6 font-[family-name:var(--font-v2-sans)] text-[1.03125rem] leading-[1.82] font-light text-[var(--color-v2-text-body)] sm:text-[1.0625rem] [&>blockquote]:my-6 [&>blockquote]:border-l-2 [&>blockquote]:border-[var(--color-v2-accent-warm)] [&>blockquote]:bg-[var(--color-v2-surface)]/80 [&>blockquote]:px-5 [&>blockquote]:py-3.5 [&>h2]:mt-12 [&>h2]:mb-4 [&>h2]:border-b [&>h2]:border-[var(--color-v2-border)] [&>h2]:pb-2.5 [&>h2]:font-[family-name:var(--font-v2-display)] [&>h2]:text-3xl [&>h2]:leading-[1.15] [&>h2]:font-normal [&>h2]:text-[var(--color-v2-heading)] [&>h3]:mt-9 [&>h3]:mb-3 [&>h3]:font-[family-name:var(--font-v2-display)] [&>h3]:text-2xl [&>h3]:leading-[1.2] [&>h3]:font-normal [&>h3]:text-[var(--color-v2-accent-warm)] [&>ol]:my-5 [&>ol]:list-decimal [&>ol]:space-y-2.5 [&>ol]:pl-6 [&>ol>li::marker]:text-[var(--color-v2-accent-warm)] [&>table]:my-6 [&>table]:w-full [&>table]:border-collapse [&>table]:border [&>table]:border-[var(--color-v2-border)] [&>table]:text-sm [&>ul]:my-5 [&>ul]:list-disc [&>ul]:space-y-2.5 [&>ul]:pl-6 [&>ul>li::marker]:text-[var(--color-v2-accent-warm)] [&_a]:text-[var(--color-v2-accent-warm)] [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-[var(--color-v2-heading)] [&_code]:border [&_code]:border-[var(--color-v2-border)] [&_code]:bg-[var(--color-v2-surface)] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-[family-name:var(--font-v2-mono)] [&_code]:text-[0.875em] [&_code]:text-[var(--color-v2-accent-warm)] [&_strong]:font-medium [&_strong]:text-[var(--color-v2-heading)] [&_td]:border [&_td]:border-[var(--color-v2-border)] [&_td]:px-3.5 [&_td]:py-2.5 [&_th]:border [&_th]:border-[var(--color-v2-border)] [&_th]:bg-[var(--color-v2-surface)] [&_th]:px-3.5 [&_th]:py-2.5 [&_th]:text-left [&_th]:font-[family-name:var(--font-v2-mono)] [&_th]:text-xs [&_th]:text-[var(--color-v2-heading)] [&_th]:uppercase"
+          >
+            {processedHtml ? (
+              <Fragment set:html={processedHtml} />
+            ) : (
+              <Content />
+            )}
+          </div>
+
+          {/* Artigos relacionados */}
+          {relatedEntries.length > 0 && (
+            <aside
+              aria-label="Artigos relacionados do Diário Linux"
+              class="mt-14 max-w-[780px] border-t border-[var(--color-v2-border)] pt-8"
+            >
+              <p class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+                // Artigos relacionados
+              </p>
+              <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {relatedEntries.map((rel) => (
+                  <a
+                    href={withBase(`/diario-linux/${rel.id}/`)}
+                    class="v2-focus group block border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/75 p-4 transition-colors hover:border-[var(--color-v2-border-hover)]"
+                  >
+                    <span class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase">
+                      {LINUX_DIARY_CATEGORIES[rel.data.category].label}
+                    </span>
+                    <h2 class="mt-1.5 font-[family-name:var(--font-v2-display)] text-xl text-[var(--color-v2-heading)] group-hover:text-[var(--color-v2-accent-warm)]">
+                      {rel.data.title}
+                    </h2>
+                  </a>
+                ))}
+              </div>
+            </aside>
+          )}
+
+          {/* Tags e navegação contextual */}
+          <footer class="mt-14 max-w-[780px] border-t border-[var(--color-v2-border)] pt-8">
+            {data.tags.length > 0 && (
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-text-muted)] uppercase">
+                  Tags:
+                </span>
+                {data.tags.map((tag) => (
+                  <span class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text)]">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <ContentNavigation
+              ariaLabel="Navegação entre publicações do Diário Linux"
+              prev={
+                prevEntry
+                  ? {
+                      href: `/diario-linux/${prevEntry.id}/`,
+                      label: prevEntry.data.title,
+                    }
+                  : null
+              }
+              next={
+                nextEntry
+                  ? {
+                      href: `/diario-linux/${nextEntry.id}/`,
+                      label: nextEntry.data.title,
+                    }
+                  : null
+              }
+              prevLabel="Publicação anterior"
+              nextLabel="Próxima publicação"
+              backHref="/diario-linux/"
+              backLabel="Voltar para o Diário Linux"
+              class="mt-8 border-t border-[var(--color-v2-border)] pt-6"
+            />
+          </footer>
+        </div>
+
+        {/* Sumário lateral no desktop */}
+        <div class="hidden xl:col-span-3 xl:block">
+          <TableOfContents headings={headings} variant="sidebar" />
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <CodeBlockEnhancer />
+  <EditorialLightbox />
+</BaseLayout>

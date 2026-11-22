@@ -1,0 +1,323 @@
+---
+/**
+ * Listagem da seção Diário Linux (/diario-linux/) — EXP-04A.
+ *
+ * Base de conhecimento técnica independente da página autobiográfica /linux/.
+ * Contempla filtros pelas 6 categorias oficiais, pesquisa exclusiva da seção
+ * (títulos, descrições e tags), contador acessível e estado vazio informativo.
+ */
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LinuxDiaryCard from './LinuxDiaryCard.astro';
+import { withBase } from '../../utils/base';
+import {
+  countLinuxDiaryByCategory,
+  LINUX_DIARY_CATEGORIES,
+  LINUX_DIARY_CATEGORY_ORDER,
+} from '../../utils/linux-diary';
+
+interface Props {
+  entries: CollectionEntry<'linuxDiary'>[];
+  isPreview?: boolean;
+}
+
+const { entries, isPreview = false } = Astro.props;
+const counts = countLinuxDiaryByCategory(entries);
+---
+
+<BaseLayout
+  variant="v2"
+  title="Diário Linux — guilherme.dev"
+  description="Base de conhecimento prática sobre Linux, Fedora, GNOME, tutoriais, configurações do sistema, soluções de problemas, programas e comandos."
+  noindex={isPreview}
+>
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera sutil no topo */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[480px] overflow-hidden"
+    >
+      <img
+        src={withBase('/images/home/linux.webp')}
+        alt=""
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        class="v2-section-hero-photo h-full w-full object-cover object-center opacity-[0.13] blur-[2px] filter"
+      />
+      <div class="v2-atmosphere-warm absolute inset-0"></div>
+      <div class="v2-atmosphere-fade absolute inset-0"></div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-[var(--container-v2)] px-5 sm:px-8">
+      {/* Hero Editorial */}
+      <header class="border-b border-[var(--color-v2-border)] pt-12 pb-10 md:pt-16 md:pb-14">
+        <div class="mb-4 flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            class="inline-block h-px w-8 bg-[var(--color-v2-accent)]"
+          ></span>
+          <p class="v2-eyebrow text-[var(--color-v2-accent-warm)]">
+            DOCUMENTAÇÃO TÉCNICA / DIÁRIO LINUX
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.04] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-6xl">
+              Diário <span class="italic">Linux.</span>
+            </h1>
+          </div>
+
+          <div class="lg:col-span-5">
+            <p class="font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text-body)] sm:text-base">
+              Tutoriais práticos, configurações do sistema, relatos de uso,
+              soluções de problemas, recomendações de programas e comandos para
+              iniciantes e usuários intermediários.
+            </p>
+          </div>
+        </div>
+
+        {/* Links contextuais (página autobiográfica + Meu ambiente) */}
+        <div class="mt-6 flex flex-wrap items-center gap-4 font-[family-name:var(--font-v2-mono)] text-xs">
+          <a
+            href={withBase('/diario-linux/meu-ambiente/')}
+            class="v2-focus inline-flex min-h-10 items-center gap-2 border border-[var(--color-v2-accent-warm)]/55 bg-[var(--color-v2-surface)] px-3.5 py-2 tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-heading)]"
+          >
+            <span>Meu ambiente</span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+
+          <a
+            href={withBase('/linux/')}
+            class="v2-focus inline-flex min-h-10 items-center gap-2 border border-[var(--color-v2-border)] px-3.5 py-2 tracking-[0.14em] text-[var(--color-v2-text-muted)] uppercase transition-colors hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-heading)]"
+          >
+            <span>Minha trajetória no Linux</span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+
+        {/* Controles: Pesquisa exclusiva do Diário Linux + Filtros por categoria */}
+        <div
+          class="mt-8 space-y-5 border-t border-[var(--color-v2-border)] pt-6"
+          data-diary-controls
+        >
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="relative w-full max-w-md">
+              <label for="diary-search-input" class="sr-only">
+                Pesquisar no Diário Linux por título, descrição ou tag
+              </label>
+              <input
+                id="diary-search-input"
+                type="search"
+                autocomplete="off"
+                placeholder="Pesquisar no Diário Linux (título, assunto, tag)..."
+                data-diary-search
+                class="v2-focus w-full min-h-11 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)] px-4 py-2.5 font-[family-name:var(--font-v2-sans)] text-sm text-[var(--color-v2-heading)] placeholder:text-[var(--color-v2-text-muted)] focus:border-[var(--color-v2-accent-warm)]"
+              />
+            </div>
+
+            <p
+              id="diary-count-status"
+              aria-live="polite"
+              class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.12em] text-[var(--color-v2-text-muted)] uppercase"
+            >
+              {entries.length === 1
+                ? '1 publicação exibida'
+                : `${entries.length} publicações exibidas`}
+            </p>
+          </div>
+
+          <div
+            role="group"
+            aria-label="Filtrar publicações do Diário Linux por categoria"
+            class="flex flex-wrap items-center gap-2"
+          >
+            <button
+              type="button"
+              data-diary-filter="all"
+              aria-pressed="true"
+              class="v2-focus min-h-10 cursor-pointer border border-[var(--color-v2-accent)] bg-[var(--color-v2-accent)] px-3.5 py-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.12em] text-[var(--color-v2-on-accent)] uppercase transition-colors"
+            >
+              Todas ({counts.all})
+            </button>
+
+            {LINUX_DIARY_CATEGORY_ORDER.map((categoryId) => {
+              const meta = LINUX_DIARY_CATEGORIES[categoryId];
+              return (
+                <button
+                  type="button"
+                  data-diary-filter={categoryId}
+                  aria-pressed="false"
+                  class="v2-focus min-h-10 cursor-pointer border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)] px-3.5 py-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.12em] text-[var(--color-v2-text-muted)] uppercase transition-colors hover:border-[var(--color-v2-border-hover)] hover:text-[var(--color-v2-heading)]"
+                >
+                  {meta.label} ({counts[categoryId]})
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </header>
+
+      {/* Listagem de publicações */}
+      {entries.length > 0 ? (
+        <section
+          aria-label="Publicações do Diário Linux"
+          class="mt-12"
+          data-diary-grid
+        >
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {entries.map((entry) => (
+              <LinuxDiaryCard entry={entry} />
+            ))}
+          </div>
+
+          {/* Estado vazio para busca/filtro sem resultados */}
+          <div
+            data-diary-empty-filter
+            hidden
+            class="mt-8 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/70 px-6 py-12 text-center"
+          >
+            <p class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+              // Nenhuma publicação encontrada
+            </p>
+            <p class="mx-auto mt-3 max-w-md font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-text-body)]">
+              Nenhuma publicação do Diário Linux corresponde aos filtros e
+              termos de pesquisa informados.
+            </p>
+            <button
+              type="button"
+              data-diary-reset
+              class="v2-focus mt-6 inline-flex min-h-10 cursor-pointer items-center border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-bg)] px-4 py-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-heading)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-accent-warm)]"
+            >
+              Limpar filtros e pesquisa
+            </button>
+          </div>
+        </section>
+      ) : (
+        <section
+          aria-label="Estado vazio do Diário Linux"
+          class="mt-12 border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/70 px-6 py-16 text-center"
+        >
+          <p class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+            // Base de conhecimento em preparação
+          </p>
+          <h2 class="mt-3 font-[family-name:var(--font-v2-display)] text-3xl font-normal text-[var(--color-v2-heading)]">
+            Nenhuma publicação técnica disponível ainda.
+          </h2>
+          <p class="mx-auto mt-3 max-w-lg font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text-body)]">
+            Os tutoriais, configurações e anotações técnicas do Diário Linux
+            aparecerão aqui conforme forem integrados e revisados.
+          </p>
+        </section>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { matchesSearchTerms } from '../../utils/search';
+
+  function setupLinuxDiaryFilters() {
+    const controls = document.querySelector<HTMLElement>(
+      '[data-diary-controls]',
+    );
+    const grid = document.querySelector<HTMLElement>('[data-diary-grid]');
+    if (!controls || !grid || controls.dataset.bound === 'true') return;
+    controls.dataset.bound = 'true';
+
+    const searchInput = controls.querySelector<HTMLInputElement>(
+      '[data-diary-search]',
+    );
+    const buttons = Array.from(
+      controls.querySelectorAll<HTMLButtonElement>('[data-diary-filter]'),
+    );
+    const cards = Array.from(
+      grid.querySelectorAll<HTMLElement>('[data-diary-card]'),
+    );
+    const emptyState = grid.querySelector<HTMLElement>(
+      '[data-diary-empty-filter]',
+    );
+    const resetBtn =
+      grid.querySelector<HTMLButtonElement>('[data-diary-reset]');
+    const statusElem = document.getElementById('diary-count-status');
+
+    let selectedCategory = 'all';
+    let query = '';
+
+    const activeClasses = [
+      'border-[var(--color-v2-accent)]',
+      'bg-[var(--color-v2-accent)]',
+      'text-[var(--color-v2-on-accent)]',
+    ];
+    const inactiveClasses = [
+      'border-[var(--color-v2-border)]',
+      'bg-[var(--color-v2-surface)]',
+      'text-[var(--color-v2-text-muted)]',
+    ];
+
+    function applyFilters() {
+      let visibleCount = 0;
+
+      for (const card of cards) {
+        const matchesCat =
+          selectedCategory === 'all' ||
+          card.dataset.category === selectedCategory;
+        const matchesQuery = matchesSearchTerms(
+          card.dataset.searchable || '',
+          query,
+        );
+        const visible = matchesCat && matchesQuery;
+        card.hidden = !visible;
+        if (visible) visibleCount += 1;
+      }
+
+      for (const btn of buttons) {
+        const isSelected = btn.dataset.diaryFilter === selectedCategory;
+        btn.setAttribute('aria-pressed', String(isSelected));
+        if (isSelected) {
+          btn.classList.remove(...inactiveClasses);
+          btn.classList.add(...activeClasses);
+        } else {
+          btn.classList.remove(...activeClasses);
+          btn.classList.add(...inactiveClasses);
+        }
+      }
+
+      if (emptyState) {
+        emptyState.hidden = visibleCount > 0;
+      }
+
+      if (statusElem) {
+        statusElem.textContent =
+          visibleCount === 1
+            ? '1 publicação exibida'
+            : `${visibleCount} publicações exibidas`;
+      }
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        selectedCategory = btn.dataset.diaryFilter || 'all';
+        applyFilters();
+      });
+    });
+
+    searchInput?.addEventListener('input', () => {
+      query = searchInput.value || '';
+      applyFilters();
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      selectedCategory = 'all';
+      query = '';
+      if (searchInput) searchInput.value = '';
+      applyFilters();
+      searchInput?.focus();
+    });
+  }
+
+  setupLinuxDiaryFilters();
+  document.addEventListener('astro:page-load', setupLinuxDiaryFilters);
+</script>

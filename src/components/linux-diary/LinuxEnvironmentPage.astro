@@ -1,0 +1,114 @@
+---
+/**
+ * Arquitetura estrutural da futura página `/diario-linux/meu-ambiente/` (EXP-04A).
+ *
+ * Não exibe dados presumidos ou desatualizados: enquanto `linuxEnvironmentSpec.confirmed`
+ * for `false`, apresenta apenas a estrutura planejada aguardando confirmação editorial.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TechnicalNotice from '../editorial/TechnicalNotice.astro';
+import { linuxEnvironmentSpec } from '../../data/linuxEnvironment';
+import { withBase } from '../../utils/base';
+
+interface Props {
+  isPreview?: boolean;
+}
+
+const { isPreview = false } = Astro.props;
+const { confirmed, lastVerifiedAt, sections } = linuxEnvironmentSpec;
+---
+
+<BaseLayout
+  variant="v2"
+  title="Meu ambiente — Diário Linux — guilherme.dev"
+  description="Documentação do ambiente de desenvolvimento e desktop Linux no guilherme.dev."
+  noindex={isPreview || !confirmed}
+>
+  <div class="relative overflow-hidden pb-20 md:pb-28">
+    <div class="mx-auto w-full max-w-[var(--container-v2)] px-5 pt-10 sm:px-8 md:pt-14">
+      <div class="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[var(--color-v2-border)] pb-4">
+        <a
+          href={withBase('/diario-linux/')}
+          class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-text-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+        >
+          <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+            &larr;
+          </span>
+          <span>Voltar para o Diário Linux</span>
+        </a>
+
+        <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-text-muted)] uppercase">
+          DIÁRIO LINUX // MEU AMBIENTE
+        </span>
+      </div>
+
+      <header class="max-w-3xl border-b border-[var(--color-v2-border)] pb-8">
+        <p class="v2-eyebrow text-[var(--color-v2-accent-warm)]">
+          CONFIGURAÇÃO E HARDWARE
+        </p>
+        <h1 class="mt-3 font-[family-name:var(--font-v2-display)] text-4xl leading-[1.06] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl">
+          Meu ambiente.
+        </h1>
+        <p class="mt-4 font-[family-name:var(--font-v2-sans)] text-base leading-relaxed font-light text-[var(--color-v2-text-body)]">
+          Referência central sobre hardware, sistema operacional,
+          personalizações do GNOME, otimizações e ferramentas utilizadas no dia
+          a dia.
+        </p>
+        {confirmed && lastVerifiedAt && (
+          <p class="mt-4 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text-muted)]">
+            Última verificação: {lastVerifiedAt}
+          </p>
+        )}
+      </header>
+
+      {!confirmed ? (
+        <div class="mt-8 max-w-3xl">
+          <TechnicalNotice variant="info" title="Dados aguardando confirmação">
+            <p>
+              A estrutura desta página está pronta para receber as
+              especificações reais de hardware, versão do Fedora, extensões e
+              ferramentas assim que forem confirmadas editorialmente.
+            </p>
+          </TechnicalNotice>
+
+          <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {sections.map((section) => (
+              <section class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/70 p-5">
+                <h2 class="font-[family-name:var(--font-v2-display)] text-2xl text-[var(--color-v2-heading)]">
+                  {section.title}
+                </h2>
+                <p class="mt-2 font-[family-name:var(--font-v2-sans)] text-sm font-light text-[var(--color-v2-text-body)]">
+                  {section.description}
+                </p>
+              </section>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+          {sections
+            .filter((section) => section.items.length > 0)
+            .map((section) => (
+              <section class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 p-6">
+                <h2 class="font-[family-name:var(--font-v2-display)] text-2xl text-[var(--color-v2-heading)]">
+                  {section.title}
+                </h2>
+                <dl class="mt-4 space-y-3 border-t border-[var(--color-v2-border)] pt-4 text-sm">
+                  {section.items.map((item) => (
+                    <div>
+                      <dt class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] text-[var(--color-v2-text-muted)] uppercase">
+                        {item.label}
+                      </dt>
+                      <dd class="mt-0.5 text-[var(--color-v2-heading)]">
+                        {item.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+            ))}
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>

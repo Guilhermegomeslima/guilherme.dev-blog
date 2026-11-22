@@ -1,0 +1,126 @@
+---
+/**
+ * Card editorial técnico do Diário Linux (EXP-04A).
+ */
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../../utils/base';
+import {
+  buildDiarySearchableText,
+  LINUX_DIARY_CATEGORIES,
+  LINUX_DIARY_LEVEL_LABELS,
+} from '../../utils/linux-diary';
+
+interface Props {
+  entry: CollectionEntry<'linuxDiary'>;
+}
+
+const { entry } = Astro.props;
+const { data, id } = entry;
+
+const categoryMeta = LINUX_DIARY_CATEGORIES[data.category];
+const levelLabel = data.level ? LINUX_DIARY_LEVEL_LABELS[data.level] : null;
+const entryHref = withBase(`/diario-linux/${id}/`);
+const searchableText = buildDiarySearchableText(data);
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
+
+const publishedLabel = data.publishedAt ? formatDate(data.publishedAt) : null;
+const updatedLabel = data.updatedAt ? formatDate(data.updatedAt) : null;
+---
+
+<article
+  data-diary-card
+  data-category={data.category}
+  data-searchable={searchableText}
+  class="group relative flex flex-col justify-between border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:v2-shadow-card motion-reduce:transition-none"
+>
+  <a href={entryHref} class="v2-focus flex h-full flex-col justify-between">
+    <div>
+      {data.coverImage && (
+        <div class="relative aspect-video w-full overflow-hidden border-b border-[var(--color-v2-border)] bg-[var(--color-v2-media-surface)]">
+          <img
+            src={withBase(data.coverImage.url)}
+            alt={data.coverImage.alt}
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-cover brightness-95 contrast-105 transition-transform duration-500 ease-out group-hover:scale-[1.03] group-hover:brightness-100 motion-reduce:transition-none"
+          />
+        </div>
+      )}
+
+      <div class="p-6">
+        <div class="mb-3 flex flex-wrap items-center gap-2 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] uppercase">
+          <span class="border border-[var(--color-v2-accent-warm)]/50 bg-[var(--color-v2-accent)]/10 px-2 py-0.5 text-[var(--color-v2-accent-warm)]">
+            {categoryMeta.label}
+          </span>
+
+          {levelLabel && (
+            <span class="border border-[var(--color-v2-border)] px-2 py-0.5 text-[var(--color-v2-text-muted)]">
+              {levelLabel}
+            </span>
+          )}
+
+          {data.draft && (
+            <span class="border border-[var(--color-v2-accent-warm)]/60 px-2 py-0.5 text-[var(--color-v2-accent-warm)]">
+              Rascunho local
+            </span>
+          )}
+        </div>
+
+        <h2 class="font-[family-name:var(--font-v2-display)] text-2xl leading-[1.14] font-normal tracking-[-0.015em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)]">
+          {data.title}
+        </h2>
+
+        <p class="mt-3 line-clamp-3 font-[family-name:var(--font-v2-sans)] text-sm leading-relaxed font-light text-[var(--color-v2-text-body)]">
+          {data.description}
+        </p>
+
+        {data.environment && (
+          <p class="mt-4 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-text-muted)]">
+            Ambiente: {data.environment.distro}
+            {data.environment.desktop ? ` · ${data.environment.desktop}` : ''}
+          </p>
+        )}
+
+        {data.tags.length > 0 && (
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            {data.tags.map((tag) => (
+              <span class="border border-[var(--color-v2-border)] bg-[var(--color-v2-bg)]/70 px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.1em] text-[var(--color-v2-text-muted)]">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div class="px-6 pb-6">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-[var(--color-v2-border)] pt-3.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-text-muted)] uppercase">
+        <div class="flex flex-wrap items-center gap-2">
+          {publishedLabel && data.publishedAt && (
+            <time datetime={data.publishedAt.toISOString()}>
+              {publishedLabel}
+            </time>
+          )}
+          {updatedLabel && data.updatedAt && <span>Rev. {updatedLabel}</span>}
+          {!publishedLabel && !updatedLabel && <span>Documentação</span>}
+        </div>
+
+        <span class="inline-flex items-center gap-1.5 text-[var(--color-v2-accent-warm)] transition-colors group-hover:text-[var(--color-v2-heading)]">
+          <span>Ler</span>
+          <span
+            aria-hidden="true"
+            class="transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+          >
+            &rarr;
+          </span>
+        </span>
+      </div>
+    </div>
+  </a>
+</article>
