@@ -191,7 +191,8 @@ export function shouldIncludeInSitemap(
 }
 
 /**
- * Retorna as rotas estáticas de índice das seções publicamente aprovadas.
+ * Retorna as rotas estáticas (índice e subpáginas institucionais confirmadas)
+ * das seções publicamente aprovadas.
  */
 export function getPublishedExpansionStaticRoutes(
   flags: Readonly<Record<ExpansionSection, boolean>> = EXPANSION_PUBLIC_FLAGS,
@@ -199,7 +200,11 @@ export function getPublishedExpansionStaticRoutes(
   const routes: string[] = [];
   for (const section of Object.keys(EXPANSION_SECTIONS) as ExpansionSection[]) {
     if (isSectionPubliclyPublished(section, flags)) {
-      routes.push(EXPANSION_SECTIONS[section].indexRoute);
+      const meta = EXPANSION_SECTIONS[section];
+      routes.push(meta.indexRoute);
+      if (meta.extraRoutes) {
+        routes.push(...meta.extraRoutes);
+      }
     }
   }
   return routes;

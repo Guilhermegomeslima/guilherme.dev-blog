@@ -24,18 +24,80 @@ const ALL_SECTIONS: ExpansionSection[] = [
   'recommendations',
 ];
 
-describe('editorial-flags — Controle de publicação segura (EXP-02A)', () => {
-  it('todas as três novas seções devem iniciar desativadas para publicação pública', () => {
+describe('editorial-flags — Controle de publicação segura (EXP-02A / EXP-07B)', () => {
+  it('as flags públicas devem manter consistência entre rotas publicadas e prefixos bloqueados', () => {
     for (const section of ALL_SECTIONS) {
-      assert.equal(EXPANSION_PUBLIC_FLAGS[section], false);
-      assert.equal(isSectionPubliclyPublished(section), false);
+      assert.equal(typeof EXPANSION_PUBLIC_FLAGS[section], 'boolean');
+      assert.equal(
+        isSectionPubliclyPublished(section),
+        EXPANSION_PUBLIC_FLAGS[section],
+      );
     }
-    assert.deepEqual(getPublishedExpansionStaticRoutes(), []);
-    assert.deepEqual(getUnpublishedExpansionPrefixes().sort(), [
-      'diario-linux',
-      'recomendacoes',
-      'resenhas',
+
+    const publishedRoutes = getPublishedExpansionStaticRoutes();
+    const unpublishedPrefixes = getUnpublishedExpansionPrefixes();
+
+    for (const section of ALL_SECTIONS) {
+      const meta = EXPANSION_SECTIONS[section];
+      if (EXPANSION_PUBLIC_FLAGS[section]) {
+        assert.ok(publishedRoutes.includes(meta.indexRoute));
+        assert.ok(!unpublishedPrefixes.includes(meta.distPrefix));
+      } else {
+        assert.ok(!publishedRoutes.includes(meta.indexRoute));
+        assert.ok(unpublishedPrefixes.includes(meta.distPrefix));
+      }
+    }
+  });
+
+  it('deve simular ativação completa das 3 seções mantendo rascunhos e demos bloqueados em produção', () => {
+    const allEnabled = {
+      reviews: true,
+      linuxDiary: true,
+      recommendations: true,
+    } as const;
+    const prodEnv = { VERCEL: '1' };
+
+    assert.deepEqual(getPublishedExpansionStaticRoutes(allEnabled), [
+      '/resenhas/',
+      '/diario-linux/',
+      '/diario-linux/meu-ambiente/',
+      '/recomendacoes/',
     ]);
+    assert.deepEqual(getUnpublishedExpansionPrefixes(allEnabled), []);
+
+    for (const section of ALL_SECTIONS) {
+      assert.equal(
+        shouldGenerateSectionRoute(section, prodEnv, allEnabled),
+        true,
+      );
+      assert.equal(
+        shouldIncludeEntry(
+          section,
+          { draft: false, isDemo: false },
+          prodEnv,
+          allEnabled,
+        ),
+        true,
+      );
+      assert.equal(
+        shouldIncludeEntry(
+          section,
+          { draft: true, isDemo: false },
+          prodEnv,
+          allEnabled,
+        ),
+        false,
+      );
+      assert.equal(
+        shouldIncludeEntry(
+          section,
+          { draft: false, isDemo: true },
+          prodEnv,
+          allEnabled,
+        ),
+        false,
+      );
+    }
   });
 
   it('deve bloquear a geração de rotas e entradas em ambiente padrão sem preview', () => {

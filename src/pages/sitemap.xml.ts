@@ -1,5 +1,9 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import {
+  getPublishedExpansionStaticRoutes,
+  shouldIncludeInSitemap,
+} from '../utils/editorial-flags';
 import { CANONICAL_SITE, isPublishable } from '../utils/seo';
 
 interface SitemapEntry {
@@ -40,6 +44,7 @@ export const GET: APIRoute = async () => {
     '/musica/',
     '/opensource/',
     '/galeria/',
+    ...getPublishedExpansionStaticRoutes(),
   ];
 
   const entries: SitemapEntry[] = staticPaths.map((path) => ({
@@ -99,6 +104,30 @@ export const GET: APIRoute = async () => {
   for (const slug of albumSlugs) {
     entries.push({
       loc: `${CANONICAL_SITE}/galeria/${slug}/`,
+    });
+  }
+
+  // Resenhas — apenas quando a seção estiver aprovada e a entrada for publicável
+  const reviews = await getCollection('reviews', ({ data }) =>
+    shouldIncludeInSitemap('reviews', data),
+  );
+  for (const review of reviews) {
+    const refDate = review.data.updatedAt ?? review.data.publishedAt;
+    entries.push({
+      loc: `${CANONICAL_SITE}/resenhas/${review.id}/`,
+      lastmod: refDate ? refDate.toISOString().split('T')[0] : undefined,
+    });
+  }
+
+  // Diário Linux — apenas quando a seção estiver aprovada e a entrada for publicável
+  const diaryEntries = await getCollection('linuxDiary', ({ data }) =>
+    shouldIncludeInSitemap('linuxDiary', data),
+  );
+  for (const entry of diaryEntries) {
+    const refDate = entry.data.updatedAt ?? entry.data.publishedAt;
+    entries.push({
+      loc: `${CANONICAL_SITE}/diario-linux/${entry.id}/`,
+      lastmod: refDate ? refDate.toISOString().split('T')[0] : undefined,
     });
   }
 

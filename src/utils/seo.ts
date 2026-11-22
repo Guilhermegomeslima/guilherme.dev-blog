@@ -198,3 +198,107 @@ export function getBlogPostingSchema(article: {
     },
   };
 }
+
+export interface EditorialArticleSchema {
+  '@context': 'https://schema.org';
+  '@type': 'Article' | 'TechArticle';
+  headline: string;
+  description: string;
+  url: string;
+  inLanguage: string;
+  datePublished?: string;
+  dateModified?: string;
+  image?: string;
+  keywords?: string[];
+  author: {
+    '@type': 'Person';
+    name: string;
+    url: string;
+  };
+  publisher: {
+    '@type': 'Person';
+    name: string;
+    url: string;
+  };
+  mainEntityOfPage: {
+    '@type': 'WebPage';
+    '@id': string;
+  };
+}
+
+function buildEditorialSchema(
+  type: 'Article' | 'TechArticle',
+  canonicalPath: string,
+  entry: {
+    title: string;
+    description: string;
+    publishedAt?: Date;
+    updatedAt?: Date;
+    imageUrl?: string;
+    tags?: string[];
+  },
+): EditorialArticleSchema {
+  const url = `${CANONICAL_SITE}${canonicalPath}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': type,
+    headline: entry.title,
+    description: entry.description,
+    url,
+    inLanguage: 'pt-BR',
+    ...(entry.publishedAt
+      ? { datePublished: entry.publishedAt.toISOString() }
+      : {}),
+    ...(entry.updatedAt ? { dateModified: entry.updatedAt.toISOString() } : {}),
+    ...(entry.imageUrl ? { image: toAbsoluteImageUrl(entry.imageUrl) } : {}),
+    ...(entry.tags && entry.tags.length > 0 ? { keywords: entry.tags } : {}),
+    author: {
+      '@type': 'Person',
+      name: 'Guilherme Gomes',
+      url: `${CANONICAL_SITE}/sobre/`,
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Guilherme Gomes',
+      url: `${CANONICAL_SITE}/sobre/`,
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+  };
+}
+
+/**
+ * Gera JSON-LD `Article` para páginas individuais de Resenhas sem inventar datas ou notas.
+ */
+export function getReviewArticleSchema(review: {
+  id: string;
+  title: string;
+  description: string;
+  publishedAt?: Date;
+  updatedAt?: Date;
+  imageUrl?: string;
+  tags?: string[];
+}): EditorialArticleSchema {
+  return buildEditorialSchema('Article', `/resenhas/${review.id}/`, review);
+}
+
+/**
+ * Gera JSON-LD `TechArticle` para publicações individuais do Diário Linux sem inventar datas.
+ */
+export function getLinuxDiaryArticleSchema(entry: {
+  id: string;
+  title: string;
+  description: string;
+  publishedAt?: Date;
+  updatedAt?: Date;
+  imageUrl?: string;
+  tags?: string[];
+}): EditorialArticleSchema {
+  return buildEditorialSchema(
+    'TechArticle',
+    `/diario-linux/${entry.id}/`,
+    entry,
+  );
+}

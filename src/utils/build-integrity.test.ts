@@ -5,8 +5,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { CANONICAL_SITE } from './seo.ts';
 import {
+  EXPANSION_PUBLIC_FLAGS,
+  getPublishedExpansionStaticRoutes,
   getUnpublishedExpansionPrefixes,
   isExpansionPreviewEnabled,
+  isSectionPubliclyPublished,
+  type ExpansionSection,
 } from './editorial-flags.ts';
 
 const distDir = path.resolve('dist');
@@ -105,7 +109,9 @@ export function getPublishableGalleryAlbums(dir: string): string[] {
 /**
  * Calcula de forma independente as rotas canônicas e os arquivos HTML esperados no build.
  */
-export function computeExpectedBuildRoutes(): {
+export function computeExpectedBuildRoutes(
+  flags: Readonly<Record<ExpansionSection, boolean>> = EXPANSION_PUBLIC_FLAGS,
+): {
   sitemapUrls: Set<string>;
   expectedHtmlFiles: Set<string>;
   counts: {
@@ -114,6 +120,8 @@ export function computeExpectedBuildRoutes(): {
     movies: number;
     books: number;
     galleryAlbums: number;
+    reviews: number;
+    linuxDiary: number;
     staticRoutes: number;
   };
 } {
@@ -127,12 +135,22 @@ export function computeExpectedBuildRoutes(): {
   const galleryAlbums = getPublishableGalleryAlbums(
     path.join(contentDir, 'gallery'),
   );
+  const reviews = isSectionPubliclyPublished('reviews', flags)
+    ? getPublishableSlugs(path.join(contentDir, 'reviews'), '.md')
+    : [];
+  const linuxDiary = isSectionPubliclyPublished('linuxDiary', flags)
+    ? getPublishableSlugs(path.join(contentDir, 'linux-diary'), '.md')
+    : [];
 
   const sitemapUrls = new Set<string>();
   const expectedHtmlFiles = new Set<string>();
+  const allStaticRoutes = [
+    ...staticSitemapRoutes,
+    ...getPublishedExpansionStaticRoutes(flags),
+  ];
 
-  // Rotas estáticas
-  for (const r of staticSitemapRoutes) {
+  // Rotas estáticas (base + seções da expansão efetivamente publicadas)
+  for (const r of allStaticRoutes) {
     sitemapUrls.add(`${CANONICAL_SITE}${r}`);
     if (r === '/') {
       expectedHtmlFiles.add('index.html');
@@ -163,6 +181,14 @@ export function computeExpectedBuildRoutes(): {
     sitemapUrls.add(`${CANONICAL_SITE}/galeria/${slug}/`);
     expectedHtmlFiles.add(path.join('galeria', slug, 'index.html'));
   }
+  for (const id of reviews) {
+    sitemapUrls.add(`${CANONICAL_SITE}/resenhas/${id}/`);
+    expectedHtmlFiles.add(path.join('resenhas', id, 'index.html'));
+  }
+  for (const id of linuxDiary) {
+    sitemapUrls.add(`${CANONICAL_SITE}/diario-linux/${id}/`);
+    expectedHtmlFiles.add(path.join('diario-linux', id, 'index.html'));
+  }
 
   // Arquivos auxiliares que não figuram no sitemap
   for (const f of nonSitemapHtmlFiles) {
@@ -178,7 +204,9 @@ export function computeExpectedBuildRoutes(): {
       movies: movies.length,
       books: books.length,
       galleryAlbums: galleryAlbums.length,
-      staticRoutes: staticSitemapRoutes.length,
+      reviews: reviews.length,
+      linuxDiary: linuxDiary.length,
+      staticRoutes: allStaticRoutes.length,
     },
   };
 }
@@ -452,6 +480,70 @@ describe('Auditoria Pós-Build — Integridade Dinâmica de Rotas, Links e Ativo
           `Rota não aprovada /${prefix}/ vazou no sitemap.xml`,
         );
       }
+    });
+
+    it('captura privada sistema-sobre-fedora-gnome.webp não deve existir em dist/', () => {
+      const privateAsset = path.join(
+        distDir,
+        'images',
+        'linux-diary',
+        'gnome-personalizacao',
+        'sistema-sobre-fedora-gnome.webp',
+      );
+      assert.equal(
+        fs.existsSync(privateAsset),
+        false,
+        'Captura privada sistema-sobre-fedora-gnome.webp não pode ser copiada para dist/',
+      );
+    });
+
+    it('computeExpectedBuildRoutes deve suportar simulação de flags ativadas mantendo rascunhos fora do sitemap', () => {
+      const simulated = computeExpectedBuildRoutes({
+        reviews: true,
+        linuxDiary: true,
+        recommendations: true,
+      });
+
+      assert.ok(simulated.sitemapUrls.has(`${CANONICAL_SITE}/resenhas/`));
+      assert.ok(simulated.sitemapUrls.has(`${CANONICAL_SITE}/diario-linux/`));
+      assert.ok(
+        simulated.sitemapUrls.has(
+          `${CANONICAL_SITE}/diario-linux/meu-ambiente/`,
+        ),
+      );
+      assert.ok(simulated.sitemapUrls.has(`${CANONICAL_SITE}/recomendacoes/`));
+      assert.ok(
+        simulated.expectedHtmlFiles.has(path.join('resenhas', 'index.html')),
+      );
+      assert.ok(
+        simulated.expectedHtmlFiles.has(
+          path.join('diario-linux', 'index.html'),
+        ),
+      );
+      assert.ok(
+        simulated.expectedHtmlFiles.has(
+          path.join('diario-linux', 'meu-ambiente', 'index.html'),
+        ),
+      );
+      assert.ok(
+        simulated.expectedHtmlFiles.has(
+          path.join('recomendacoes', 'index.html'),
+        ),
+      );
+
+      // Enquanto Shinobido e GNOME estiverem com draft: true, continuam fora do sitemap
+      assert.equal(
+        simulated.sitemapUrls.has(
+          `${CANONICAL_SITE}/resenhas/shinobido-uma-joia-esquecida/`,
+        ),
+        false,
+      );
+      assert.equal(
+        simulated.sitemapUrls.has(
+          `${CANONICAL_SITE}/diario-linux/como-personalizo-meu-gnome/`,
+        ),
+        false,
+      );
     });
   });
 

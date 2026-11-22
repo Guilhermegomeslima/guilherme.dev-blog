@@ -27,6 +27,7 @@ import {
   syncHeadingIdsWithToc,
 } from '../../utils/linux-diary';
 import { estimateReadingMinutes } from '../../utils/reviews';
+import { getLinuxDiaryArticleSchema } from '../../utils/seo';
 
 interface Props {
   entry: CollectionEntry<'linuxDiary'>;
@@ -76,6 +77,15 @@ const processedHtml = rawHtml
       tocItems,
     )
   : '';
+const diarySchema = getLinuxDiaryArticleSchema({
+  id: entry.id,
+  title: data.title,
+  description: data.description,
+  publishedAt: data.publishedAt,
+  updatedAt: data.updatedAt,
+  imageUrl: data.coverImage?.url,
+  tags: data.tags,
+});
 ---
 
 <BaseLayout
@@ -84,6 +94,7 @@ const processedHtml = rawHtml
   description={data.description}
   image={data.coverImage?.url}
   type="article"
+  schema={diarySchema}
   noindex={isPreview || data.draft || data.isDemo}
 >
   <ReadingProgress />

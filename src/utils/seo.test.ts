@@ -12,6 +12,8 @@ import {
   getWebSiteSchema,
   getProfilePageSchema,
   getBlogPostingSchema,
+  getReviewArticleSchema,
+  getLinuxDiaryArticleSchema,
 } from './seo.ts';
 
 describe('toCanonicalUrl — Canonicalização de URLs para a produção principal', () => {
@@ -202,5 +204,35 @@ describe('Schemas de Dados Estruturados (Schema.org)', () => {
     );
     assert.equal(schema.image, `${CANONICAL_SITE}/images/articles/fedora.jpg`);
     assert.deepEqual(schema.keywords, ['Linux', 'Fedora']);
+  });
+
+  it('getReviewArticleSchema e getLinuxDiaryArticleSchema não devem inventar datas ausentes (EXP-07B)', () => {
+    const reviewSchema = getReviewArticleSchema({
+      id: 'shinobido-uma-joia-esquecida',
+      title: 'Shinobido: uma joia esquecida do PS2',
+      description: 'Análise pessoal do clássico de PS2.',
+      imageUrl: '/images/reviews/shinobido/tela-titulo-shinobido.webp',
+      tags: ['PS2', 'Shinobido'],
+    });
+    assert.equal(reviewSchema['@type'], 'Article');
+    assert.equal(
+      reviewSchema.url,
+      `${CANONICAL_SITE}/resenhas/shinobido-uma-joia-esquecida/`,
+    );
+    assert.equal(reviewSchema.datePublished, undefined);
+    assert.equal(reviewSchema.dateModified, undefined);
+
+    const diarySchema = getLinuxDiaryArticleSchema({
+      id: 'como-personalizo-meu-gnome',
+      title: 'Como personalizo meu GNOME',
+      description: 'Tutorial de personalização do GNOME no Fedora.',
+      publishedAt: new Date('2026-11-22T12:00:00Z'),
+    });
+    assert.equal(diarySchema['@type'], 'TechArticle');
+    assert.equal(
+      diarySchema.url,
+      `${CANONICAL_SITE}/diario-linux/como-personalizo-meu-gnome/`,
+    );
+    assert.equal(diarySchema.datePublished, '2026-11-22T12:00:00.000Z');
   });
 });
