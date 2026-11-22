@@ -1,0 +1,157 @@
+---
+/**
+ * Bloco complementar da Home com os três cards das novas seções em linha única
+ * no desktop (EXP-07C — Ajustes finais de interface).
+ *
+ * Disposição no desktop (`lg+`, 3 colunas iguais no contêiner `max-w-v2`):
+ *   [ DIÁRIO LINUX ]  [ RESENHAS ]  [ RECOMENDAÇÕES ]
+ *
+ * Em telas intermediárias (`sm`–`md`): 2 colunas (com o terceiro card ocupando a linha).
+ * No mobile (`< sm`): empilhados verticalmente.
+ * Cada card respeita `shouldGenerateSectionRoute()` e `withBase()`.
+ */
+import { withBase } from '../../utils/base';
+import {
+  shouldGenerateSectionRoute,
+  type ExpansionSection,
+} from '../../utils/editorial-flags';
+
+interface ExpansionHomeCard {
+  id: string;
+  section: ExpansionSection;
+  eyebrow: string;
+  title: string;
+  description: string;
+  href: string;
+  image: {
+    src: string;
+    width: number;
+    height: number;
+    position: string;
+  };
+}
+
+const expansionCards: ExpansionHomeCard[] = [
+  {
+    id: 'diario-linux',
+    section: 'linuxDiary',
+    eyebrow: 'Tutoriais e sistema',
+    title: 'Diário Linux',
+    description: 'Guias práticos, personalização do GNOME e meu ambiente.',
+    href: '/diario-linux/',
+    image: {
+      src: '/images/header/diario-linux.webp',
+      width: 1024,
+      height: 576,
+      position: '70% 70%',
+    },
+  },
+  {
+    id: 'resenhas',
+    section: 'reviews',
+    eyebrow: 'Críticas e impressões',
+    title: 'Resenhas',
+    description: 'Análises pessoais sobre jogos, filmes e livros.',
+    href: '/resenhas/',
+    image: {
+      src: '/images/home/resenhas-card.webp',
+      width: 1024,
+      height: 1024,
+      position: '50% 62%',
+    },
+  },
+  {
+    id: 'recomendacoes',
+    section: 'recommendations',
+    eyebrow: 'Curadoria pessoal',
+    title: 'Recomendações',
+    description: 'Produtos, periféricos e editoras com experiência real.',
+    href: '/recomendacoes/',
+    image: {
+      src: '/images/header/recomendacoes.webp',
+      width: 1024,
+      height: 682,
+      position: '60% 45%',
+    },
+  },
+];
+
+const visibleCards = expansionCards.filter((card) =>
+  shouldGenerateSectionRoute(card.section),
+);
+---
+
+{visibleCards.length > 0 && (
+  <section
+    aria-labelledby="expansao-home-title"
+    data-home-expansion-row
+    class="mx-auto mt-14 -mb-12 w-full max-w-v2 px-6 lg:mt-16 lg:-mb-16 xl:px-0"
+  >
+    <div class="border-v2-border/70 mb-6 flex items-center justify-between gap-4 border-t pt-6">
+      <p class="font-v2-mono text-v2-text-muted flex items-center gap-3 text-[0.5625rem] tracking-[0.2em] uppercase">
+        <span aria-hidden="true" class="text-v2-accent-warm">
+          ✦
+        </span>
+        <span id="expansao-home-title">Novas seções editoriais</span>
+      </p>
+      <span
+        aria-hidden="true"
+        class="bg-v2-border/70 hidden h-px flex-1 sm:block"
+      ></span>
+    </div>
+
+    <ul class="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+      {visibleCards.map((card, index) => {
+        const spanOnTablet =
+          visibleCards.length === 3 && index === 2
+            ? 'sm:col-span-2 lg:col-span-1'
+            : '';
+
+        return (
+          <li class:list={['flex', spanOnTablet]}>
+            <a
+              href={withBase(card.href)}
+              data-home-expansion-card={card.id}
+              class="v2-focus group border-v2-border bg-v2-media-surface relative isolate block h-[12.25rem] w-full overflow-hidden border transition-colors duration-300 hover:border-v2-text/70 focus-visible:border-v2-text/70 motion-reduce:transition-none sm:h-[13.25rem]"
+            >
+              <img
+                src={withBase(card.image.src)}
+                alt=""
+                width={card.image.width}
+                height={card.image.height}
+                loading="lazy"
+                decoding="async"
+                style={`object-position: ${card.image.position}`}
+                class="absolute inset-0 -z-20 h-full w-full object-cover brightness-[0.46] saturate-[0.65] transition-[filter] duration-500 group-hover:brightness-[0.66] group-focus-visible:brightness-[0.66] motion-reduce:transition-none"
+              />
+              <div
+                aria-hidden="true"
+                class="from-v2-media-bg/92 via-v2-media-bg/45 absolute inset-0 -z-10 bg-linear-to-t to-transparent"
+              />
+
+              <div class="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4">
+                <div class="min-w-0">
+                  <p class="font-v2-sans text-v2-accent-warm text-[0.5625rem] tracking-[0.2em] uppercase">
+                    {card.eyebrow}
+                  </p>
+                  <h3 class="font-v2-display text-v2-media-text mt-1.5 text-[1.95rem] leading-none font-medium tracking-tight">
+                    {card.title}
+                  </h3>
+                  <p class="font-v2-sans text-v2-media-muted mt-1.5 line-clamp-2 text-xs leading-snug font-light">
+                    {card.description}
+                  </p>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="border-v2-media-text/40 text-v2-media-text group-hover:border-v2-accent group-hover:bg-v2-accent group-hover:text-v2-on-accent group-focus-visible:border-v2-accent group-focus-visible:bg-v2-accent group-focus-visible:text-v2-on-accent mb-0.5 inline-flex size-8 shrink-0 items-center justify-center border text-xs transition-colors duration-300 motion-reduce:transition-none"
+                >
+                  &rarr;
+                </span>
+              </div>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </section>
+)}

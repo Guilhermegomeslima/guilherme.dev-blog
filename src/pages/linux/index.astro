@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinuxTimeline from '../../components/linux/LinuxTimeline.astro';
-import ReadingProgress from '../../components/ui/ReadingProgress.astro';
 import ShareButton from '../../components/ui/ShareButton.astro';
 import { withBase } from '../../utils/base';
 
@@ -22,7 +21,6 @@ const chapterIndex = [
   title="Linux & Sistemas Operacionais — guilherme.dev"
   description="Minha trajetória com Linux: do Windows 11 ao Fedora. Como um notebook com pouca memória RAM me levou a descobrir um sistema operacional que acabou mudando minha relação com a tecnologia."
 >
-  <ReadingProgress />
   <div class="mx-auto w-full max-w-v2 px-6 pb-20 xl:px-0">
     <!-- Cabeçalho editorial da crônica -->
     <header
@@ -126,7 +124,7 @@ const chapterIndex = [
     </header>
 
     <!-- Corpo da Crônica Editorial (Capítulos 01 a 07) -->
-    <div data-reading-content class="divide-v2-border/70 divide-y">
+    <div class="divide-v2-border/70 divide-y">
       <!-- Capítulo 01 -->
       <section
         id="cap-1"

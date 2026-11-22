@@ -4,7 +4,7 @@
  *
  * Reutiliza integralmente:
  * - `TableOfContents`, `CodeBlockEnhancer`, `EditorialLightbox` (EXP-02B/02C)
- * - `ReadingProgress`, `ShareButton`, `ContentNavigation`
+ * - `ShareButton`, `ContentNavigation`
  * - `enhanceTechnicalHtml`, `buildTableOfContents`, `syncHeadingIdsWithToc`
  */
 import { render } from 'astro:content';
@@ -14,7 +14,6 @@ import ContentNavigation from '../content/ContentNavigation.astro';
 import CodeBlockEnhancer from '../editorial/CodeBlockEnhancer.astro';
 import EditorialLightbox from '../editorial/EditorialLightbox.astro';
 import TableOfContents from '../editorial/TableOfContents.astro';
-import ReadingProgress from '../ui/ReadingProgress.astro';
 import ShareButton from '../ui/ShareButton.astro';
 import { withBase } from '../../utils/base';
 import {
@@ -97,7 +96,6 @@ const diarySchema = getLinuxDiaryArticleSchema({
   schema={diarySchema}
   noindex={isPreview || data.draft || data.isDemo}
 >
-  <ReadingProgress />
   <article class="relative overflow-hidden pb-20 md:pb-28">
     {/* Atmosfera sutil no topo */}
     <div
@@ -265,7 +263,6 @@ const diarySchema = getLinuxDiaryArticleSchema({
           {/* Corpo técnico Markdown */}
           <div
             data-editorial-prose
-            data-reading-content
             class="v2-doc-prose mt-8 max-w-[780px] space-y-6 font-[family-name:var(--font-v2-sans)] text-[1.03125rem] leading-[1.82] font-light text-[var(--color-v2-text-body)] sm:text-[1.0625rem] [&>blockquote]:my-6 [&>blockquote]:border-l-2 [&>blockquote]:border-[var(--color-v2-accent-warm)] [&>blockquote]:bg-[var(--color-v2-surface)]/80 [&>blockquote]:px-5 [&>blockquote]:py-3.5 [&>h2]:mt-12 [&>h2]:mb-4 [&>h2]:border-b [&>h2]:border-[var(--color-v2-border)] [&>h2]:pb-2.5 [&>h2]:font-[family-name:var(--font-v2-display)] [&>h2]:text-3xl [&>h2]:leading-[1.15] [&>h2]:font-normal [&>h2]:text-[var(--color-v2-heading)] [&>h3]:mt-9 [&>h3]:mb-3 [&>h3]:font-[family-name:var(--font-v2-display)] [&>h3]:text-2xl [&>h3]:leading-[1.2] [&>h3]:font-normal [&>h3]:text-[var(--color-v2-accent-warm)] [&>ol]:my-5 [&>ol]:list-decimal [&>ol]:space-y-2.5 [&>ol]:pl-6 [&>ol>li::marker]:text-[var(--color-v2-accent-warm)] [&>table]:my-6 [&>table]:w-full [&>table]:border-collapse [&>table]:border [&>table]:border-[var(--color-v2-border)] [&>table]:text-sm [&>ul]:my-5 [&>ul]:list-disc [&>ul]:space-y-2.5 [&>ul]:pl-6 [&>ul>li::marker]:text-[var(--color-v2-accent-warm)] [&_a]:text-[var(--color-v2-accent-warm)] [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-[var(--color-v2-heading)] [&_code]:border [&_code]:border-[var(--color-v2-border)] [&_code]:bg-[var(--color-v2-surface)] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-[family-name:var(--font-v2-mono)] [&_code]:text-[0.875em] [&_code]:text-[var(--color-v2-accent-warm)] [&_strong]:font-medium [&_strong]:text-[var(--color-v2-heading)] [&_td]:border [&_td]:border-[var(--color-v2-border)] [&_td]:px-3.5 [&_td]:py-2.5 [&_th]:border [&_th]:border-[var(--color-v2-border)] [&_th]:bg-[var(--color-v2-surface)] [&_th]:px-3.5 [&_th]:py-2.5 [&_th]:text-left [&_th]:font-[family-name:var(--font-v2-mono)] [&_th]:text-xs [&_th]:text-[var(--color-v2-heading)] [&_th]:uppercase"
           >
             {processedHtml ? (

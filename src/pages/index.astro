@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroV2 from '../components/home/HeroV2.astro';
 import CategoryPosterGrid from '../components/home/CategoryPosterGrid.astro';
+import ExpansionPyramidSection from '../components/home/ExpansionPyramidSection.astro';
 import EditorialStrip from '../components/home/EditorialStrip.astro';
 import { getWebSiteSchema } from '../utils/seo';
 
@@ -16,5 +17,6 @@ const websiteSchema = getWebSiteSchema();
 >
   <HeroV2 />
   <CategoryPosterGrid />
+  <ExpansionPyramidSection />
   <EditorialStrip />
 </BaseLayout>

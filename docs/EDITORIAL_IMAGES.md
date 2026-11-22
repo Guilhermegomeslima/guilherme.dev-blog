@@ -142,6 +142,7 @@ Pasta definitiva: `public/images/recommendations/`. As 2 imagens enviadas pelo a
 ## 4. Resumo quantitativo de pendências
 
 - **Header 2.0:** 8 imagens **integradas** (6 reutilizadas de `public/images/home/` + 2 novas em `public/images/header/`).
+- **Home (Novas seções editoriais):** 3 imagens **integradas** (`public/images/home/resenhas-card.webp` para Resenhas + reutilização de `diario-linux.webp` e `recomendacoes.webp`).
 - **Resenhas (Shinobido):** 27 imagens preparadas em `public/images/reviews/shinobido/`, sendo **14 integradas** no rascunho (`draft: true`) e 13 mantidas como reserva (`validada`).
 - **Diário Linux (Personalização GNOME):** 11 assets ativos em `public/images/linux-diary/gnome-personalizacao/`, sendo **8 integradas** no rascunho (`draft: true`), 3 em reserva (`arcmenu-detalhe.webp`, `gnome-padrao-overview.webp`, `gnome-padrao-desktop.webp`) e 1 removida por privacidade (`sistema-sobre-fedora-gnome.webp`); pendências sinalizadas para Blur my Shell (`[CAPTURA 04]`), Hide Top Bar oculta (`[CAPTURA 07]`) e GNOME padrão (`[CAPTURA 09 — Antes]`).
 - **Recomendações:** 2 imagens preparadas e **integradas** em `public/images/recommendations/` nos rascunhos (`draft: true`).
