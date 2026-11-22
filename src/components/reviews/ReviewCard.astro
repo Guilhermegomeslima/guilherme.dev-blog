@@ -1,0 +1,171 @@
+---
+/**
+ * Card cinematográfico de Resenha (EXP-03A).
+ *
+ * Usa exclusivamente `data.description` no resumo (nunca o corpo Markdown),
+ * garantindo zero vazamento de spoilers na listagem.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../../utils/base';
+import { formatScore } from '../../utils/ratings';
+import { REVIEW_MEDIA_TYPES } from '../../utils/reviews';
+
+interface Props {
+  review: CollectionEntry<'reviews'>;
+  featured?: boolean;
+}
+
+const { review, featured = false } = Astro.props;
+const { data, id } = review;
+
+const mediaMeta = REVIEW_MEDIA_TYPES[data.mediaType];
+const reviewHref = withBase(`/resenhas/${id}/`);
+
+const formattedDate = data.publishedAt
+  ? new Intl.DateTimeFormat('pt-BR', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    }).format(data.publishedAt)
+  : null;
+---
+
+<article
+  data-review-card
+  data-media-type={data.mediaType}
+  class:list={[
+    'group relative flex flex-col justify-between border bg-[var(--color-v2-surface)]/80 transition-all duration-300 motion-reduce:transition-none',
+    featured
+      ? 'border-[var(--color-v2-border-hover)] hover:border-[var(--color-v2-accent-warm)]/60 hover:v2-shadow-elevated'
+      : 'border-[var(--color-v2-border)] hover:-translate-y-0.5 hover:border-[var(--color-v2-border-hover)] hover:v2-shadow-card',
+  ]}
+>
+  {featured && (
+    <>
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute -top-px -left-px z-10 h-3.5 w-3.5 border-t border-l border-[var(--color-v2-accent-warm)]"
+      />
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute -top-px -right-px z-10 h-3.5 w-3.5 border-t border-r border-[var(--color-v2-accent-warm)]"
+      />
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute -bottom-px -left-px z-10 h-3.5 w-3.5 border-b border-l border-[var(--color-v2-accent-warm)]"
+      />
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute -bottom-px -right-px z-10 h-3.5 w-3.5 border-b border-r border-[var(--color-v2-accent-warm)]"
+      />
+    </>
+  )}
+
+  <a
+    href={reviewHref}
+    class:list={[
+      'v2-focus flex h-full flex-col justify-between',
+      featured && 'lg:grid lg:grid-cols-12',
+    ]}
+  >
+    {data.coverImage && (
+      <div
+        class:list={[
+          'relative overflow-hidden bg-[var(--color-v2-media-surface)]',
+          featured
+            ? 'aspect-video border-b border-[var(--color-v2-border)] lg:col-span-6 lg:aspect-auto lg:border-r lg:border-b-0'
+            : 'aspect-video w-full border-b border-[var(--color-v2-border)]',
+        ]}
+      >
+        <img
+          src={withBase(data.coverImage.url)}
+          alt={data.coverImage.alt}
+          loading={featured ? 'eager' : 'lazy'}
+          decoding="async"
+          class="h-full w-full object-cover brightness-95 contrast-105 transition-transform duration-500 ease-out group-hover:scale-[1.03] group-hover:brightness-100 motion-reduce:transition-none"
+        />
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-v2-media-bg)]/75 via-transparent to-transparent"
+        />
+      </div>
+    )}
+
+    <div
+      class:list={[
+        'flex flex-1 flex-col justify-between p-6',
+        featured &&
+          (data.coverImage
+            ? 'sm:p-8 lg:col-span-6 lg:p-10'
+            : 'sm:p-8 lg:col-span-12 lg:p-10'),
+      ]}
+    >
+      <div>
+        <div class="mb-3 flex flex-wrap items-center gap-2.5 font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.14em] uppercase">
+          <span class="border border-[var(--color-v2-accent-warm)]/50 bg-[var(--color-v2-accent)]/10 px-2 py-0.5 text-[10px] text-[var(--color-v2-accent-warm)]">
+            {mediaMeta.singular}
+          </span>
+
+          {formattedDate && data.publishedAt && (
+            <time
+              datetime={data.publishedAt.toISOString()}
+              class="text-[var(--color-v2-text-muted)]"
+            >
+              {formattedDate}
+            </time>
+          )}
+
+          {typeof data.rating === 'number' && (
+            <span class="border border-[var(--color-v2-border-hover)] px-2 py-0.5 text-[10px] text-[var(--color-v2-heading)]">
+              Nota {formatScore(data.rating)}
+            </span>
+          )}
+
+          {data.hasSpoilers && (
+            <span class="border border-[var(--color-v2-accent)]/50 px-2 py-0.5 text-[10px] text-[var(--color-v2-status-active)]">
+              Contém spoilers
+            </span>
+          )}
+
+          {data.draft && (
+            <span class="border border-[var(--color-v2-accent-warm)]/60 px-2 py-0.5 text-[10px] text-[var(--color-v2-accent-warm)]">
+              Rascunho local
+            </span>
+          )}
+        </div>
+
+        <p class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.12em] text-[var(--color-v2-text-muted)] uppercase">
+          {data.workTitle}
+        </p>
+
+        <h2
+          class:list={[
+            'mt-1.5 font-[family-name:var(--font-v2-display)] leading-[1.12] font-normal tracking-[-0.015em] text-[var(--color-v2-heading)] transition-colors duration-200 group-hover:text-[var(--color-v2-accent-warm)]',
+            featured ? 'text-3xl sm:text-4xl' : 'text-2xl',
+          ]}
+        >
+          {data.title}
+        </h2>
+
+        <p
+          class:list={[
+            'mt-3 font-[family-name:var(--font-v2-sans)] leading-relaxed font-light text-[var(--color-v2-text-body)]',
+            featured ? 'text-base' : 'line-clamp-3 text-sm',
+          ]}
+        >
+          {data.description}
+        </p>
+      </div>
+
+      <div class="mt-6 flex items-center justify-between border-t border-[var(--color-v2-border)] pt-4 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.16em] text-[var(--color-v2-text-muted)] uppercase transition-colors group-hover:text-[var(--color-v2-heading)]">
+        <span>Ler resenha</span>
+        <span
+          aria-hidden="true"
+          class="text-[var(--color-v2-accent-warm)] transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+        >
+          &rarr;
+        </span>
+      </div>
+    </div>
+  </a>
+</article>

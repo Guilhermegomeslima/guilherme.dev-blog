@@ -1,0 +1,368 @@
+---
+/**
+ * Template individual de Resenha (/resenhas/[id]/) — EXP-03A.
+ *
+ * Reutiliza integralmente:
+ * - `BaseLayout.astro`, `ReadingProgress.astro`, `ShareButton.astro`, `ContentNavigation.astro`
+ * - `EditorialLightbox.astro` e `enhanceEditorialHtml()` (EXP-02B)
+ * - Vínculo opcional com a ficha da obra em Jogos, Filmes ou Livros (`relatedWork`)
+ */
+import { getEntry, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentNavigation from '../content/ContentNavigation.astro';
+import EditorialLightbox from '../editorial/EditorialLightbox.astro';
+import ReadingProgress from '../ui/ReadingProgress.astro';
+import ShareButton from '../ui/ShareButton.astro';
+import { withBase } from '../../utils/base';
+import {
+  enhanceEditorialHtml,
+  stripSpoilerBlocks,
+} from '../../utils/editorial-media';
+import { formatScore } from '../../utils/ratings';
+import {
+  estimateReadingMinutes,
+  resolveRelatedWorkLink,
+  REVIEW_MEDIA_TYPES,
+} from '../../utils/reviews';
+
+interface Props {
+  review: CollectionEntry<'reviews'>;
+  prevReview?: CollectionEntry<'reviews'> | null;
+  nextReview?: CollectionEntry<'reviews'> | null;
+  isPreview?: boolean;
+}
+
+const {
+  review,
+  prevReview = null,
+  nextReview = null,
+  isPreview = false,
+} = Astro.props;
+const { data } = review;
+const { Content } = await render(review);
+
+const mediaMeta = REVIEW_MEDIA_TYPES[data.mediaType];
+const readingMinutes = estimateReadingMinutes(
+  stripSpoilerBlocks(review.body || ''),
+);
+
+const formattedDate = data.publishedAt
+  ? new Intl.DateTimeFormat('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    }).format(data.publishedAt)
+  : null;
+
+const rawHtml = review.rendered?.html ?? '';
+const processedHtml = rawHtml
+  ? enhanceEditorialHtml(rawHtml, {
+      base: import.meta.env.BASE_URL,
+      enableLightbox: true,
+      wrapFigures: true,
+    })
+  : '';
+
+// Vínculo opcional com a ficha da obra já existente na biblioteca (sem duplicar notas)
+let relatedWorkCard: {
+  href: string;
+  sectionLabel: string;
+  actionLabel: string;
+  workTitle: string;
+} | null = null;
+
+if (data.relatedWork) {
+  const linkInfo = resolveRelatedWorkLink(data.relatedWork);
+  const entry = await getEntry(
+    data.relatedWork.collection,
+    data.relatedWork.id,
+  );
+  if (entry) {
+    relatedWorkCard = {
+      ...linkInfo,
+      workTitle: entry.data.title,
+    };
+  }
+}
+---
+
+<BaseLayout
+  variant="v2"
+  title={`${data.title} — Resenhas — guilherme.dev`}
+  description={data.description}
+  image={data.coverImage?.url}
+  type="article"
+  noindex={isPreview || data.draft || data.isDemo}
+>
+  <ReadingProgress />
+  <article class="relative overflow-hidden pb-20 md:pb-28">
+    {/* Atmosfera sutil no topo */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-[480px] overflow-hidden"
+    >
+      <img
+        src={withBase(data.coverImage?.url || '/images/home/jogos.webp')}
+        alt=""
+        width="1200"
+        height="630"
+        loading="eager"
+        decoding="async"
+        class="h-full w-full scale-105 object-cover object-center opacity-[0.10] blur-3xl filter"
+      />
+      <div class="v2-atmosphere-crimson absolute inset-0"></div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-[940px] px-5 pt-10 sm:px-8 md:pt-14">
+      {/* Barra superior de retorno e compartilhamento */}
+      <div class="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-[var(--color-v2-border)] pb-4">
+        <a
+          href={withBase('/resenhas/')}
+          class="v2-focus inline-flex items-center gap-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-text-muted)] uppercase transition-colors hover:text-[var(--color-v2-heading)]"
+        >
+          <span aria-hidden="true" class="text-[var(--color-v2-accent-warm)]">
+            &larr;
+          </span>
+          <span>Voltar para todas as resenhas</span>
+        </a>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="font-[family-name:var(--font-v2-mono)] text-[11px] tracking-[0.18em] text-[var(--color-v2-text-muted)] uppercase">
+            RESENHA // {mediaMeta.singular}
+          </span>
+          <ShareButton
+            title={`${data.title} — guilherme.dev`}
+            text={data.description}
+            url={`/resenhas/${review.id}/`}
+          />
+        </div>
+      </div>
+
+      {/* Cabeçalho da Resenha */}
+      <header class="mx-auto max-w-[860px] border-b border-[var(--color-v2-border)] pb-10">
+        <div class="mb-4 flex flex-wrap items-center gap-3 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] uppercase">
+          <span class="text-[var(--color-v2-accent-warm)]">
+            // {mediaMeta.singular} · {data.workTitle}
+          </span>
+
+          {formattedDate && data.publishedAt && (
+            <>
+              <span
+                class="text-[var(--color-v2-border-hover)]"
+                aria-hidden="true"
+              >
+                ·
+              </span>
+              <time
+                datetime={data.publishedAt.toISOString()}
+                class="text-[var(--color-v2-text)]"
+              >
+                {formattedDate}
+              </time>
+            </>
+          )}
+
+          <span class="text-[var(--color-v2-border-hover)]" aria-hidden="true">
+            ·
+          </span>
+          <span class="text-[var(--color-v2-text-muted)]">
+            ~{readingMinutes} min de leitura
+          </span>
+
+          {typeof data.rating === 'number' && (
+            <>
+              <span
+                class="text-[var(--color-v2-border-hover)]"
+                aria-hidden="true"
+              >
+                ·
+              </span>
+              <span class="border border-[var(--color-v2-border-hover)] px-2 py-0.5 text-[11px] text-[var(--color-v2-heading)]">
+                Nota {formatScore(data.rating)}
+              </span>
+            </>
+          )}
+        </div>
+
+        <h1 class="font-[family-name:var(--font-v2-display)] text-4xl leading-[1.06] font-normal tracking-[-0.02em] text-[var(--color-v2-heading)] sm:text-5xl lg:text-[3.4rem]">
+          {data.title}
+        </h1>
+
+        {data.subtitle && (
+          <p class="mt-3 font-[family-name:var(--font-v2-sans)] text-base font-light text-[var(--color-v2-text-muted)] sm:text-lg">
+            {data.subtitle}
+          </p>
+        )}
+
+        <p class="mt-6 font-[family-name:var(--font-v2-display)] text-xl leading-relaxed text-[var(--color-v2-text)] italic sm:text-2xl">
+          {data.description}
+        </p>
+
+        {/* Aviso geral discreto somente quando a resenha contiver spoilers */}
+        {data.hasSpoilers && (
+          <div
+            role="note"
+            class="mt-6 flex items-center gap-3 border border-[var(--color-v2-border)] border-l-2 border-l-[var(--color-v2-accent)] bg-[var(--color-v2-surface)] px-4 py-3 font-[family-name:var(--font-v2-sans)] text-xs leading-relaxed text-[var(--color-v2-text-body)] sm:text-sm"
+          >
+            <span class="shrink-0 bg-[var(--color-v2-accent)] px-2 py-0.5 font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.14em] text-[var(--color-v2-on-accent)] uppercase">
+              Aviso
+            </span>
+            <span>
+              Esta resenha contém trechos com spoilers mantidos ocultos ao longo
+              do texto até sua interação.
+            </span>
+          </div>
+        )}
+      </header>
+
+      {/* Imagem de Capa da Resenha (opcional, preservando proporção e abrindo no lightbox) */}
+      {data.coverImage && (
+        <figure class="v2-shadow-elevated relative my-10 border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-media-surface)] p-2">
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute -top-px -left-px h-3.5 w-3.5 border-t border-l border-[var(--color-v2-accent-warm)]"
+          />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute -top-px -right-px h-3.5 w-3.5 border-t border-r border-[var(--color-v2-accent-warm)]"
+          />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute -bottom-px -left-px h-3.5 w-3.5 border-b border-l border-[var(--color-v2-accent-warm)]"
+          />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute -bottom-px -right-px h-3.5 w-3.5 border-b border-r border-[var(--color-v2-accent-warm)]"
+          />
+
+          <div class="overflow-hidden border border-[var(--color-v2-media-border)] bg-[var(--color-v2-media-bg)]">
+            <img
+              src={withBase(data.coverImage.url)}
+              alt={data.coverImage.alt}
+              loading="eager"
+              decoding="async"
+              data-editorial-lightbox-trigger="true"
+              data-lightbox-src={withBase(data.coverImage.url)}
+              data-lightbox-alt={data.coverImage.alt}
+              data-lightbox-caption={
+                data.coverImage.caption || data.coverImage.alt
+              }
+              tabindex="0"
+              role="button"
+              aria-label={`Ampliar imagem de capa: ${data.coverImage.alt}`}
+              class="mx-auto block h-auto max-h-[600px] w-auto max-w-full cursor-zoom-in object-contain"
+            />
+          </div>
+
+          {(data.coverImage.caption || data.coverImage.alt) && (
+            <figcaption class="px-3 pt-3 pb-1 font-[family-name:var(--font-v2-mono)] text-[11px] text-[var(--color-v2-media-muted)]">
+              // {data.coverImage.caption || data.coverImage.alt}
+            </figcaption>
+          )}
+        </figure>
+      )}
+
+      {/* Corpo Editorial em Coluna de Leitura Confortável */}
+      <div
+        data-editorial-prose
+        data-reading-content
+        class="v2-article-prose mx-auto mt-10 max-w-[760px] space-y-6 font-[family-name:var(--font-v2-sans)] text-[1.0625rem] leading-[1.88] font-light text-[var(--color-v2-text-body)] sm:text-[1.125rem] [&>blockquote]:my-8 [&>blockquote]:border-l-2 [&>blockquote]:border-[var(--color-v2-accent-warm)] [&>blockquote]:bg-[var(--color-v2-surface)]/80 [&>blockquote]:px-6 [&>blockquote]:py-4 [&>blockquote]:font-[family-name:var(--font-v2-display)] [&>blockquote]:text-xl [&>blockquote]:text-[var(--color-v2-heading)] [&>blockquote]:italic [&>h2]:mt-14 [&>h2]:mb-5 [&>h2]:border-b [&>h2]:border-[var(--color-v2-border)] [&>h2]:pb-3 [&>h2]:font-[family-name:var(--font-v2-display)] [&>h2]:text-3xl [&>h2]:leading-[1.15] [&>h2]:font-normal [&>h2]:tracking-[-0.01em] [&>h2]:text-[var(--color-v2-heading)] sm:[&>h2]:text-[2.15rem] [&>h3]:mt-10 [&>h3]:mb-4 [&>h3]:font-[family-name:var(--font-v2-display)] [&>h3]:text-2xl [&>h3]:leading-[1.2] [&>h3]:font-normal [&>h3]:text-[var(--color-v2-accent-warm)] [&>ol]:my-6 [&>ol]:list-decimal [&>ol]:space-y-3 [&>ol]:pl-6 [&>ol]:text-[var(--color-v2-text-body)] [&>ol>li::marker]:text-[var(--color-v2-accent-warm)] [&>ul]:my-6 [&>ul]:list-disc [&>ul]:space-y-3 [&>ul]:pl-6 [&>ul]:text-[var(--color-v2-text-body)] [&>ul>li::marker]:text-[var(--color-v2-accent-warm)] [&_a]:text-[var(--color-v2-accent-warm)] [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-[var(--color-v2-heading)] [&_strong]:font-medium [&_strong]:text-[var(--color-v2-heading)]"
+      >
+        {processedHtml ? <Fragment set:html={processedHtml} /> : <Content />}
+      </div>
+
+      {/* Vínculo opcional com a ficha da obra em Jogos, Filmes ou Livros */}
+      {relatedWorkCard && (
+        <aside
+          aria-label="Ficha relacionada no acervo"
+          class="mx-auto mt-14 max-w-[760px] border border-[var(--color-v2-border-hover)] bg-[var(--color-v2-surface)] p-5 sm:p-6"
+        >
+          <p class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-accent-warm)] uppercase">
+            // {relatedWorkCard.sectionLabel}
+          </p>
+          <div class="mt-2 flex flex-wrap items-center justify-between gap-4">
+            <p class="font-[family-name:var(--font-v2-display)] text-2xl text-[var(--color-v2-heading)]">
+              {relatedWorkCard.workTitle}
+            </p>
+            <a
+              href={withBase(relatedWorkCard.href)}
+              class="v2-focus inline-flex min-h-10 items-center gap-2 border border-[var(--color-v2-accent-warm)]/60 bg-[var(--color-v2-bg)] px-4 py-2 font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.14em] text-[var(--color-v2-accent-warm)] uppercase transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-heading)]"
+            >
+              <span>{relatedWorkCard.actionLabel}</span>
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </aside>
+      )}
+
+      {/* Links relacionados opcionais */}
+      {data.relatedLinks.length > 0 && (
+        <aside
+          aria-label="Links relacionados"
+          class="mx-auto mt-8 max-w-[760px] border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/70 p-5"
+        >
+          <p class="font-[family-name:var(--font-v2-mono)] text-[10px] tracking-[0.18em] text-[var(--color-v2-text-muted)] uppercase">
+            // Links relacionados
+          </p>
+          <ul class="mt-3 flex flex-wrap gap-3">
+            {data.relatedLinks.map((link) => (
+              <li>
+                <a
+                  href={withBase(link.href)}
+                  class="v2-focus inline-flex items-center gap-1.5 border border-[var(--color-v2-border)] px-3 py-1.5 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-heading)] transition-colors hover:border-[var(--color-v2-accent-warm)] hover:text-[var(--color-v2-accent-warm)]"
+                >
+                  <span>{link.label}</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
+
+      {/* Rodapé de Leitura e Navegação Contextual */}
+      <footer class="mx-auto mt-16 max-w-[760px] border-t border-[var(--color-v2-border)] pt-8">
+        {data.tags.length > 0 && (
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-[family-name:var(--font-v2-mono)] text-xs tracking-[0.16em] text-[var(--color-v2-text-muted)] uppercase">
+              Tags:
+            </span>
+            {data.tags.map((tag) => (
+              <span class="border border-[var(--color-v2-border)] bg-[var(--color-v2-surface)]/80 px-2.5 py-1 font-[family-name:var(--font-v2-mono)] text-xs text-[var(--color-v2-text)]">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <ContentNavigation
+          ariaLabel="Navegação entre resenhas"
+          prev={
+            prevReview
+              ? {
+                  href: `/resenhas/${prevReview.id}/`,
+                  label: prevReview.data.title,
+                }
+              : null
+          }
+          next={
+            nextReview
+              ? {
+                  href: `/resenhas/${nextReview.id}/`,
+                  label: nextReview.data.title,
+                }
+              : null
+          }
+          prevLabel="Resenha anterior"
+          nextLabel="Próxima resenha"
+          backHref="/resenhas/"
+          backLabel="Voltar para resenhas"
+          class="mt-8 border-t border-[var(--color-v2-border)] pt-6"
+        />
+      </footer>
+    </div>
+  </article>
+
+  <EditorialLightbox />
+</BaseLayout>

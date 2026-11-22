@@ -1,0 +1,102 @@
+---
+/**
+ * Roteador estático condicional da seção Resenhas (/resenhas/ e /resenhas/[id]/) — EXP-03A.
+ *
+ * Utiliza rota rest `[...slug].astro` controlada por `editorial-flags.ts`:
+ * - Em builds públicos enquanto `EXPANSION_PUBLIC_FLAGS.reviews === false`,
+ *   `getStaticPaths()` retorna `[]`, garantindo ZERO arquivos HTML gerados em `dist/resenhas/`.
+ * - Em prévia local autorizada (`PREVIEW_EXPANSION=true` fora de CI/Vercel/GH Pages),
+ *   gera `/resenhas/` e cada `/resenhas/[id]/` elegível para revisão visual.
+ */
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ReviewsCatalog from '../../components/reviews/ReviewsCatalog.astro';
+import ReviewDetail from '../../components/reviews/ReviewDetail.astro';
+import {
+  isExpansionPreviewEnabled,
+  shouldGenerateSectionRoute,
+  shouldIncludeEntry,
+} from '../../utils/editorial-flags';
+import { compareReviews } from '../../utils/reviews';
+
+export async function getStaticPaths() {
+  if (!shouldGenerateSectionRoute('reviews')) {
+    return [];
+  }
+
+  const isPreview = isExpansionPreviewEnabled();
+  const allReviews = await getCollection('reviews');
+  const visibleReviews = allReviews
+    .filter((entry) => shouldIncludeEntry('reviews', entry.data))
+    .sort(compareReviews);
+
+  const paths: Array<{
+    params: { slug: string | undefined };
+    props:
+      | {
+          mode: 'index';
+          reviews: CollectionEntry<'reviews'>[];
+          isPreview: boolean;
+        }
+      | {
+          mode: 'detail';
+          review: CollectionEntry<'reviews'>;
+          prevReview: CollectionEntry<'reviews'> | null;
+          nextReview: CollectionEntry<'reviews'> | null;
+          isPreview: boolean;
+        };
+  }> = [
+    {
+      params: { slug: undefined },
+      props: {
+        mode: 'index',
+        reviews: visibleReviews,
+        isPreview,
+      },
+    },
+  ];
+
+  visibleReviews.forEach((review, index) => {
+    paths.push({
+      params: { slug: review.id },
+      props: {
+        mode: 'detail',
+        review,
+        prevReview: index > 0 ? visibleReviews[index - 1] : null,
+        nextReview:
+          index < visibleReviews.length - 1 ? visibleReviews[index + 1] : null,
+        isPreview,
+      },
+    });
+  });
+
+  return paths;
+}
+
+type Props =
+  | {
+      mode: 'index';
+      reviews: CollectionEntry<'reviews'>[];
+      isPreview: boolean;
+    }
+  | {
+      mode: 'detail';
+      review: CollectionEntry<'reviews'>;
+      prevReview: CollectionEntry<'reviews'> | null;
+      nextReview: CollectionEntry<'reviews'> | null;
+      isPreview: boolean;
+    };
+
+const props = Astro.props;
+---
+
+{props.mode === 'index' ? (
+  <ReviewsCatalog reviews={props.reviews} isPreview={props.isPreview} />
+) : (
+  <ReviewDetail
+    review={props.review}
+    prevReview={props.prevReview}
+    nextReview={props.nextReview}
+    isPreview={props.isPreview}
+  />
+)}
